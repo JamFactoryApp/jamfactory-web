@@ -1,0 +1,14 @@
+<form>
+  <input type="text" id="jamlabel" placeholder="Jam Label">
+  <button type="submit">Join Party</button>
+</form>
+<button type="button" (click)="createParty()">Create Party</button>
+<button type="button" (click)="leaveParty()">Leave Party</button>
+<button type="button" (click)="login()">Log in to Spotify</button>
+<button type="button" (click)="refresh()">Refresh</button>
+<figure>
+  <figcaption>{{playback.Item.name}}</figcaption>
+  <img src="{{image}}" alt="Foto" width="300" height="300">
+</figure>
+<button type="button" (click)="togglePlay()">Play</button>
+<button type="button" (click)="togglePause()">Pause</button>

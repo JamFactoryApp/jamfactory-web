@@ -18,7 +18,7 @@ declare namespace Zmb3SpotifyApi {
     context: SpotifyApi.ContextObject,
     progress_ms: number,
     is_playing: boolean,
-    item: SpotifyApi.TrackObjectFull
+    Item: SpotifyApi.TrackObjectFull
     device: SpotifyApi.UserDevice,
     shuffle_state: boolean,
     repeat_state: string
