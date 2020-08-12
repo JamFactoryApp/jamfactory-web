@@ -66,8 +66,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "jamfactory-web:build",
-            "proxyConfig": "src/proxy.conf.json"
+            "browserTarget": "jamfactory-web:build"
           },
           "configurations": {
             "production": {

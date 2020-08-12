@@ -29,9 +29,9 @@ export class LandingPageComponent implements OnInit {
   }
 
   login(): void {
-    this.authService.login().subscribe((data: LoginResponseBody) =>
-      window.location.href = data.url
-    );
+    this.authService.login().subscribe((data: LoginResponseBody) => {
+      window.location.href = data.url;
+    });
   }
 
   createParty(): void {
