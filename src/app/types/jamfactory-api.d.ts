@@ -1,72 +1,74 @@
 declare namespace JamFactoryApi {
   // ---------------------------------------------------------------------------------------------------------------------
   // request types
+
   /**
    *
    */
   interface SearchRequestBody {
-    text?: string,
-    type?: string
+    text?: string;
+    type?: string;
   }
 
   /**
    *
    */
   interface VoteRequestBody {
-    track?: string
+    track?: string;
   }
 
   /**
    *
    */
   interface AddPlaylistRequestBody {
-    playlist?: string
+    playlist?: string;
   }
 
   /**
    *
    */
   interface SetJamSessionRequestBody {
-    name?: string,
-    active?: boolean,
-    ip_voting: boolean
+    name?: string;
+    active?: boolean;
+    ip_voting: boolean;
   }
 
   /**
    *
    */
   interface SetPlayBackRequestBody {
-    playing?: boolean,
-    device_id?: boolean
+    playing?: boolean;
+    device_id?: boolean;
   }
 
   // ---------------------------------------------------------------------------------------------------------------------
   // response types
+
   /**
    *
    */
   interface StatusResponseBody {
-    user: string,
-    label: string,
-    authorized: boolean
+    user: string;
+    label: string;
+    authorized: boolean;
   }
 
   /**
    *
    */
   interface LoginResponseBody {
-    url: string
+    url: string;
   }
 
   /**
    *
    */
   interface JamSessionBody {
-    label: string,
-    name: string,
-    active: boolean,
-    device_id: string,
-    ip_voting: boolean
+    label: string;
+    name: string;
+    active: boolean;
+    device_id: string;
+    ip_voting: boolean;
   }
 
   /**
@@ -83,7 +85,7 @@ declare namespace JamFactoryApi {
    *
    */
   interface PlaybackBody {
-    playback: Zmb3SpotifyApi.PlayerState
+    playback: Zmb3SpotifyApi.PlayerState;
   }
 
   /**
@@ -100,7 +102,7 @@ declare namespace JamFactoryApi {
    *
    */
   interface labelBody {
-    label: string
+    label: string;
   }
 
   /**
@@ -122,7 +124,7 @@ declare namespace JamFactoryApi {
    *
    */
   interface LeaveJamSessionResponseBody {
-    success: boolean
+    success: boolean;
   }
 
   /**
@@ -130,6 +132,56 @@ declare namespace JamFactoryApi {
    */
   interface JamSessionStateResponseBody {
     currentSong: any;
-    state: any
+    state: any;
+  }
+
+  /**
+   *
+   */
+  interface GetQueueResponseBody {
+    queue: SongWithoutId[];
+  }
+
+  /**
+   *
+   */
+  type PlaylistQueueResponseBody = GetQueueResponseBody;
+
+  /**
+   *
+   */
+  type VoteQueueResponseBody = GetQueueResponseBody;
+
+  /**
+   *
+   */
+  interface GetSpotifyDevicesResponseBody {
+    devices: Zmb3SpotifyApi.PlayerDevice[];
+  }
+
+  /**
+   *
+   */
+  interface GetPlaylistsResponseBody {
+    playlists: Zmb3SpotifyApi.SimplePlaylistPage;
+  }
+
+  /**
+   *
+   */
+  interface PutSearchResponseBody {
+    search_result: Zmb3SpotifyApi.SearchResult;
+  }
+
+  // ---------------------------------------------------------------------------------------------------------------------
+  // other types
+
+  /**
+   *
+   */
+  interface SongWithoutId {
+    spotifyTrackFull: SpotifyApi.TrackObjectFull;
+    votes: number;
+    voted: boolean;
   }
 }
