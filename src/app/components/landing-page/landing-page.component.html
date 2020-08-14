@@ -1,14 +1,129 @@
-<form>
-  <input type="text" id="jamlabel" placeholder="Jam Label">
-  <button type="submit">Join Party</button>
-</form>
-<button type="button" (click)="createParty()">Create Party</button>
-<button type="button" (click)="leaveParty()">Leave Party</button>
-<button type="button" (click)="login()">Log in to Spotify</button>
-<button type="button" (click)="refresh()">Refresh</button>
-<figure>
-  <figcaption>{{playback.Item.name}}</figcaption>
-  <img src="{{image}}" alt="Foto" width="300" height="300">
-</figure>
-<button type="button" (click)="togglePlay()">Play</button>
-<button type="button" (click)="togglePause()">Pause</button>
+<section>
+  <h1>Auth</h1>
+
+  <h4>GET Auth Current</h4>
+  <button type="button" (click)="getAuthCurrent()">GO!</button>
+  <p>{{authCurrent | json}}</p>
+
+  <h4>GET Auth Login</h4>
+  <button type="button" (click)="getAuthLogin()">GO!</button>
+
+  <h4>GET Auth Logout</h4>
+  <button type="button" (click)="getAuthLogout()">GO!</button>
+</section>
+<hr>
+<section>
+  <h1>Jam</h1>
+
+  <h4>GET Jam</h4>
+  <button type="button" (click)="getJam()">GO!</button>
+  <p>{{jam | json}}</p>
+
+  <h4>PUT Jam</h4>
+  <form [formGroup]="putJamForm" (ngSubmit)="putJam()">
+    <label>
+      Name:
+      <input type="text" formControlName="name">
+    </label>
+    <label>
+      Active:
+      <input type="checkbox" formControlName="active">
+    </label>
+    <label>
+      IP Voting:
+      <input type="checkbox" formControlName="ip_voting">
+    </label>
+    <button type="submit" [disabled]="!putJamForm.valid">GO!</button>
+  </form>
+  <p>{{jamPut | json}}</p>
+
+  <h4>GET Jam Playback</h4>
+  <button type="button" (click)="getJamPlayback()">GO!</button>
+  <p>{{jamPlayback | json}}</p>
+
+  <h4>PUT Jam Playback</h4>
+  <form [formGroup]="putJamPlaybackForm" (ngSubmit)="putJamPlayback()">
+    <label>
+      Playing:
+      <input type="checkbox" formControlName="playing">
+    </label>
+    <label>
+      Device ID:
+      <input type="text" formControlName="device_id">
+    </label>
+    <button type="submit" [disabled]="!putJamPlaybackForm.valid">GO!</button>
+  </form>
+  <p>{{jamPlaybackPut | json}}</p>
+
+  <h4>GET Jam Create</h4>
+  <button type="button" (click)="getJamCreate()">GO!</button>
+  <p>{{jamCreate | json}}</p>
+
+  <h4>PUT Jam Join</h4>
+  <form [formGroup]="putJamJoinForm" (ngSubmit)="putJamJoin()">
+    <label>
+      Label:
+      <input type="text" formControlName="label">
+    </label>
+    <button type="submit" [disabled]="!putJamJoinForm.valid">GO!</button>
+  </form>
+  <p>{{jamJoin | json}}</p>
+
+  <h4>GET Jam Leave</h4>
+  <button type="button" (click)="getJamLeave()">GO!</button>
+  <p>{{jamLeave | json}}</p>
+</section>
+<hr>
+<section>
+  <h1>Queue</h1>
+
+  <h4>GET Queue</h4>
+  <button type="button" (click)="getQueue()">GO!</button>
+  <p>{{queue | json}}</p>
+
+  <h4>PUT Queue Vote</h4>
+  <form [formGroup]="putQueueVoteForm" (ngSubmit)="putQueueVote()">
+    <label>
+      Track:
+      <input type="text" formControlName="track">
+    </label>
+    <button type="submit" [disabled]="!putQueueVoteForm.valid">GO!</button>
+  </form>
+  <p>{{queueVotePut | json}}</p>
+
+  <h4>PUT Queue Playlist</h4>
+  <form [formGroup]="putQueuePlaylistForm" (ngSubmit)="putQueuePlaylist()">
+    <label>
+      Playlist:
+      <input type="text" formControlName="playlist">
+    </label>
+    <button type="submit" [disabled]="!putQueuePlaylistForm.valid">GO!</button>
+  </form>
+  <p>{{queuePlaylistPut | json}}</p>
+</section>
+<hr>
+<section>
+  <h1>Spotify</h1>
+
+  <h4>GET Spotify Devices</h4>
+  <button type="button" (click)="getSpotifyDevices()">GO!</button>
+  <p>{{spotifyDevices | json}}</p>
+
+  <h4>GET Spotify Playlists</h4>
+  <button type="button" (click)="getSpotifyPlaylists()">GO!</button>
+  <p>{{spotifyPlaylists | json}}</p>
+
+  <h4>PUT Spotify Search</h4>
+  <form [formGroup]="putSpotifySearchForm" (ngSubmit)="putSpotifySearch()">
+    <label>
+      Text:
+      <input type="text" formControlName="text">
+    </label>
+    <label>
+      Type:
+      <input type="text" formControlName="type">
+    </label>
+    <button type="submit" [disabled]="!putSpotifySearchForm.valid">GO!</button>
+  </form>
+  <p>{{spotifySearch | json}}</p>
+</section>
