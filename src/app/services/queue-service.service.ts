@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
-import GetQueueResponseBody = JamFactoryApi.GetQueueResponseBody;
-import VoteRequestBody = JamFactoryApi.VoteRequestBody;
-import VoteQueueResponseBody = JamFactoryApi.VoteQueueResponseBody;
-import AddPlaylistRequestBody = JamFactoryApi.AddPlaylistRequestBody;
-import PlaylistQueueResponseBody = JamFactoryApi.PlaylistQueueResponseBody;
+import GetQueueResponseBody = JamFactoryApi.GetQueueResponse;
+import VoteRequestBody = JamFactoryApi.PutQueueVoteRequest;
+import VoteQueueResponseBody = JamFactoryApi.PutQueueVoteResponse;
+import AddPlaylistRequestBody = JamFactoryApi.PutQueuePlaylistRequest;
+import PlaylistQueueResponseBody = JamFactoryApi.PutQueuePlaylistResponse;
 
 @Injectable({
   providedIn: 'root'

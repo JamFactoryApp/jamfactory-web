@@ -3,9 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import UserDevicesResponse = SpotifyApi.UserDevicesResponse;
-import GetPlaylistsResponseBody = JamFactoryApi.GetPlaylistsResponseBody;
-import SearchRequestBody = JamFactoryApi.SearchRequestBody;
-import PutSearchResponseBody = JamFactoryApi.PutSearchResponseBody;
+import GetPlaylistsResponseBody = JamFactoryApi.GetSpotifyPlaylistsResponse;
+import SearchRequestBody = JamFactoryApi.PutSpotifySearchRequest;
+import PutSearchResponseBody = JamFactoryApi.PutSpotifySearchResponse;
 
 @Injectable({
   providedIn: 'root'

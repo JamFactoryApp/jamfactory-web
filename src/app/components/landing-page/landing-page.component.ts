@@ -12,23 +12,23 @@ import {FormBuilder} from '@angular/forms';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
-  authCurrent: JamFactoryApi.StatusResponseBody;
+  authCurrent: JamFactoryApi.GetAuthCurrentResponse;
 
-  jam: JamFactoryApi.GetJamSessionResponseBody;
-  jamPut: JamFactoryApi.CreateJamSessionResponseBody;
-  jamPlayback: JamFactoryApi.GetPlaybackResponseBody;
-  jamPlaybackPut: JamFactoryApi.SetPlaybackResponseBody;
-  jamCreate: JamFactoryApi.CreateJamSessionResponseBody;
-  jamJoin: JamFactoryApi.JoinResponseBody;
-  jamLeave: JamFactoryApi.LeaveJamSessionResponseBody;
+  jam: JamFactoryApi.GetJamResponse;
+  jamPut: JamFactoryApi.GetJamCreateResponse;
+  jamPlayback: JamFactoryApi.GetJamPlaybackResponse;
+  jamPlaybackPut: JamFactoryApi.PutPlaybackResponseBody;
+  jamCreate: JamFactoryApi.GetJamCreateResponse;
+  jamJoin: JamFactoryApi.PutJamJoinResponse;
+  jamLeave: JamFactoryApi.GetJamLeaveResponse;
 
-  queue: JamFactoryApi.GetQueueResponseBody;
-  queueVotePut: JamFactoryApi.VoteQueueResponseBody;
-  queuePlaylistPut: JamFactoryApi.PlaylistQueueResponseBody;
+  queue: JamFactoryApi.GetQueueResponse;
+  queueVotePut: JamFactoryApi.PutQueueVoteResponse;
+  queuePlaylistPut: JamFactoryApi.PutQueuePlaylistResponse;
 
-  spotifyDevices: JamFactoryApi.GetSpotifyDevicesResponseBody;
-  spotifyPlaylists: JamFactoryApi.GetPlaylistsResponseBody;
-  spotifySearch: JamFactoryApi.PutSearchResponseBody;
+  spotifyDevices: JamFactoryApi.GetSpotifyDevicesResponse;
+  spotifyPlaylists: JamFactoryApi.GetSpotifyPlaylistsResponse;
+  spotifySearch: JamFactoryApi.PutSpotifySearchResponse;
 
   putJamForm = this.fb.group({
     name: [''],
