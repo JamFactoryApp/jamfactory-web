@@ -9,8 +9,6 @@ const routes: Routes = [
   {path: 'debug', component: DebugComponent},
   {path: ':jamlabel', component: JamSessionComponent},
   {path: '*', redirectTo: ''}
-
-
 ];
 
 @NgModule({

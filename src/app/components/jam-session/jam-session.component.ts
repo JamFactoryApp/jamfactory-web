@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import JamResponse = JamFactoryApi.JamResponse;
-import SongWithoutId = JamFactoryApi.SongWithoutId;
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
@@ -8,6 +6,9 @@ import {JamsessionService} from '../../services/jamsession.service';
 import {QueueServiceService} from '../../services/queue-service.service';
 import {SpotifyServiceService} from '../../services/spotify-service.service';
 import * as io from 'socket.io-client';
+import {environment} from "../../../environments/environment";
+import JamResponse = JamFactoryApi.JamResponse;
+import SongWithoutId = JamFactoryApi.SongWithoutId;
 import GetQueueResponse = JamFactoryApi.GetQueueResponse;
 import GetJamPlaybackResponse = JamFactoryApi.GetJamPlaybackResponse;
 import PlaybackBody = JamFactoryApi.PlaybackBody;
@@ -19,12 +20,15 @@ import PlaybackBody = JamFactoryApi.PlaybackBody;
 })
 export class JamSessionComponent implements OnInit {
 
-  constructor( private router: Router,
-               private fb: FormBuilder,
-               private authService: AuthService,
-               private jamsessionService: JamsessionService,
-               private queueService: QueueServiceService,
-               private spotifyService: SpotifyServiceService) { }
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private jamsessionService: JamsessionService,
+    private queueService: QueueServiceService,
+    private spotifyService: SpotifyServiceService
+  ) {
+  }
 
   jamSession: JamResponse;
   playback: PlaybackBody;
@@ -45,7 +49,7 @@ export class JamSessionComponent implements OnInit {
   }
 
   connectSocket(): void {
-    this.socket = io.connect('http://localhost:3000');
+    this.socket = io.connect(environment.JAMFACTORY_API_URL);
     this.socket.on('queue', (msg: GetQueueResponse) => {
       this.queue = msg.queue;
     });
@@ -60,9 +64,4 @@ export class JamSessionComponent implements OnInit {
   closeSocket(): void {
     this.socket.close();
   }
-
-
-
-
-
 }

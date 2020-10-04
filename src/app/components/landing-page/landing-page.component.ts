@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import {JamsessionService} from '../../services/jamsession.service';
-import LabelBody = JamFactoryApi.LabelBody;
-import PutJamJoinResponse = JamFactoryApi.PutJamJoinResponse;
 import {FormBuilder, FormControl} from '@angular/forms';
+import LabelBody = JamFactoryApi.LabelBody;
 
 @Component({
   selector: 'app-landing-page',
@@ -12,15 +11,19 @@ import {FormBuilder, FormControl} from '@angular/forms';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingpageComponent implements OnInit {
-
   public userStatus: string;
   public userLabel: string;
   public userAuthorized: boolean;
 
   labelField = new FormControl('');
 
-  constructor(private auth: AuthService, private jam: JamsessionService, private router: Router, private fb: FormBuilder) { }
-
+  constructor(
+    private auth: AuthService,
+    private jam: JamsessionService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+  }
 
   ngOnInit(): void {
     this.auth.getCurrent().subscribe(value => {
@@ -45,7 +48,7 @@ export class LandingpageComponent implements OnInit {
 
   create(): void {
     this.jam.createJamsession().subscribe(value => {
-        this.router.navigate(['/' + value.label]);
+      this.router.navigate(['/' + value.label]);
     });
   }
 
@@ -58,6 +61,4 @@ export class LandingpageComponent implements OnInit {
       this.router.navigate(['/' + value.label]);
     });
   }
-
-
 }

@@ -1,14 +1,23 @@
 <div class="container">
   <div class="row">
-    <div class="col"><h1 style="text-align: center">Welcome to JamFactory</h1></div>
+    <div class="col">
+      <h1 class="text-center">Welcome to JamFactory</h1>
+    </div>
   </div>
   <hr>
   <div class="row">
-    <div class="col"><h4><p class="text-success text-center my-3">Join an exiting JamSession or login to Spotify to create your own</p></h4></div>
+    <div class="col">
+      <h4>
+        <span class="text-success text-center my-3">
+          Join an exiting JamSession or login to Spotify to create your own
+        </span>
+      </h4>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-2 offset-md-4 col-6">
-      <input class="form-control" name="labelInput" type="text" placeholder="Jam Label" maxlength="5" [formControl]="labelField">
+      <input class="form-control" name="labelInput" type="text" placeholder="Jam Label" maxlength="5"
+             [formControl]="labelField">
     </div>
     <div class="col-md-2 col-6">
       <button class="btn btn-primary btn-block" (click)="join()">Join</button>
@@ -16,16 +25,13 @@
   </div>
   <div class="row">
     <div class="col-md-2 offset-md-5 col-12">
-      <button class="btn btn-primary btn-block my-4" *ngIf="!userAuthorized" (click)="login()">Login to Spotify</button>
-      <button class="btn btn-primary btn-block my-4" *ngIf="userAuthorized" (click)="create()">Create new JamSession</button>
+      <button class="btn btn-primary btn-block my-4" *ngIf="!userAuthorized" (click)="login()">
+        Login to Spotify
+      </button>
+      <button class="btn btn-primary btn-block my-4" *ngIf="userAuthorized" (click)="create()">
+        Create new JamSession
+      </button>
     </div>
   </div>
   <hr>
 </div>
-
-
-
-
-
-
-

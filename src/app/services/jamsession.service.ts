@@ -20,7 +20,7 @@ export class JamsessionService {
   private httpOptions = {
     withCredentials: true
   };
-  private apiUrl = environment.JAMFACTORY_API_URL + '/jam';
+  private apiUrl = environment.JAMFACTORY_API_URL + '/api/v1/jam';
 
   constructor(
     private http: HttpClient

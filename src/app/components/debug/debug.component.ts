@@ -6,6 +6,7 @@ import {QueueServiceService} from '../../services/queue-service.service';
 import {SpotifyServiceService} from '../../services/spotify-service.service';
 import {FormBuilder} from '@angular/forms';
 import * as io from 'socket.io-client';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-landing-page',
@@ -61,7 +62,7 @@ export class DebugComponent implements OnInit {
 
   socket: SocketIOClient.Socket;
   socketFlag = true;
-  socketPlaybackMsg : string;
+  socketPlaybackMsg: string;
   socketQueueMsg: string;
   socketCloseMsg: string;
 
@@ -79,7 +80,7 @@ export class DebugComponent implements OnInit {
   }
 
   connectSocket(): void {
-    this.socket = io.connect('http://localhost:3000');
+    this.socket = io.connect(environment.JAMFACTORY_API_URL);
     this.socket.on('queue', (msg: any) => {
       this.socketQueueMsg = msg;
     });

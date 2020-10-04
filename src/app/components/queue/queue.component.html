@@ -11,8 +11,8 @@
         <span class="badge badge-primary badge-pill">Votes: {{song.votes}}</span>
       </div>
       <div class="col-md-1 col-2">
-        <button (click)="vote(song)" class="btn btn-primary ml-2" *ngIf="song.voted" >Vote</button>
-        <button (click)="vote(song)" class="btn btn-outline-primary ml-2 " *ngIf="!song.voted" >Vote</button>
+        <button (click)="vote(song)" class="btn btn-primary ml-2" *ngIf="song.voted">Vote</button>
+        <button (click)="vote(song)" class="btn btn-outline-primary ml-2 " *ngIf="!song.voted">Vote</button>
       </div>
     </div>
   </li>

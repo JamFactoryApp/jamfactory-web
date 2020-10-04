@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-queue-song',
@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./queue-song.component.scss']
 })
 export class QueueSongComponent implements OnInit {
-
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
-
 }

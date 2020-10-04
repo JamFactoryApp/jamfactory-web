@@ -1,20 +1,18 @@
 <h4>Welcome to {{jamSession?.name}} - {{jamSession?.label}}</h4>
 <hr>
-<div class="container">
-  <div class="row">
+<div class="row">
+  <div class="col">
     <app-search></app-search>
   </div>
-  <div class="row">
+</div>
+<div class="row">
+  <div class="col">
     <app-queue [songList]="queue"></app-queue>
   </div>
-
 </div>
 <hr>
-<div id=playback>
-  <app-playback-controller [playback]="playback"></app-playback-controller>
+<div class="row">
+  <div class="col">
+    <app-playback-controller [playback]="playback"></app-playback-controller>
+  </div>
 </div>
-
-
-
-
-
