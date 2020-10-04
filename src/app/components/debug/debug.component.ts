@@ -9,10 +9,10 @@ import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-landing-page',
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss']
+  templateUrl: './debug.component.html',
+  styleUrls: ['./debug.component.scss']
 })
-export class LandingPageComponent implements OnInit {
+export class DebugComponent implements OnInit {
   authCurrent: JamFactoryApi.GetAuthCurrentResponse;
 
   jam: JamFactoryApi.GetJamResponse;

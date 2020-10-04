@@ -1,9 +1,16 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LandingPageComponent} from './components/landing-page/landing-page.component';
+import {LandingpageComponent} from './components/landing-page/landing-page.component';
+import {JamSessionComponent} from './components/jam-session/jam-session.component';
+import {DebugComponent} from './components/debug/debug.component';
 
 const routes: Routes = [
-  {path: '', component: LandingPageComponent}
+  {path: '', component: LandingpageComponent},
+  {path: 'debug', component: DebugComponent},
+  {path: ':jamlabel', component: JamSessionComponent},
+  {path: '*', redirectTo: ''}
+
+
 ];
 
 @NgModule({
