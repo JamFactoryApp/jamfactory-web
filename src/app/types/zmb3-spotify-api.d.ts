@@ -1,8 +1,5 @@
 declare namespace Zmb3SpotifyApi {
-  /**
-   *
-   */
-  interface basePage {
+  interface BasePage {
     href: string;
     limit: number;
     offset: number;
@@ -11,9 +8,6 @@ declare namespace Zmb3SpotifyApi {
     previous: string;
   }
 
-  /**
-   *
-   */
   interface SimpleArtist {
     name: string;
     id: string;
@@ -22,19 +16,13 @@ declare namespace Zmb3SpotifyApi {
     external_urls: any;
   }
 
-  /**
-   *
-   */
   type FullArtist = SimpleArtist & {
     popularity: number;
     genres: string[];
     followers: Followers;
     images: Image[];
-  }
+  };
 
-  /**
-   *
-   */
   interface SimpleAlbum {
     name: string;
     artists: SimpleArtist[];
@@ -47,12 +35,9 @@ declare namespace Zmb3SpotifyApi {
     images: Image[];
     external_urls: any;
     release_date: string;
-    release_date_precision: string
+    release_date_precision: string;
   }
 
-  /**
-   *
-   */
   interface SimpleTrack {
     artists: SimpleArtist[];
     available_markets: string[];
@@ -68,43 +53,31 @@ declare namespace Zmb3SpotifyApi {
     uri: number;
   }
 
-  /**
-   *
-   */
   type FullTrack = SimpleTrack & {
     album: SimpleAlbum;
     external_ids: any;
     popularity: number;
-  }
+  };
 
-  /**
-   *
-   */
   interface CurrentlyPlaying {
-    timestamp: number,
-    context: SpotifyApi.ContextObject,
-    progress_ms: number,
-    is_playing: boolean,
-    item: SpotifyApi.TrackObjectFull
+    timestamp: number;
+    context: SpotifyApi.ContextObject;
+    progress_ms: number;
+    is_playing: boolean;
+    item: SpotifyApi.TrackObjectFull;
   }
 
-  /**
-   *
-   */
   interface PlayerState {
-    timestamp: number,
-    context: SpotifyApi.ContextObject,
-    progress_ms: number,
-    is_playing: boolean,
-    Item: SpotifyApi.TrackObjectFull
-    device: SpotifyApi.UserDevice,
-    shuffle_state: boolean,
-    repeat_state: string
+    timestamp: number;
+    context: SpotifyApi.ContextObject;
+    progress_ms: number;
+    is_playing: boolean;
+    Item: SpotifyApi.TrackObjectFull;
+    device: SpotifyApi.UserDevice;
+    shuffle_state: boolean;
+    repeat_state: string;
   }
 
-  /**
-   *
-   */
   interface SimplePlaylist {
     collaborative: boolean;
     external_urls: any;
@@ -119,17 +92,11 @@ declare namespace Zmb3SpotifyApi {
     uri: string;
   }
 
-  /**
-   *
-   */
   interface PlaylistTracks {
     href: string;
     total: number;
   }
 
-  /**
-   *
-   */
   interface User {
     display_name: string;
     external_urls: any;
@@ -140,49 +107,27 @@ declare namespace Zmb3SpotifyApi {
     uri: string;
   }
 
-  /**
-   *
-   */
   interface Followers {
     total: number;
     href: string;
   }
 
-  /**
-   *
-   */
-  type SimplePlaylistPage = basePage & {
+  type SimplePlaylistPage = BasePage & {
     items: SimplePlaylist[];
-  }
+  };
 
-  /**
-   *
-   */
-  type FullArtistPage = basePage & {
+  type FullArtistPage = BasePage & {
     items: FullArtist[];
-  }
+  };
 
-  /**
-   *
-   */
-  type SimpleAlbumPage = basePage & {
+  type SimpleAlbumPage = BasePage & {
     items: SimpleAlbum[];
-  }
+  };
 
-  /**
-   *
-   */
-  type FullTrackPage = basePage & {
+  type FullTrackPage = BasePage & {
     items: FullTrack[];
-  }
+  };
 
-  /**
-   *
-   */
-
-  /**
-   *
-   */
   interface SearchResult {
     artists: FullArtistPage;
     albums: SimpleAlbumPage;
@@ -190,9 +135,6 @@ declare namespace Zmb3SpotifyApi {
     tracks: FullTrackPage;
   }
 
-  /**
-   *
-   */
   interface Image {
     height: number;
     width: number;

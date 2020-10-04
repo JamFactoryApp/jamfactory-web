@@ -1,69 +1,9 @@
 declare namespace JamFactoryApi {
-  // ---------------------------------------------------------------------------------------------------------------------
-  // request types
-
-  /**
-   *
-   */
-  interface SearchRequestBody {
-    text?: string;
-    type?: string;
-  }
-
-  /**
-   *
-   */
-  interface VoteRequestBody {
-    track?: string;
-  }
-
-  /**
-   *
-   */
-  interface AddPlaylistRequestBody {
-    playlist?: string;
-  }
-
-  /**
-   *
-   */
-  interface SetJamSessionRequestBody {
-    name?: string;
-    active?: boolean;
-    ip_voting: boolean;
-  }
-
-  /**
-   *
-   */
-  interface SetPlayBackRequestBody {
-    playing?: boolean;
-    device_id?: boolean;
-  }
 
   // ---------------------------------------------------------------------------------------------------------------------
-  // response types
+  // general
 
-  /**
-   *
-   */
-  interface StatusResponseBody {
-    user: string;
-    label: string;
-    authorized: boolean;
-  }
-
-  /**
-   *
-   */
-  interface LoginResponseBody {
-    url: string;
-  }
-
-  /**
-   *
-   */
-  interface JamSessionBody {
+  interface JamResponse {
     label: string;
     name: string;
     active: boolean;
@@ -71,114 +11,122 @@ declare namespace JamFactoryApi {
     ip_voting: boolean;
   }
 
-  /**
-   *
-   */
-  type GetJamSessionResponseBody = JamSessionBody;
-
-  /**
-   *
-   */
-  type SetJamSessionResponseBody = JamSessionBody;
-
-  /**
-   *
-   */
   interface PlaybackBody {
     playback: Zmb3SpotifyApi.PlayerState;
   }
 
-  /**
-   *
-   */
-  type GetPlaybackResponseBody = PlaybackBody;
-
-  /**
-   *
-   */
-  type SetPlaybackResponseBody = PlaybackBody;
-
-  /**
-   *
-   */
-  interface labelBody {
+  interface LabelBody {
     label: string;
   }
 
-  /**
-   *
-   */
-  type CreateJamSessionResponseBody = labelBody;
+  interface JoinResponseBody {
+    label: string;
+  }
 
-  /**
-   *
-   */
-  type JoinRequestBody = labelBody;
+  // ---------------------------------------------------------------------------------------------------------------------
+  // spotify requests
 
-  /**
-   *
-   */
-  type JoinResponseBody = labelBody;
+  interface PutSpotifySearchRequest {
+    text?: string;
+    type?: string;
+  }
 
-  /**
-   *
-   */
-  interface LeaveJamSessionResponseBody {
+  // ---------------------------------------------------------------------------------------------------------------------
+  // queue requests
+
+  interface PutQueueVoteRequest {
+    track?: string;
+  }
+
+  interface PutQueuePlaylistRequest {
+    playlist?: string;
+  }
+
+  // ---------------------------------------------------------------------------------------------------------------------
+  // jam requests
+
+  interface PutJamRequest {
+    name?: string;
+    active?: boolean;
+    ip_voting: boolean;
+  }
+
+  interface PutJamPlaybackRequest {
+    playing?: boolean;
+    device_id?: boolean;
+  }
+
+  // ---------------------------------------------------------------------------------------------------------------------
+  // auth responses
+
+  interface GetAuthCurrentResponse {
+    user: string;
+    label: string;
+    authorized: boolean;
+  }
+
+  interface GetAuthLoginResponse {
+    url: string;
+  }
+
+  interface GetAuthLogoutResponse {
     success: boolean;
   }
 
-  /**
-   *
-   */
-  interface JamSessionStateResponseBody {
-    currentSong: any;
-    state: any;
+  // ---------------------------------------------------------------------------------------------------------------------
+  // jam responses
+
+  type GetJamResponse = JamResponse;
+  type PutJamResponse = JamResponse;
+
+  type GetJamPlaybackResponse = PlaybackBody;
+  type PutPlaybackResponseBody = PlaybackBody;
+
+  type GetJamCreateResponse = LabelBody;
+  type PutJamJoinResponse = LabelBody;
+
+  interface GetJamLeaveResponse {
+    success: boolean;
   }
 
-  /**
-   *
-   */
-  interface GetQueueResponseBody {
+  // ---------------------------------------------------------------------------------------------------------------------
+  // queue responses
+
+  interface GetQueueResponse {
     queue: SongWithoutId[];
   }
 
-  /**
-   *
-   */
-  type PlaylistQueueResponseBody = GetQueueResponseBody;
+  type PutQueuePlaylistResponse = GetQueueResponse;
+  type PutQueueVoteResponse = GetQueueResponse;
 
-  /**
-   *
-   */
-  type VoteQueueResponseBody = GetQueueResponseBody;
+  // ---------------------------------------------------------------------------------------------------------------------
+  // spotify responses
 
-  /**
-   *
-   */
-  interface GetSpotifyDevicesResponseBody {
+  interface GetSpotifyDevicesResponse {
     devices: Zmb3SpotifyApi.PlayerDevice[];
   }
 
-  /**
-   *
-   */
-  interface GetPlaylistsResponseBody {
+  interface GetSpotifyPlaylistsResponse {
     playlists: Zmb3SpotifyApi.SimplePlaylistPage;
   }
 
-  /**
-   *
-   */
-  interface PutSearchResponseBody {
+  interface PutSpotifySearchResponse {
     search_result: Zmb3SpotifyApi.SearchResult;
   }
 
   // ---------------------------------------------------------------------------------------------------------------------
+  // socketio types
+
+  // type JoinResponseBody = LabelBody;
+
+  // interface JamSessionStateResponseBody {
+  //   currentSong: any;
+  //   state: any;
+  // }
+
+  // ---------------------------------------------------------------------------------------------------------------------
   // other types
 
-  /**
-   *
-   */
   interface SongWithoutId {
     spotifyTrackFull: SpotifyApi.TrackObjectFull;
     votes: number;

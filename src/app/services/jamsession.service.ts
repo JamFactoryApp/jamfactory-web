@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import CreateJamSessionResponseBody = JamFactoryApi.CreateJamSessionResponseBody;
-import LeaveJamSessionResponseBody = JamFactoryApi.LeaveJamSessionResponseBody;
-import GetPlaybackResponseBody = JamFactoryApi.GetPlaybackResponseBody;
-import SetPlaybackResponseBody = JamFactoryApi.SetPlaybackResponseBody;
-import SetPlayBackRequestBody = JamFactoryApi.SetPlayBackRequestBody;
-import GetJamSessionResponseBody = JamFactoryApi.GetJamSessionResponseBody;
-import SetJamSessionResponseBody = JamFactoryApi.SetJamSessionResponseBody;
-import SetJamSessionRequestBody = JamFactoryApi.SetJamSessionRequestBody;
+import CreateJamSessionResponseBody = JamFactoryApi.GetJamCreateResponse;
+import LeaveJamSessionResponseBody = JamFactoryApi.GetJamLeaveResponse;
+import GetPlaybackResponseBody = JamFactoryApi.GetJamPlaybackResponse;
+import SetPlaybackResponseBody = JamFactoryApi.PutPlaybackResponseBody;
+import SetPlayBackRequestBody = JamFactoryApi.PutJamPlaybackRequest;
+import GetJamSessionResponseBody = JamFactoryApi.GetJamResponse;
+import SetJamSessionResponseBody = JamFactoryApi.PutJamResponse;
+import SetJamSessionRequestBody = JamFactoryApi.PutJamRequest;
 import JoinResponseBody = JamFactoryApi.JoinResponseBody;
-import JoinRequestBody = JamFactoryApi.JoinRequestBody;
+import JoinRequestBody = JamFactoryApi.PutJamJoinResponse;
 
 @Injectable({
   providedIn: 'root'

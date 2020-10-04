@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import LoginResponseBody = JamFactoryApi.LoginResponseBody;
-import StatusResponseBody = JamFactoryApi.StatusResponseBody;
+import LoginResponseBody = JamFactoryApi.GetAuthLoginResponse;
+import StatusResponseBody = JamFactoryApi.GetAuthCurrentResponse;
 
 @Injectable({
   providedIn: 'root'
