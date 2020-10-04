@@ -7,12 +7,12 @@
   <div class="row">
     <app-queue [songList]="queue"></app-queue>
   </div>
-  <div class="row">
-    <app-playback-controller></app-playback-controller>
-  </div>
+
 </div>
-
-
+<hr>
+<div id=playback>
+  <app-playback-controller [playback]="playback"></app-playback-controller>
+</div>
 
 
 

@@ -35,6 +35,9 @@ export class JamSessionComponent implements OnInit {
     this.jamsessionService.getJamsession().subscribe(value => {
       this.jamSession = value;
     });
+    this.jamsessionService.getPlayback().subscribe(value => {
+      this.playback = value;
+    })
     this.queueService.getQueue().subscribe(value => {
       this.queue = value.queue;
     });
@@ -48,6 +51,7 @@ export class JamSessionComponent implements OnInit {
     });
     this.socket.on('playback', (msg: GetJamPlaybackResponse) => {
       this.playback = msg;
+      console.log(msg)
     });
     this.socket.on('close', (msg: any) => {
     });
