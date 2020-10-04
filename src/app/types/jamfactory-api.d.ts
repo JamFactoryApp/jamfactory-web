@@ -19,6 +19,10 @@ declare namespace JamFactoryApi {
     label: string;
   }
 
+  interface JoinResponseBody {
+    label: string;
+  }
+
   // ---------------------------------------------------------------------------------------------------------------------
   // spotify requests
 
