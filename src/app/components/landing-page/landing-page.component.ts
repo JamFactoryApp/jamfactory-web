@@ -5,6 +5,7 @@ import {JamsessionService} from '../../services/jamsession.service';
 import {QueueServiceService} from '../../services/queue-service.service';
 import {SpotifyServiceService} from '../../services/spotify-service.service';
 import {FormBuilder} from '@angular/forms';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-landing-page',
@@ -58,6 +59,12 @@ export class LandingPageComponent implements OnInit {
     type: ['']
   });
 
+  socket: SocketIOClient.Socket;
+  socketFlag = true;
+  socketPlaybackMsg : string;
+  socketQueueMsg: string;
+  socketCloseMsg: string;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -69,6 +76,23 @@ export class LandingPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  connectSocket(): void {
+    this.socket = io.connect('http://localhost:3000');
+    this.socket.on('queue', (msg: any) => {
+      this.socketQueueMsg = msg;
+    });
+    this.socket.on('playback', (msg: any) => {
+      this.socketPlaybackMsg = msg;
+    });
+    this.socket.on('close', (msg: any) => {
+      this.socketCloseMsg = msg;
+    });
+  }
+
+  disconnectSocket(): void {
+    this.socket.close();
   }
 
   getAuthCurrent(): void {
