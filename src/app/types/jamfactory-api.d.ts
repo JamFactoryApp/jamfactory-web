@@ -7,12 +7,12 @@ declare namespace JamFactoryApi {
     label: string;
     name: string;
     active: boolean;
-    device_id: string;
-    ip_voting: boolean;
+    voting_type: string;
   }
 
   interface PlaybackBody {
     playback: Zmb3SpotifyApi.PlayerState;
+    device_id: string;
   }
 
   interface LabelBody {

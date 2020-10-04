@@ -1,1 +1,20 @@
-<p>jam-session works!</p>
+<h4>Welcome to {{jamSession?.name}} - {{jamSession?.label}}</h4>
+<hr>
+<div class="container">
+  <div class="row">
+    <app-search></app-search>
+  </div>
+  <div class="row">
+    <app-queue [songList]="queue"></app-queue>
+  </div>
+  <div class="row">
+    <app-playback-controller></app-playback-controller>
+  </div>
+</div>
+
+
+
+
+
+
+

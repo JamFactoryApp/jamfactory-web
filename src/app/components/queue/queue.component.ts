@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import SongWithoutId = JamFactoryApi.SongWithoutId;
 
 @Component({
   selector: 'app-queue',
@@ -8,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class QueueComponent implements OnInit {
 
   constructor() { }
+
+  @Input()
+  songList: SongWithoutId[];
 
   ngOnInit(): void {
   }
