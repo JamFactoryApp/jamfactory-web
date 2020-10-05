@@ -1,1 +1,31 @@
-<p>queue-song works!</p>
+<div class="container">
+  <div class="row my-1">
+    <div class="col-3">
+      <img src="{{item.album.images[2].url}}"
+           width="{{item.album.images[2].width}}"
+           height="{{item.album.images[2].height}}">
+    </div>
+    <div class="col-7">
+      <div class="row">
+        <div class="col">
+          <span
+            class="small">{{item.name | slice:0:32}}{{item.name.length > 32 ? "..." : ""}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <span class="small">
+            {{item.artists[0].name  | slice:0:32}}
+            {{item.artists[0].name.length > 32 ? "..." : ""}}
+            {{item.artists.length > 1 ? "and " + (item.artists.length - 1) + " more" : ""}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <button class="btn bg-light" (click)="vote(item)">
+        <fa-icon [icon]="voted(item) ? faMinus : faPlus"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>

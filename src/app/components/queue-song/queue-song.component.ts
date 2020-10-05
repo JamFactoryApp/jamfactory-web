@@ -1,4 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {faMinus, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {QueueService} from '../../services/queue.service';
+import SongWithoutId = JamFactoryApi.SongWithoutId;
+import FullTrack = Zmb3SpotifyApi.FullTrack;
+import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
+import TrackObjectFull = SpotifyApi.TrackObjectFull;
 
 @Component({
   selector: 'app-queue-song',
@@ -6,9 +12,46 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./queue-song.component.scss']
 })
 export class QueueSongComponent implements OnInit {
-  constructor() {
+  faPlus = faPlus;
+  faMinus = faMinus;
+
+  @Input()
+  item: FullTrack | TrackObjectFull;
+
+  @Input()
+  queue: SongWithoutId[];
+
+  constructor(
+    private queueService: QueueService
+  ) {
   }
 
   ngOnInit(): void {
+  }
+
+  voted(track: FullTrack | TrackObjectFull): boolean {
+    if (this.queue === undefined) {
+      return false;
+    }
+
+    if (this.queue.length == 0) {
+      return false;
+    }
+
+    for (let i = 0; i < this.queue.length; i++) {
+      if (track.id === this.queue[i].spotifyTrackFull.id && this.queue[i].voted) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  vote(track: FullTrack | TrackObjectFull) {
+    const body: PutQueueVoteRequest = {
+      track: track.id
+    };
+    this.queueService.putQueueVote(body).subscribe(response => {
+      this.queue = response.queue;
+    });
   }
 }

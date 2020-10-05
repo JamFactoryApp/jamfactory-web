@@ -12,6 +12,8 @@ import {QueueComponent} from './components/queue/queue.component';
 import {SearchComponent} from './components/search/search.component';
 import {LandingpageComponent} from './components/landing-page/landing-page.component';
 import {JamSessionComponent} from './components/jam-session/jam-session.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -22,13 +24,15 @@ import {JamSessionComponent} from './components/jam-session/jam-session.componen
     PlaybackControllerComponent,
     QueueComponent,
     SearchComponent,
-    JamSessionComponent
+    JamSessionComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import {JamsessionService} from '../../services/jamsession.service';
-import {QueueServiceService} from '../../services/queue-service.service';
-import {SpotifyServiceService} from '../../services/spotify-service.service';
+import {QueueService} from '../../services/queue.service';
+import {SpotifyService} from '../../services/spotify.service';
 import {FormBuilder} from '@angular/forms';
 import * as io from 'socket.io-client';
 import {environment} from "../../../environments/environment";
@@ -71,8 +71,8 @@ export class DebugComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private jamsessionService: JamsessionService,
-    private queueService: QueueServiceService,
-    private spotifyService: SpotifyServiceService
+    private queueService: QueueService,
+    private spotifyService: SpotifyService
   ) {
   }
 

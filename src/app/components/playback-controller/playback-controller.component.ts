@@ -7,11 +7,11 @@ import PlaybackBody = JamFactoryApi.PlaybackBody;
   styleUrls: ['./playback-controller.component.scss']
 })
 export class PlaybackControllerComponent implements OnInit {
-  constructor() {
-  }
-
   @Input()
   playback: PlaybackBody;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

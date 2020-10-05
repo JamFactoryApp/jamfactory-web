@@ -1,1 +1,13 @@
-<p>search works!</p>
+<div class="row">
+  <div class="col">
+    <input type="text" class="form-control" id="searchInput" name="searchInput"
+           placeholder="Search..." (change)="search()" [formControl]="searchField">
+  </div>
+</div>
+<div class="row mt-4" *ngIf="searchResults !== undefined">
+  <div class="col">
+    <div *ngFor="let item of searchResults.tracks.items.slice(0,4)">
+      <app-queue-song [item]="item" [queue]="queue"></app-queue-song>
+    </div>
+  </div>
+</div>

@@ -11,7 +11,7 @@ import PlaylistQueueResponseBody = JamFactoryApi.PutQueuePlaylistResponse;
 @Injectable({
   providedIn: 'root'
 })
-export class QueueServiceService {
+export class QueueService {
   private httpOptions = {
     withCredentials: true
   };

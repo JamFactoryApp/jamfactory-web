@@ -4,13 +4,13 @@ import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import UserDevicesResponse = SpotifyApi.UserDevicesResponse;
 import GetPlaylistsResponseBody = JamFactoryApi.GetSpotifyPlaylistsResponse;
-import SearchRequestBody = JamFactoryApi.PutSpotifySearchRequest;
-import PutSearchResponseBody = JamFactoryApi.PutSpotifySearchResponse;
+import PutSpotifySearchRequest = JamFactoryApi.PutSpotifySearchRequest;
+import PutSpotifySearchResponse = JamFactoryApi.PutSpotifySearchResponse;
 
 @Injectable({
   providedIn: 'root'
 })
-export class SpotifyServiceService {
+export class SpotifyService {
   private httpOptions = {
     withCredentials: true
   };
@@ -29,7 +29,7 @@ export class SpotifyServiceService {
     return this.http.get<GetPlaylistsResponseBody>(this.apiUrl + '/playlists', this.httpOptions);
   }
 
-  putSearch(body: SearchRequestBody): Observable<PutSearchResponseBody> {
-    return this.http.put<PutSearchResponseBody>(this.apiUrl + '/search', body, this.httpOptions);
+  putSearch(body: PutSpotifySearchRequest): Observable<PutSpotifySearchResponse> {
+    return this.http.put<PutSpotifySearchResponse>(this.apiUrl + '/search', body, this.httpOptions);
   }
 }

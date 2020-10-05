@@ -7,11 +7,11 @@ import SongWithoutId = JamFactoryApi.SongWithoutId;
   styleUrls: ['./queue.component.scss']
 })
 export class QueueComponent implements OnInit {
-  constructor() {
-  }
-
   @Input()
   songList: SongWithoutId[];
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

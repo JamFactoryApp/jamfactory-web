@@ -110,9 +110,7 @@ declare namespace JamFactoryApi {
     playlists: Zmb3SpotifyApi.SimplePlaylistPage;
   }
 
-  interface PutSpotifySearchResponse {
-    search_result: Zmb3SpotifyApi.SearchResult;
-  }
+  type PutSpotifySearchResponse  = Zmb3SpotifyApi.SearchResult;
 
   // ---------------------------------------------------------------------------------------------------------------------
   // socketio types

@@ -1,22 +1,8 @@
-<ul class="list-group my-3 list-group-flush">
-  <li class="list-group-item align-items-center" *ngFor="let song of songList" [ngClass]="{'active' : song.voted}">
-    <div class="row no-gutters">
-      <div class="col-md-1 col-3">
-        <img [src]="song.spotifyTrackFull.album.images[2].url" width="64" height="64">
-      </div>
-      <div class="col-md-9 col-5" style="font-size: 0.9em">
-        <p>{{song.spotifyTrackFull.name}}</p>
-      </div>
-      <div class="col-md-1 col-2">
-        <span class="badge badge-primary badge-pill">Votes: {{song.votes}}</span>
-      </div>
-      <div class="col-md-1 col-2">
-        <button (click)="vote(song)" class="btn btn-primary ml-2" *ngIf="song.voted">Vote</button>
-        <button (click)="vote(song)" class="btn btn-outline-primary ml-2 " *ngIf="!song.voted">Vote</button>
-      </div>
+<div class="row">
+  <div class="col">
+    <div *ngFor="let song of songList">
+      <app-queue-song [queue]="songList" [item]="song.spotifyTrackFull"></app-queue-song>
     </div>
-  </li>
-  <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="songList?.length === 0">
-    Currently there are no songs in the queue!
-  </li>
-</ul>
+    <span *ngIf="songList.length === 0">Currently there are no songs in the queue!</span>
+  </div>
+</div>

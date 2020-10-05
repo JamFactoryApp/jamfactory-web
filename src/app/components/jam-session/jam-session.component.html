@@ -1,18 +1,7 @@
-<h4>Welcome to {{jamSession?.name}} - {{jamSession?.label}}</h4>
+<h5 class="text-center">{{jamSession?.name}} - {{jamSession?.label}}</h5>
 <hr>
-<div class="row">
-  <div class="col">
-    <app-search></app-search>
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-    <app-queue [songList]="queue"></app-queue>
-  </div>
-</div>
+<app-search [queue]="queue"></app-search>
 <hr>
-<div class="row">
-  <div class="col">
-    <app-playback-controller [playback]="playback"></app-playback-controller>
-  </div>
-</div>
+<app-queue [songList]="queue"></app-queue>
+<hr>
+<app-playback-controller [playback]="playback"></app-playback-controller>

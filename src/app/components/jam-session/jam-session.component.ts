@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {JamsessionService} from '../../services/jamsession.service';
-import {QueueServiceService} from '../../services/queue-service.service';
-import {SpotifyServiceService} from '../../services/spotify-service.service';
+import {QueueService} from '../../services/queue.service';
+import {SpotifyService} from '../../services/spotify.service';
 import * as io from 'socket.io-client';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
 import JamResponse = JamFactoryApi.JamResponse;
+import PlaybackBody = JamFactoryApi.PlaybackBody;
 import SongWithoutId = JamFactoryApi.SongWithoutId;
 import GetQueueResponse = JamFactoryApi.GetQueueResponse;
 import GetJamPlaybackResponse = JamFactoryApi.GetJamPlaybackResponse;
-import PlaybackBody = JamFactoryApi.PlaybackBody;
 
 @Component({
   selector: 'app-jam-session',
@@ -19,14 +19,14 @@ import PlaybackBody = JamFactoryApi.PlaybackBody;
   styleUrls: ['./jam-session.component.scss']
 })
 export class JamSessionComponent implements OnInit {
-
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private authService: AuthService,
     private jamsessionService: JamsessionService,
-    private queueService: QueueServiceService,
-    private spotifyService: SpotifyServiceService
+    private queueService: QueueService,
+    private spotifyService: SpotifyService
   ) {
   }
 
@@ -41,7 +41,7 @@ export class JamSessionComponent implements OnInit {
     });
     this.jamsessionService.getPlayback().subscribe(value => {
       this.playback = value;
-    })
+    });
     this.queueService.getQueue().subscribe(value => {
       this.queue = value.queue;
     });
@@ -55,9 +55,9 @@ export class JamSessionComponent implements OnInit {
     });
     this.socket.on('playback', (msg: GetJamPlaybackResponse) => {
       this.playback = msg;
-      console.log(msg)
     });
     this.socket.on('close', (msg: any) => {
+      console.log(msg);
     });
   }
 

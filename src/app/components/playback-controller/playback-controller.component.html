@@ -1,6 +1,12 @@
-<div class="d-flex justify-content-between" *ngIf="playback">
+<div class="text-center" *ngIf="playback">
   <div id="album">
-    <img [src]="playback.playback.Item.album.images[2].url" width="64" height="64" alt="album cover"><br>
-    {{playback.playback.Item.name}}
+    <img [src]="playback.playback.Item.album.images[1].url"
+         width="{{playback.playback.Item.album.images[1].width}}"
+         height="{{playback.playback.Item.album.images[1].height}}"
+         alt="album cover">
+    <br>
+    <span class="h5">{{playback.playback.Item.name}}</span>
+    <br>
+    <span class="h6">{{playback.playback.Item.artists[0].name}}</span>
   </div>
 </div>
