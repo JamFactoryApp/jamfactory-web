@@ -67,6 +67,15 @@
   margin-top: auto;
 }
 
+.mobile-progress {
+  visibility: hidden;
+  width: 100%;
+  position: absolute;
+  top: -5px;
+  padding: 0;
+  margin: 0;
+}
+
 
 @media (max-width: 768px) {
   #playback {
@@ -94,7 +103,17 @@
   }
 
   .progress-div {
-    display: none;
+    visibility: hidden;
+  }
+
+  .mobile-progress {
+    visibility: visible;
+  }
+
+  .progress {
+    margin-top: 0px;
+    height: 5px;
+    border-radius: 0px;
   }
 
   .btn-circle {
