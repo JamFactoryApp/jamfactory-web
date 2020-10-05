@@ -114,8 +114,12 @@
   <h4>PUT Queue Playlist</h4>
   <form [formGroup]="putQueuePlaylistForm" (ngSubmit)="putQueuePlaylist()">
     <label>
-      Playlist:
-      <input type="text" formControlName="playlist">
+      Collection:
+      <input type="text" formControlName="collection">
+    </label>
+    <label>
+      Type:
+      <input type="text" formControlName="type">
     </label>
     <button type="submit" [disabled]="!putQueuePlaylistForm.valid">GO!</button>
   </form>

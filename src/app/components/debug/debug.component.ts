@@ -52,7 +52,8 @@ export class DebugComponent implements OnInit {
   });
 
   putQueuePlaylistForm = this.fb.group({
-    playlist: ['']
+    collection: [''],
+    type: ['']
   });
 
   putSpotifySearchForm = this.fb.group({
@@ -157,7 +158,8 @@ export class DebugComponent implements OnInit {
 
   putQueuePlaylist(): void {
     this.queueService.putQueuePlaylist({
-      playlist: this.putQueuePlaylistForm.value['playlist']
+      collection: this.putQueuePlaylistForm.value['collection'],
+      type: this.putQueuePlaylistForm.value['type']
     }).subscribe(data => this.queuePlaylistPut = data);
   }
 

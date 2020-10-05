@@ -31,6 +31,6 @@ export class QueueService {
   }
 
   putQueuePlaylist(body: AddPlaylistRequestBody): Observable<PlaylistQueueResponseBody> {
-    return this.http.put<PlaylistQueueResponseBody>(this.apiUrl + '/playlist', body, this.httpOptions);
+    return this.http.put<PlaylistQueueResponseBody>(this.apiUrl + '/collection', body, this.httpOptions);
   }
 }

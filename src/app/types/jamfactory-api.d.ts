@@ -39,7 +39,8 @@ declare namespace JamFactoryApi {
   }
 
   interface PutQueuePlaylistRequest {
-    playlist?: string;
+    collection?: string;
+    type?: string;
   }
 
   // ---------------------------------------------------------------------------------------------------------------------
