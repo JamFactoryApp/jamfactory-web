@@ -3,6 +3,6 @@
     <div *ngFor="let song of songList">
       <app-queue-song [queue]="songList" [item]="song.spotifyTrackFull"></app-queue-song>
     </div>
-    <span *ngIf="songList.length === 0">Currently there are no songs in the queue!</span>
+    <span *ngIf="songList && songList.length === 0">Currently there are no songs in the queue!</span>
   </div>
 </div>

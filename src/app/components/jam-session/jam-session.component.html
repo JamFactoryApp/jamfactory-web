@@ -1,5 +1,10 @@
-<h5 class="text-center">{{jamSession?.name}} - {{jamSession?.label}}</h5>
+<div class="header">
+  <p class="text-center header-text">{{jamSession?.name}} - {{jamSession?.label}}</p>
+</div>
+
+
 <hr>
+
 <app-search [queue]="queue"></app-search>
 <hr>
 <app-queue [songList]="queue"></app-queue>

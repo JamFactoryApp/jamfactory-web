@@ -43,12 +43,10 @@ export class JamSessionComponent implements OnInit {
     });
     this.jamsessionService.getPlayback().subscribe(value => {
       this.playback = value;
-
-
     });
     this.authService.getCurrent().subscribe(value => {
       this.current = value;
-    })
+    });
     this.queueService.getQueue().subscribe(value => {
       this.queue = value.queue;
     });
@@ -59,6 +57,7 @@ export class JamSessionComponent implements OnInit {
     this.socket = io.connect(environment.JAMFACTORY_API_URL);
     this.socket.on('queue', (msg: GetQueueResponse) => {
       this.queue = msg.queue;
+      console.log(msg);
     });
     this.socket.on('playback', (msg: GetJamPlaybackResponse) => {
       this.playback = msg;
