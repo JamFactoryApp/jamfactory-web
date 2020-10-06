@@ -7,10 +7,33 @@
   background:#282828;
 }
 
+.corner-left {
+  position: absolute;
+  left: 0;
+  width: 25%;
+  float: left;
+  top: 0
+}
+
+.center {
+  position: absolute;
+  left: 25%;
+  width: 50%;
+  bottom: 0
+}
+
+.corner-right {
+  position: absolute;
+  right: 0;
+  width: 25%;
+  top: 0
+}
+
 .album-cover {
+  position: absolute;
+  left: 0;
   width: 100px;
   height: 100px;
-  float: right;
 }
 
 .playback-text {
@@ -23,10 +46,14 @@
 .title-text {
   color: lightgray;
   font-size: 1em;
+  white-space:nowrap;
+  float: left;
 }
 
 .artist-text {
   color: gray;
+  float: left;
+  white-space: nowrap;
   font-size: 0.8em;
 }
 
@@ -76,6 +103,10 @@
   margin: 0;
 }
 
+.mobile-button {
+  visibility: hidden;
+}
+
 
 @media (max-width: 768px) {
   #playback {
@@ -108,6 +139,14 @@
 
   .mobile-progress {
     visibility: visible;
+  }
+
+  .mobile-button {
+    visibility: visible;
+  }
+
+  .corner-right {
+    width: 40%;
   }
 
   .progress {

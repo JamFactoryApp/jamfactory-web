@@ -12,6 +12,7 @@ import PlaybackBody = JamFactoryApi.PlaybackBody;
 import SongWithoutId = JamFactoryApi.SongWithoutId;
 import GetQueueResponse = JamFactoryApi.GetQueueResponse;
 import GetJamPlaybackResponse = JamFactoryApi.GetJamPlaybackResponse;
+import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
 
 @Component({
   selector: 'app-jam-session',
@@ -31,6 +32,7 @@ export class JamSessionComponent implements OnInit {
   }
 
   jamSession: JamResponse;
+  current: GetAuthCurrentResponse;
   playback: PlaybackBody;
   queue: SongWithoutId[] = [];
   socket: SocketIOClient.Socket;
@@ -41,7 +43,12 @@ export class JamSessionComponent implements OnInit {
     });
     this.jamsessionService.getPlayback().subscribe(value => {
       this.playback = value;
+
+
     });
+    this.authService.getCurrent().subscribe(value => {
+      this.current = value;
+    })
     this.queueService.getQueue().subscribe(value => {
       this.queue = value.queue;
     });
