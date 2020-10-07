@@ -1,0 +1,41 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:900|Raleway:400,400i,700,700i);
+
+%boxshadow {
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+}
+
+.test {
+  //box-sizing: border-box;
+  //background: white;
+  //border-radius: 0 0.5rem 0.5rem 0.5rem;
+  //@extend %boxshadow;
+  //margin-top: 1rem;
+  //min-height: 3rem;
+  //padding: 1rem 1rem 1rem 3rem;
+  position: relative;
+  &::before,
+  &::after {
+    background: linear-gradient(90deg, lawngreen 0%, limegreen 100%);
+    //background: limegreen;
+    border-radius: 0.5rem;
+    content: '';
+    height: 1.5rem;
+    left: -0.5rem;
+    overflow: hidden;
+    position: absolute;
+    top: -0.75rem;
+    width: 5rem;
+  }
+  &::before {
+    align-items: flex-end;
+    @extend %boxshadow;
+    content: "Next:";
+    color: black;
+    display: flex;
+    font: 100 0.7em/1 'Montserrat';
+    justify-content: flex-end;
+    padding: 0.5em 0.75em;
+    padding-right: 2em;
+    z-index: 1;
+  }
+}

@@ -11,6 +11,7 @@ import TrackObjectFull = SpotifyApi.TrackObjectFull;
   templateUrl: './queue-song.component.html',
   styleUrls: ['./queue-song.component.scss']
 })
+
 export class QueueSongComponent implements OnInit {
   faPlus = faPlus;
   faMinus = faMinus;
@@ -21,12 +22,27 @@ export class QueueSongComponent implements OnInit {
   @Input()
   queue: SongWithoutId[];
 
+  @Input()
+  pos;
+
   constructor(
     private queueService: QueueService
   ) {
   }
 
   ngOnInit(): void {
+  }
+
+  getArtist(item): string {
+    const len = item.length;
+    let artist: string = item[0].name;
+
+    if (len > 1) {
+      for (let i = 1; len > i; i++) {
+        artist = artist + ', ' + item[i].name;
+      }
+    }
+    return artist;
   }
 
   voted(track: FullTrack | TrackObjectFull): boolean {

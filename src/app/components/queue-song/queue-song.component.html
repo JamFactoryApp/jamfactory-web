@@ -4,11 +4,11 @@
        height="{{item.album.images[2].height}}">
 </td>
 <td class="align-middle col-3" style="text-align: left">
-  <span class="medium">{{item.name | slice:0:32}}{{item.name.length > 32 ? "..." : ""}}</span>
+  <span class="medium">{{item.name}}</span>
   <br>
   <span
     class="small"
-    style="opacity: 60%">{{item.artists[0].name  | slice:0:32}} {{item.artists[0].name.length > 32 ? "..." : ""}} {{item.artists.length > 1 ? "and " + (item.artists.length - 1) + " more" : ""}}</span>
+    style="opacity: 60%">{{getArtist(item.artists)}}</span>
 </td>
 <td class="align-middle col-1" style="text-align: right">
   <div class="btn-group" role="group">
