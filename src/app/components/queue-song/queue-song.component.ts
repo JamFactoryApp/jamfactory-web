@@ -24,7 +24,7 @@ export class QueueSongComponent implements OnInit {
 
   @Input()
   voteMethod: (PutQueueVoteRequest) => void;
-  
+
 
   constructor(
     private queueService: QueueService

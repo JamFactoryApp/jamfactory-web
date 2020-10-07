@@ -2,7 +2,7 @@
   <p class="text-center header-text">{{jamSession?.name}} - {{jamSession?.label}}</p>
 </div>
 <div class="search">
-  <app-search [voteMethod]="vote" [current]="current" [queue]="queue"></app-search>
+  <app-search #search [voteMethod]="vote" [current]="current" [queue]="queue"></app-search>
 </div>
 
 <div class="queue">

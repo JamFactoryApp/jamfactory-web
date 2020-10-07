@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
@@ -37,6 +37,7 @@ export class JamSessionComponent implements OnInit, OnDestroy{
   playback: PlaybackBody;
   queue: SongWithoutId[] = [];
   socket: SocketIOClient.Socket;
+
 
   ngOnInit(): void {
     this.jamsessionService.getJamsession().subscribe(value => {
@@ -98,7 +99,7 @@ export class JamSessionComponent implements OnInit, OnDestroy{
       this.queue = response.queue;
 
     });
-  }
+  };
 
 
   ngOnDestroy(): void {
