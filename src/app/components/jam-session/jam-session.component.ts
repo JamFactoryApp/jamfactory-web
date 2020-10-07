@@ -48,7 +48,7 @@ export class JamSessionComponent implements OnInit, OnDestroy{
       this.current = value;
     });
     this.queueService.getQueue().subscribe(value => {
-      this.queue = value.queue;
+      this.updateQueueFromSocket(value.queue);
     });
     this.connectSocket();
   }
@@ -67,6 +67,19 @@ export class JamSessionComponent implements OnInit, OnDestroy{
     });
   }
 
+  updateQueueFromSocket(queue: SongWithoutId[]): void {
+
+    this.queue = queue.map( (q) => {
+      let voted = false;
+      this.queue.forEach( value => {
+        if (value.spotifyTrackFull.uri === q.spotifyTrackFull.uri) {
+          voted = value.voted;
+        }
+      });
+      q.voted = voted;
+      return q;
+    });
+  }
 
   ngOnDestroy(): void {
     this.closeSocket();
