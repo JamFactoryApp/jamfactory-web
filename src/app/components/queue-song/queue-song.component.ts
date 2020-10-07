@@ -24,6 +24,7 @@ export class QueueSongComponent implements OnInit {
 
   @Input()
   voteMethod: (PutQueueVoteRequest) => void;
+  
 
   constructor(
     private queueService: QueueService
@@ -38,7 +39,7 @@ export class QueueSongComponent implements OnInit {
       return false;
     }
 
-    if (this.queue.length == 0) {
+    if (this.queue.length === 0) {
       return false;
     }
 

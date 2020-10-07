@@ -49,7 +49,7 @@ export class JamSessionComponent implements OnInit, OnDestroy{
       this.current = value;
     });
     this.queueService.getQueue().subscribe(value => {
-      this.updateQueueFromSocket(value.queue);
+      this.queue = value.queue;
     });
     this.connectSocket();
   }
@@ -57,8 +57,7 @@ export class JamSessionComponent implements OnInit, OnDestroy{
   connectSocket(): void {
     this.socket = io.connect(environment.JAMFACTORY_API_URL);
     this.socket.on('queue', (msg: GetQueueResponse) => {
-      this.queue = msg.queue;
-      console.log(msg);
+      this.updateQueueFromSocket(msg.queue);
     });
     this.socket.on('playback', (msg: GetJamPlaybackResponse) => {
       this.playback = msg;
@@ -68,23 +67,36 @@ export class JamSessionComponent implements OnInit, OnDestroy{
     });
   }
 
-  updateQueueFromSocket(queue: SongWithoutId[]): void {
-
-    this.queue = queue.map( (q) => {
-      let voted = false;
-      this.queue.forEach( value => {
-        if (value.spotifyTrackFull.uri === q.spotifyTrackFull.uri) {
-          voted = value.voted;
-        }
-      });
-      q.voted = voted;
-      return q;
-    });
+  getQueue(): SongWithoutId[]  {
+    return this.queue;
   }
 
-  vote(body: PutQueueVoteRequest): void {
-    this.queueService.putQueueVote(body).subscribe(response => {
+  updateQueueFromSocket(list: SongWithoutId[]): void {
+    console.log('Socket: ', list);
+    console.log('QueueB: ', this.getQueue());
+    this.queue = list.map( (q) => {
+
+      const song: SongWithoutId = {
+        spotifyTrackFull: q.spotifyTrackFull,
+        votes: q.votes,
+        voted: false
+      };
+
+      this.getQueue().forEach( value => {
+        if (value.spotifyTrackFull.id === q.spotifyTrackFull.id) {
+          song.voted = value.voted;
+        }
+      });
+      return song;
+    });
+    console.log('Queue: ', this.getQueue());
+  }
+
+  vote = (body: PutQueueVoteRequest) => {
+    this.queueService.putQueueVote(body).subscribe((response) => {
+
       this.queue = response.queue;
+
     });
   }
 
