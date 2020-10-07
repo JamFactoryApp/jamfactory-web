@@ -13,6 +13,7 @@ import SongWithoutId = JamFactoryApi.SongWithoutId;
 import GetQueueResponse = JamFactoryApi.GetQueueResponse;
 import GetJamPlaybackResponse = JamFactoryApi.GetJamPlaybackResponse;
 import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
+import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
 
 @Component({
   selector: 'app-jam-session',
@@ -81,6 +82,13 @@ export class JamSessionComponent implements OnInit, OnDestroy{
     });
   }
 
+  vote(body: PutQueueVoteRequest): void {
+    this.queueService.putQueueVote(body).subscribe(response => {
+      this.queue = response.queue;
+    });
+  }
+
+
   ngOnDestroy(): void {
     this.closeSocket();
   }
@@ -88,4 +96,6 @@ export class JamSessionComponent implements OnInit, OnDestroy{
   closeSocket(): void {
     this.socket.close();
   }
+
+
 }

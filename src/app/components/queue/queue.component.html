@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col">
     <div *ngFor="let song of songList">
-      <app-queue-song [queue]="songList" [item]="song.spotifyTrackFull"></app-queue-song>
+      <app-queue-song [voteMethod]="voteMethod" [queue]="songList" [item]="song.spotifyTrackFull"></app-queue-song>
     </div>
     <span *ngIf="songList && songList.length === 0">Currently there are no songs in the queue!</span>
   </div>

@@ -19,6 +19,9 @@ export class SearchComponent implements OnInit {
   @Input()
   current: GetAuthCurrentResponse;
 
+  @Input()
+  voteMethod: (PutQueueVoteRequest) => void;
+
   searchField = new FormControl('');
   searchResults: SearchResult;
 
@@ -54,6 +57,7 @@ export class SearchComponent implements OnInit {
     };
 
     this.spotifyService.putSearch(body).subscribe(value => {
+      value.tracks.items = value.tracks.items.sort((a, b) => b.popularity - a.popularity);
       this.searchResults = value;
     });
   }
