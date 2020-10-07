@@ -4,6 +4,8 @@ import {FormControl} from '@angular/forms';
 import PutSpotifySearchRequest = JamFactoryApi.PutSpotifySearchRequest;
 import SearchResult = Zmb3SpotifyApi.SearchResult;
 import SongWithoutId = JamFactoryApi.SongWithoutId;
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
 
 @Component({
   selector: 'app-search',
@@ -14,18 +16,33 @@ export class SearchComponent implements OnInit {
   @Input()
   queue: SongWithoutId[];
 
+  @Input()
+  current: GetAuthCurrentResponse;
+
   searchField = new FormControl('');
   searchResults: SearchResult;
 
+  faSearch = faSearch;
+
+  searchTimeout: number;
+
   constructor(
-    private spotifyService: SpotifyService
+    private spotifyService: SpotifyService,
   ) {
   }
 
   ngOnInit(): void {
   }
 
+  searchEvent(): void {
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => this.search(), 100);
+  }
+
   search(): void {
+
+
+
     if (this.searchField.value === '') {
       this.searchResults = undefined;
       return;
