@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
@@ -19,7 +19,7 @@ import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
   templateUrl: './jam-session.component.html',
   styleUrls: ['./jam-session.component.scss']
 })
-export class JamSessionComponent implements OnInit {
+export class JamSessionComponent implements OnInit, OnDestroy{
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -65,6 +65,11 @@ export class JamSessionComponent implements OnInit {
     this.socket.on('close', (msg: any) => {
       console.log(msg);
     });
+  }
+
+
+  ngOnDestroy(): void {
+    this.closeSocket();
   }
 
   closeSocket(): void {
