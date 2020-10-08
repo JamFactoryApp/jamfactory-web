@@ -12,8 +12,8 @@
 </td>
 <td class="align-middle col-1" style="text-align: right">
   <div class="btn-group" role="group">
-    <button type="button" class="btn" style="background: #e7e7e7" (click)="vote(item)">
-      <fa-icon [icon]="voted(item) ? faMinus : faPlus"></fa-icon>
+    <button type="button" class="btn" style="background: radial-gradient(#f1f1f1, #cecece)" (click)="vote(item)">
+      <fa-icon [icon]="voted(item) ? iconVote : iconNVote" [ngStyle]="voted(item) ? {'color': 'darkred'} : {'color': ''}"></fa-icon>
     </button>
     <ng-container *ngFor="let queue of queue">
       <button type="button" class="btn btn-secondary disabled" style=" cursor: initial;" *ngIf="queue.spotifyTrackFull.id == item.id">{{queue.votes}}</button>

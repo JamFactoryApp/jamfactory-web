@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {faMinus, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faHeart as iconVote} from '@fortawesome/free-solid-svg-icons';
+import {faHeart as iconNVote} from '@fortawesome/free-regular-svg-icons';
 import {QueueService} from '../../services/queue.service';
 import SongWithoutId = JamFactoryApi.SongWithoutId;
 import FullTrack = Zmb3SpotifyApi.FullTrack;
@@ -13,8 +14,8 @@ import TrackObjectFull = SpotifyApi.TrackObjectFull;
 })
 
 export class QueueSongComponent implements OnInit {
-  faPlus = faPlus;
-  faMinus = faMinus;
+  iconVote = iconVote;
+  iconNVote = iconNVote;
 
   @Input()
   item: FullTrack | TrackObjectFull;

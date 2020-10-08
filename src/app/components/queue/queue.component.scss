@@ -8,11 +8,12 @@
   position: relative;
   &::before,
   &::after {
-    background: linear-gradient(90deg, lawngreen 0%, limegreen 100%);
+    //color: oran;
+    background: linear-gradient(90deg, #ffe9b6 0%, #ffb70f 100%);
     border-radius: 0.5rem;
     content: '';
     height: 1.5rem;
-    left: -0.5rem;
+    left: -1.5rem;
     overflow: hidden;
     position: absolute;
     top: -0.75rem;
@@ -30,4 +31,16 @@
     padding-right: 2em;
     z-index: 1;
   }
+}
+
+.even {
+  background: #e7e7e7;
+}
+
+.voted-even {
+  background: radial-gradient(#e7e7e7, #99e699);
+}
+
+.voted-odd {
+  background: radial-gradient(white, #d6f5d6);
 }
