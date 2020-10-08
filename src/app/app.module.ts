@@ -14,6 +14,7 @@ import {LandingpageComponent} from './components/landing-page/landing-page.compo
 import {JamSessionComponent} from './components/jam-session/jam-session.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { QueueCollectionComponent } from './components/queue-collection/queue-collection.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     QueueComponent,
     SearchComponent,
     JamSessionComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    QueueCollectionComponent
   ],
   imports: [
     BrowserModule,

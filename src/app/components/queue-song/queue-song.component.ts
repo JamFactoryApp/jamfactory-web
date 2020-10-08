@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {faMinus, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {QueueService} from '../../services/queue.service';
 import SongWithoutId = JamFactoryApi.SongWithoutId;
 import FullTrack = Zmb3SpotifyApi.FullTrack;
 import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-queue-song',
@@ -21,6 +22,10 @@ export class QueueSongComponent implements OnInit {
   @Input()
   queue: SongWithoutId[];
 
+  @Input()
+  voteMethod: (PutQueueVoteRequest) => void;
+
+
   constructor(
     private queueService: QueueService
   ) {
@@ -34,7 +39,7 @@ export class QueueSongComponent implements OnInit {
       return false;
     }
 
-    if (this.queue.length == 0) {
+    if (this.queue.length === 0) {
       return false;
     }
 
@@ -46,12 +51,10 @@ export class QueueSongComponent implements OnInit {
     return false;
   }
 
-  vote(track: FullTrack | TrackObjectFull) {
+  vote(track: FullTrack | TrackObjectFull): void {
     const body: PutQueueVoteRequest = {
       track: track.id
     };
-    this.queueService.putQueueVote(body).subscribe(response => {
-      this.queue = response.queue;
-    });
+    this.voteMethod(body);
   }
 }
