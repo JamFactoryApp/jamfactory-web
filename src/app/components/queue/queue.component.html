@@ -1,8 +1,13 @@
-<div class="row">
-  <div class="col">
-    <div *ngFor="let song of songList">
-      <app-queue-song [voteMethod]="voteMethod" [queue]="songList" [item]="song.spotifyTrackFull"></app-queue-song>
-    </div>
+<!--<div class="container">-->
+<!--  <div class="row d-flex justify-content-center">-->
+<div class="table-responsive" style="padding: 30px;">
+  <table class="table d-flex justify-content-center">
+    <tbody>
+    <tr [ngClass]="{'label':songList.length !== 0}"></tr>
+    <tr *ngFor="let song of songList; let pos = index" [ngClass]="{'even':pos % 2 == 0, 'voted-even':song.voted == true && pos % 2 == 0, 'voted-odd':song.voted == true && pos % 2 !== 0}">
+      <app-queue-song [queue]="songList" [item]="song.spotifyTrackFull" [voteMethod]="voteMethod" [pos]="pos"></app-queue-song>
+    </tr>
     <span *ngIf="songList && songList.length === 0">Currently there are no songs in the queue!</span>
-  </div>
+    </tbody>
+  </table>
 </div>

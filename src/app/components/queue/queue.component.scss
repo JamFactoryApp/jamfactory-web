@@ -1,0 +1,45 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:900|Raleway:400,400i,700,700i);
+
+%boxshadow {
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+}
+
+.label {
+  position: relative;
+  &::before,
+  &::after {
+    background: linear-gradient(90deg, #ffe9b6 0%, #ffb70f 100%);
+    border-radius: 0.5rem;
+    content: '';
+    height: 1.5rem;
+    left: -1.5rem;
+    overflow: hidden;
+    position: absolute;
+    top: -0.75rem;
+    width: 5rem;
+  }
+  &::before {
+    align-items: flex-end;
+    @extend %boxshadow;
+    content: "Next:";
+    color: black;
+    display: flex;
+    font: 100 0.7em/1 'Montserrat';
+    justify-content: flex-end;
+    padding: 0.5em 0.75em;
+    padding-right: 2em;
+    z-index: 1;
+  }
+}
+
+.even {
+  background: #e7e7e7;
+}
+
+.voted-even {
+  background: radial-gradient(#e7e7e7, #99e699);
+}
+
+.voted-odd {
+  background: radial-gradient(white, #d6f5d6);
+}
