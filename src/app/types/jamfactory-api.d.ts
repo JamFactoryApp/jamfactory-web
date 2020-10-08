@@ -38,7 +38,7 @@ declare namespace JamFactoryApi {
     track?: string;
   }
 
-  interface PutQueuePlaylistRequest {
+  interface AddCollectionRequestBody {
     collection?: string;
     type?: string;
   }
@@ -97,7 +97,7 @@ declare namespace JamFactoryApi {
     queue: SongWithoutId[];
   }
 
-  type PutQueuePlaylistResponse = GetQueueResponse;
+  type PutQueueCollectionResponse = GetQueueResponse;
   type PutQueueVoteResponse = GetQueueResponse;
 
   // ---------------------------------------------------------------------------------------------------------------------

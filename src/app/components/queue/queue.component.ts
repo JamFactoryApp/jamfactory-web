@@ -15,6 +15,9 @@ export class QueueComponent implements OnInit {
   @Input()
   voteMethod: (PutQueueVoteRequest) => void;
 
+  @Input()
+  addMethod: (AddCollectionRequestBody) => void;
+
   constructor() {
   }
 

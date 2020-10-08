@@ -4,9 +4,10 @@ import {FormControl} from '@angular/forms';
 import PutSpotifySearchRequest = JamFactoryApi.PutSpotifySearchRequest;
 import SearchResult = Zmb3SpotifyApi.SearchResult;
 import SongWithoutId = JamFactoryApi.SongWithoutId;
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import {faSearch, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
 import {QueueSongComponent} from '../queue-song/queue-song.component';
+import PlaylistObjectSimplified = SpotifyApi.PlaylistObjectSimplified;
 
 @Component({
   selector: 'app-search',
@@ -29,6 +30,9 @@ export class SearchComponent implements OnInit {
   @Input()
   voteMethod: (PutQueueVoteRequest) => void;
 
+  @Input()
+  addMethod: (AddCollectionRequestBody) => void;
+
   @ViewChildren('SearchSong', {read: ElementRef}) searchSongs: QueryList<ElementRef>;
 
   searchField = new FormControl('');
@@ -36,6 +40,7 @@ export class SearchComponent implements OnInit {
   searchCount = 1;
 
   faSearch = faSearch;
+  faArrowRight = faArrowRight;
 
   searchTimeout: number;
 
@@ -91,4 +96,14 @@ export class SearchComponent implements OnInit {
       }
     });
   }
+
+  showUserPlaylists(): void {
+    this.spotifyService.getPlaylists().subscribe(value => {
+      this.searchResults.tracks = undefined;
+      this.searchResults.playlists = value.playlists;
+      console.log(this.searchResults.playlists);
+    });
+  }
+
+
 }

@@ -14,6 +14,8 @@ import GetQueueResponse = JamFactoryApi.GetQueueResponse;
 import GetJamPlaybackResponse = JamFactoryApi.GetJamPlaybackResponse;
 import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
 import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
+import PutQueueCollectionResponse = JamFactoryApi.PutQueueCollectionResponse;
+import AddCollectionRequestBody = JamFactoryApi.AddCollectionRequestBody;
 
 @Component({
   selector: 'app-jam-session',
@@ -99,7 +101,15 @@ export class JamSessionComponent implements OnInit, OnDestroy{
       this.queue = response.queue;
 
     });
-  };
+  }
+
+  addCollection = (body: AddCollectionRequestBody) => {
+    this.queueService.putQueueCollection(body).subscribe((response) => {
+
+      this.queue = response.queue;
+
+    });
+  }
 
 
   ngOnDestroy(): void {

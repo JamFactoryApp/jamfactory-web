@@ -5,8 +5,8 @@ import {Observable} from 'rxjs';
 import GetQueueResponseBody = JamFactoryApi.GetQueueResponse;
 import VoteRequestBody = JamFactoryApi.PutQueueVoteRequest;
 import VoteQueueResponseBody = JamFactoryApi.PutQueueVoteResponse;
-import AddPlaylistRequestBody = JamFactoryApi.PutQueuePlaylistRequest;
-import PlaylistQueueResponseBody = JamFactoryApi.PutQueuePlaylistResponse;
+import AddCollectionRequestBody = JamFactoryApi.AddCollectionRequestBody;
+import CollectionQueueResponseBody = JamFactoryApi.PutQueueCollectionResponse;
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,8 @@ export class QueueService {
     return this.http.put<VoteQueueResponseBody>(this.apiUrl + '/vote', body, this.httpOptions);
   }
 
-  putQueuePlaylist(body: AddPlaylistRequestBody): Observable<PlaylistQueueResponseBody> {
-    return this.http.put<PlaylistQueueResponseBody>(this.apiUrl + '/collection', body, this.httpOptions);
+  putQueueCollection(body: AddCollectionRequestBody): Observable<CollectionQueueResponseBody> {
+    console.log(body);
+    return this.http.put<CollectionQueueResponseBody>(this.apiUrl + '/collection', body, this.httpOptions);
   }
 }

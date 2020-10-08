@@ -829,7 +829,6 @@ declare namespace SpotifyApi {
    * [album object (full)](https://developer.spotify.com/web-api/object-model/#album-object-simplified)
    */
   interface AlbumObjectFull extends AlbumObjectSimplified {
-    artists: ArtistObjectSimplified[];
     copyrights: CopyrightObject[];
     external_ids: ExternalIdObject;
     genres: string[];
@@ -853,6 +852,7 @@ declare namespace SpotifyApi {
     name: string;
     type: 'album';
     uri: string;
+    artists: ArtistObjectFull[];
   }
 
   /**
