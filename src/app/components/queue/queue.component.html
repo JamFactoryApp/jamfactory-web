@@ -5,7 +5,7 @@
     <tbody>
     <tr [ngClass]="{'label':songList.length !== 0}"></tr>
     <tr *ngFor="let song of songList; let pos = index" [ngClass]="{'even':pos % 2 == 0, 'voted-even':song.voted == true && pos % 2 == 0, 'voted-odd':song.voted == true && pos % 2 !== 0}">
-      <app-queue-song [queue]="songList" [item]="song.spotifyTrackFull" [pos]="pos"></app-queue-song>
+      <app-queue-song [queue]="songList" [item]="song.spotifyTrackFull" [voteMethod]="voteMethod" [pos]="pos"></app-queue-song>
     </tr>
     <span *ngIf="songList && songList.length === 0">Currently there are no songs in the queue!</span>
     </tbody>

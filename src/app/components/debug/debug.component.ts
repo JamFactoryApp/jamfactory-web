@@ -26,7 +26,7 @@ export class DebugComponent implements OnInit {
 
   queue: JamFactoryApi.GetQueueResponse;
   queueVotePut: JamFactoryApi.PutQueueVoteResponse;
-  queuePlaylistPut: JamFactoryApi.PutQueuePlaylistResponse;
+  queuePlaylistPut: JamFactoryApi.PutQueueCollectionResponse;
 
   spotifyDevices: JamFactoryApi.GetSpotifyDevicesResponse;
   spotifyPlaylists: JamFactoryApi.GetSpotifyPlaylistsResponse;
@@ -157,7 +157,7 @@ export class DebugComponent implements OnInit {
   }
 
   putQueuePlaylist(): void {
-    this.queueService.putQueuePlaylist({
+    this.queueService.putQueueCollection({
       collection: this.putQueuePlaylistForm.value['collection'],
       type: this.putQueuePlaylistForm.value['type']
     }).subscribe(data => this.queuePlaylistPut = data);

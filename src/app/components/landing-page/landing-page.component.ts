@@ -42,7 +42,13 @@ export class LandingpageComponent implements OnInit {
 
   checkForRedirect(): void {
     if (this.userLabel) {
-      this.router.navigate(['/' + this.userLabel]);
+
+      this.jam.getJamsession().subscribe(value => {
+        this.router.navigate(['/' + this.userLabel]);
+      }, error1 => {
+        this.jam.leaveJamSession().subscribe(() => {});
+      })
+
     }
   }
 

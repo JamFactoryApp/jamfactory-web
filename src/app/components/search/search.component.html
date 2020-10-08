@@ -1,13 +1,36 @@
-<div class="row">
-  <div class="col">
-    <input type="text" class="form-control" id="searchInput" name="searchInput"
-           placeholder="Search..." (change)="search()" [formControl]="searchField">
+<div class="row search-div">
+  <div class="col-10">
+    <div class="inner-addon left-addon">
+      <i class="glyphicon"><fa-icon [icon]="faSearch"></fa-icon></i>
+      <input type="text" class="form-control search-input" placeholder="Search" (keyup)="searchEvent()" [formControl]="searchField"/>
+    </div>
   </div>
+
+
+  <div class="col-2">
+    <span class="user-text" *ngIf="current">{{current.user}}</span>
+  </div>
+
 </div>
-<div class="row mt-4" *ngIf="searchResults !== undefined">
-  <div class="col">
-    <div *ngFor="let item of searchResults.tracks.items.slice(0,4)">
-      <app-queue-song [item]="item" [queue]="queue"></app-queue-song>
+<hr>
+<div class="search-result" *ngIf="searchResults">
+
+  <div class="search-text" *ngIf="searchResults?.tracks?.items?.length === 0">No results!</div>
+  <div class="row">
+    <div class="col mt-1">
+      <div *ngFor="let item of searchResults?.tracks?.items?.slice(0 + searchShift,searchCount + searchShift)">
+        <app-queue-song style="display: block" #SearchSong [voteMethod]="voteMethod" [item]="item" [queue]="queue"></app-queue-song>
+      </div>
+      <div *ngFor="let item of searchResults?.playlists?.items.slice(0 + searchShift,searchCount + searchShift)">
+        <app-queue-collection style="display: block" [addMethod]="addMethod" [collection]="item"></app-queue-collection>
+      </div>
+
+
+      <div class="btn user-playlist" *ngIf="getSearchResultCount() > searchCount" (click)="showMore()">
+        {{getSearchResultCount()  > searchCount + searchShift ?  'Show more...' : 'Back to beginning'}}</div>
+      <hr *ngIf="getSearchResultCount() > searchCount && (current?.user === 'Host' && searchResults.playlists !== undefined)">
+      <div class="btn user-playlist" *ngIf="current?.user === 'Host' && searchResults.playlists !== undefined" (click)="showUserPlaylists()">Show your playlists <fa-icon [icon]="faArrowRight"></fa-icon></div>
+
     </div>
   </div>
 </div>

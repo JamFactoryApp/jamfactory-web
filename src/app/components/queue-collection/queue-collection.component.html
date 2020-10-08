@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row my-1">
+    <div class="col-3">
+      <img *ngIf="collection.images.length !== 0" src="{{collection.images[0].url}}" class="playlist-cover">
+      <img *ngIf="collection.images.length === 0" src="../../../assets/gopher.png" class="playlist-cover">
+    </div>
+    <div class="col-7">
+      <div class="row">
+        <div class="col">
+          <span
+            class="small">{{collection.name | slice:0:32}}{{collection.name.length > 32 ? "..." : ""}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" *ngIf="isAlbum(collection)">
+
+          <span class="small">
+            {{collection.artists[0].name  | slice:0:32}}
+            {{collection.artists[0].name.length > 32 ? "..." : ""}}
+            {{collection.artists.length > 1 ? "and " + (item.artists.length - 1) + " more" : ""}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <button class="btn bg-light" (click)="vote(collection)">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>

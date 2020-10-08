@@ -5,6 +5,7 @@ import {AuthService} from '../../services/auth.service';
 import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
 import {JamsessionService} from '../../services/jamsession.service';
 import {Router} from '@angular/router';
+import PutJamPlaybackRequest = JamFactoryApi.PutJamPlaybackRequest;
 
 @Component({
   selector: 'app-playback-controller',
@@ -56,10 +57,24 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   resumePlayback(): void {
-
+    const body: PutJamPlaybackRequest = {
+      playing: true
+    };
+    this.jamService.putPlayback(body).subscribe((value) => {
+      this.playback = value;
+    });
   }
 
   pausePlayback(): void {
+    const body: PutJamPlaybackRequest = {
+      playing: false
+    };
+    this.jamService.putPlayback(body).subscribe((value) => {
+      this.playback = value;
+    });
+  }
 
+  openSettings(): void {
+    this.router.navigate(['/' + 'debug']);
   }
 }
