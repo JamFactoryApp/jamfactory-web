@@ -1,7 +1,8 @@
 <div class="container">
   <div class="row my-1">
     <div class="col-3">
-      <img src="{{collection.images[0].url}}" class="playlist-cover">
+      <img *ngIf="collection.images.length !== 0" src="{{collection.images[0].url}}" class="playlist-cover">
+      <img *ngIf="collection.images.length === 0" src="../../../assets/gopher.png" class="playlist-cover">
     </div>
     <div class="col-7">
       <div class="row">

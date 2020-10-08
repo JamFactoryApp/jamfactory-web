@@ -38,6 +38,7 @@ export class SearchComponent implements OnInit {
   searchField = new FormControl('');
   searchResults: SearchResult;
   searchCount = 1;
+  searchShift = 0;
 
   faSearch = faSearch;
   faArrowRight = faArrowRight;
@@ -77,7 +78,7 @@ export class SearchComponent implements OnInit {
   }
 
   search(): void {
-
+    this.searchShift = 0;
     if (this.searchField.value === '') {
       this.searchResults = undefined;
       return;
@@ -98,11 +99,37 @@ export class SearchComponent implements OnInit {
   }
 
   showUserPlaylists(): void {
+    this.searchShift = 0;
     this.spotifyService.getPlaylists().subscribe(value => {
       this.searchResults.tracks = undefined;
       this.searchResults.playlists = value.playlists;
       console.log(this.searchResults.playlists);
     });
+  }
+
+  getSearchResultCount(): number {
+    let x = 0;
+
+    if (this.searchResults.tracks?.items) {
+      x = this.searchResults.tracks.items.length;
+    }
+
+    if (this.searchResults.albums?.items) {
+      x = this.searchResults.albums.items.length;
+    }
+
+    if (this.searchResults.playlists?.items) {
+      x = this.searchResults.playlists.items.length;
+    }
+
+    return x;
+  }
+
+  showMore(): void {
+    this.searchShift += this.searchCount;
+    if (this.searchShift > this.getSearchResultCount()) {
+      this.searchShift = 0;
+    }
   }
 
 
