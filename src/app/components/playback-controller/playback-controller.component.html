@@ -22,10 +22,10 @@
       <div class="row">
         <div class="col text-center">
 
-            <button class="btn btn-circle mx-4" *ngIf="current && current.user === 'Host' && playback.playback.is_playing">
+            <button class="btn btn-circle mx-4" (click)="pausePlayback()" *ngIf="current && current.user === 'Host' && playback.playback.is_playing">
               <fa-icon [icon]="faPause"></fa-icon>
             </button>
-            <button class="btn btn-circle mx-4" *ngIf="current && current.user === 'Host' && !playback.playback.is_playing">
+            <button class="btn btn-circle mx-4" (click)="resumePlayback()" *ngIf="current && current.user === 'Host' && !playback.playback.is_playing">
               <fa-icon [icon]="faPlay"></fa-icon>
             </button>
 
@@ -55,15 +55,15 @@
         <div class="col text-right">
 
 
-          <button class="btn btn-circle mx-1 mobile-button" *ngIf="current && current.user === 'Host' && playback.playback.is_playing">
+          <button class="btn btn-circle mx-1 mobile-button" (click)="pausePlayback()" *ngIf="current && current.user === 'Host' && playback?.playback?.is_playing">
             <fa-icon [icon]="faPause"></fa-icon>
           </button>
-          <button class="btn btn-circle mx-1 mobile-button" *ngIf="current && current.user === 'Host' && !playback.playback.is_playing">
+          <button class="btn btn-circle mx-1 mobile-button" (click)="resumePlayback()" *ngIf="current && current.user === 'Host' && !(playback?.playback?.is_playing)">
             <fa-icon [icon]="faPlay"></fa-icon>
           </button>
 
 
-          <button class="btn btn-circle mx-1" *ngIf="current && current.user === 'Host' ">
+          <button class="btn btn-circle mx-1" (click)="openSettings()" *ngIf="current && current.user === 'Host' ">
             <fa-icon [icon]="faCog"></fa-icon>
           </button>
           <button class="btn btn-circle mx-1" (click)="leave()">
