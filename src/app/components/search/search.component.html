@@ -17,8 +17,8 @@
   <div class="search-text" *ngIf="searchResults?.tracks?.items?.length === 0">No results!</div>
   <div class="row">
     <div class="col mt-3">
-      <div *ngFor="let item of searchResults?.tracks?.items?.slice(0,8)">
-        <app-queue-song [voteMethod]="voteMethod" [item]="item" [queue]="queue"></app-queue-song>
+      <div *ngFor="let item of searchResults?.tracks?.items?.slice(0,searchCount)">
+        <app-queue-song style="display: block" #SearchSong [voteMethod]="voteMethod" [item]="item" [queue]="queue"></app-queue-song>
       </div>
 
 

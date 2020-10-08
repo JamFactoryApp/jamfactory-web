@@ -1,4 +1,4 @@
-import {Component, HostListener, Input, OnInit, ElementRef } from '@angular/core';
+import {Component, HostListener, Input, OnInit, ElementRef, ViewChildren, QueryList, ViewChild} from '@angular/core';
 import {SpotifyService} from '../../services/spotify.service';
 import {FormControl} from '@angular/forms';
 import PutSpotifySearchRequest = JamFactoryApi.PutSpotifySearchRequest;
@@ -6,6 +6,7 @@ import SearchResult = Zmb3SpotifyApi.SearchResult;
 import SongWithoutId = JamFactoryApi.SongWithoutId;
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
+import {QueueSongComponent} from '../queue-song/queue-song.component';
 
 @Component({
   selector: 'app-search',
@@ -16,7 +17,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private spotifyService: SpotifyService,
-    private elRef: ElementRef
+    private elementRef: ElementRef
   ) {
   }
   @Input()
@@ -28,19 +29,27 @@ export class SearchComponent implements OnInit {
   @Input()
   voteMethod: (PutQueueVoteRequest) => void;
 
+  @ViewChildren('SearchSong', {read: ElementRef}) searchSongs: QueryList<ElementRef>;
+
   searchField = new FormControl('');
   searchResults: SearchResult;
+  searchCount = 1;
 
   faSearch = faSearch;
 
   searchTimeout: number;
 
   @HostListener('document:click', ['$event'])
-  handlerFunction(e: MouseEvent): void {
-    if (!this.elRef.nativeElement.contains(e.target)) {
+  handlerFunctionClick(e: MouseEvent): void {
+    if (!this.elementRef.nativeElement.contains(e.target)) {
       this.searchField.patchValue('');
       this.search();
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  handlerFunctionResize = (e: MouseEvent) => {
+    this.setSearchCount();
   }
 
   ngOnInit(): void {
@@ -51,9 +60,18 @@ export class SearchComponent implements OnInit {
       this.searchTimeout = setTimeout(() => this.search(), 100);
   }
 
+  setSearchCount(): void {
+    if (!this.searchSongs.first) {
+      this.searchCount = 1;
+    } else {
+      const itemHeight = this.searchSongs.first.nativeElement.offsetHeight;
+      const height = window.innerHeight;
+      this.searchCount = Math.ceil(((height - 150) * 0.65) / itemHeight);
+    }
+
+  }
+
   search(): void {
-
-
 
     if (this.searchField.value === '') {
       this.searchResults = undefined;
@@ -68,6 +86,9 @@ export class SearchComponent implements OnInit {
     this.spotifyService.putSearch(body).subscribe(value => {
       value.tracks.items = value.tracks.items.sort((a, b) => b.popularity - a.popularity);
       this.searchResults = value;
+      if (this.searchCount === 1 ) {
+        window.requestAnimationFrame(() => {this.setSearchCount(); });
+      }
     });
   }
 }
