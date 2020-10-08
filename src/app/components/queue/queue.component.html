@@ -3,7 +3,7 @@
 <div class="table-responsive" style="padding: 30px;">
   <table class="table table-striped d-flex justify-content-center">
     <tbody>
-    <tr class="test"></tr>
+    <tr [ngClass]="{'label':songList.length !== 0}"></tr>
     <tr *ngFor="let song of songList; let pos = index">
       <app-queue-song [queue]="songList" [item]="song.spotifyTrackFull" [pos]="pos"></app-queue-song>
     </tr>
