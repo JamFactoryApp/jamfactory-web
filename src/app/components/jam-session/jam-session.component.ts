@@ -1,17 +1,15 @@
-import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {JamsessionService} from '../../services/jamsession.service';
 import {QueueService} from '../../services/queue.service';
 import {SpotifyService} from '../../services/spotify.service';
-import * as io from 'socket.io-client';
-import {environment} from '../../../environments/environment';
+import {WebsocketService} from '../../services/websocket.service';
+import {catchError, map, tap} from 'rxjs/operators';
 import JamResponse = JamFactoryApi.JamResponse;
 import PlaybackBody = JamFactoryApi.PlaybackBody;
 import SongWithoutId = JamFactoryApi.SongWithoutId;
-import GetQueueResponse = JamFactoryApi.GetQueueResponse;
-import GetJamPlaybackResponse = JamFactoryApi.GetJamPlaybackResponse;
 import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
 import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
 import AddCollectionRequestBody = JamFactoryApi.AddCollectionRequestBody;
@@ -21,7 +19,13 @@ import AddCollectionRequestBody = JamFactoryApi.AddCollectionRequestBody;
   templateUrl: './jam-session.component.html',
   styleUrls: ['./jam-session.component.scss']
 })
-export class JamSessionComponent implements OnInit, OnDestroy{
+export class JamSessionComponent implements OnInit {
+  jamSession: JamResponse;
+  current: GetAuthCurrentResponse;
+  playback: PlaybackBody;
+  queue: SongWithoutId[] = [];
+  liveData$;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -29,22 +33,17 @@ export class JamSessionComponent implements OnInit, OnDestroy{
     private authService: AuthService,
     private jamsessionService: JamsessionService,
     private queueService: QueueService,
-    private spotifyService: SpotifyService
+    private spotifyService: SpotifyService,
+    private websocketService: WebsocketService
   ) {
   }
-
-  jamSession: JamResponse;
-  current: GetAuthCurrentResponse;
-  playback: PlaybackBody;
-  queue: SongWithoutId[] = [];
-  socket: SocketIOClient.Socket;
-
 
   ngOnInit(): void {
     this.jamsessionService.getJamsession().subscribe(value => {
       this.jamSession = value;
-    }, error1 => {
-      this.jamsessionService.leaveJamSession().subscribe(() => {});
+    }, error => {
+      this.jamsessionService.leaveJamSession().subscribe(() => {
+      });
       this.router.navigate(['/']);
     });
     this.jamsessionService.getPlayback().subscribe(value => {
@@ -56,30 +55,42 @@ export class JamSessionComponent implements OnInit, OnDestroy{
     this.queueService.getQueue().subscribe(value => {
       this.queue = value.queue;
     });
-    this.connectSocket();
+
+    this.websocketService.connect();
+    this.liveData$ = this.websocketService.messages$.pipe(
+      map(rows => rows.toString()),
+      catchError(error => {
+        throw error;
+      }),
+      tap({
+        next: t => console.log(t),
+        error: error => console.log('[Live component] Error:', error),
+        complete: () => console.log('[Live component] Connection Closed')
+      })
+    );
   }
 
-  connectSocket(): void {
-    this.socket = io.connect(environment.JAMFACTORY_API_URL);
-    this.socket.on('queue', (msg: GetQueueResponse) => {
-      this.updateQueueFromSocket(msg.queue);
-    });
-    this.socket.on('playback', (msg: GetJamPlaybackResponse) => {
-      this.playback = msg;
-    });
-    this.socket.on('close', (msg: any) => {
-      console.log(msg);
-    });
-  }
+  // connectSocket(): void {
+  // this.socket = io.connect(environment.JAMFACTORY_API_URL);
+  // this.socket.on('queue', (msg: GetQueueResponse) => {
+  //   this.updateQueueFromSocket(msg.queue);
+  // });
+  // this.socket.on('playback', (msg: GetJamPlaybackResponse) => {
+  //   this.playback = msg;
+  // });
+  // this.socket.on('close', (msg: any) => {
+  //   console.log(msg);
+  // });
+  // }
 
-  getQueue(): SongWithoutId[]  {
+  getQueue(): SongWithoutId[] {
     return this.queue;
   }
 
   updateQueueFromSocket(list: SongWithoutId[]): void {
     console.log('Socket: ', list);
     console.log('QueueB: ', this.getQueue());
-    this.queue = list.map( (q) => {
+    this.queue = list.map((q) => {
 
       const song: SongWithoutId = {
         spotifyTrackFull: q.spotifyTrackFull,
@@ -87,7 +98,7 @@ export class JamSessionComponent implements OnInit, OnDestroy{
         voted: false
       };
 
-      this.getQueue().forEach( value => {
+      this.getQueue().forEach(value => {
         if (value.spotifyTrackFull.id === q.spotifyTrackFull.id) {
           song.voted = value.voted;
         }
@@ -103,7 +114,7 @@ export class JamSessionComponent implements OnInit, OnDestroy{
       this.queue = response.queue;
 
     });
-  }
+  };
 
   addCollection = (body: AddCollectionRequestBody) => {
     this.queueService.putQueueCollection(body).subscribe((response) => {
@@ -111,16 +122,5 @@ export class JamSessionComponent implements OnInit, OnDestroy{
       this.queue = response.queue;
 
     });
-  }
-
-
-  ngOnDestroy(): void {
-    this.closeSocket();
-  }
-
-  closeSocket(): void {
-    this.socket.close();
-  }
-
-
+  };
 }

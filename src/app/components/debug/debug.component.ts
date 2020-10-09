@@ -5,8 +5,6 @@ import {JamsessionService} from '../../services/jamsession.service';
 import {QueueService} from '../../services/queue.service';
 import {SpotifyService} from '../../services/spotify.service';
 import {FormBuilder} from '@angular/forms';
-import * as io from 'socket.io-client';
-import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-landing-page',
@@ -61,12 +59,6 @@ export class DebugComponent implements OnInit {
     type: ['']
   });
 
-  socket: SocketIOClient.Socket;
-  socketFlag = true;
-  socketPlaybackMsg: string;
-  socketQueueMsg: string;
-  socketCloseMsg: string;
-
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -78,23 +70,6 @@ export class DebugComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  connectSocket(): void {
-    this.socket = io.connect(environment.JAMFACTORY_API_URL);
-    this.socket.on('queue', (msg: any) => {
-      this.socketQueueMsg = msg;
-    });
-    this.socket.on('playback', (msg: any) => {
-      this.socketPlaybackMsg = msg;
-    });
-    this.socket.on('close', (msg: any) => {
-      this.socketCloseMsg = msg;
-    });
-  }
-
-  disconnectSocket(): void {
-    this.socket.close();
   }
 
   getAuthCurrent(): void {

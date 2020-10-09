@@ -15,7 +15,7 @@ export class QueueService {
   private httpOptions = {
     withCredentials: true
   };
-  private apiUrl = environment.JAMFACTORY_API_URL + '/api/v1/queue';
+  private apiUrl = 'http://' + environment.JAMFACTORY_API_URL + '/api/v1/queue';
 
   constructor(
     private http: HttpClient

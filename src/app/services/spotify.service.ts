@@ -14,7 +14,7 @@ export class SpotifyService {
   private httpOptions = {
     withCredentials: true
   };
-  private apiUrl = environment.JAMFACTORY_API_URL + '/api/v1/spotify';
+  private apiUrl = 'http://' + environment.JAMFACTORY_API_URL + '/api/v1/spotify';
 
   constructor(
     private http: HttpClient
