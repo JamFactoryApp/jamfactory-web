@@ -1,6 +1,4 @@
-<!-- - seite unten am palyback-->
-
-<div class="d-flex p-3 align-items-center"
+<div class="d-flex align-items-center" style="padding-left: 0.5rem"
      [ngClass]="{'even':pos % 2 == 0, 'voted-even':songVoted == true && pos % 2 == 0, 'voted-odd':songVoted == true && pos % 2 !== 0}">
   <img src="{{item.album.images[2].url}}"
        width="{{item.album.images[2].width}}"

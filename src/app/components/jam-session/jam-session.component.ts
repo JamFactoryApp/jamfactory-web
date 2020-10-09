@@ -70,7 +70,7 @@ export class JamSessionComponent implements OnInit, OnDestroy {
   //   return viewHeight - (headerHeight + searchHeight + footerHeight);
 
     let styles = {
-      'height': viewHeight - 200 + 'px',
+      'height': viewHeight - 150 + 'px',
     };
 
     return styles;
