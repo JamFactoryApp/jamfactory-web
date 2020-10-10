@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
@@ -25,7 +25,7 @@ export class JamSessionComponent implements OnInit, OnDestroy {
   current: GetAuthCurrentResponse;
   playback: PlaybackBody;
   queue: SongWithoutId[] = [];
-
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -38,7 +38,7 @@ export class JamSessionComponent implements OnInit, OnDestroy {
   ) {
     this.websocketService.connect();
   }
-
+  
   ngOnInit(): void {
     this.jamsessionService.getJamsession().subscribe(value => {
       this.jamSession = value;
@@ -55,7 +55,7 @@ export class JamSessionComponent implements OnInit, OnDestroy {
     });
     this.queueService.getQueue().subscribe(value => {
       this.queue = value.queue;
-    });
+    });    
     this.websocketService.socket.asObservable().subscribe(
       value => {
         switch (value.event) {
@@ -77,6 +77,24 @@ export class JamSessionComponent implements OnInit, OnDestroy {
       error => console.error(error),
       () => console.log('closed')
     );
+  }
+
+  setQueueHeight() {
+    const viewHeight = document.documentElement.clientHeight;
+  //   const header = document.getElementsByClassName('header');
+  //   const headerHeight = header[0]['clientHeight'];
+  //   const search = document.getElementsByClassName('search');
+  //   const searchHeight = search[0]['clientHeight'];
+  //   const footer = document.getElementsByClassName('footer');
+  //   const footerHeight = footer[0]['clientHeight'];
+  //
+  //   return viewHeight - (headerHeight + searchHeight + footerHeight);
+
+    let styles = {
+      'height': viewHeight - 150 + 'px',
+    };
+
+    return styles;
   }
 
   getQueue(): SongWithoutId[] {

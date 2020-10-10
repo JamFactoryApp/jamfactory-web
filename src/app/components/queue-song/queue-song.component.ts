@@ -25,10 +25,19 @@ export class QueueSongComponent implements OnInit {
   queue: SongWithoutId[];
 
   @Input()
+  songVotes: number;
+
+  @Input()
+  songVoted: boolean;
+
+  @Input()
   pos: number;
-  
+
   @Input()
   voteMethod: (PutQueueVoteRequest) => void;
+
+  @Input()
+  inQueue: boolean;
 
   constructor(
     private queueService: QueueService

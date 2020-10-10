@@ -5,8 +5,10 @@
   <app-search [voteMethod]="vote" [addMethod]="addCollection" [current]="current" [queue]="queue"></app-search>
 </div>
 
-<div class="queue">
-  <app-queue  [voteMethod]="vote" [addMethod]="addCollection" [songList]="queue"></app-queue>
+<div class="queue" [ngStyle]="setQueueHeight()">
+  <app-queue [voteMethod]="vote" [addMethod]="addCollection" [songList]="queue"></app-queue>
 </div>
 
-<app-playback-controller [playback]="playback" [current]="current"></app-playback-controller>
+<div class="footer">
+  <app-playback-controller [playback]="playback" [current]="current"></app-playback-controller>
+</div>

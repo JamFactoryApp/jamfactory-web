@@ -1,0 +1,33 @@
+.even {
+  background: #e7e7e7;
+}
+
+.voted-even {
+  background: radial-gradient(#e7e7e7, #FFEB85);
+}
+
+.voted-odd {
+  background: radial-gradient(white, #FFF1AD);
+}
+
+.op-60 {
+  opacity: 60%;
+}
+
+.btn-group-imitate {
+  position: relative;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.votes-display {
+  background: #828F9B;
+  color: white;
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 0.5rem 1rem;
+}
+
+.vote-btn {
+  background: radial-gradient(#f1f1f1, #cecece);
+}

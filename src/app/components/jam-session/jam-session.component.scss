@@ -22,7 +22,15 @@
 .queue {
   position: relative;
   width: 100%;
-  top: 70px;
+  top: 35px;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.queue::-webkit-scrollbar {
+  display: none;
 }
 
 .header-text {

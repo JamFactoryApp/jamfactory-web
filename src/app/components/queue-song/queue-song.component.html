@@ -1,22 +1,17 @@
-<td class="align-middle col-1">
+<div class="d-flex align-items-center" style="padding-left: 0.5rem"
+     [ngClass]="{'even':pos % 2 == 0, 'voted-even':songVoted == true && pos % 2 == 0, 'voted-odd':songVoted == true && pos % 2 !== 0}">
   <img src="{{item.album.images[2].url}}"
        width="{{item.album.images[2].width}}"
        height="{{item.album.images[2].height}}">
-</td>
-<td class="align-middle col-3" style="text-align: left">
-  <span class="medium">{{item.name}}</span>
-  <br>
-  <span
-    class="small"
-    style="opacity: 60%">{{getArtist(item.artists)}}</span>
-</td>
-<td class="align-middle col-1" style="text-align: right">
-  <div class="btn-group" role="group">
-    <button type="button" class="btn" style="background: radial-gradient(#f1f1f1, #cecece)" (click)="vote(item)">
+  <div class="flex-grow-1 ml-3" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">
+    <span class="medium">{{item.name}}</span>
+    <br>
+    <span class="small op-60">{{getArtist(item.artists)}}</span>
+  </div>
+  <div class="btn-group-imitate p-3">
+    <button class="btn vote-btn" [ngStyle]="inQueue ? {'border-radius': '0.5rem'} : {'border-radius': '0.5rem 0 0 0.5rem'}" (click)="vote(item)">
       <fa-icon [icon]="voted(item) ? iconVote : iconNVote" [ngStyle]="voted(item) ? {'color': 'darkred'} : {'color': ''}"></fa-icon>
     </button>
-    <ng-container *ngFor="let queue of queue">
-      <button type="button" class="btn btn-secondary disabled" style=" cursor: initial;" *ngIf="queue.spotifyTrackFull.id == item.id">{{queue.votes}}</button>
-    </ng-container>
+    <div class="align-self-center votes-display" *ngIf="songVotes !== undefined">{{songVotes}}</div>
   </div>
-</td>
+</div>
