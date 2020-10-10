@@ -5,6 +5,7 @@ import {JamsessionService} from '../../services/jamsession.service';
 import {QueueService} from '../../services/queue.service';
 import {SpotifyService} from '../../services/spotify.service';
 import {FormBuilder} from '@angular/forms';
+import {WebsocketService} from '../../services/websocket.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -29,6 +30,12 @@ export class DebugComponent implements OnInit {
   spotifyDevices: JamFactoryApi.GetSpotifyDevicesResponse;
   spotifyPlaylists: JamFactoryApi.GetSpotifyPlaylistsResponse;
   spotifySearch: JamFactoryApi.PutSpotifySearchResponse;
+
+  socketPlaybackMsg;
+  socketQueueMsg;
+  socketCloseMsg;
+
+  hideSocketEvents = true;
 
   putJamForm = this.fb.group({
     name: [''],
@@ -65,7 +72,8 @@ export class DebugComponent implements OnInit {
     private authService: AuthService,
     private jamsessionService: JamsessionService,
     private queueService: QueueService,
-    private spotifyService: SpotifyService
+    private spotifyService: SpotifyService,
+    private websocketService: WebsocketService
   ) {
   }
 
@@ -151,5 +159,40 @@ export class DebugComponent implements OnInit {
       text: this.putSpotifySearchForm.value['text'],
       type: this.putSpotifySearchForm.value['type']
     }).subscribe(data => this.spotifySearch = data);
+  }
+
+  connectSocket(): void {
+    this.websocketService.connect();
+    this.websocketService.socket.asObservable().subscribe(
+      value => {
+        switch (value.event) {
+          case 'queue':
+            this.socketQueueMsg = value;
+            break;
+          case 'playback':
+            this.socketPlaybackMsg = value;
+            break;
+          case 'close':
+            this.socketCloseMsg = value;
+            break;
+          default:
+            console.error('unknown event');
+        }
+      },
+      error => console.error(error),
+      () => console.log('closed')
+    );
+  }
+
+  disconnectSocket(): void {
+    this.websocketService.close();
+  }
+
+  socketDefined(): boolean {
+    return this.websocketService.socket !== undefined;
+  }
+
+  socketConnected(): boolean {
+    return this.websocketService.connected();
   }
 }
