@@ -5,6 +5,7 @@ import {JamsessionService} from '../../services/jamsession.service';
 import {FormBuilder, FormControl} from '@angular/forms';
 import LabelBody = JamFactoryApi.LabelBody;
 
+
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
@@ -16,6 +17,7 @@ export class LandingpageComponent implements OnInit {
   public userAuthorized: boolean;
 
   labelField = new FormControl('');
+  wrong = false;
 
   constructor(
     private auth: AuthService,
@@ -36,7 +38,10 @@ export class LandingpageComponent implements OnInit {
 
   login(): void {
     this.auth.getLogin().subscribe(value => {
+      this.wrong = false;
       window.location.href = value.url;
+    }, error => {
+      this.wrong = true;
     });
   }
 
@@ -45,8 +50,6 @@ export class LandingpageComponent implements OnInit {
 
       this.jam.getJamsession().subscribe(value => {
         this.router.navigate(['/' + this.userLabel]);
-      }, error1 => {
-        this.jam.leaveJamSession().subscribe(() => {});
       })
 
     }
@@ -65,6 +68,9 @@ export class LandingpageComponent implements OnInit {
 
     this.jam.joinJamSession(body).subscribe(value => {
       this.router.navigate(['/' + value.label]);
+    }, error1 => {
+      this.wrong = true;
     });
   }
+
 }

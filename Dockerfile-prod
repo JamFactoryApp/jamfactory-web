@@ -1,0 +1,15 @@
+# node:14-alpine
+FROM node@sha256:9a28dee760ed940c6b72bd0b5aca05cdb04a05f4328f6308c59b3d59903e5c30 as builder
+
+WORKDIR /usr/src/app
+
+COPY package.json package-lock.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build --prod
+
+# nginx:1.19-alpine
+FROM nginx@sha256:a3c6118edc80de4a5aaf2711b7742c25d4d2da54325bae465205cb386afa79ee
+
+COPY --from=builder /usr/src/app/dist/jamfactory-web /usr/share/nginx/html

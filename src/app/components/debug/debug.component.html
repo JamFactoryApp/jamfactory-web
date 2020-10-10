@@ -1,24 +1,4 @@
 <section>
-  <h1>Socket</h1>
-
-  <h4>Connect Socket</h4>
-  <button type="button" (click)="connectSocket()">GO!</button>
-  <p *ngIf="socket">Connected: {{socket.connected}}</p>
-
-  <h4>Disconnect Socket</h4>
-  <button type="button" (click)="disconnectSocket()">GO!</button>
-
-  <h4>Show Socket Events</h4>
-  <button type="button" (click)="socketFlag = !socketFlag">GO!</button>
-
-  <div [hidden]="socketFlag">
-    <p>Playback: {{socketPlaybackMsg | json}}</p>
-    <p>Queue: {{socketQueueMsg | json}}</p>
-    <p>Close: {{socketCloseMsg | json}}</p>
-  </div>
-</section>
-<hr>
-<section>
   <h1>Auth</h1>
 
   <h4>GET Auth Current</h4>
@@ -150,4 +130,24 @@
     <button type="submit" [disabled]="!putSpotifySearchForm.valid">GO!</button>
   </form>
   <p>{{spotifySearch | json}}</p>
+</section>
+<hr>
+<section>
+  <h1>Socket</h1>
+
+  <h4>Connect Socket</h4>
+  <button type="button" (click)="connectSocket()">GO!</button>
+  <p *ngIf="socketDefined()">Connected: {{socketConnected()}}</p>
+
+  <h4>Disconnect Socket</h4>
+  <button type="button" (click)="disconnectSocket()">GO!</button>
+
+  <h4>Show Socket Events</h4>
+  <button type="button" (click)="hideSocketEvents = !hideSocketEvents">GO!</button>
+
+  <div [hidden]="hideSocketEvents">
+    <p>Playback: {{socketPlaybackMsg | json}}</p>
+    <p>Queue: {{socketQueueMsg | json}}</p>
+    <p>Close: {{socketCloseMsg | json}}</p>
+  </div>
 </section>
