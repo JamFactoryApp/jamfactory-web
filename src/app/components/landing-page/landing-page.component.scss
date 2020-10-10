@@ -1,7 +1,6 @@
 .header {
-  position: relative;
+  position: absolute;
   top: 0;
-  left: 0;
   width: 100%;
   height: 100px; /* Height of the footer */
   background:#282828;
@@ -18,6 +17,7 @@
 }
 
 .main-div {
+  margin-top: 100px;
   height: 100%;
 }
 
@@ -144,8 +144,14 @@
     height: 50px; /* Height of the footer */
   }
 
+  .main-div {
+    margin-top: 50px;
+    height: 100%;
+  }
+
   .header-text {
     font-size: 1.5em;
+    padding-top: 20px;
   }
 
   .footer-text {

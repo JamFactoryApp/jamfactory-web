@@ -17,7 +17,9 @@ import AlbumObjectSimplified = SpotifyApi.AlbumObjectSimplified;
 
 export class QueueCollectionComponent implements OnInit {
 
-  faPlus = faPlus;
+  iconAdd = faPlus;
+
+  inQueue = true;
 
 
   @Input()
@@ -49,6 +51,18 @@ export class QueueCollectionComponent implements OnInit {
       type: 'playlist'
     };
     this.addMethod(body);
+  }
+
+  getArtist(item): string {
+    const len = item.length;
+    let artist: string = item[0].name;
+
+    if (len > 1) {
+      for (let i = 1; len > i; i++) {
+        artist = artist + ', ' + item[i].name;
+      }
+    }
+    return artist;
   }
 
   isPlaylist(val): boolean { return val.constructor.name === 'PlaylistObjectSimplified'; }
