@@ -31,7 +31,6 @@ export class QueueService {
   }
 
   putQueueCollection(body: AddCollectionRequestBody): Observable<CollectionQueueResponseBody> {
-    console.log(body);
     return this.http.put<CollectionQueueResponseBody>(this.apiUrl + '/collection', body, this.httpOptions);
   }
 }

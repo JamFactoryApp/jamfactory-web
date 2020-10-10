@@ -103,7 +103,6 @@ export class SearchComponent implements OnInit {
     this.spotifyService.getPlaylists().subscribe(value => {
       this.searchResults.tracks = undefined;
       this.searchResults.playlists = value.playlists;
-      console.log(this.searchResults.playlists);
     });
   }
 
