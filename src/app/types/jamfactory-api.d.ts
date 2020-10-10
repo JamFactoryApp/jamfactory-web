@@ -111,17 +111,24 @@ declare namespace JamFactoryApi {
     playlists: Zmb3SpotifyApi.SimplePlaylistPage;
   }
 
-  type PutSpotifySearchResponse  = Zmb3SpotifyApi.SearchResult;
+  type PutSpotifySearchResponse = Zmb3SpotifyApi.SearchResult;
 
   // ---------------------------------------------------------------------------------------------------------------------
-  // socketio types
+  // notification types
 
-  // type JoinResponseBody = LabelBody;
+  interface Notification {
+    event: string,
+    message: any
+  }
 
-  // interface JamSessionStateResponseBody {
-  //   currentSong: any;
-  //   state: any;
-  // }
+  interface SocketJamState {
+    currentSong: Zmb3SpotifyApi.FullTrack,
+    state: Zmb3SpotifyApi.PlayerState
+  }
+
+  interface SocketPlaybackState {
+    playback: Zmb3SpotifyApi.PlayerState
+  }
 
   // ---------------------------------------------------------------------------------------------------------------------
   // other types

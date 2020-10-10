@@ -12,7 +12,7 @@ export class AuthService {
   private httpOptions = {
     withCredentials: true
   };
-  private apiUrl = environment.JAMFACTORY_API_URL + '/api/v1/auth';
+  private apiUrl = 'http://' + environment.JAMFACTORY_API_URL + '/api/v1/auth';
 
   constructor(private http: HttpClient) {
   }
