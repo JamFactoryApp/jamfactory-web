@@ -6,7 +6,7 @@ import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
   providedIn: 'root'
 })
 export class WebsocketService {
-  private wsUrl = 'ws://' + environment.JAMFACTORY_API_URL + '/ws';
+  private wsUrl = environment.JAMFACTORY_WS_URL;
   public socket: WebSocketSubject<any>;
 
   constructor() {
