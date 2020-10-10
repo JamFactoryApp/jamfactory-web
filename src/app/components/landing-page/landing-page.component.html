@@ -1,33 +1,47 @@
-<div class="row">
-  <div class="col text-center">
-    <h1>Welcome to JamFactory</h1>
+<div class="header">
+    <div class="gopher corner-left"></div>
+    <div class="vertical-center center">
+      <p class="text-center header-text">JamFactory</p>
+    </div>
+    <div class="corner-right">
+
+      <a href="https://github.com/JamFactoryApp" class="version-text vertical-center"> 0.1.0 <svg class="github-icon" width="20px" height="20px"><path fill="lightgray" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+    </div>
+
+</div>
+
+<div class="main-div">
+
+
+  <div class="row">
+    <div class="col text-center h4 welcome-text">Join a JamSession</div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-4 offset-md-4 col-12 d-flex justify-content-center">
+      <input style="text-transform:uppercase"  [ngStyle]="{'color': wrong ? 'red' : '#282828'}" type="text" class="form-control jam-label-input" id="labelInput" name="labelInput"
+             minlength="5" maxlength="5" [formControl]="labelField" (keyup)="wrong = false;" >
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-md-4 offset-md-4 col-12 d-flex justify-content-center">
+      <button *ngIf="labelField.valid && labelField.value !== ''" class="btn" style="width: 300px" (click)="join()">Join</button>
+      <p *ngIf="labelField.invalid || labelField.value === ''" class="enter-label-text">Enter a JamLabel</p>
+    </div>
+  </div>
+
+  <div class="row my-5">
+    <div class="col-md-4 offset-md-4 d-flex justify-content-center">
+      <button class="btn " style="width: 300px" *ngIf="!userAuthorized" (click)="login()">
+        Login to Spotify to create your own
+      </button>
+      <button class="btn " style="width: 300px" *ngIf="userAuthorized" (click)="create()">
+        Create new JamSession
+      </button>
+    </div>
   </div>
 </div>
 
-<hr>
+<div class="footer">
 
-<div class="row">
-  <div class="col text-center text-success h4">Join an exiting JamSession or login to Spotify to create your own</div>
 </div>
-
-<div class="row my-4">
-  <div class="col-md-2 offset-md-4 col-6">
-    <input type="text" class="form-control" id="labelInput" name="labelInput"
-           placeholder="JamLabel" maxlength="5" [formControl]="labelField">
-  </div>
-  <div class="col-md-2 col-6">
-    <button class="btn btn-primary btn-block" (click)="join()">Join</button>
-  </div>
-</div>
-
-<div class="row my-4">
-  <div class="col-md-4 offset-md-4">
-    <button class="btn btn-primary btn-block" *ngIf="!userAuthorized" (click)="login()">
-      Login to Spotify
-    </button>
-    <button class="btn btn-primary btn-block" *ngIf="userAuthorized" (click)="create()">
-      Create new JamSession
-    </button>
-  </div>
-</div>
-<hr>
