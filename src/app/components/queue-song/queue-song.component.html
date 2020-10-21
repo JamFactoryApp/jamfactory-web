@@ -1,14 +1,17 @@
 <div class="d-flex align-items-center" style="padding-left: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem"
+     [ngStyle]="{'color': songVoted == true ? MutedColor : 'black', 'font-weight': songVoted == true ? 'bold' : 'normal' }"
      [ngClass]="{'even':pos % 2 == 0, 'voted-even':songVoted == true && pos % 2 == 0, 'voted-odd':songVoted == true && pos % 2 !== 0}">
-  <img src="{{item.album.images[1].url}}" class="cover">
-  <div class="flex-grow-1 ml-3" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">
+  <img #cover src="{{item.album.images[1].url}}" class="cover">
+  <div class="flex-grow-1 ml-3" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}" style="filter: saturate(3)">
     <span class="medium">{{item.name}}</span>
     <br>
     <span class="small op-60">{{getArtist(item.artists)}}</span>
   </div>
   <div class="btn-group-imitate p-3 btn" (click)="vote(item)">
-    <button class="btn vote-btn" [ngStyle]="inQueue ? {'border-radius': '0.2rem'} : {'border-radius': '0.2rem 0 0 0.2rem'}" >
-      <fa-icon [icon]="voted(item) ? iconVote : iconNVote" [ngStyle]="voted(item) ? {'color': 'darkred'} : {'color': ''}"></fa-icon>
+    <button class="btn vote-btn"
+            [ngStyle]="inQueue ? {'border-radius': '0.2rem'} : {'border-radius': '0.2rem 0 0 0.2rem'}">
+      <fa-icon [icon]="voted(item) ? iconVote : iconNVote"
+               [ngStyle]="voted(item) ? {'color': 'darkred'} : {'color': ''}"></fa-icon>
     </button>
     <div class="align-self-center votes-display" *ngIf="songVotes !== undefined">{{songVotes}}</div>
   </div>

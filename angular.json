@@ -30,7 +30,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              { "input": "node_modules/node-vibrant/dist/vibrant.js", "inject": true, "bundleName": "Vibrant" }
+            ]
           },
           "configurations": {
             "production": {

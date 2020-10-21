@@ -84,10 +84,10 @@ export class JamSessionComponent implements OnInit, OnDestroy {
 
     const footerHeight = document.getElementById('playback').offsetHeight;
     const headerHeight = document.getElementById('header').offsetHeight;
-    const searchHeight = document.getElementById('search').offsetHeight;
+    // const searchHeight = document.getElementById('search').offsetHeight;
 
     let styles = {
-      'height': (viewHeight - footerHeight - headerHeight - searchHeight - 10) + 'px',
+      'height': (viewHeight - footerHeight - headerHeight - 45 - 10) + 'px',
       'top': headerHeight + 'px',
     };
 
