@@ -25,7 +25,7 @@ export class JamSessionComponent implements OnInit, OnDestroy {
   current: GetAuthCurrentResponse;
   playback: PlaybackBody;
   queue: SongWithoutId[] = [];
-  
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -38,7 +38,7 @@ export class JamSessionComponent implements OnInit, OnDestroy {
   ) {
     this.websocketService.connect();
   }
-  
+
   ngOnInit(): void {
     this.jamsessionService.getJamsession().subscribe(value => {
       this.jamSession = value;
@@ -55,7 +55,7 @@ export class JamSessionComponent implements OnInit, OnDestroy {
     });
     this.queueService.getQueue().subscribe(value => {
       this.queue = value.queue;
-    });    
+    });
     this.websocketService.socket.asObservable().subscribe(
       value => {
         switch (value.event) {
@@ -81,17 +81,14 @@ export class JamSessionComponent implements OnInit, OnDestroy {
 
   setQueueHeight() {
     const viewHeight = document.documentElement.clientHeight;
-  //   const header = document.getElementsByClassName('header');
-  //   const headerHeight = header[0]['clientHeight'];
-  //   const search = document.getElementsByClassName('search');
-  //   const searchHeight = search[0]['clientHeight'];
-  //   const footer = document.getElementsByClassName('footer');
-  //   const footerHeight = footer[0]['clientHeight'];
-  //
-  //   return viewHeight - (headerHeight + searchHeight + footerHeight);
+
+    const footerHeight = document.getElementById('playback').offsetHeight;
+    const headerHeight = document.getElementById('header').offsetHeight;
+    const searchHeight = document.getElementById('search').offsetHeight;
 
     let styles = {
-      'height': viewHeight - 150 + 'px',
+      'height': (viewHeight - footerHeight - headerHeight - searchHeight - 10) + 'px',
+      'top': headerHeight + 'px',
     };
 
     return styles;
