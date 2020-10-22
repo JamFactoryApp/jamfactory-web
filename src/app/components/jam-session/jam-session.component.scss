@@ -41,6 +41,11 @@
   font-size: 1.5em;
 }
 
+.sidebar-button {
+  float: left;
+  padding: 10px;
+}
+
 @media (max-width: 768px) {
 
   .header {
@@ -58,5 +63,9 @@
   .queue {
     top: 40px;
   }
+
+  //.sidebar-button {
+  //  padding: 5px;
+  //}
 }
 

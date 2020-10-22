@@ -1,6 +1,6 @@
 input[type="checkbox"]:checked ~ #sidebarMenu {
   transform: translatey(0);
-  top: 50px /*change here related your top menu height*/
+  //top: 50px /*change here related your top menu height*/
 }
 
 input[type=checkbox] {
@@ -69,3 +69,9 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   transform: rotate(-135deg);
   margin-top: -9px;
 }
+
+//@media (max-width: 768px) {
+//  .spinner {
+//    height: 1px;
+//  }
+//}
