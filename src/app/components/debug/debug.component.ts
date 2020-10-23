@@ -6,6 +6,7 @@ import {QueueService} from '../../services/queue.service';
 import {SpotifyService} from '../../services/spotify.service';
 import {FormBuilder} from '@angular/forms';
 import {WebsocketService} from '../../services/websocket.service';
+import * as JamFactoryApi from 'jamfactory-types';
 
 @Component({
   selector: 'app-landing-page',
@@ -13,23 +14,23 @@ import {WebsocketService} from '../../services/websocket.service';
   styleUrls: ['./debug.component.scss']
 })
 export class DebugComponent implements OnInit {
-  authCurrent: JamFactoryApi.GetAuthCurrentResponse;
+  authCurrent: JamFactoryApi.AuthCurrentResponseBody;
 
-  jam: JamFactoryApi.GetJamResponse;
-  jamPut: JamFactoryApi.GetJamCreateResponse;
-  jamPlayback: JamFactoryApi.GetJamPlaybackResponse;
-  jamPlaybackPut: JamFactoryApi.PutPlaybackResponseBody;
-  jamCreate: JamFactoryApi.GetJamCreateResponse;
-  jamJoin: JamFactoryApi.PutJamJoinResponse;
-  jamLeave: JamFactoryApi.GetJamLeaveResponse;
+  jam: JamFactoryApi.GetJamSessionResponseBody;
+  jamPut: JamFactoryApi.CreateJamSessionResponseBody;
+  jamPlayback: JamFactoryApi.GetPlaybackResponseBody;
+  jamPlaybackPut: JamFactoryApi.GetPlaybackRequestBody;
+  jamCreate: JamFactoryApi.CreateJamSessionResponseBody;
+  jamJoin: JamFactoryApi.JoinResponseBody;
+  jamLeave: JamFactoryApi.LeaveJamSessionResponseBody;
 
-  queue: JamFactoryApi.GetQueueResponse;
-  queueVotePut: JamFactoryApi.PutQueueVoteResponse;
-  queuePlaylistPut: JamFactoryApi.PutQueueCollectionResponse;
+  queue: JamFactoryApi.GetQueueResponseBody;
+  queueVotePut: JamFactoryApi.VoteResponseBody;
+  queuePlaylistPut: JamFactoryApi.AddCollectionResponseBody;
 
-  spotifyDevices: JamFactoryApi.GetSpotifyDevicesResponse;
-  spotifyPlaylists: JamFactoryApi.GetSpotifyPlaylistsResponse;
-  spotifySearch: JamFactoryApi.PutSpotifySearchResponse;
+  spotifyDevices: JamFactoryApi.UserDevicesResponseBody;
+  spotifyPlaylists: JamFactoryApi.UserPlaylistsResponseBody;
+  spotifySearch: JamFactoryApi.SpotifySearchResponseBody;
 
   socketPlaybackMsg;
   socketQueueMsg;

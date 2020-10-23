@@ -2,10 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
-import UserDevicesResponse = SpotifyApi.UserDevicesResponse;
-import GetPlaylistsResponseBody = JamFactoryApi.GetSpotifyPlaylistsResponse;
-import PutSpotifySearchRequest = JamFactoryApi.PutSpotifySearchRequest;
-import PutSpotifySearchResponse = JamFactoryApi.PutSpotifySearchResponse;
+import {
+  UserDevicesResponseBody,
+  UserPlaylistsResponseBody,
+  SpotifySearchRequestBody,
+  SpotifySearchResponseBody,
+} from 'jamfactory-types';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +24,15 @@ export class SpotifyService {
   ) {
   }
 
-  getDevices(): Observable<UserDevicesResponse> {
-    return this.http.get<UserDevicesResponse>(this.apiUrl + '/devices', this.httpOptions);
+  getDevices(): Observable<UserDevicesResponseBody> {
+    return this.http.get<UserDevicesResponseBody>(this.apiUrl + '/devices', this.httpOptions);
   }
 
-  getPlaylists(): Observable<GetPlaylistsResponseBody> {
-    return this.http.get<GetPlaylistsResponseBody>(this.apiUrl + '/playlists', this.httpOptions);
+  getPlaylists(): Observable<UserPlaylistsResponseBody> {
+    return this.http.get<UserPlaylistsResponseBody>(this.apiUrl + '/playlists', this.httpOptions);
   }
 
-  putSearch(body: PutSpotifySearchRequest): Observable<PutSpotifySearchResponse> {
-    return this.http.put<PutSpotifySearchResponse>(this.apiUrl + '/search', body, this.httpOptions);
+  putSearch(body: SpotifySearchRequestBody): Observable<SpotifySearchResponseBody> {
+    return this.http.put<SpotifySearchResponseBody>(this.apiUrl + '/search', body, this.httpOptions);
   }
 }

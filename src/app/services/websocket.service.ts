@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
+import {SocketNotification} from 'jamfactory-types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
   private wsUrl = environment.JAMFACTORY_WS_URL;
-  public socket: WebSocketSubject<any>;
+  public socket: WebSocketSubject<SocketNotification>;
 
   constructor() {
   }
@@ -18,7 +19,7 @@ export class WebsocketService {
     }
   }
 
-  public close() {
+  public close(): void {
     this.socket.complete();
   }
 

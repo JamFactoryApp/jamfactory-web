@@ -1,7 +1,6 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import SongWithoutId = JamFactoryApi.SongWithoutId;
-import {EventEmitter} from '@angular/core';
-import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
+import {QueueSong} from 'jamfactory-types';
+
 
 @Component({
   selector: 'app-queue',
@@ -10,7 +9,7 @@ import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
 })
 export class QueueComponent implements OnInit {
   @Input()
-  songList: SongWithoutId[];
+  songList: QueueSong[];
 
   @Input()
   voteMethod: (PutQueueVoteRequest) => void;

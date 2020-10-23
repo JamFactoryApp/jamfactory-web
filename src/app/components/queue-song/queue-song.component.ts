@@ -2,11 +2,8 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 import {faHeart as iconVote} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as iconNVote} from '@fortawesome/free-regular-svg-icons';
 import {QueueService} from '../../services/queue.service';
-import SongWithoutId = JamFactoryApi.SongWithoutId;
-import FullTrack = Zmb3SpotifyApi.FullTrack;
-import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
+import {VoteRequestBody, QueueSong} from 'jamfactory-types';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
-import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-queue-song',
@@ -19,10 +16,10 @@ export class QueueSongComponent implements OnInit {
   iconNVote = iconNVote;
 
   @Input()
-  item: FullTrack | TrackObjectFull;
+  item: TrackObjectFull;
 
   @Input()
-  queue: SongWithoutId[];
+  queue: QueueSong[];
 
   @Input()
   songVotes: number;
@@ -59,7 +56,7 @@ export class QueueSongComponent implements OnInit {
     return artist;
   }
 
-  voted(track: FullTrack | TrackObjectFull): boolean {
+  voted(track: TrackObjectFull): boolean {
     if (this.queue === undefined) {
       return false;
     }
@@ -76,8 +73,8 @@ export class QueueSongComponent implements OnInit {
     return false;
   }
 
-  vote(track: FullTrack | TrackObjectFull): void {
-    const body: PutQueueVoteRequest = {
+  vote(track: TrackObjectFull): void {
+    const body: VoteRequestBody = {
       track: track.id
     };
     this.voteMethod(body);

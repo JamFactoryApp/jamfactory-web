@@ -1,13 +1,15 @@
 import {Component, HostListener, Input, OnInit, ElementRef, ViewChildren, QueryList, ViewChild} from '@angular/core';
 import {SpotifyService} from '../../services/spotify.service';
 import {FormControl} from '@angular/forms';
-import PutSpotifySearchRequest = JamFactoryApi.PutSpotifySearchRequest;
-import SearchResult = Zmb3SpotifyApi.SearchResult;
-import SongWithoutId = JamFactoryApi.SongWithoutId;
 import {faSearch, faArrowRight} from '@fortawesome/free-solid-svg-icons';
-import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
-import {QueueSongComponent} from '../queue-song/queue-song.component';
-import PlaylistObjectSimplified = SpotifyApi.PlaylistObjectSimplified;
+
+import {
+  SpotifySearchRequestBody,
+  SpotifySearchResponseBody,
+  QueueSong,
+  AuthCurrentResponseBody
+} from 'jamfactory-types';
+
 
 @Component({
   selector: 'app-search',
@@ -22,10 +24,10 @@ export class SearchComponent implements OnInit {
   ) {
   }
   @Input()
-  queue: SongWithoutId[];
+  queue: QueueSong[];
 
   @Input()
-  current: GetAuthCurrentResponse;
+  current: AuthCurrentResponseBody;
 
   @Input()
   voteMethod: (PutQueueVoteRequest) => void;
@@ -36,7 +38,7 @@ export class SearchComponent implements OnInit {
   @ViewChildren('SearchSong', {read: ElementRef}) searchSongs: QueryList<ElementRef>;
 
   searchField = new FormControl('');
-  searchResults: SearchResult;
+  searchResults: SpotifySearchResponseBody;
   searchCount = 1;
   searchShift = 0;
 
@@ -84,7 +86,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    const body: PutSpotifySearchRequest = {
+    const body: SpotifySearchRequestBody = {
       text: this.searchField.value,
       type: 'track'
     };

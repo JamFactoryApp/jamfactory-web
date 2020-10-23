@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import LoginResponseBody = JamFactoryApi.GetAuthLoginResponse;
-import StatusResponseBody = JamFactoryApi.GetAuthCurrentResponse;
+import {LoginResponseBody, AuthCurrentResponseBody } from 'jamfactory-types';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,8 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  getCurrent(): Observable<StatusResponseBody> {
-    return this.http.get<StatusResponseBody>(this.apiUrl + '/current', this.httpOptions);
+  getCurrent(): Observable<AuthCurrentResponseBody> {
+    return this.http.get<AuthCurrentResponseBody>(this.apiUrl + '/current', this.httpOptions);
   }
 
   getLogout(): void {

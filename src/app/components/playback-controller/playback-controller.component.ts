@@ -1,11 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import PlaybackBody = JamFactoryApi.PlaybackBody;
-import {faPlay, faPause, faStepForward, faStepBackward, faSignOutAlt, faCog} from '@fortawesome/free-solid-svg-icons';
+import {faPlay, faPause, faSignOutAlt, faCog} from '@fortawesome/free-solid-svg-icons';
 import {AuthService} from '../../services/auth.service';
-import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
 import {JamsessionService} from '../../services/jamsession.service';
 import {Router} from '@angular/router';
-import PutJamPlaybackRequest = JamFactoryApi.PutJamPlaybackRequest;
+import {SetPlaybackRequestBody, AuthCurrentResponseBody, GetPlaybackResponseBody} from 'jamfactory-types';
+
 
 @Component({
   selector: 'app-playback-controller',
@@ -14,10 +13,10 @@ import PutJamPlaybackRequest = JamFactoryApi.PutJamPlaybackRequest;
 })
 export class PlaybackControllerComponent implements OnInit {
   @Input()
-  playback: PlaybackBody;
+  playback: GetPlaybackResponseBody;
 
   @Input()
-  current: GetAuthCurrentResponse;
+  current: AuthCurrentResponseBody;
 
   faPlay = faPlay;
   faPause = faPause;
@@ -57,7 +56,7 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   resumePlayback(): void {
-    const body: PutJamPlaybackRequest = {
+    const body: SetPlaybackRequestBody = {
       playing: true
     };
     this.jamService.putPlayback(body).subscribe((value) => {
@@ -66,7 +65,7 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   pausePlayback(): void {
-    const body: PutJamPlaybackRequest = {
+    const body: SetPlaybackRequestBody = {
       playing: false
     };
     this.jamService.putPlayback(body).subscribe((value) => {

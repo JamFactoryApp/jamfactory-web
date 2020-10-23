@@ -6,14 +6,18 @@ import {JamsessionService} from '../../services/jamsession.service';
 import {QueueService} from '../../services/queue.service';
 import {SpotifyService} from '../../services/spotify.service';
 import {WebsocketService} from '../../services/websocket.service';
-import JamResponse = JamFactoryApi.JamResponse;
-import PlaybackBody = JamFactoryApi.PlaybackBody;
-import SongWithoutId = JamFactoryApi.SongWithoutId;
-import GetAuthCurrentResponse = JamFactoryApi.GetAuthCurrentResponse;
-import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
-import AddCollectionRequestBody = JamFactoryApi.AddCollectionRequestBody;
-import GetQueueResponse = JamFactoryApi.GetQueueResponse;
-import GetJamPlaybackResponse = JamFactoryApi.GetJamPlaybackResponse;
+import {
+  GetJamSessionResponseBody,
+  GetPlaybackResponseBody,
+  QueueSong,
+  AuthCurrentResponseBody,
+  VoteRequestBody,
+  AddCollectionRequestBody,
+  SocketQueueMessage,
+  SocketPlaybackMessage,
+  SocketCloseMessage
+} from 'jamfactory-types';
+
 
 @Component({
   selector: 'app-jam-session',
@@ -21,10 +25,10 @@ import GetJamPlaybackResponse = JamFactoryApi.GetJamPlaybackResponse;
   styleUrls: ['./jam-session.component.scss']
 })
 export class JamSessionComponent implements OnInit, OnDestroy {
-  jamSession: JamResponse;
-  current: GetAuthCurrentResponse;
-  playback: PlaybackBody;
-  queue: SongWithoutId[] = [];
+  jamSession: GetJamSessionResponseBody;
+  current: AuthCurrentResponseBody;
+  playback: GetPlaybackResponseBody;
+  queue: QueueSong[] = [];
 
   constructor(
     private router: Router,
@@ -60,11 +64,11 @@ export class JamSessionComponent implements OnInit, OnDestroy {
       value => {
         switch (value.event) {
           case 'queue':
-            const queuePayload: GetQueueResponse = value.message;
+            const queuePayload: SocketQueueMessage = value.message as SocketQueueMessage;
             this.updateQueueFromSocket(queuePayload.queue);
             break;
           case 'playback':
-            const playbackPayload: GetJamPlaybackResponse = value.message;
+            const playbackPayload: SocketPlaybackMessage = value.message as SocketPlaybackMessage;
             this.playback = playbackPayload;
             break;
           case 'close':
@@ -79,30 +83,30 @@ export class JamSessionComponent implements OnInit, OnDestroy {
     );
   }
 
-  setQueueHeight() {
+  setQueueHeight(): object {
     const viewHeight = document.documentElement.clientHeight;
 
     const footerHeight = document.getElementById('playback').offsetHeight;
     const headerHeight = document.getElementById('header').offsetHeight;
     const searchHeight = document.getElementById('search').offsetHeight;
 
-    let styles = {
-      'height': (viewHeight - footerHeight - headerHeight - searchHeight - 10) + 'px',
-      'top': headerHeight + 'px',
+    const styles = {
+      height: (viewHeight - footerHeight - headerHeight - searchHeight - 10) + 'px',
+      top: headerHeight + 'px',
     };
 
     return styles;
   }
 
-  getQueue(): SongWithoutId[] {
+  getQueue(): QueueSong[] {
     return this.queue;
   }
 
 
-  updateQueueFromSocket(list: SongWithoutId[]): void {
+  updateQueueFromSocket(list: QueueSong[]): void {
     this.queue = list.map((q) => {
 
-      const song: SongWithoutId = {
+      const song: QueueSong = {
         spotifyTrackFull: q.spotifyTrackFull,
         votes: q.votes,
         voted: false
@@ -117,13 +121,13 @@ export class JamSessionComponent implements OnInit, OnDestroy {
     });
   }
 
-  vote = (body: PutQueueVoteRequest) => {
+  vote = (body: VoteRequestBody) => {
     this.queueService.putQueueVote(body).subscribe((response) => {
 
       this.queue = response.queue;
 
     });
-  };
+  }
 
   addCollection = (body: AddCollectionRequestBody) => {
     this.queueService.putQueueCollection(body).subscribe((response) => {
@@ -131,7 +135,7 @@ export class JamSessionComponent implements OnInit, OnDestroy {
       this.queue = response.queue;
 
     });
-  };
+  }
 
   ngOnDestroy(): void {
     this.websocketService.close();

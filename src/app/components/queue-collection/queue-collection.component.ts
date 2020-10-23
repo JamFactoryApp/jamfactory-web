@@ -1,13 +1,10 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {faMinus, faPlus} from '@fortawesome/free-solid-svg-icons';
-import {QueueService} from '../../services/queue.service';
-import SongWithoutId = JamFactoryApi.SongWithoutId;
-import FullTrack = Zmb3SpotifyApi.FullTrack;
-import AddCollectionRequest = JamFactoryApi.AddCollectionRequestBody;
-import TrackObjectFull = SpotifyApi.TrackObjectFull;
-import { EventEmitter } from '@angular/core';
+import {faPlus} from '@fortawesome/free-solid-svg-icons';
+import {AddCollectionRequestBody} from 'jamfactory-types';
 import PlaylistObjectSimplified = SpotifyApi.PlaylistObjectSimplified;
 import AlbumObjectSimplified = SpotifyApi.AlbumObjectSimplified;
+
+
 
 @Component({
   selector: 'app-queue-collection',
@@ -46,7 +43,7 @@ export class QueueCollectionComponent implements OnInit {
       type = 'album';
     }
 
-    const body: AddCollectionRequest = {
+    const body: AddCollectionRequestBody = {
       collection: collection.id,
       type: 'playlist'
     };

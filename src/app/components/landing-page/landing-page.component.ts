@@ -3,8 +3,7 @@ import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import {JamsessionService} from '../../services/jamsession.service';
 import {FormBuilder, FormControl} from '@angular/forms';
-import LabelBody = JamFactoryApi.LabelBody;
-
+import {JoinRequestBody} from 'jamfactory-types';
 
 @Component({
   selector: 'app-landing-page',
@@ -62,7 +61,7 @@ export class LandingpageComponent implements OnInit {
   }
 
   join(): void {
-    const body: LabelBody = {
+    const body: JoinRequestBody = {
       label: this.labelField.value
     }
 
