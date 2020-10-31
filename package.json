@@ -25,7 +25,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@types/socket.io-client": "^1.4.34",
     "bootstrap": "^4.5.2",
-    "node-vibrant": "^3.2.1-alpha.1",
+    "colorthief": "^2.3.2",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

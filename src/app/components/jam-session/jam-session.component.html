@@ -1,15 +1,32 @@
-<div id="header" class="header" style="overflow: hidden">
-  <div class="sidebar-button"><app-sidebar></app-sidebar></div>
-  <div class="text-center header-text">{{jamSession?.name}} - {{jamSession?.label}}</div>
-</div>
-<div id="search" class="search">
-  <app-search [voteMethod]="vote" [addMethod]="addCollection" [current]="current" [queue]="queue"></app-search>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">×</a>
+  <!--  <a href="#">About</a>-->
+  <!--  <a href="#">Services</a>-->
+  <!--  <a href="#">Clients</a>-->
+  <!--  <a href="#">Contact</a>-->
+  <div id="settings" class="settings">
+    <app-debug></app-debug>
+  </div>
 </div>
 
-<div class="queue" [ngStyle]="setQueueHeight()">
-  <app-queue [voteMethod]="vote" [addMethod]="addCollection" [songList]="queue"></app-queue>
-</div>
+<div id="main">
+  <div id="header" class="header" style="overflow: hidden">
+    <div id="menubutton" class="sidebar-button" (click)="openNav()">
+      <div id="bgm-1" class="burgermenu"></div>
+      <div id="bgm-2" class="burgermenu"></div>
+      <div id="bgm-3" class="burgermenu"></div>
+    </div>
+    <div class="text-center header-text">{{jamSession?.name}} - {{jamSession?.label}}</div>
+  </div>
+  <div id="search" class="search">
+    <app-search [voteMethod]="vote" [addMethod]="addCollection" [current]="current" [queue]="queue"></app-search>
+  </div>
 
-<div class="footer">
-  <app-playback-controller [playback]="playback" [current]="current"></app-playback-controller>
+  <div id="queue" class="queue" [ngStyle]="setQueueHeight()">
+    <app-queue [voteMethod]="vote" [addMethod]="addCollection" [songList]="queue"></app-queue>
+  </div>
+
+  <div id="footer" class="footer">
+    <app-playback-controller [playback]="playback" [current]="current"></app-playback-controller>
+  </div>
 </div>

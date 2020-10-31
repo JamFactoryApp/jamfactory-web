@@ -136,4 +136,41 @@ export class JamSessionComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.websocketService.close();
   }
+
+  openNav(): void {
+    document.getElementById('mySidenav').style.width = '250px';
+    document.getElementById('main').style.marginLeft = '250px';
+    document.body.style.backgroundColor = 'rgba(0,0,0,0.4)';
+    document.getElementById('menubutton').style.opacity = '0';
+    // document.getElementById('main').style.filter = '';
+    document.getElementById('bgm-1').style.width = '0px';
+    document.getElementById('bgm-2').style.width = '0px';
+    document.getElementById('bgm-3').style.width = '0px';
+
+    document.getElementById('queue').style.opacity = '0.5';
+    document.getElementById('queue').style.filter = 'grayscale(50%)';
+
+    document.getElementById('search').style.opacity = '0.5';
+    document.getElementById('footer').style.opacity = '0.5';
+    document.getElementById('settings').style.opacity = '1';
+
+  }
+
+  closeNav(): void {
+    document.getElementById('mySidenav').style.width = '0';
+    document.getElementById('main').style.marginLeft = '0';
+    document.body.style.backgroundColor = 'white';
+    document.getElementById('menubutton').style.opacity = '1';
+    document.getElementById('bgm-1').style.width = '25px';
+    document.getElementById('bgm-2').style.width = '25px';
+    document.getElementById('bgm-3').style.width = '25px';
+
+    document.getElementById('queue').style.opacity = '1';
+    document.getElementById('queue').style.filter = 'grayscale(0%)';
+
+    document.getElementById('search').style.opacity = '1';
+    document.getElementById('footer').style.opacity = '1';
+    document.getElementById('settings').style.opacity = '0';
+  }
+
 }

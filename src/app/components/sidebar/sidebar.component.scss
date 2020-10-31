@@ -50,25 +50,25 @@ input[type=checkbox] {
   margin-top: 3px;
 }
 
-input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
-  transition: all 0.3s;
-  box-sizing: border-box;
-  opacity: 0;
-}
-
-input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
-  transition: all 0.3s;
-  box-sizing: border-box;
-  transform: rotate(135deg);
-  margin-top: 8px;
-}
-
-input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
-  transition: all 0.3s;
-  box-sizing: border-box;
-  transform: rotate(-135deg);
-  margin-top: -9px;
-}
+//input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+//  transition: all 0.3s;
+//  box-sizing: border-box;
+//  opacity: 0;
+//}
+//
+//input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+//  transition: all 0.3s;
+//  box-sizing: border-box;
+//  transform: rotate(135deg);
+//  margin-top: 8px;
+//}
+//
+//input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+//  transition: all 0.3s;
+//  box-sizing: border-box;
+//  transform: rotate(-135deg);
+//  margin-top: -9px;
+//}
 
 //@media (max-width: 768px) {
 //  .spinner {

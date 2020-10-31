@@ -31,8 +31,9 @@
               "src/styles.scss"
             ],
             "scripts": [
-              { "input": "node_modules/node-vibrant/dist/vibrant.js", "inject": true, "bundleName": "Vibrant" }
+              { "input": "node_modules/colorthief/dist/color-thief.umd.js", "inject": true, "bundleName": "colorthief" }
             ]
+
           },
           "configurations": {
             "production": {

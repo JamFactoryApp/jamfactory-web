@@ -8,7 +8,7 @@ import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
 import {EventEmitter} from '@angular/core';
 
-declare var Vibrant: any;
+declare var ColorThief: any;
 
 @Component({
   selector: 'app-queue-song',
@@ -22,12 +22,12 @@ export class QueueSongComponent implements OnInit {
 
   @ViewChild('cover') cover: ElementRef;
 
-  ngAfterViewInit() {
-    // this.logo = this.cover;
-    // console.log(this.cover.nativeElement.src);
-
-    this.getImgColor(this.cover.nativeElement.src);
-  }
+  // ngAfterViewInit(): void {
+  //   // this.logo = this.cover;
+  //   // console.log(this.cover.nativeElement.src);
+  //
+  //   this.getImgColor(this.cover.nativeElement);
+  // }
 
   @Input()
   item: FullTrack | TrackObjectFull;
@@ -75,42 +75,16 @@ export class QueueSongComponent implements OnInit {
     return artist;
   }
 
-  getImgColor(img) {
-    // console.log(img);
-    // const url = document.getElementById('img');
-    // console.log(url);
-    // // const img = document.querySelector('img');
+  getImgColor(): void {
 
-    Vibrant.from(img).getPalette().then((palette) => {
-      // console.log(palette);
-      // this.VibrantColor = palette.LightVibrant.hex;
-      this.VibrantColor = 'rgba( 0, 0, 0 , 0.8)';
-      this.MutedColor = palette.Vibrant.hex;
+    const colorThief = new ColorThief();
+    const col = colorThief.getColor(this.cover.nativeElement);
+    const col2 = colorThief.getPalette(this.cover.nativeElement)[0];
+    this.MutedColor = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ')';
+    this.VibrantColor = 'rgba(' + col2[0] + ',' + col2[1] + ',' + col2[2] + ')';
 
-      console.log(palette.Vibrant.hex);
-      console.log(palette.DarkVibrant.hex);
-      console.log(palette.DarkMuted.hex);
-      console.log(palette.LightVibrant.hex);
-      console.log(palette.LightMuted.hex);
-    });
-
-    // Vibrant.from(url).getPalette((err, palette) => console.log(palette));
-    // const v = new Vibrant(url);
-    // this.color = v.getPalette();
-    // console.log(color);
-    // Vibrant.from(url).getPalette((err, palette) => console.log(palette));
-    // this.color = 'yellow';
-
-    //   const v = new Vibrant(url);
-    //   const color = console.log(v.getPalette());
-    // const img = document.getElementById('img').src;
-    // Vibrant.from(img).getPalette().then((palette) => console.log(palette));
-
-    // let styles = {
-    //   'height': (viewHeight - footerHeight - headerHeight - searchHeight - 10) + 'px',
-    // };
-
-    // return styles;
+    // console.log(colorThief.getPalette(this.cover.nativeElement));
+    // console.log(colorThief.getColor(this.cover.nativeElement));
   }
 
   voted(track: FullTrack | TrackObjectFull): boolean {

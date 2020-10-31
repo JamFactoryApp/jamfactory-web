@@ -8,7 +8,7 @@ import {FormBuilder} from '@angular/forms';
 import {WebsocketService} from '../../services/websocket.service';
 
 @Component({
-  selector: 'app-landing-page',
+  selector: 'app-debug',
   templateUrl: './debug.component.html',
   styleUrls: ['./debug.component.scss']
 })
