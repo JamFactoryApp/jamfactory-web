@@ -6,6 +6,7 @@ import {QueueService} from '../../services/queue.service';
 import {SpotifyService} from '../../services/spotify.service';
 import {FormBuilder} from '@angular/forms';
 import {WebsocketService} from '../../services/websocket.service';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-debug',
@@ -64,6 +65,13 @@ export class DebugComponent implements OnInit {
   putSpotifySearchForm = this.fb.group({
     text: [''],
     type: ['']
+  });
+
+  websiteList: any = ['ItSolutionStuff.com', 'HDTuto.com', 'Nicesnippets.com'];
+  addedFilter: any = [];
+
+  form = new FormGroup({
+    website: new FormControl('', Validators.required)
   });
 
   constructor(
@@ -194,5 +202,10 @@ export class DebugComponent implements OnInit {
 
   socketConnected(): boolean {
     return this.websocketService.connected();
+  }
+
+  changeWebsite(e): void {
+    console.log(e.target.value);
+    // this.addedFilter = e.target.value;
   }
 }

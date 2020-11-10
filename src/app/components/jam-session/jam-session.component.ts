@@ -154,6 +154,10 @@ export class JamSessionComponent implements OnInit, OnDestroy {
     document.getElementById('footer').style.opacity = '0.5';
     document.getElementById('settings').style.opacity = '1';
 
+    document.getElementById('search').style.pointerEvents = 'none';
+    document.getElementById('queue').style.pointerEvents = 'none';
+    document.getElementById('footer').style.pointerEvents = 'none';
+
   }
 
   closeNav(): void {
@@ -171,6 +175,10 @@ export class JamSessionComponent implements OnInit, OnDestroy {
     document.getElementById('search').style.opacity = '1';
     document.getElementById('footer').style.opacity = '1';
     document.getElementById('settings').style.opacity = '0';
+
+    document.getElementById('search').style.pointerEvents = '';
+    document.getElementById('queue').style.pointerEvents = '';
+    document.getElementById('footer').style.pointerEvents = '';
   }
 
 }

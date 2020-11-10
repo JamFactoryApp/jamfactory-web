@@ -8,15 +8,16 @@
   background-color: #2274A5;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
+  //padding-top: 60px;
 }
 
 .sidenav a {
-  padding: 8px 8px 8px 32px;
+  //padding: 8px 8px 8px 32px;
+  padding-left: 10px;
   text-decoration: none;
-  font-size: 25px;
+  //font-size: 25px;
   color: black;
-  display: block;
+  //display: block;
   transition: 0.3s
 }
 
@@ -25,11 +26,12 @@
 }
 
 .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px !important;
-  margin-left: 50px;
+  //position: sticky;
+  cursor: pointer;
+  //top: -10px;
+  //right: 25px;
+  font-size: 30px !important;
+  //margin-left: 50px;
 }
 
 #main {

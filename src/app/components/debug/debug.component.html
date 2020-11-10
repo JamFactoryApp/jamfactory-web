@@ -1,22 +1,41 @@
 <section>
-  <h1>Auth</h1>
+  <h1>Options</h1>
+
+  <br>
+
+  <div class="container">
+    <form [formGroup]="form">
+      <div class="form-group">
+<!--        <label for="website">Website:</label>-->
+        <select formControlName="website" class="form-control" (change)="changeWebsite($event)">
+          <option disabled>Select Website</option>
+          <option>Choose Website</option>
+          <option *ngFor="let web of websiteList">{{web}}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <button class="button">Add Filter</button>
+
+  <div *ngFor="let add of addedFilter">{{add}}</div>
 
   <h4>GET Auth Current</h4>
-  <button type="button" (click)="getAuthCurrent()">GO!</button>
+  <button class="button" type="button" (click)="getAuthCurrent()">GO!</button>
   <p>{{authCurrent | json}}</p>
 
   <h4>GET Auth Login</h4>
-  <button type="button" (click)="getAuthLogin()">GO!</button>
+  <button class="button" type="button" (click)="getAuthLogin()">GO!</button>
 
   <h4>GET Auth Logout</h4>
-  <button type="button" (click)="getAuthLogout()">GO!</button>
+  <button class="button" type="button" (click)="getAuthLogout()">GO!</button>
 </section>
 <hr>
 <section>
   <h1>Jam</h1>
 
   <h4>GET Jam</h4>
-  <button type="button" (click)="getJam()">GO!</button>
+  <button class="button" type="button" (click)="getJam()">GO!</button>
   <p>{{jam | json}}</p>
 
   <h4>PUT Jam</h4>
@@ -33,12 +52,12 @@
       IP Voting:
       <input type="checkbox" formControlName="ip_voting">
     </label>
-    <button type="submit" [disabled]="!putJamForm.valid">GO!</button>
+    <button class="button" type="submit" [disabled]="!putJamForm.valid">GO!</button>
   </form>
   <p>{{jamPut | json}}</p>
 
   <h4>GET Jam Playback</h4>
-  <button type="button" (click)="getJamPlayback()">GO!</button>
+  <button class="button" type="button" (click)="getJamPlayback()">GO!</button>
   <p>{{jamPlayback | json}}</p>
 
   <h4>PUT Jam Playback</h4>
@@ -51,12 +70,12 @@
       Device ID:
       <input type="text" formControlName="device_id">
     </label>
-    <button type="submit" [disabled]="!putJamPlaybackForm.valid">GO!</button>
+    <button class="button" type="submit" [disabled]="!putJamPlaybackForm.valid">GO!</button>
   </form>
   <p>{{jamPlaybackPut | json}}</p>
 
   <h4>GET Jam Create</h4>
-  <button type="button" (click)="getJamCreate()">GO!</button>
+  <button class="button" type="button" (click)="getJamCreate()">GO!</button>
   <p>{{jamCreate | json}}</p>
 
   <h4>PUT Jam Join</h4>
@@ -65,12 +84,12 @@
       Label:
       <input type="text" formControlName="label">
     </label>
-    <button type="submit" [disabled]="!putJamJoinForm.valid">GO!</button>
+    <button class="button" type="submit" [disabled]="!putJamJoinForm.valid">GO!</button>
   </form>
   <p>{{jamJoin | json}}</p>
 
   <h4>GET Jam Leave</h4>
-  <button type="button" (click)="getJamLeave()">GO!</button>
+  <button class="button" type="button" (click)="getJamLeave()">GO!</button>
   <p>{{jamLeave | json}}</p>
 </section>
 <hr>
@@ -78,7 +97,7 @@
   <h1>Queue</h1>
 
   <h4>GET Queue</h4>
-  <button type="button" (click)="getQueue()">GO!</button>
+  <button class="button" type="button" (click)="getQueue()">GO!</button>
   <p>{{queue | json}}</p>
 
   <h4>PUT Queue Vote</h4>
@@ -87,7 +106,7 @@
       Track:
       <input type="text" formControlName="track">
     </label>
-    <button type="submit" [disabled]="!putQueueVoteForm.valid">GO!</button>
+    <button class="button" type="submit" [disabled]="!putQueueVoteForm.valid">GO!</button>
   </form>
   <p>{{queueVotePut | json}}</p>
 
@@ -101,7 +120,7 @@
       Type:
       <input type="text" formControlName="type">
     </label>
-    <button type="submit" [disabled]="!putQueuePlaylistForm.valid">GO!</button>
+    <button class="button" type="submit" [disabled]="!putQueuePlaylistForm.valid">GO!</button>
   </form>
   <p>{{queuePlaylistPut | json}}</p>
 </section>
@@ -110,11 +129,11 @@
   <h1>Spotify</h1>
 
   <h4>GET Spotify Devices</h4>
-  <button type="button" (click)="getSpotifyDevices()">GO!</button>
+  <button class="button" type="button" (click)="getSpotifyDevices()">GO!</button>
   <p>{{spotifyDevices | json}}</p>
 
   <h4>GET Spotify Playlists</h4>
-  <button type="button" (click)="getSpotifyPlaylists()">GO!</button>
+  <button class="button" type="button" (click)="getSpotifyPlaylists()">GO!</button>
   <p>{{spotifyPlaylists | json}}</p>
 
   <h4>PUT Spotify Search</h4>
@@ -127,7 +146,7 @@
       Type:
       <input type="text" formControlName="type">
     </label>
-    <button type="submit" [disabled]="!putSpotifySearchForm.valid">GO!</button>
+    <button class="button" type="submit" [disabled]="!putSpotifySearchForm.valid">GO!</button>
   </form>
   <p>{{spotifySearch | json}}</p>
 </section>
@@ -136,14 +155,14 @@
   <h1>Socket</h1>
 
   <h4>Connect Socket</h4>
-  <button type="button" (click)="connectSocket()">GO!</button>
+  <button class="button" type="button" (click)="connectSocket()">GO!</button>
   <p *ngIf="socketDefined()">Connected: {{socketConnected()}}</p>
 
   <h4>Disconnect Socket</h4>
-  <button type="button" (click)="disconnectSocket()">GO!</button>
+  <button class="button" type="button" (click)="disconnectSocket()">GO!</button>
 
   <h4>Show Socket Events</h4>
-  <button type="button" (click)="hideSocketEvents = !hideSocketEvents">GO!</button>
+  <button class="button" type="button" (click)="hideSocketEvents = !hideSocketEvents">GO!</button>
 
   <div [hidden]="hideSocketEvents">
     <p>Playback: {{socketPlaybackMsg | json}}</p>
