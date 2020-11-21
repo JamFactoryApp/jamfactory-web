@@ -7,7 +7,7 @@
 
     <div class="corner-left">
       <img *ngIf="playback?.playback?.Item" class="album-cover" [src]="playback.playback.Item.album.images[1].url" alt="album cover">
-      <img *ngIf="!(playback?.playback?.Item)" class="album-cover" src="../../../assets/gopher.png" alt="album cover">
+      <img *ngIf="!(playback?.playback?.Item)" class="album-cover" src="../../../../assets/gopher.png" alt="album cover">
       <p class="playback-text" *ngIf="playback?.playback?.Item">
         <span class="title-text">{{playback.playback.Item.name}}</span><br>
         <span class="artist-text">{{playback.playback.Item.artists[0].name}}</span>

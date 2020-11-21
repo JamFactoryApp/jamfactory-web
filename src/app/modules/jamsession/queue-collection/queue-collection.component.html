@@ -1,6 +1,6 @@
 <div class="d-flex align-items-center voted-even" style="padding-left: 0.5rem">
   <img *ngIf="collection.images.length !== 0" src="{{collection.images[0].url}}" class="playlist-cover">
-  <img *ngIf="collection.images.length === 0" src="../../../assets/gopher.png" class="playlist-cover">
+  <img *ngIf="collection.images.length === 0" src="../../../../assets/gopher.png" class="playlist-cover">
   <div class="flex-grow-1 ml-3" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">
     <span class="medium">{{collection.name}}</span>
     <br>

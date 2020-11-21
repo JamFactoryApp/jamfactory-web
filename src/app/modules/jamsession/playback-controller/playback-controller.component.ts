@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {faPlay, faPause, faSignOutAlt, faCog} from '@fortawesome/free-solid-svg-icons';
-import {AuthService} from '../../services/auth.service';
-import {JamsessionService} from '../../services/jamsession.service';
+import {AuthService} from '../../../core/http/auth.service';
+import {JamsessionService} from '../../../core/http/jamsession.service';
 import {Router} from '@angular/router';
 import {SetPlaybackRequestBody, AuthCurrentResponseBody, GetPlaybackResponseBody} from 'jamfactory-types';
 

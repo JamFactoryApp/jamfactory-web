@@ -1,11 +1,11 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
-import {AuthService} from '../../services/auth.service';
-import {JamsessionService} from '../../services/jamsession.service';
-import {QueueService} from '../../services/queue.service';
-import {SpotifyService} from '../../services/spotify.service';
-import {WebsocketService} from '../../services/websocket.service';
+import {AuthService} from '../../core/http/auth.service';
+import {JamsessionService} from '../../core/http/jamsession.service';
+import {QueueService} from '../../core/http/queue.service';
+import {SpotifyService} from '../../core/http/spotify.service';
+import {WebsocketService} from '../../core/socket/websocket.service';
 import {
   GetJamSessionResponseBody,
   GetPlaybackResponseBody,
@@ -21,10 +21,10 @@ import {
 
 @Component({
   selector: 'app-jam-session',
-  templateUrl: './jam-session.component.html',
-  styleUrls: ['./jam-session.component.scss']
+  templateUrl: './jamsession.component.html',
+  styleUrls: ['./jamsession.component.scss']
 })
-export class JamSessionComponent implements OnInit, OnDestroy {
+export class JamsessionComponent implements OnInit, OnDestroy {
   jamSession: GetJamSessionResponseBody;
   current: AuthCurrentResponseBody;
   playback: GetPlaybackResponseBody;

@@ -1,5 +1,5 @@
 import {Component, HostListener, Input, OnInit, ElementRef, ViewChildren, QueryList, ViewChild} from '@angular/core';
-import {SpotifyService} from '../../services/spotify.service';
+import {SpotifyService} from '../../../core/http/spotify.service';
 import {FormControl} from '@angular/forms';
 import {faSearch, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 

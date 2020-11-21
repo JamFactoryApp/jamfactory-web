@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../../core/http/auth.service';
 import {Router} from '@angular/router';
-import {JamsessionService} from '../../services/jamsession.service';
-import {QueueService} from '../../services/queue.service';
-import {SpotifyService} from '../../services/spotify.service';
+import {JamsessionService} from '../../../core/http/jamsession.service';
+import {QueueService} from '../../../core/http/queue.service';
+import {SpotifyService} from '../../../core/http/spotify.service';
 import {FormBuilder} from '@angular/forms';
-import {WebsocketService} from '../../services/websocket.service';
+import {WebsocketService} from '../../../core/socket/websocket.service';
 import * as JamFactoryApi from 'jamfactory-types';
 
 @Component({

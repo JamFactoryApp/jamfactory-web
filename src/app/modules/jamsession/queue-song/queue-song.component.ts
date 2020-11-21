@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import {faHeart as iconVote} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as iconNVote} from '@fortawesome/free-regular-svg-icons';
-import {QueueService} from '../../services/queue.service';
+import {QueueService} from '../../../core/http/queue.service';
 import {VoteRequestBody, QueueSong} from 'jamfactory-types';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
 

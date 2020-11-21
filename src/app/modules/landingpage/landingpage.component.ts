@@ -1,19 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../core/http/auth.service';
 import {Router} from '@angular/router';
-import {JamsessionService} from '../../services/jamsession.service';
-import {FormBuilder, FormControl} from '@angular/forms';
-import {JoinRequestBody} from 'jamfactory-types';
+import {JamsessionService} from '../../core/http/jamsession.service';
+import { FormControl} from '@angular/forms';
+import {JoinRequestBody, JamAuthStatus} from 'jamfactory-types';
 
 @Component({
   selector: 'app-landing-page',
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss']
+  templateUrl: './landingpage.component.html',
+  styleUrls: ['./landingpage.component.scss']
 })
 export class LandingpageComponent implements OnInit {
-  public userStatus: string;
-  public userLabel: string;
-  public userAuthorized: boolean;
+
+  private authStatus: JamAuthStatus = this.auth.defaultStatus;
 
   labelField = new FormControl('');
   wrong = false;
@@ -21,16 +20,14 @@ export class LandingpageComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private jam: JamsessionService,
-    private router: Router,
-    private fb: FormBuilder
+    private router: Router
   ) {
+    this.auth.getCurrent().subscribe(value => this.authStatus = value);
   }
 
   ngOnInit(): void {
     this.auth.getCurrent().subscribe(value => {
-      this.userStatus = value.user;
-      this.userLabel = value.label;
-      this.userAuthorized = value.authorized;
+      this.authStatus = value;
       this.checkForRedirect();
     });
   }
@@ -45,12 +42,11 @@ export class LandingpageComponent implements OnInit {
   }
 
   checkForRedirect(): void {
-    if (this.userLabel) {
+    if (this.authStatus.label) {
 
       this.jam.getJamsession().subscribe(value => {
-        this.router.navigate(['/' + this.userLabel]);
-      })
-
+        this.router.navigate(['/' + this.authStatus.label]);
+      });
     }
   }
 
@@ -63,8 +59,7 @@ export class LandingpageComponent implements OnInit {
   join(): void {
     const body: JoinRequestBody = {
       label: this.labelField.value
-    }
-
+    };
     this.jam.joinJamSession(body).subscribe(value => {
       this.router.navigate(['/' + value.label]);
     }, error1 => {
