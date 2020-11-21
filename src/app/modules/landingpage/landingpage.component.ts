@@ -12,7 +12,7 @@ import {JoinRequestBody, JamAuthStatus} from 'jamfactory-types';
 })
 export class LandingpageComponent implements OnInit {
 
-  private authStatus: JamAuthStatus = this.auth.defaultStatus;
+  public authStatus: JamAuthStatus = this.auth.defaultStatus;
 
   labelField = new FormControl('');
   wrong = false;
