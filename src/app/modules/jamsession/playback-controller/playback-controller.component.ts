@@ -50,7 +50,7 @@ export class PlaybackControllerComponent implements OnInit {
   leave(): void {
     this.jamService.leaveJamSession().subscribe( value => {
       if (value.success) {
-        this.router.navigate(['/']);
+        this.router.navigate(['./']);
       }
     });
   }

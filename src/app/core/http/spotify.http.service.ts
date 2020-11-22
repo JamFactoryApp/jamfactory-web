@@ -16,22 +16,18 @@ import {ErrorService} from '../errors/error.service';
   providedIn: 'root'
 })
 export class SpotifyHttpService {
-  private httpOptions = {
-    withCredentials: true
-  };
-  private apiUrl = environment.JAMFACTORY_API_URL + '/api/v1/spotify';
 
   constructor(private http: HttpClient, private errorService: ErrorService) { }
 
   getDevices(): Observable<UserDevicesResponseBody> {
-    return this.http.get<UserDevicesResponseBody>(this.apiUrl + '/devices', this.httpOptions).pipe(catchError(this.errorService.handle));
+    return this.http.get<UserDevicesResponseBody>('spotify/devices').pipe(catchError(this.errorService.handle));
   }
 
   getPlaylists(): Observable<UserPlaylistsResponseBody> {
-    return this.http.get<UserPlaylistsResponseBody>(this.apiUrl + '/playlists', this.httpOptions).pipe(catchError(this.errorService.handle));
+    return this.http.get<UserPlaylistsResponseBody>('spotify/playlists').pipe(catchError(this.errorService.handle));
   }
 
   putSearch(body: SpotifySearchRequestBody): Observable<SpotifySearchResponseBody> {
-    return this.http.put<SpotifySearchResponseBody>(this.apiUrl + '/search', body, this.httpOptions).pipe(catchError(this.errorService.handle));
+    return this.http.put<SpotifySearchResponseBody>('spotify/search', body).pipe(catchError(this.errorService.handle));
   }
 }

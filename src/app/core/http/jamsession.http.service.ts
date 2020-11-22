@@ -27,53 +27,33 @@ import {catchError} from 'rxjs/operators';
 })
 export class JamsessionHttpService {
 
-  private httpOptions = {
-    withCredentials: true
-  };
-
-  private apiUrl = environment.JAMFACTORY_API_URL + '/api/v1/jam';
-
   constructor(private http: HttpClient, private router: Router, private errorService: ErrorService) { }
 
   getJamsession(): Observable<JamSessionDetails> {
-   return this.http
-     .get<GetJamSessionResponseBody>(this.apiUrl, this.httpOptions)
-     .pipe(catchError(this.errorService.handle));
+   return this.http.get<GetJamSessionResponseBody>('jam').pipe(catchError(this.errorService.handle));
   }
 
   putJamsession(body: SetJamSessionRequestBody): Observable<JamSessionDetails> {
-    return this.http
-      .put<SetJamSessionResponseBody>(this.apiUrl, body, this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+    return this.http.put<SetJamSessionResponseBody>('jam', body).pipe(catchError(this.errorService.handle));
   }
 
   getPlayback(): Observable<JamPlaybackBody> {
-    return this.http
-      .get<GetPlaybackResponseBody>(this.apiUrl + '/playback', this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+    return this.http.get<GetPlaybackResponseBody>('jam/playback').pipe(catchError(this.errorService.handle));
   }
 
   putPlayback(body: SetPlaybackRequestBody): Observable<JamPlaybackBody> {
-    return this.http
-      .put<SetPlaybackResponseBody>(this.apiUrl + '/playback', body, this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+    return this.http.put<SetPlaybackResponseBody>('jam/playback', body).pipe(catchError(this.errorService.handle));
   }
 
   createJamsession(): Observable<JamLabelBody> {
-    return this.http
-      .get<CreateJamSessionResponseBody>(this.apiUrl + '/create', this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+    return this.http.get<CreateJamSessionResponseBody>('jam/create').pipe(catchError(this.errorService.handle));
   }
 
   joinJamSession(body: JoinRequestBody): Observable<JamLabelBody> {
-    return this.http
-      .put<JoinResponseBody>(this.apiUrl + '/join', body, this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+    return this.http.put<JoinResponseBody>('jam/join', body).pipe(catchError(this.errorService.handle));
   }
 
   leaveJamSession(): Observable<JamSuccessConfirmation> {
-    return this.http
-      .get<LeaveJamSessionResponseBody>(this.apiUrl + '/leave', this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+    return this.http.get<LeaveJamSessionResponseBody>('jam/leave').pipe(catchError(this.errorService.handle));
   }
 }

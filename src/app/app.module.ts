@@ -5,6 +5,7 @@ import {DebugComponent} from './shared/components/debug/debug.component';
 import {PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import {SharedModule} from './shared/shared.module';
 import {BrowserModule} from '@angular/platform-browser';
+import {httpInterceptorProviders} from './core/interceptors/index';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import {BrowserModule} from '@angular/platform-browser';
     SharedModule,
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

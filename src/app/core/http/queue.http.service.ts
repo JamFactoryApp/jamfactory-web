@@ -19,30 +19,17 @@ import {ErrorService} from '../errors/error.service';
 })
 export class QueueHttpService {
 
-  private httpOptions = {
-    withCredentials: true
-  };
-
-  // private queueSubject: BehaviorSubject<JamQueue> = new BehaviorSubject<JamQueue>({queue: []});
-  private apiUrl = environment.JAMFACTORY_API_URL + '/api/v1/queue';
-
   constructor(private http: HttpClient, private errorService: ErrorService) { }
 
   getQueue(): Observable<JamQueue> {
-    return this.http
-      .get<GetQueueResponseBody>(this.apiUrl, this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+    return this.http.get<GetQueueResponseBody>('queue').pipe(catchError(this.errorService.handle));
   }
 
   putQueueVote(body: VoteRequestBody): Observable<JamQueue> {
-    return this.http
-      .put<VoteResponseBody>(this.apiUrl + '/vote', body, this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+    return this.http.put<VoteResponseBody>('queue/vote', body).pipe(catchError(this.errorService.handle));
   }
 
   putQueueCollection(body: AddCollectionRequestBody): Observable<JamQueue> {
-    return this.http
-      .put<AddCollectionResponseBody>(this.apiUrl + '/collection', body, this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+    return this.http.put<AddCollectionResponseBody>('queue/collection', body).pipe(catchError(this.errorService.handle));
   }
 }
