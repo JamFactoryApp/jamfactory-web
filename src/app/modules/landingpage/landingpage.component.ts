@@ -21,7 +21,7 @@ export class LandingpageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authStore.authStatusObs.subscribe(() => {
+    this.authStore.authStatusObs.subscribe((value) => {
       this.checkForRedirect();
     });
   }
@@ -30,7 +30,7 @@ export class LandingpageComponent implements OnInit {
     if (this.authStore.authStatus.label) {
 
       this.jam.getJamsession().subscribe(value => {
-        this.router.navigate(['/' + this.authStore.authStatus.label]);
+        this.router.navigate(['/jam/' + this.authStore.authStatus.label]);
       });
     }
   }

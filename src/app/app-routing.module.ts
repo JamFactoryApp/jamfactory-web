@@ -6,18 +6,19 @@ import {PageNotFoundComponent} from './shared/components/page-not-found/page-not
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./modules/landingpage/landingpage.module').then(m => m.LandingpageModule)
+    loadChildren: () => import('./modules/landingpage/landingpage.module').then(m => m.LandingpageModule),
+    pathMatch: 'full'
   },
   {
     path: 'debug',
     component: DebugComponent
   },
   {
-    path: ':jamlabel',
+    path: 'jam/:jamlabel',
     loadChildren: () => import('./modules/jamsession/jamsession.module').then(m => m.JamsessionModule)
   },
   {
-    path: '*',
+    path: '**',
     component: PageNotFoundComponent
   }
 ];

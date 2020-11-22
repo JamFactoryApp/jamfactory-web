@@ -36,7 +36,7 @@ export class InitiationComponent implements OnInit {
 
   create(): void {
     this.jamsessionService.createJamsession().subscribe(value => {
-      this.router.navigate(['/' + value.label]);
+      this.router.navigate(['/jam/' + value.label]);
     });
   }
 
@@ -45,7 +45,7 @@ export class InitiationComponent implements OnInit {
       label: this.labelField.value
     };
     this.jamsessionService.joinJamSession(body).subscribe(value => {
-      this.router.navigate(['/' + value.label]);
+      this.router.navigate(['/jam/' + value.label]);
     }, error1 => {
       this.wrong = true;
     });

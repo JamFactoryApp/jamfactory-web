@@ -4,7 +4,10 @@ import {JamsessionComponent} from './jamsession.component';
 
 
 const routes: Routes = [
-  {path: '', component: JamsessionComponent}
+  {
+    path: '',
+    component: JamsessionComponent
+  }
 ];
 
 @NgModule({
