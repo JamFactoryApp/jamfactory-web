@@ -1,5 +1,5 @@
 import {Component, HostListener, Input, OnInit, ElementRef, ViewChildren, QueryList, ViewChild} from '@angular/core';
-import {SpotifyService} from '../../../core/http/spotify.service';
+import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 import {FormControl} from '@angular/forms';
 import {faSearch, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 
@@ -19,7 +19,7 @@ import {
 export class SearchComponent implements OnInit {
 
   constructor(
-    private spotifyService: SpotifyService,
+    private spotifyService: SpotifyHttpService,
     private elementRef: ElementRef
   ) {
   }

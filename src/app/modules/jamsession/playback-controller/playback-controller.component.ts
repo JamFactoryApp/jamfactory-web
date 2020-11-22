@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {faPlay, faPause, faSignOutAlt, faCog} from '@fortawesome/free-solid-svg-icons';
-import {AuthService} from '../../../core/http/auth.service';
-import {JamsessionService} from '../../../core/http/jamsession.service';
+import {AuthHttpService} from '../../../core/http/auth.http.service';
+import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
 import {SetPlaybackRequestBody, AuthCurrentResponseBody, GetPlaybackResponseBody} from 'jamfactory-types';
 
@@ -25,7 +25,7 @@ export class PlaybackControllerComponent implements OnInit {
 
   Math = Math;
 
-  constructor(private authService: AuthService, private jamService: JamsessionService, private router: Router) {
+  constructor(private authService: AuthHttpService, private jamService: JamsessionHttpService, private router: Router) {
   }
 
 

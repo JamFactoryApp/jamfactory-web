@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../../core/http/auth.service';
+import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {Router} from '@angular/router';
-import {JamsessionService} from '../../../core/http/jamsession.service';
-import {QueueService} from '../../../core/http/queue.service';
-import {SpotifyService} from '../../../core/http/spotify.service';
+import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
+import {QueueHttpService} from '../../../core/http/queue.http.service';
+import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 import {FormBuilder} from '@angular/forms';
 import {WebsocketService} from '../../../core/socket/websocket.service';
 import * as JamFactoryApi from 'jamfactory-types';
@@ -70,10 +70,10 @@ export class DebugComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService,
-    private jamsessionService: JamsessionService,
-    private queueService: QueueService,
-    private spotifyService: SpotifyService,
+    private authService: AuthHttpService,
+    private jamsessionService: JamsessionHttpService,
+    private queueService: QueueHttpService,
+    private spotifyService: SpotifyHttpService,
     private websocketService: WebsocketService
   ) {
   }

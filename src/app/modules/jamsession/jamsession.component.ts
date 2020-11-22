@@ -1,10 +1,10 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
-import {AuthService} from '../../core/http/auth.service';
-import {JamsessionService} from '../../core/http/jamsession.service';
-import {QueueService} from '../../core/http/queue.service';
-import {SpotifyService} from '../../core/http/spotify.service';
+import {AuthHttpService} from '../../core/http/auth.http.service';
+import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
+import {QueueHttpService} from '../../core/http/queue.http.service';
+import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {WebsocketService} from '../../core/socket/websocket.service';
 import {
   GetJamSessionResponseBody,
@@ -34,10 +34,10 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private authService: AuthService,
-    private jamsessionService: JamsessionService,
-    private queueService: QueueService,
-    private spotifyService: SpotifyService,
+    private authService: AuthHttpService,
+    private jamsessionService: JamsessionHttpService,
+    private queueService: QueueHttpService,
+    private spotifyService: SpotifyHttpService,
     private websocketService: WebsocketService
   ) {
     this.websocketService.connect();

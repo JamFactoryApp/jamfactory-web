@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../core/http/auth.service';
+import {AuthHttpService} from '../../core/http/auth.http.service';
 import {Router} from '@angular/router';
-import {JamsessionService} from '../../core/http/jamsession.service';
-import { FormControl} from '@angular/forms';
-import {JoinRequestBody, JamAuthStatus} from 'jamfactory-types';
+import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
+import {AuthStoreService} from '../../core/stores/auth.store.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -12,59 +11,27 @@ import {JoinRequestBody, JamAuthStatus} from 'jamfactory-types';
 })
 export class LandingpageComponent implements OnInit {
 
-  public authStatus: JamAuthStatus = this.auth.defaultStatus;
-
-  labelField = new FormControl('');
-  wrong = false;
-
   constructor(
-    private auth: AuthService,
-    private jam: JamsessionService,
-    private router: Router
+    private auth: AuthHttpService,
+    private jam: JamsessionHttpService,
+    private router: Router,
+    private authStore: AuthStoreService
   ) {
-    this.auth.getCurrent().subscribe(value => this.authStatus = value);
+    this.auth.getCurrent().subscribe(value => authStore.authStatus = value);
   }
 
   ngOnInit(): void {
-    this.auth.getCurrent().subscribe(value => {
-      this.authStatus = value;
+    this.authStore.authStatusObs.subscribe(() => {
       this.checkForRedirect();
     });
   }
 
-  login(): void {
-    this.auth.getLogin().subscribe(value => {
-      this.wrong = false;
-      window.location.href = value.url;
-    }, error => {
-      this.wrong = true;
-    });
-  }
-
   checkForRedirect(): void {
-    if (this.authStatus.label) {
+    if (this.authStore.authStatus.label) {
 
       this.jam.getJamsession().subscribe(value => {
-        this.router.navigate(['/' + this.authStatus.label]);
+        this.router.navigate(['/' + this.authStore.authStatus.label]);
       });
     }
   }
-
-  create(): void {
-    this.jam.createJamsession().subscribe(value => {
-      this.router.navigate(['/' + value.label]);
-    });
-  }
-
-  join(): void {
-    const body: JoinRequestBody = {
-      label: this.labelField.value
-    };
-    this.jam.joinJamSession(body).subscribe(value => {
-      this.router.navigate(['/' + value.label]);
-    }, error1 => {
-      this.wrong = true;
-    });
-  }
-
 }

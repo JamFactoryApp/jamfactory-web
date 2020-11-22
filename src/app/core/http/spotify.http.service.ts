@@ -15,7 +15,7 @@ import {ErrorService} from '../errors/error.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SpotifyService {
+export class SpotifyHttpService {
   private httpOptions = {
     withCredentials: true
   };

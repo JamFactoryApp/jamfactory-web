@@ -25,7 +25,7 @@ import {catchError} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class JamsessionService {
+export class JamsessionHttpService {
 
   private httpOptions = {
     withCredentials: true

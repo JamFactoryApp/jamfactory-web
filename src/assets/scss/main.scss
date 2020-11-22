@@ -2,9 +2,7 @@
 
 @import "../../../node_modules/bootstrap";
 
-body {
-  padding-top: 45px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap');
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 body::-webkit-scrollbar {
@@ -15,4 +13,8 @@ body::-webkit-scrollbar {
 body {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  min-height: 100vh;
+  min-width: 100vw;
 }
+
+

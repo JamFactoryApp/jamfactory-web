@@ -17,7 +17,7 @@ import {ErrorService} from '../errors/error.service';
 @Injectable({
   providedIn: 'root'
 })
-export class QueueService {
+export class QueueHttpService {
 
   private httpOptions = {
     withCredentials: true

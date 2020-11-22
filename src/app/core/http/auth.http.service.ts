@@ -17,19 +17,13 @@ import {ErrorService} from '../errors/error.service';
   providedIn: 'root'
 })
 
-export class AuthService {
+export class AuthHttpService {
 
   private httpOptions = {
     withCredentials: true,
   };
 
   private apiUrl = environment.JAMFACTORY_API_URL + '/api/v1/auth';
-  public defaultStatus: JamAuthStatus = {
-    label: '',
-    user: 'New',
-    authorized: false
-  };
-  private authStatusSubject: BehaviorSubject<JamAuthStatus> = new BehaviorSubject<JamAuthStatus>(this.defaultStatus);
 
   constructor(private http: HttpClient, private router: Router, private errorService: ErrorService) { }
 
@@ -49,12 +43,5 @@ export class AuthService {
     return this.http
       .get<LoginResponseBody>(this.apiUrl + '/login', this.httpOptions)
       .pipe(catchError(this.errorService.handle));
-  }
-
-  checkForRedirect(): void {
-    const label = this.authStatusSubject.value.label;
-    if (label !== '') {
-      this.router.navigate(['/' + label]);
-    }
   }
 }
