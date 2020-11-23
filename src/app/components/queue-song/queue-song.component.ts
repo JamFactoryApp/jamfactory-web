@@ -6,7 +6,6 @@ import SongWithoutId = JamFactoryApi.SongWithoutId;
 import FullTrack = Zmb3SpotifyApi.FullTrack;
 import PutQueueVoteRequest = JamFactoryApi.PutQueueVoteRequest;
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
-import {EventEmitter} from '@angular/core';
 
 type Vec3 = [number, number, number];
 
@@ -23,13 +22,6 @@ export class QueueSongComponent implements OnInit {
   iconNVote = iconNVote;
 
   @ViewChild('cover') cover: ElementRef;
-
-  // ngAfterViewInit(): void {
-  //   // this.logo = this.cover;
-  //   // console.log(this.cover.nativeElement.src);
-  //
-  //   this.getImgColor(this.cover.nativeElement);
-  // }
 
   @Input()
   item: FullTrack | TrackObjectFull;
@@ -55,15 +47,9 @@ export class QueueSongComponent implements OnInit {
   VibrantColor;
   MutedColor;
 
-  constructor(
-    private queueService: QueueService
-  ) {
-  }
+  constructor(private queueService: QueueService) {}
 
-  ngOnInit(): void {
-    // console.log(this.logo);
-    // this.getImgColor(this.cover.nativeElement);
-  }
+  ngOnInit(): void {}
 
   getArtist(item): string {
     const len = item.length;
@@ -78,38 +64,14 @@ export class QueueSongComponent implements OnInit {
   }
 
   getImgColor(): void {
-
-    // console.log('NEW:');
     const colorThief = new ColorThief();
-    const col = colorThief.getColor(this.cover.nativeElement);
-    // const col2 = colorThief.getPalette(this.cover.nativeElement)[0];
+    const palette = colorThief.getPalette(this.cover.nativeElement, 5, 50);
+    const col = palette[0];
+
     this.MutedColor = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ')';
-    // this.VibrantColor = 'rgba(' + col2[0] + ',' + col2[1] + ',' + col2[2] + ')';
-
-    // console.log(colorThief.getPalette(this.cover.nativeElement));
-    // console.log(colorThief.getColor(this.cover.nativeElement));
-    // console.log(this.item.name);
-    const palette = colorThief.getPalette(this.cover.nativeElement);
-
-    // console.log(this.highestDiff(palette, col));
 
     const col2 = this.highestDiff(palette, col);
     this.VibrantColor = 'rgba(' + col2[0] + ',' + col2[1] + ',' + col2[2] + ')';
-    // console.log(col2);
-    // console.log(this.rgbDiff(rgb1, rgb2));
-
-    // const test1: Vec3 = [ 7, 4, 5 ];
-    // const test2: Vec3 =  [ 175, 118, 66 ];
-
-    // console.log(test2[0]);
-    // console.log(this.rgbDiff(test1, test2));
-    // const vm = this;
-
-    // console.log(this.deltaE94(test1, test2));
-    // this.test2();
-
-    // console.log(colorThief.getPalette(this.cover.nativeElement));
-    // console.log(colorThief.getColor(this.cover.nativeElement));
   }
 
   highestDiff(palette, col): any {
