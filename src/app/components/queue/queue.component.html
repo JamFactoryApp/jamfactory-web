@@ -1,5 +1,6 @@
 <div class="label" *ngIf="songList?.length !== 0">Next:</div>
 <app-queue-song *ngFor="let song of songList; let pos = index" [inQueue]="false" [songVoted]="song.voted"
                 [songVotes]="song.votes" [queue]="songList" [item]="song.spotifyTrackFull" [voteMethod]="voteMethod"
-                [pos]="pos"></app-queue-song>
+                [pos]="pos">
+</app-queue-song>
 <span *ngIf="songList && songList.length === 0">Currently there are no songs in the queue!</span>

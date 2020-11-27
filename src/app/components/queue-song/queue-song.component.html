@@ -10,8 +10,8 @@
   <div class="btn-group-imitate p-3 btn" (click)="vote(item)">
     <button class="btn vote-btn"
             [ngStyle]="inQueue ? {'border-radius': '0.2rem'} : {'border-radius': '0.2rem 0 0 0.2rem'}">
-      <fa-icon [icon]="voted(item) ? iconVote : iconNVote"
-               [ngStyle]="voted(item) ? {'color': 'darkred'} : {'color': ''}"></fa-icon>
+      <fa-icon [icon]="songVoted ? iconVote : iconNVote"
+               [ngStyle]="songVoted ? {'color': 'darkred'} : {'color': ''}"></fa-icon>
     </button>
     <div class="align-self-center votes-display" *ngIf="songVotes !== undefined">{{songVotes}}</div>
   </div>

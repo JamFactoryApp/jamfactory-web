@@ -19,6 +19,8 @@
   <div class="row">
     <div class="col mt-1">
       <div *ngFor="let item of searchResults?.tracks?.items?.slice(0 + searchShift,searchCount + searchShift)">
+        {{item.id | json}}
+        {{queue[0].voted | json}}
         <app-queue-song style="display: block" #SearchSong [inQueue]="true"   [voteMethod]="voteMethod" [item]="item" [queue]="queue"></app-queue-song>
       </div>
       <div *ngFor="let item of searchResults?.playlists?.items.slice(0 + searchShift,searchCount + searchShift)">

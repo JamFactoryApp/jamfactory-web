@@ -49,7 +49,9 @@ export class QueueSongComponent implements OnInit {
 
   constructor(private queueService: QueueService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.queue);
+  }
 
   getArtist(item): string {
     const len = item.length;
@@ -178,22 +180,26 @@ export class QueueSongComponent implements OnInit {
     return Math.sqrt(xDL * xDL + xDC * xDC + xDH * xDH);
   }
 
-  voted(track: FullTrack | TrackObjectFull): boolean {
-    if (this.queue === undefined) {
-      return false;
-    }
-
-    if (this.queue.length === 0) {
-      return false;
-    }
-
-    for (let i = 0; i < this.queue.length; i++) {
-      if (track.id === this.queue[i].spotifyTrackFull.id && this.queue[i].voted) {
-        return true;
-      }
-    }
-    return false;
+  voted(): boolean {
+    return this.songVoted === true;
   }
+
+  // voted(track: FullTrack | TrackObjectFull): boolean {
+  //   if (this.queue === undefined) {
+  //     return false;
+  //   }
+  //
+  //   if (this.queue.length === 0) {
+  //     return false;
+  //   }
+  //
+  //   for (let i = 0; i < this.queue.length; i++) {
+  //     if (track.id === this.queue[i].spotifyTrackFull.id && this.queue[i].voted) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
   vote(track: FullTrack | TrackObjectFull): void {
     const body: PutQueueVoteRequest = {

@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit {
     private elementRef: ElementRef
   ) {
   }
+
   @Input()
   queue: SongWithoutId[];
 
@@ -56,14 +57,14 @@ export class SearchComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   handlerFunctionResize = (e: MouseEvent) => {
     this.setSearchCount();
-  }
+  };
 
   ngOnInit(): void {
   }
 
   searchEvent(): void {
-      clearTimeout(this.searchTimeout);
-      this.searchTimeout = setTimeout(() => this.search(), 100);
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => this.search(), 100);
   }
 
   setSearchCount(): void {
@@ -78,6 +79,7 @@ export class SearchComponent implements OnInit {
   }
 
   search(): void {
+    console.log(this.queue);
     this.searchShift = 0;
     if (this.searchField.value === '') {
       this.searchResults = undefined;
@@ -92,7 +94,7 @@ export class SearchComponent implements OnInit {
     this.spotifyService.putSearch(body).subscribe(value => {
       value.tracks.items = value.tracks.items.sort((a, b) => b.popularity - a.popularity);
       this.searchResults = value;
-      if (this.searchCount === 1 ) {
+      if (this.searchCount === 1) {
         window.requestAnimationFrame(() => {this.setSearchCount(); });
       }
     });
