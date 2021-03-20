@@ -4,7 +4,7 @@ import {FormControl} from '@angular/forms';
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {AuthStoreService} from '../../../core/stores/auth.store.service';
+import {AuthStore} from '../../../core/stores/auth.store';
 
 @Component({
   selector: 'app-initiation',
@@ -19,7 +19,7 @@ export class InitiationComponent implements OnInit {
     private authService: AuthHttpService,
     private jamsessionService: JamsessionHttpService,
     private router: Router,
-    public authStore: AuthStoreService
+    public authStore: AuthStore
   ) { }
 
   ngOnInit(): void {

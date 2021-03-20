@@ -5,7 +5,7 @@ import {JamAuthStatus} from 'jamfactory-types';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthStoreService {
+export class AuthStore {
 
   private defaultStatus: JamAuthStatus = {
     label: '',
@@ -25,7 +25,7 @@ export class AuthStoreService {
     this.authStatusSubject.next(authStatus);
   }
 
-  get authStatusObs(): Observable<JamAuthStatus> {
+  get $authStatus(): Observable<JamAuthStatus> {
     return new Observable(fn => this.authStatusSubject.subscribe(fn));
   }
 }

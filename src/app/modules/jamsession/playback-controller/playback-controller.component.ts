@@ -3,7 +3,11 @@ import {faPlay, faPause, faSignOutAlt, faCog} from '@fortawesome/free-solid-svg-
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {SetPlaybackRequestBody, AuthCurrentResponseBody, GetPlaybackResponseBody} from 'jamfactory-types';
+import {SetPlaybackRequestBody, AuthCurrentResponseBody, GetPlaybackResponseBody, JamAuthStatus, JamPlaybackBody} from 'jamfactory-types';
+import {QueueService} from '../../../core/services/queue.service';
+import {QueueStore} from '../../../core/stores/queue.store';
+import {JamsessionStore} from '../../../core/stores/jamsession.store';
+import {AuthStore} from '../../../core/stores/auth.store';
 
 
 @Component({
@@ -12,12 +16,6 @@ import {SetPlaybackRequestBody, AuthCurrentResponseBody, GetPlaybackResponseBody
   styleUrls: ['./playback-controller.component.scss']
 })
 export class PlaybackControllerComponent implements OnInit {
-  @Input()
-  playback: GetPlaybackResponseBody;
-
-  @Input()
-  current: AuthCurrentResponseBody;
-
   faPlay = faPlay;
   faPause = faPause;
   faSignOut = faSignOutAlt;
@@ -25,11 +23,29 @@ export class PlaybackControllerComponent implements OnInit {
 
   Math = Math;
 
-  constructor(private authService: AuthHttpService, private jamService: JamsessionHttpService, private router: Router) {
+  constructor(
+    private authService: AuthHttpService,
+    private jamService: JamsessionHttpService,
+    private router: Router,
+    private queueStore: QueueStore,
+    private jamStore: JamsessionStore,
+    private authStore: AuthStore) {
   }
 
+  public current: JamAuthStatus;
+  public playback: JamPlaybackBody;
 
+  public playing: boolean;
+  
   ngOnInit(): void {
+    this.authStore.$authStatus.subscribe(value => {
+      this.current = value;
+    });
+
+    this.jamStore.$playback.subscribe(value => {
+      this.playback = value;
+      this.playing = this.playback?.playback?.Item !== undefined;
+    });
   }
 
   getTime(millisecons: number): string {
@@ -60,7 +76,7 @@ export class PlaybackControllerComponent implements OnInit {
       playing: true
     };
     this.jamService.putPlayback(body).subscribe((value) => {
-      this.playback = value;
+      this.jamStore.playback = value;
     });
   }
 
@@ -69,7 +85,8 @@ export class PlaybackControllerComponent implements OnInit {
       playing: false
     };
     this.jamService.putPlayback(body).subscribe((value) => {
-      this.playback = value;
+      console.log(value);
+      this.jamStore.playback = value;
     });
   }
 

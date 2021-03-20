@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AuthHttpService} from '../../core/http/auth.http.service';
 import {Router} from '@angular/router';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
-import {AuthStoreService} from '../../core/stores/auth.store.service';
+import {AuthStore} from '../../core/stores/auth.store';
+import {JamsessionStore} from '../../core/stores/jamsession.store';
 
 @Component({
   selector: 'app-landing-page',
@@ -15,13 +16,14 @@ export class LandingpageComponent implements OnInit {
     private auth: AuthHttpService,
     private jam: JamsessionHttpService,
     private router: Router,
-    private authStore: AuthStoreService
+    private authStore: AuthStore,
+    private jamStore: JamsessionStore
   ) {
     this.auth.getCurrent().subscribe(value => authStore.authStatus = value);
   }
 
   ngOnInit(): void {
-    this.authStore.authStatusObs.subscribe((value) => {
+    this.authStore.$authStatus.subscribe((value) => {
       this.checkForRedirect();
     });
   }
@@ -30,8 +32,9 @@ export class LandingpageComponent implements OnInit {
     if (this.authStore.authStatus.label) {
 
       this.jam.getJamsession().subscribe(value => {
+        this.jamStore.jamsession = value;
         this.router.navigate(['/jam/' + this.authStore.authStatus.label]);
-      });
+      }, error => {});
     }
   }
 }

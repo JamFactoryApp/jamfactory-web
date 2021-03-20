@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import {QueueSong} from 'jamfactory-types';
+import {QueueStore} from '../../../core/stores/queue.store';
 
 
 @Component({
@@ -8,16 +9,10 @@ import {QueueSong} from 'jamfactory-types';
   styleUrls: ['./queue.component.scss']
 })
 export class QueueComponent implements OnInit {
-  @Input()
-  songList: QueueSong[];
 
-  @Input()
-  voteMethod: (PutQueueVoteRequest) => void;
-
-  @Input()
-  addMethod: (AddCollectionRequestBody) => void;
-
-  constructor() {
+  constructor(
+    public queueStore: QueueStore
+  ) {
   }
 
   ngOnInit(): void {

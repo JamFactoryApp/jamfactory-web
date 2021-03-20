@@ -17,6 +17,10 @@ import {
   SocketPlaybackMessage,
   SocketCloseMessage
 } from 'jamfactory-types';
+import {JamsessionStore} from '../../core/stores/jamsession.store';
+import {QueueStore} from '../../core/stores/queue.store';
+import {QueueService} from '../../core/services/queue.service';
+import {AuthStore} from '../../core/stores/auth.store';
 
 
 @Component({
@@ -36,105 +40,55 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthHttpService,
     private jamsessionService: JamsessionHttpService,
-    private queueService: QueueHttpService,
+    private jamStore: JamsessionStore,
+    private queueStore: QueueStore,
+    private queueService: QueueService,
+    private queueApi: QueueHttpService,
     private spotifyService: SpotifyHttpService,
-    private websocketService: WebsocketService
+    private websocketService: WebsocketService,
+    private authStore: AuthStore,
   ) {
     this.websocketService.connect();
+    this.authService.getCurrent().subscribe(value => authStore.authStatus = value);
   }
+
 
   ngOnInit(): void {
-    this.jamsessionService.getJamsession().subscribe(value => {
-      this.jamSession = value;
-    }, _ => {
-      this.jamsessionService.leaveJamSession().subscribe(() => {
-      });
+    this.jamsessionService.getJamsession().subscribe(
+      value => this.jamStore.jamsession = value,
+      _ => {
+      this.jamsessionService.leaveJamSession().subscribe(() => {});
       this.router.navigate(['/']);
     });
-    this.jamsessionService.getPlayback().subscribe(value => {
-      this.playback = value;
-    });
-    this.authService.getCurrent().subscribe(value => {
-      this.current = value;
-    });
-    this.queueService.getQueue().subscribe(value => {
-      this.queue = value.queue;
-    });
+
+    this.jamsessionService.getPlayback().subscribe(
+      value => this.jamStore.playback = value);
+
+    this.queueApi.getQueue().subscribe(
+      value => this.queueStore.queue = value);
+
     this.websocketService.socket.asObservable().subscribe(
-      value => {
-        switch (value.event) {
-          case 'queue':
-            const queuePayload: SocketQueueMessage = value.message as SocketQueueMessage;
-            this.updateQueueFromSocket(queuePayload.queue);
-            break;
-          case 'playback':
-            const playbackPayload: SocketPlaybackMessage = value.message as SocketPlaybackMessage;
-            this.playback = playbackPayload;
-            break;
-          case 'close':
-            console.error(value.message);
-            break;
-          default:
-            console.error('unknown event');
-        }
-      },
+      value => this.websocketHandler(value),
       error => console.error(error),
-      () => console.log('closed')
-    );
+      () => console.log('closed'));
   }
 
-  setQueueHeight(): object {
-    const viewHeight = document.documentElement.clientHeight;
-
-    const footerHeight = document.getElementById('playback').offsetHeight;
-    const headerHeight = document.getElementById('header').offsetHeight;
-    const searchHeight = document.getElementById('search').offsetHeight;
-
-    const styles = {
-      height: (viewHeight - footerHeight - headerHeight - searchHeight - 10) + 'px',
-      top: headerHeight + 'px',
-    };
-
-    return styles;
-  }
-
-  getQueue(): QueueSong[] {
-    return this.queue;
-  }
-
-
-  updateQueueFromSocket(list: QueueSong[]): void {
-    this.queue = list.map((q) => {
-
-      const song: QueueSong = {
-        spotifyTrackFull: q.spotifyTrackFull,
-        votes: q.votes,
-        voted: false
-      };
-
-      this.getQueue().forEach(value => {
-        if (value.spotifyTrackFull.id === q.spotifyTrackFull.id) {
-          song.voted = value.voted;
-        }
-      });
-      return song;
-    });
-  }
-
-  vote = (body: VoteRequestBody) => {
-    this.queueService.putQueueVote(body).subscribe((response) => {
-
-      this.queue = response.queue;
-
-    });
-  }
-
-  addCollection = (body: AddCollectionRequestBody) => {
-    this.queueService.putQueueCollection(body).subscribe((response) => {
-
-      this.queue = response.queue;
-
-    });
+  websocketHandler(wsMessage): void {
+    switch (wsMessage.event) {
+      case 'queue':
+        const queuePayload: SocketQueueMessage = wsMessage.message as SocketQueueMessage;
+        this.queueService.updateQueueFromSocket(queuePayload.tracks);
+        break;
+      case 'playback':
+        const playbackPayload: SocketPlaybackMessage = wsMessage.message as SocketPlaybackMessage;
+        this.jamStore.playback = playbackPayload;
+        break;
+      case 'close':
+        console.error(wsMessage.message);
+        break;
+      default:
+        console.error('unknown event');
+    }
   }
 
   ngOnDestroy(): void {

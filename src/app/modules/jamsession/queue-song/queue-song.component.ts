@@ -4,6 +4,8 @@ import {faHeart as iconNVote} from '@fortawesome/free-regular-svg-icons';
 import {QueueHttpService} from '../../../core/http/queue.http.service';
 import {VoteRequestBody, QueueSong} from 'jamfactory-types';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
+import {QueueService} from '../../../core/services/queue.service';
+import {QueueStore} from '../../../core/stores/queue.store';
 
 @Component({
   selector: 'app-queue-song',
@@ -16,28 +18,18 @@ export class QueueSongComponent implements OnInit {
   iconNVote = iconNVote;
 
   @Input()
-  item: TrackObjectFull;
+  track: QueueSong;
 
   @Input()
-  queue: QueueSong[];
-
-  @Input()
-  songVotes: number;
-
-  @Input()
-  songVoted: boolean;
-
-  @Input()
-  pos: number;
-
-  @Input()
-  voteMethod: (PutQueueVoteRequest) => void;
+  index: number;
 
   @Input()
   inQueue: boolean;
 
   constructor(
-    private queueService: QueueHttpService
+    private queueApi: QueueHttpService,
+    private queueService: QueueService,
+    private queueStore: QueueStore
   ) {
   }
 
@@ -57,16 +49,16 @@ export class QueueSongComponent implements OnInit {
   }
 
   voted(track: TrackObjectFull): boolean {
-    if (this.queue === undefined) {
+    if (this.queueStore.queue.tracks === undefined) {
       return false;
     }
 
-    if (this.queue.length === 0) {
+    if (this.queueStore.queue.tracks.length === 0) {
       return false;
     }
 
-    for (let i = 0; i < this.queue.length; i++) {
-      if (track.id === this.queue[i].spotifyTrackFull.id && this.queue[i].voted) {
+    for (let i = 0; i < this.queueStore.queue.tracks.length; i++) {
+      if (track.id === this.queueStore.queue.tracks[i].spotifyTrackFull.id && this.queueStore.queue.tracks[i].voted) {
         return true;
       }
     }
@@ -77,6 +69,6 @@ export class QueueSongComponent implements OnInit {
     const body: VoteRequestBody = {
       track: track.id
     };
-    this.voteMethod(body);
+    this.queueService.vote(body);
   }
 }

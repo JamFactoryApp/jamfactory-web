@@ -3,6 +3,7 @@ import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import {AddCollectionRequestBody} from 'jamfactory-types';
 import PlaylistObjectSimplified = SpotifyApi.PlaylistObjectSimplified;
 import AlbumObjectSimplified = SpotifyApi.AlbumObjectSimplified;
+import {QueueService} from '../../../core/services/queue.service';
 
 
 
@@ -22,11 +23,10 @@ export class QueueCollectionComponent implements OnInit {
   @Input()
   collection: PlaylistObjectSimplified | AlbumObjectSimplified;
 
-  @Input()
-  addMethod: (PutPlay) => void;
 
-
-  constructor() {
+  constructor(
+    private queueService: QueueService
+  ) {
   }
 
   ngOnInit(): void {
@@ -47,7 +47,7 @@ export class QueueCollectionComponent implements OnInit {
       collection: collection.id,
       type: 'playlist'
     };
-    this.addMethod(body);
+    this.queueService.addCollection(body);
   }
 
   getArtist(item): string {

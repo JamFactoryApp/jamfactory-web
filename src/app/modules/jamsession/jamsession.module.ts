@@ -7,6 +7,7 @@ import {SearchComponent} from './search/search.component';
 import {JamsessionComponent} from './jamsession.component';
 import {QueueCollectionComponent} from './queue-collection/queue-collection.component';
 import {SharedModule} from '../../shared/shared.module';
+import { TitleComponent } from './title/title.component';
 
 
 
@@ -17,7 +18,8 @@ import {SharedModule} from '../../shared/shared.module';
     QueueComponent,
     SearchComponent,
     JamsessionComponent,
-    QueueCollectionComponent
+    QueueCollectionComponent,
+    TitleComponent
   ],
   imports: [
     JamsessionRoutingModule,

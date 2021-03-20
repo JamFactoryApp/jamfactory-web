@@ -1,14 +1,18 @@
-<div id="header" class="header">
-  <p class="text-center header-text">{{jamSession?.name}} - {{jamSession?.label}}</p>
-</div>
-<div id="search" class="search">
-  <app-search [voteMethod]="vote" [addMethod]="addCollection" [current]="current" [queue]="queue"></app-search>
-</div>
+<div class="main">
 
-<div class="queue" [ngStyle]="setQueueHeight()">
-  <app-queue [voteMethod]="vote" [addMethod]="addCollection" [songList]="queue"></app-queue>
-</div>
+  <app-title id="title" class="title"></app-title>
 
-<div class="footer">
-  <app-playback-controller [playback]="playback" [current]="current"></app-playback-controller>
+
+
+  <div id="search" class="search">
+    <app-search></app-search>
+  </div>
+
+  <div class="queue">
+    <app-queue></app-queue>
+  </div>
+
+  <div class="footer">
+    <app-playback-controller></app-playback-controller>
+  </div>
 </div>
