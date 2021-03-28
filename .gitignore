@@ -11,6 +11,7 @@ yarn.lock
 
 # dependencies
 /node_modules
+yarn.lock
 
 # profiling files
 chrome-profiler-events*.json

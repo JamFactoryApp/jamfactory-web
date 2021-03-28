@@ -1,0 +1,29 @@
+<div>
+  <div class="row">
+    <div class="col text-center h4 welcome-text">Join a JamSession</div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-4 offset-md-4 col-12 d-flex justify-content-center">
+      <input style="text-transform:uppercase"  [ngStyle]="{'color': wrong ? 'red' : '#282828'}" type="text" class="form-control jam-label-input" id="labelInput" name="labelInput"
+             minlength="5" maxlength="5" [formControl]="labelField" (keyup)="wrong = false;" >
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-md-4 offset-md-4 col-12 d-flex justify-content-center">
+      <button *ngIf="labelField.valid && labelField.value !== ''" class="btn" style="width: 300px" (click)="join()">Join</button>
+      <p *ngIf="labelField.invalid || labelField.value === ''" class="enter-label-text">Enter a JamLabel</p>
+    </div>
+  </div>
+
+  <div class="row my-5">
+    <div class="col-md-4 offset-md-4 d-flex justify-content-center">
+      <button class="btn " style="width: 300px" *ngIf="!(authStore.$authStatus | async)?.authorized" (click)="login()">
+        Login to Spotify to create your own
+      </button>
+      <button class="btn " style="width: 300px" *ngIf="(authStore.$authStatus | async)?.authorized" (click)="create()">
+        Create new JamSession
+      </button>
+    </div>
+  </div>
+</div>

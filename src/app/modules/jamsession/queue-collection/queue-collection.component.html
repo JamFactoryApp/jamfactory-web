@@ -1,0 +1,16 @@
+<div class="d-flex align-items-center voted-even" style="padding-left: 0.5rem">
+  <img *ngIf="collection.images.length !== 0" src="{{collection.images[0].url}}" class="playlist-cover">
+  <img *ngIf="collection.images.length === 0" src="../../../../assets/gopher.png" class="playlist-cover">
+  <div class="flex-grow-1 ml-3" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">
+    <span class="medium">{{collection.name}}</span>
+    <br>
+    <div class="col" *ngIf="isAlbum(collection)">
+      <span class="small op-60">{{getArtist(collection.artists)}}</span>
+    </div>
+  </div>
+  <div class="btn-group-imitate p-3">
+    <button class="btn vote-btn" [ngStyle]="inQueue ? {'border-radius': '0.5rem'} : {'border-radius': '0.5rem 0 0 0.5rem'}" (click)="vote(collection)">
+      <fa-icon [icon]="iconAdd"></fa-icon>
+    </button>
+  </div>
+</div>

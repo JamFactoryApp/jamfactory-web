@@ -1,0 +1,68 @@
+.main {
+  width: 100vw;
+  height: 100px;
+  background:#282828;
+  box-shadow: 0 0 5px 0px #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-text {
+  color: lightgray;
+  font-size: 3em;
+}
+
+.gopher {
+  height: 100px;
+  width: 100px;
+  background-color: lightgray;
+  -webkit-mask: url("../../../../assets/gopher.svg") no-repeat center;
+  mask: url("../../../../assets/gopher.svg") no-repeat center;
+}
+
+.version-text {
+  color: lightgray;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 1em;
+  text-align: right;
+  margin-right: 16px;
+}
+
+.github-icon {
+  height: 20px;
+  width: 20px;
+}
+
+@media (max-width: 768px) {
+
+  .main {
+    height: 50px; /* Height of the footer */
+  }
+
+  .github-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .hide {
+    visibility: hidden;
+  }
+
+  .gopher {
+    height: 50px;
+    width: 50px;
+  }
+
+  .header-text {
+    font-size: 1.5em;
+    padding-top: 20px;
+  }
+
+  .version-text {
+    font-size: 0.8em;
+    text-align: right;
+    margin-right: 2px;
+  }
+}
