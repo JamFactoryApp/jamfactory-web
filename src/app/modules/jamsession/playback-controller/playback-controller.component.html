@@ -1,24 +1,24 @@
 <div id="playback">
-  <div class="progress mobile-progress" *ngIf="playing">
+  <div class="progress mobile-progress" *ngIf="item">
     <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
          [ngStyle]="{'width': getProgressAsString(playback.playback.progress_ms, playback.playback.Item.duration_ms)}"></div>
   </div>
 
 
     <div class="corner-left">
-      <img *ngIf="playing" class="album-cover" [src]="playback.playback.Item.album.images[1].url" alt="album cover">
-      <img *ngIf="!playing" class="album-cover" src="../../../../assets/gopher.png" alt="album cover">
-      <p class="playback-text" *ngIf="playing">
+      <img *ngIf="item" class="album-cover" [src]="playback.playback.Item.album.images[1].url" alt="album cover">
+      <img *ngIf="!item" class="album-cover" src="../../../../assets/gopher.png" alt="album cover">
+      <p class="playback-text" *ngIf="item">
         <span class="title-text">{{playback.playback.Item.name}}</span><br>
         <span class="artist-text">{{playback.playback.Item.artists[0].name}}</span>
       </p>
 
-      <p class="playback-text" *ngIf="!playing">
+      <p class="playback-text" *ngIf="!item">
         <span class="title-text">No Playback found</span><br>
       </p>
     </div>
 
-    <div class="progress-div center" *ngIf="playing">
+    <div class="progress-div center" *ngIf="item">
       <div class="row">
         <div class="col text-center">
 
@@ -55,15 +55,15 @@
         <div class="col text-right">
 
 
-          <button class="btn btn-circle mx-1 mobile-button" (click)="pausePlayback()" *ngIf="current && current.user === 'Host' && playing">
+          <button class="btn btn-circle mx-1 mobile-button" (click)="pausePlayback()" *ngIf="item && current && current.user === 'Host' && playback.playback.is_playing">
             <fa-icon [icon]="faPause"></fa-icon>
           </button>
-          <button class="btn btn-circle mx-1 mobile-button" (click)="resumePlayback()" *ngIf="current && current.user === 'Host' && !playing">
+          <button class="btn btn-circle mx-1 mobile-button" (click)="resumePlayback()" *ngIf="item && current && current.user === 'Host' && !playback.playback.is_playing">
             <fa-icon [icon]="faPlay"></fa-icon>
           </button>
 
 
-          <button class="btn btn-circle mx-1" (click)="openSettings()" *ngIf="current && current.user === 'Host' ">
+          <button class="btn btn-circle mx-1" (click)="openSettings()" *ngIf="current && current.user === 'Host'" ngbTooltip="I am Bootstrap Tooltip">
             <fa-icon [icon]="faCog"></fa-icon>
           </button>
           <button class="btn btn-circle mx-1" (click)="leave()">

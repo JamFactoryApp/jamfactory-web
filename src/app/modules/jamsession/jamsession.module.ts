@@ -8,7 +8,7 @@ import {JamsessionComponent} from './jamsession.component';
 import {QueueCollectionComponent} from './queue-collection/queue-collection.component';
 import {SharedModule} from '../../shared/shared.module';
 import { TitleComponent } from './title/title.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -23,7 +23,8 @@ import { TitleComponent } from './title/title.component';
   ],
   imports: [
     JamsessionRoutingModule,
-    SharedModule
+    SharedModule,
+    NgbModule
   ]
 })
 export class JamsessionModule { }

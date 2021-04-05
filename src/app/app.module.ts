@@ -6,7 +6,7 @@ import {PageNotFoundComponent } from './shared/components/page-not-found/page-no
 import {SharedModule} from './shared/shared.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {httpInterceptorProviders} from './core/interceptors/index';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,8 @@ import {httpInterceptorProviders} from './core/interceptors/index';
   imports: [
     AppRoutingModule,
     SharedModule,
-    BrowserModule
+    BrowserModule,
+    NgbModule
   ],
   providers: [
     httpInterceptorProviders
