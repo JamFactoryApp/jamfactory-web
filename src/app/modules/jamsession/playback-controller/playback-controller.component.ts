@@ -2,11 +2,19 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {SetPlaybackRequestBody, AuthCurrentResponseBody, GetPlaybackResponseBody, JamAuthStatus, JamPlaybackBody} from 'jamfactory-types';
+import {
+  SetPlaybackRequestBody,
+  AuthCurrentResponseBody,
+  GetPlaybackResponseBody,
+  JamAuthStatus,
+  JamPlaybackBody,
+  SpotifyDevices
+} from 'jamfactory-types';
 import {QueueService} from '../../../core/services/queue.service';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {AuthStore} from '../../../core/stores/auth.store';
+import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 
 
 @Component({
@@ -20,6 +28,7 @@ export class PlaybackControllerComponent implements OnInit {
   constructor(
     private authService: AuthHttpService,
     private jamService: JamsessionHttpService,
+    private spotifyService: SpotifyHttpService,
     private router: Router,
     private queueStore: QueueStore,
     private jamStore: JamsessionStore,
@@ -30,12 +39,18 @@ export class PlaybackControllerComponent implements OnInit {
   public playback: JamPlaybackBody;
   public progressms: number;
   public intervallId: number;
+  public devices: SpotifyDevices;
 
   public item = false;
   
   ngOnInit(): void {
     this.authStore.$authStatus.subscribe(value => {
       this.current = value;
+      if (this.current.user === 'Host') {
+        this.spotifyService.getDevices().subscribe(value1 => {
+          this.devices = value1;
+        });
+      }
     });
 
     this.jamStore.$playback.subscribe(value => {
@@ -74,6 +89,15 @@ export class PlaybackControllerComponent implements OnInit {
       if (value.success) {
         this.router.navigate(['./']);
       }
+    });
+  }
+
+  selectDevice(deviceid: string): void {
+    const body: SetPlaybackRequestBody = {
+      device_id: deviceid
+    };
+    this.jamService.putPlayback(body).subscribe((value) => {
+      this.jamStore.playback = value;
     });
   }
 

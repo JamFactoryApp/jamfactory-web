@@ -62,8 +62,17 @@
             <span class="material-icons">play_arrow</span>
           </button>
 
+          <ng-template #tipContent><p style="white-space: nowrap;"><span class="material-icons material-btn" style="font-size: 1rem; top: -2px;">speaker</span> {{playback?.playback.device.name}}</p></ng-template>
+          <div ngbDropdown placement="top" class="d-inline-block" *ngIf="current && current.user === 'Host'">
+            <button class="btn btn-circle mx-1 material-btn" id="dropdownDevice" ngbDropdownToggle *ngIf="current && current.user === 'Host'" [ngbTooltip]="tipContent">
+              <span class="material-icons">speaker_group</span>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownDevice" *ngIf="devices">
+              <button ngbDropdownItem [ngClass]="device.id === playback?.device_id ? 'active' : ''" *ngFor="let device of devices.devices" (click)="selectDevice(device.id)" ><span class="material-icons material-btn mr-1" style="font-size: 1rem; top: -2px;">speaker</span>{{device.name}}</button>
+            </div>
+          </div>
 
-          <button class="btn btn-circle mx-1 material-btn" (click)="openSettings()" *ngIf="current && current.user === 'Host'" ngbTooltip="I am Bootstrap Tooltip">
+          <button class="btn btn-circle mx-1 material-btn" (click)="openSettings()" *ngIf="current && current.user === 'Host'">
             <span class="material-icons">settings</span>
           </button>
           <button class="btn btn-circle mx-1 material-btn" (click)="leave()">

@@ -108,6 +108,10 @@
   visibility: hidden;
 }
 
+.dropdown-toggle::after {
+  display:none;
+}
+
 
 @media (max-width: 768px) {
   #playback {
