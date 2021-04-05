@@ -1,7 +1,6 @@
 import {Component, HostListener, Input, OnInit, ElementRef, ViewChildren, QueryList, ViewChild} from '@angular/core';
 import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 import {FormControl} from '@angular/forms';
-import {faSearch, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 
 import {
   SpotifySearchRequestBody,
@@ -42,10 +41,6 @@ export class SearchComponent implements OnInit {
   searchResultsAlbums: SpotifyApi.AlbumObjectSimplified[] = [];
   searchCount = 1;
   searchShift = 0;
-
-  faSearch = faSearch;
-  faArrowRight = faArrowRight;
-
   searchTimeout: number;
 
   // Close Search when clicking outsite of div

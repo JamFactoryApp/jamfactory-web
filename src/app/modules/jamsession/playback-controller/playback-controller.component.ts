@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {faPlay, faPause, faSignOutAlt, faCog} from '@fortawesome/free-solid-svg-icons';
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
@@ -16,11 +15,6 @@ import {AuthStore} from '../../../core/stores/auth.store';
   styleUrls: ['./playback-controller.component.scss']
 })
 export class PlaybackControllerComponent implements OnInit {
-  faPlay = faPlay;
-  faPause = faPause;
-  faSignOut = faSignOutAlt;
-  faCog = faCog;
-
   Math = Math;
 
   constructor(
@@ -47,9 +41,9 @@ export class PlaybackControllerComponent implements OnInit {
     this.jamStore.$playback.subscribe(value => {
       this.playback = value;
       this.progressms = this.playback?.playback?.progress_ms;
-      console.log(this.playback);
       this.item = this.playback !== undefined && this.playback?.playback?.Item !== null;
       if (this.playback?.playback?.is_playing && this.progressms < this.playback.playback.Item.duration_ms) {
+
         if (this.intervallId === undefined) {
           this.intervallId = setInterval(() => this.progressms += 1000, 1000);
         }

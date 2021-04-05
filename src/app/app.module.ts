@@ -7,6 +7,7 @@ import {SharedModule} from './shared/shared.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {httpInterceptorProviders} from './core/interceptors/index';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   declarations: [
