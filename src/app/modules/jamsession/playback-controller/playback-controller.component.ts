@@ -34,8 +34,10 @@ export class PlaybackControllerComponent implements OnInit {
 
   public current: JamAuthStatus;
   public playback: JamPlaybackBody;
+  public progressms: number;
+  public intervallId: number;
 
-  public playing: boolean;
+  public item = false;
   
   ngOnInit(): void {
     this.authStore.$authStatus.subscribe(value => {
@@ -44,7 +46,17 @@ export class PlaybackControllerComponent implements OnInit {
 
     this.jamStore.$playback.subscribe(value => {
       this.playback = value;
-      this.playing = this.playback?.playback?.Item !== undefined;
+      this.progressms = this.playback?.playback?.progress_ms;
+      console.log(this.playback);
+      this.item = this.playback !== undefined && this.playback?.playback?.Item !== null;
+      if (this.playback?.playback?.is_playing && this.progressms < this.playback.playback.Item.duration_ms) {
+        if (this.intervallId === undefined) {
+          this.intervallId = setInterval(() => this.progressms += 1000, 1000);
+        }
+      } else {
+        clearInterval(this.intervallId);
+        this.intervallId = undefined;
+      }
     });
   }
 
@@ -81,13 +93,20 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   pausePlayback(): void {
+
     const body: SetPlaybackRequestBody = {
       playing: false
     };
-    this.jamService.putPlayback(body).subscribe((value) => {
-      console.log(value);
-      this.jamStore.playback = value;
+    this.jamService.putPlayback(body).subscribe(() => {
+      this.playback.playback.is_playing = false;
+      setTimeout(() => {
+        this.jamService.getPlayback().subscribe( (value) => {
+          this.jamStore.playback = value;
+        });
+      }, 250);
     });
+    clearInterval(this.intervallId);
+    this.intervallId = undefined;
   }
 
   openSettings(): void {
