@@ -36,7 +36,7 @@ export class PlaybackControllerComponent implements OnInit {
   public playback: JamPlaybackBody;
 
   public playing: boolean;
-  
+
   ngOnInit(): void {
     this.authStore.$authStatus.subscribe(value => {
       this.current = value;
@@ -44,7 +44,7 @@ export class PlaybackControllerComponent implements OnInit {
 
     this.jamStore.$playback.subscribe(value => {
       this.playback = value;
-      this.playing = this.playback?.playback?.Item !== undefined;
+      this.playing = this.playback?.playback?.item !== undefined;
     });
   }
 
