@@ -56,8 +56,8 @@ export class PlaybackControllerComponent implements OnInit {
     this.jamStore.$playback.subscribe(value => {
       this.playback = value;
       this.progressms = this.playback?.playback?.progress_ms;
-      this.item = this.playback !== undefined && this.playback?.playback?.Item !== null;
-      if (this.playback?.playback?.is_playing && this.progressms < this.playback.playback.Item.duration_ms) {
+      this.item = this.playback !== undefined && this.playback?.playback?.item !== undefined;
+      if (this.playback?.playback?.is_playing && this.progressms < this.playback.playback.item.duration_ms) {
 
         if (this.intervallId === undefined) {
           this.intervallId = setInterval(() => this.progressms += 1000, 1000);

@@ -1,16 +1,16 @@
 <div id="playback">
   <div class="progress mobile-progress" *ngIf="item">
     <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-         [ngStyle]="{'width': getProgressAsString(progressms, playback.playback.Item.duration_ms)}"></div>
+         [ngStyle]="{'width': getProgressAsString(progressms, playback.playback.item.duration_ms)}"></div>
   </div>
 
 
     <div class="corner-left">
-      <img *ngIf="item" class="album-cover" [src]="playback.playback.Item.album.images[1].url" alt="album cover">
+      <img *ngIf="item" class="album-cover" [src]="playback.playback.item.album.images[1].url" alt="album cover">
       <img *ngIf="!item" class="album-cover" src="../../../../assets/gopher.png" alt="album cover">
       <p class="playback-text" *ngIf="item">
-        <span class="title-text">{{playback.playback.Item.name}}</span><br>
-        <span class="artist-text">{{playback.playback.Item.artists[0].name}}</span>
+        <span class="title-text">{{playback.playback.item.name}}</span><br>
+        <span class="artist-text">{{playback.playback.item.artists[0].name}}</span>
       </p>
 
       <p class="playback-text" *ngIf="!item">
@@ -39,7 +39,7 @@
         <div class="col-10 progress-cell">
           <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-                 [ngStyle]="{'width': getProgressAsString(progressms, playback.playback.Item.duration_ms)}"></div>
+                 [ngStyle]="{'width': getProgressAsString(progressms, playback.playback.item.duration_ms)}"></div>
           </div>
         </div>
 
