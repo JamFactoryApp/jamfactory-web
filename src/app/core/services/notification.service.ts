@@ -62,6 +62,14 @@ export class NotificationService {
     this.notifications = this.notifications.filter(t => t !== n);
   }
 
+  clearAll(): void {
+    this.notifications = [];
+  }
+
+  clearPersistent(): void {
+    this.notifications = this.notifications.filter(t => t.autohide === true);
+  }
+
   isTemplate(n: Notification): boolean {
     return n.message instanceof TemplateRef;
   }

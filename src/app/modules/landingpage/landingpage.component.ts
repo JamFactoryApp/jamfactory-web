@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {AuthStore} from '../../core/stores/auth.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
+import {NotificationService} from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -17,7 +18,8 @@ export class LandingpageComponent implements OnInit {
     private jam: JamsessionHttpService,
     private router: Router,
     private authStore: AuthStore,
-    private jamStore: JamsessionStore
+    private jamStore: JamsessionStore,
+    private notificationService: NotificationService
   ) {
     this.auth.getCurrent().subscribe(value => authStore.authStatus = value);
   }
@@ -26,6 +28,7 @@ export class LandingpageComponent implements OnInit {
     this.authStore.$authStatus.subscribe((value) => {
       this.checkForRedirect();
     });
+    this.notificationService.clearPersistent();
   }
 
   checkForRedirect(): void {
