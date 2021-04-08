@@ -13,6 +13,8 @@ export class AuthStore {
     authorized: false
   };
 
+  public showedAuthSuccess = false;
+
   private authStatusSubject: BehaviorSubject<JamAuthStatus> = new BehaviorSubject<JamAuthStatus>(this.defaultStatus);
 
   constructor() { }

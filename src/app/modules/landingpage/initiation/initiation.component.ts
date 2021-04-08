@@ -5,6 +5,7 @@ import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
 import {AuthStore} from '../../../core/stores/auth.store';
+import {NotificationService} from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-initiation',
@@ -19,7 +20,8 @@ export class InitiationComponent implements OnInit {
     private authService: AuthHttpService,
     private jamsessionService: JamsessionHttpService,
     private router: Router,
-    public authStore: AuthStore
+    public authStore: AuthStore,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class InitiationComponent implements OnInit {
 
   create(): void {
     this.jamsessionService.createJamsession().subscribe(value => {
+      this.notificationService.clearAll();
       this.router.navigate(['/jam/' + value.label]);
     });
   }

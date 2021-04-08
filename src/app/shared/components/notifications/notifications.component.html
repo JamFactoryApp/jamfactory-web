@@ -1,8 +1,8 @@
 <ngb-toast *ngFor="let n of notificationService.notifications" [class]="notificationService.getClasses(n.level)"
-           [autohide]="n.autohide" [delay]="n.delay" (hidden)="notificationService.remove(n); n.closeFunction()" style="width: 200px">
+           [autohide]="n.autohide" [delay]="n.delay" (hidden)="notificationService.remove(n); n.closeFunction()" style="min-width: 200px">
 
     <ng-template ngbToastHeader>
-      <span *ngIf="n.headerIcon" class="material-icons" style="top: -1px">{{n.headerIcon}}</span>
+      <span *ngIf="n.headerIcon" class="material-icons">{{n.headerIcon}}</span>
       <strong class="mx-1">{{n.header}}</strong>
     </ng-template>
 

@@ -14,6 +14,7 @@ import {QueueStore} from '../../../core/stores/queue.store';
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {AuthStore} from '../../../core/stores/auth.store';
 import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
+import {NotificationService, Notification} from '../../../core/services/notification.service';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class PlaybackControllerComponent implements OnInit {
     private router: Router,
     private queueStore: QueueStore,
     private jamStore: JamsessionStore,
-    private authStore: AuthStore) {
+    private authStore: AuthStore,
+    private notificationService: NotificationService) {
   }
 
   public current: JamAuthStatus;
@@ -82,6 +84,7 @@ export class PlaybackControllerComponent implements OnInit {
   leave(): void {
     this.jamService.leaveJamSession().subscribe( value => {
       if (value.success) {
+        this.notificationService.show(new Notification('Successfully quit the JamSession').addHeader('JamSession quit', 'exit_to_app').setAutohide(5000));
         this.router.navigate(['./']);
       }
     });
