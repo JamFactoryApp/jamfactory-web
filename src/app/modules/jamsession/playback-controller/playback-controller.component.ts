@@ -10,7 +10,6 @@ import {
   JamPlaybackBody,
   SpotifyDevices
 } from 'jamfactory-types';
-import {QueueService} from '../../../core/services/queue.service';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {AuthStore} from '../../../core/stores/auth.store';
@@ -46,11 +45,7 @@ export class PlaybackControllerComponent implements OnInit {
   ngOnInit(): void {
     this.authStore.$authStatus.subscribe(value => {
       this.current = value;
-      if (this.current.user === 'Host') {
-        this.spotifyService.getDevices().subscribe(value1 => {
-          this.devices = value1;
-        });
-      }
+      this.getDevices();
     });
 
     this.jamStore.$playback.subscribe(value => {
@@ -90,6 +85,14 @@ export class PlaybackControllerComponent implements OnInit {
         this.router.navigate(['./']);
       }
     });
+  }
+
+  getDevices(): void {
+    if (this.current.user === 'Host') {
+      this.spotifyService.getDevices().subscribe(value1 => {
+        this.devices = value1;
+      });
+    }
   }
 
   selectDevice(deviceid: string): void {

@@ -64,7 +64,7 @@
 
           <ng-template #tipContent><p style="white-space: nowrap;"><span class="material-icons material-btn" style="font-size: 1rem; top: -2px;">speaker</span> {{playback?.playback.device.name}}</p></ng-template>
           <div ngbDropdown placement="top" class="d-inline-block" *ngIf="current && current.user === 'Host'">
-            <button class="btn btn-circle mx-1 material-btn" id="dropdownDevice" ngbDropdownToggle *ngIf="current && current.user === 'Host'" [ngbTooltip]="tipContent">
+            <button class="btn btn-circle mx-1 material-btn" id="dropdownDevice" ngbDropdownToggle *ngIf="current && current.user === 'Host'" [ngbTooltip]="tipContent" (click)="getDevices()">
               <span class="material-icons">speaker_group</span>
             </button>
             <div ngbDropdownMenu aria-labelledby="dropdownDevice" *ngIf="devices">
