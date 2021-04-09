@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {AuthStore} from '../../core/stores/auth.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
+import {Notification, NotificationService} from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -17,15 +18,23 @@ export class LandingpageComponent implements OnInit {
     private jam: JamsessionHttpService,
     private router: Router,
     private authStore: AuthStore,
-    private jamStore: JamsessionStore
+    private jamStore: JamsessionStore,
+    private notificationService: NotificationService
   ) {
-    this.auth.getCurrent().subscribe(value => authStore.authStatus = value);
+    this.auth.getCurrent().subscribe(value => {
+      authStore.authStatus = value;
+      if (value.authorized && value.label === '' && !this.authStore.showedAuthSuccess) {
+        this.notificationService.show(new Notification('You are authorized by Spotify').setLevel(1).addHeader('Spotify login success', 'verified_user').setAutohide(5000));
+        this.authStore.showedAuthSuccess = true;
+      }
+    });
   }
 
   ngOnInit(): void {
     this.authStore.$authStatus.subscribe((value) => {
       this.checkForRedirect();
     });
+    this.notificationService.clearPersistent();
   }
 
   checkForRedirect(): void {

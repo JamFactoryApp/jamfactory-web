@@ -81,13 +81,13 @@
 }
 
 .btn-circle {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   padding: 6px 0px;
-  border-radius: 50px;
+  border-radius: 40px;
   font-size: 1em;
   text-align: center;
-  border-color: lightgray;
+  border: none;
   color: lightgray;
 }
 
@@ -106,6 +106,10 @@
 
 .mobile-button {
   visibility: hidden;
+}
+
+.dropdown-toggle::after {
+  display:none;
 }
 
 
@@ -159,11 +163,11 @@
   .btn-circle {
     width: 30px;
     height: 30px;
-    padding: 6px 0px;
+    padding: 0px 0px;
     border-radius: 30px;
     font-size: 0.6em;
     text-align: center;
-    border-color: lightgray;
+    border: none;
     color: lightgray;
   }
 }

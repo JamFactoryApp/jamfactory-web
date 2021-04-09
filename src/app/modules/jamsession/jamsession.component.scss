@@ -10,6 +10,14 @@
   position: fixed;
 }
 
+.notifications-anker {
+  position: fixed;
+  top: 81px;
+  right: 0;
+  margin: 0.5em;
+  z-index: 1200;
+}
+
 .search {
   position: fixed;
   top: 35px;

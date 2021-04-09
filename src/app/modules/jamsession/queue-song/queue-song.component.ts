@@ -1,6 +1,4 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {faHeart as iconVote} from '@fortawesome/free-solid-svg-icons';
-import {faHeart as iconNVote} from '@fortawesome/free-regular-svg-icons';
 import {QueueHttpService} from '../../../core/http/queue.http.service';
 import {VoteRequestBody, QueueSong} from 'jamfactory-types';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
@@ -14,8 +12,6 @@ import {QueueStore} from '../../../core/stores/queue.store';
 })
 
 export class QueueSongComponent implements OnInit {
-  iconVote = iconVote;
-  iconNVote = iconNVote;
 
   @Input()
   track: QueueSong;

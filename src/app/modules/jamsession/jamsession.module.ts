@@ -10,7 +10,6 @@ import {SharedModule} from '../../shared/shared.module';
 import { TitleComponent } from './title/title.component';
 
 
-
 @NgModule({
   declarations: [
     QueueSongComponent,

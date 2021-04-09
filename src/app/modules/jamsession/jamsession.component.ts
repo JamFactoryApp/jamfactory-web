@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, TemplateRef, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {AuthHttpService} from '../../core/http/auth.http.service';
@@ -21,6 +21,7 @@ import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {QueueStore} from '../../core/stores/queue.store';
 import {QueueService} from '../../core/services/queue.service';
 import {AuthStore} from '../../core/stores/auth.store';
+import {NotificationService, Notification} from '../../core/services/notification.service';
 
 
 @Component({
@@ -47,19 +48,20 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private spotifyService: SpotifyHttpService,
     private websocketService: WebsocketService,
     private authStore: AuthStore,
+    public notificationService: NotificationService
   ) {
     this.websocketService.connect();
     this.authService.getCurrent().subscribe(value => authStore.authStatus = value);
   }
 
-
   ngOnInit(): void {
     this.jamsessionService.getJamsession().subscribe(
       value => this.jamStore.jamsession = value,
       _ => {
-      this.jamsessionService.leaveJamSession().subscribe(() => {});
-      this.router.navigate(['/']);
-    });
+        this.jamsessionService.leaveJamSession().subscribe(() => {
+        });
+        this.router.navigate(['/']);
+      });
 
     this.jamsessionService.getPlayback().subscribe(
       value => this.jamStore.playback = value);
@@ -84,7 +86,14 @@ export class JamsessionComponent implements OnInit, OnDestroy {
         this.jamStore.playback = playbackPayload;
         break;
       case 'close':
-        console.error(wsMessage.message);
+        switch (wsMessage.message) {
+          case 'host':
+            this.notificationService.show(new Notification('Your JamSession was closed by the host').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {this.router.navigate(['/']); }));
+            break;
+          case  'inactivity':
+            this.notificationService.show(new Notification('Your JamSession was closed due to inactivity').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {this.router.navigate(['/']); }));
+            break;
+        }
         break;
       default:
         console.error('unknown event');

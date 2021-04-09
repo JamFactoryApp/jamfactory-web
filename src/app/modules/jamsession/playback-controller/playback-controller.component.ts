@@ -1,13 +1,21 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {faPlay, faPause, faSignOutAlt, faCog} from '@fortawesome/free-solid-svg-icons';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {SetPlaybackRequestBody, AuthCurrentResponseBody, GetPlaybackResponseBody, JamAuthStatus, JamPlaybackBody} from 'jamfactory-types';
-import {QueueService} from '../../../core/services/queue.service';
+import {
+  SetPlaybackRequestBody,
+  AuthCurrentResponseBody,
+  GetPlaybackResponseBody,
+  JamAuthStatus,
+  JamPlaybackBody,
+  SpotifyDevices
+} from 'jamfactory-types';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {AuthStore} from '../../../core/stores/auth.store';
+import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
+import {NotificationService, Notification} from '../../../core/services/notification.service';
+import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -16,36 +24,65 @@ import {AuthStore} from '../../../core/stores/auth.store';
   styleUrls: ['./playback-controller.component.scss']
 })
 export class PlaybackControllerComponent implements OnInit {
-  faPlay = faPlay;
-  faPause = faPause;
-  faSignOut = faSignOutAlt;
-  faCog = faCog;
-
   Math = Math;
+
+  @ViewChild('deviceTooltip', { static: false }) deviceTooltip: NgbTooltip;
 
   constructor(
     private authService: AuthHttpService,
     private jamService: JamsessionHttpService,
+    private spotifyService: SpotifyHttpService,
     private router: Router,
     private queueStore: QueueStore,
     private jamStore: JamsessionStore,
-    private authStore: AuthStore) {
+    private authStore: AuthStore,
+    private notificationService: NotificationService) {
   }
 
   public current: JamAuthStatus;
   public playback: JamPlaybackBody;
-
-  public playing: boolean;
-
+  public progressms: number;
+  public intervallId: number;
+  public devices: SpotifyDevices;
+  private showedNoPlaybackNotification = false;
+  public item = false;
+  
   ngOnInit(): void {
+
     this.authStore.$authStatus.subscribe(value => {
       this.current = value;
+      this.getDevices();
     });
 
     this.jamStore.$playback.subscribe(value => {
       this.playback = value;
-      this.playing = this.playback?.playback?.item !== undefined;
+      this.progressms = this.playback?.playback?.progress_ms;
+      this.item = this.playback !== undefined && this.playback?.playback?.item !== null;
+
+      if (this.playback?.device_id) {
+        this.notificationService.clearId(1);
+      }
+
+
+      if (this.playback?.playback?.is_playing && this.progressms < this.playback.playback.item.duration_ms) {
+
+        if (this.intervallId === undefined) {
+          this.intervallId = setInterval(() => this.progressms += 1000, 1000);
+        }
+      } else {
+        clearInterval(this.intervallId);
+        this.intervallId = undefined;
+      }
     });
+
+    setTimeout(() => {this.checkNotifications()}, 1000);
+  }
+
+  checkNotifications(): void {
+    if (!this.playback?.device_id && !this.showedNoPlaybackNotification) {
+      this.showedNoPlaybackNotification = true;
+      this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
+    }
   }
 
   getTime(millisecons: number): string {
@@ -66,8 +103,26 @@ export class PlaybackControllerComponent implements OnInit {
   leave(): void {
     this.jamService.leaveJamSession().subscribe( value => {
       if (value.success) {
+        this.notificationService.show(new Notification('Successfully quit the JamSession').addHeader('JamSession quit', 'exit_to_app').setAutohide(5000));
         this.router.navigate(['./']);
       }
+    });
+  }
+
+  getDevices(): void {
+    if (this.current.user === 'Host') {
+      this.spotifyService.getDevices().subscribe(value1 => {
+        this.devices = value1;
+      });
+    }
+  }
+
+  selectDevice(deviceid: string): void {
+    const body: SetPlaybackRequestBody = {
+      device_id: deviceid
+    };
+    this.jamService.putPlayback(body).subscribe((value) => {
+      this.jamStore.playback = value;
     });
   }
 
@@ -81,13 +136,21 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   pausePlayback(): void {
+
     const body: SetPlaybackRequestBody = {
       playing: false
     };
-    this.jamService.putPlayback(body).subscribe((value) => {
-      console.log(value);
-      this.jamStore.playback = value;
+    this.jamService.putPlayback(body).subscribe(() => {
+      this.playback.playback.is_playing = false;
+      setTimeout(() => {
+        this.jamService.getPlayback().subscribe( (value) => {
+          value.playback.progress_ms = this.progressms;
+          this.jamStore.playback = value;
+        });
+      }, 250);
     });
+    clearInterval(this.intervallId);
+    this.intervallId = undefined;
   }
 
   openSettings(): void {

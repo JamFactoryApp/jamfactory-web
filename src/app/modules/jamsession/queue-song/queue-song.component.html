@@ -7,9 +7,9 @@
     <span class="small op-60">{{getArtist(track.spotifyTrackFull.artists)}}</span>
   </div>
   <div class="btn-group-imitate p-3 btn" (click)="vote(track.spotifyTrackFull)">
-    <button class="btn vote-btn" [ngStyle]="inQueue ? {'border-radius': '0.2rem'} : {'border-radius': '0.2rem 0 0 0.2rem'}" >
-      <fa-icon [icon]="voted(track.spotifyTrackFull) ? iconVote : iconNVote" [ngStyle]="voted(track.spotifyTrackFull) ? {'color': 'darkred'} : {'color': ''}"></fa-icon>
+    <button class="btn vote-btn material-btn" [ngStyle]="inQueue ? {'border-radius': '0.2rem'} : {'border-radius': '0.2rem 0 0 0.2rem'}" >
+      <span class="material-icons" style="font-size: 20px" [ngStyle]="voted(track.spotifyTrackFull) ? {'color': 'darkred'} : {'color': ''}">{{voted(track.spotifyTrackFull) ? "favorite" : "favorite_border"}}</span>
     </button>
-    <div class="align-self-center votes-display" *ngIf="track.votes !== undefined">{{track.votes}}</div>
+    <div class="align-self-center votes-display " *ngIf="track.votes !== undefined">{{track.votes}}</div>
   </div>
 </div>

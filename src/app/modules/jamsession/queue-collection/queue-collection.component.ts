@@ -1,5 +1,4 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import {AddCollectionRequestBody} from 'jamfactory-types';
 import PlaylistObjectSimplified = SpotifyApi.PlaylistObjectSimplified;
 import AlbumObjectSimplified = SpotifyApi.AlbumObjectSimplified;
@@ -14,8 +13,6 @@ import {QueueService} from '../../../core/services/queue.service';
 })
 
 export class QueueCollectionComponent implements OnInit {
-
-  iconAdd = faPlus;
 
   inQueue = true;
 
