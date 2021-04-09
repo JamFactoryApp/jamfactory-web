@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
@@ -15,6 +15,7 @@ import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {AuthStore} from '../../../core/stores/auth.store';
 import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 import {NotificationService, Notification} from '../../../core/services/notification.service';
+import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -24,6 +25,8 @@ import {NotificationService, Notification} from '../../../core/services/notifica
 })
 export class PlaybackControllerComponent implements OnInit {
   Math = Math;
+
+  @ViewChild('deviceTooltip', { static: false }) deviceTooltip: NgbTooltip;
 
   constructor(
     private authService: AuthHttpService,
@@ -41,10 +44,11 @@ export class PlaybackControllerComponent implements OnInit {
   public progressms: number;
   public intervallId: number;
   public devices: SpotifyDevices;
-
+  private showedNoPlaybackNotification = false;
   public item = false;
   
   ngOnInit(): void {
+
     this.authStore.$authStatus.subscribe(value => {
       this.current = value;
       this.getDevices();
@@ -54,6 +58,12 @@ export class PlaybackControllerComponent implements OnInit {
       this.playback = value;
       this.progressms = this.playback?.playback?.progress_ms;
       this.item = this.playback !== undefined && this.playback?.playback?.item !== null;
+
+      if (this.playback?.device_id) {
+        this.notificationService.clearId(1);
+      }
+
+
       if (this.playback?.playback?.is_playing && this.progressms < this.playback.playback.item.duration_ms) {
 
         if (this.intervallId === undefined) {
@@ -64,6 +74,15 @@ export class PlaybackControllerComponent implements OnInit {
         this.intervallId = undefined;
       }
     });
+
+    setTimeout(() => {this.checkNotifications()}, 1000);
+  }
+
+  checkNotifications(): void {
+    if (!this.playback?.device_id && !this.showedNoPlaybackNotification) {
+      this.showedNoPlaybackNotification = true;
+      this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
+    }
   }
 
   getTime(millisecons: number): string {
@@ -125,6 +144,7 @@ export class PlaybackControllerComponent implements OnInit {
       this.playback.playback.is_playing = false;
       setTimeout(() => {
         this.jamService.getPlayback().subscribe( (value) => {
+          value.playback.progress_ms = this.progressms;
           this.jamStore.playback = value;
         });
       }, 250);

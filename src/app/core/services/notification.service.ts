@@ -5,6 +5,7 @@ export class Notification {
   message: string | TemplateRef<any>;
   autohide: boolean;
   delay: number;
+  id: number;
   level: number;
   header: string;
   headerIcon: string;
@@ -17,6 +18,7 @@ export class Notification {
     this.autohide = false;
     this.delay = 0;
     this.level = 0;
+    this.id = 0;
     this.header = undefined;
     this.headerIcon = undefined;
     this.closeFunction = () => {};
@@ -45,6 +47,11 @@ export class Notification {
     }
     return this;
   }
+
+  setId(id: number): Notification  {
+    this.id = id;
+    return this;
+  }
 }
 
 
@@ -64,6 +71,10 @@ export class NotificationService {
 
   clearAll(): void {
     this.notifications = [];
+  }
+
+  clearId(id: number): void {
+    this.notifications = this.notifications.filter(t => t.id !== id);
   }
 
   clearPersistent(): void {
