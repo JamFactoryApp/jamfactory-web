@@ -59,6 +59,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "sslCert": "cert.pem",
+            "sslKey": "key.pem",
             "browserTarget": "jamfactory-web:build"
           },
           "configurations": {

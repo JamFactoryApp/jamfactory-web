@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-prod-ssl
+    ports:
+      - 8080:443

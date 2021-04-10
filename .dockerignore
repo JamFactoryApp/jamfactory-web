@@ -9,3 +9,5 @@ e2e
 node_modules
 .editorconfig
 README.md
+
+yarn.lock

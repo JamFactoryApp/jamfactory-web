@@ -12,5 +12,7 @@ RUN ./node_modules/.bin/ng build --prod
 # nginx:1.19-alpine
 FROM nginx@sha256:a3c6118edc80de4a5aaf2711b7742c25d4d2da54325bae465205cb386afa79ee
 
-COPY ./docker/nginx.conf /etc/nginx/nginx.conf
+COPY ./docker/nginx-ssl.conf /etc/nginx/nginx.conf
+COPY ./cert.pem /etc/nginx/cert.pem
+COPY ./key.pem /etc/nginx/key.pem
 COPY --from=builder /usr/src/app/dist/jamfactory-web /usr/share/nginx/html
