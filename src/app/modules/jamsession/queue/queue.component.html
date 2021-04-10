@@ -1,6 +1,6 @@
 <div *ngIf="(queueStore.$queue | async) as queue">
 
   <app-queue-song *ngFor="let track of queue.tracks; let pos = index" [inQueue]="false" [track]="track" [index]="pos"></app-queue-song>
-  <span *ngIf="queue.tracks.length ===0">Currently there are no songs in the queue!</span>
+  <span *ngIf="queue.tracks.length ===0" style="padding-left: 10px">Currently there are no songs in the queue!</span>
 </div>
 
