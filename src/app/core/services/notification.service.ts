@@ -15,8 +15,8 @@ export class Notification {
     message: string | TemplateRef<any>,
   ) {
     this.message = message;
-    this.autohide = false;
-    this.delay = 0;
+    this.autohide = true;
+    this.delay = 5000;
     this.level = 0;
     this.id = 0;
     this.header = undefined;
@@ -28,7 +28,7 @@ export class Notification {
     this.level = level;
     return this;
   }
-  
+
   addCloseFunction(func: () => void): Notification {
     this.closeFunction = func;
     return this;
