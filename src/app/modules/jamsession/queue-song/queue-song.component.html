@@ -1,14 +1,17 @@
 <div class="d-flex align-items-center animate" style="padding-left: 1rem; padding-bottom: 0.2rem; padding-top: 0.2rem"
-     [ngClass]="{'even':index % 2 == 0, 'voted-even':track.voted == true && index % 2 == 0, 'voted-odd':track.voted == true && index % 2 !== 0}">
-  <img src="{{track.spotifyTrackFull.album.images[1].url}}" class="cover">
+     [ngStyle]="{'background-color': voted(track.spotifyTrackFull) == true && search == false ? VibrantColor : '', 'font-weight': voted(track.spotifyTrackFull) == true ? 'bold' : 'normal', 'color': voted(track.spotifyTrackFull) == true && search == false ? MutedColor : ''}"
+     [ngClass]="{'even':index % 2 == 0 && !voted(track.spotifyTrackFull), 'no_search': search == false, 'search': search == true}">
+  <img #cover src="{{track.spotifyTrackFull.album.images[1].url}}" class="cover" (load)="getImgColor()" crossorigin="anonymous">
   <div class="flex-grow-1 ml-3" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">
     <span class="medium">{{track.spotifyTrackFull.name}}</span>
     <br>
     <span class="small op-60">{{getArtist(track.spotifyTrackFull.artists)}}</span>
   </div>
   <div class="btn-group-imitate p-3 btn" (click)="vote(track.spotifyTrackFull)">
-    <button class="btn vote-btn material-btn" [ngStyle]="inQueue ? {'border-radius': '0.2rem'} : {'border-radius': '0.2rem 0 0 0.2rem'}" >
-      <span class="material-icons" style="font-size: 20px" [ngStyle]="voted(track.spotifyTrackFull) ? {'color': 'darkred'} : {'color': ''}">{{voted(track.spotifyTrackFull) ? "favorite" : "favorite_border"}}</span>
+    <button class="btn vote-btn material-btn"
+            [ngStyle]="inQueue ? {'border-radius': '0.2rem'} : {'border-radius': '0.2rem 0 0 0.2rem'}">
+      <span class="material-icons" style="font-size: 20px"
+            [ngStyle]="voted(track.spotifyTrackFull) ? {'color': 'darkred'} : {'color': ''}">{{voted(track.spotifyTrackFull) ? "favorite" : "favorite_border"}}</span>
     </button>
     <div class="align-self-center votes-display " *ngIf="track.votes !== undefined">{{track.votes}}</div>
   </div>

@@ -16,6 +16,7 @@ import {AuthStore} from '../../../core/stores/auth.store';
 import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 import {NotificationService, Notification} from '../../../core/services/notification.service';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
+import {ColorService} from '../../../core/services/color.service';
 
 
 @Component({
@@ -26,7 +27,7 @@ import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 export class PlaybackControllerComponent implements OnInit {
   Math = Math;
 
-  @ViewChild('deviceTooltip', { static: false }) deviceTooltip: NgbTooltip;
+  @ViewChild('deviceTooltip', {static: false}) deviceTooltip: NgbTooltip;
 
   constructor(
     private authService: AuthHttpService,
@@ -36,7 +37,8 @@ export class PlaybackControllerComponent implements OnInit {
     private queueStore: QueueStore,
     private jamStore: JamsessionStore,
     private authStore: AuthStore,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private colorService: ColorService) {
   }
 
   public current: JamAuthStatus;
@@ -46,7 +48,7 @@ export class PlaybackControllerComponent implements OnInit {
   public devices: SpotifyDevices;
   private showedNoPlaybackNotification = false;
   public item = false;
-  
+
   ngOnInit(): void {
 
     this.authStore.$authStatus.subscribe(value => {
@@ -75,7 +77,7 @@ export class PlaybackControllerComponent implements OnInit {
       }
     });
 
-    setTimeout(() => {this.checkNotifications()}, 1000);
+    setTimeout(() => {this.checkNotifications();}, 1000);
   }
 
   checkNotifications(): void {
@@ -101,7 +103,8 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   leave(): void {
-    this.jamService.leaveJamSession().subscribe( value => {
+    this.colorService.clearImgStore();
+    this.jamService.leaveJamSession().subscribe(value => {
       if (value.success) {
         this.notificationService.show(new Notification('Successfully quit the JamSession').addHeader('JamSession quit', 'exit_to_app').setAutohide(5000));
         this.router.navigate(['./']);
@@ -143,7 +146,7 @@ export class PlaybackControllerComponent implements OnInit {
     this.jamService.putPlayback(body).subscribe(() => {
       this.playback.playback.is_playing = false;
       setTimeout(() => {
-        this.jamService.getPlayback().subscribe( (value) => {
+        this.jamService.getPlayback().subscribe((value) => {
           value.playback.progress_ms = this.progressms;
           this.jamStore.playback = value;
         });

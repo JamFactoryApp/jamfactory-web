@@ -73,10 +73,10 @@
             </div>
           </div>
 
-          <button class="btn btn-circle mx-1 material-btn" (click)="openSettings()" *ngIf="current && current.user === 'Host'">
+          <button class="btn btn-circle mx-1 material-btn" (click)="openSettings()" *ngIf="current && current.user === 'Host'" title="Settings">
             <span class="material-icons">settings</span>
           </button>
-          <button class="btn btn-circle mx-1 material-btn" (click)="leave()">
+          <button class="btn btn-circle mx-1 material-btn" (click)="leave()" title="Leave JamSession">
             <span class="material-icons">exit_to_app</span>
           </button>
 

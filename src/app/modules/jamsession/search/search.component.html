@@ -19,7 +19,7 @@
   <div class="row">
     <div class="col mt-1">
       <div *ngFor="let track of searchResultsTracks.slice(0 + searchShift,searchCount + searchShift)">
-        <app-queue-song style="display: block" #SearchSong [inQueue]="false" [voteMethod]="voteMethod" [track]="track"></app-queue-song>
+        <app-queue-song style="display: block" #SearchSong [inQueue]="false" [voteMethod]="voteMethod" [track]="track" [search]="true"></app-queue-song>
       </div>
       <div *ngFor="let playlist of searchResultsPlaylists.slice(0 + searchShift,searchCount + searchShift)">
         <app-queue-collection style="display: block" [addMethod]="addMethod" [collection]="playlist"></app-queue-collection>
