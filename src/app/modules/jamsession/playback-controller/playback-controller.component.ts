@@ -87,11 +87,10 @@ export class PlaybackControllerComponent implements OnInit {
     }
   }
 
-  getTime(millisecons: number): string {
-    const minutes = Math.floor(millisecons / (60 * 1000));
-    const seconds = Math.floor(millisecons / 1000) - minutes * 60;
+  getTime(milliseconds: number): string {
+    const minutes = Math.floor(milliseconds / (60 * 1000));
+    const seconds = Math.floor(milliseconds / 1000) - minutes * 60;
     return this.str_pad_left(minutes, '0', 2) + ':' + this.str_pad_left(seconds, '0', 2);
-
   }
 
   getProgressAsString(current: number, duration: number): string {
