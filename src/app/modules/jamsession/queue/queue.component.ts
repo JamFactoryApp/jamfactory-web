@@ -18,4 +18,11 @@ export class QueueComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public trackFunction(index, item): any[] {
+    if (!item) {
+      return null;
+    }
+    return item.id;
+  }
+
 }

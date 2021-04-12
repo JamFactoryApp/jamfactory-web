@@ -2,6 +2,12 @@
   background: #e7e7e7;
 }
 
+.truncated {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .no_search {
   color: black;
 }

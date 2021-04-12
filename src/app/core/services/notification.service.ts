@@ -15,8 +15,8 @@ export class Notification {
     message: string | TemplateRef<any>,
   ) {
     this.message = message;
-    this.autohide = true;
-    this.delay = 5000;
+    this.autohide = false;
+    this.delay = 0;
     this.level = 0;
     this.id = 0;
     this.header = undefined;

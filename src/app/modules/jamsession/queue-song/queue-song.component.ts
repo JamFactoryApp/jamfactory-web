@@ -20,7 +20,7 @@ export class QueueSongComponent implements OnInit {
   track: QueueSong;
 
   @Input()
-  index: number;
+  even: number;
 
   @Input()
   inQueue: boolean;

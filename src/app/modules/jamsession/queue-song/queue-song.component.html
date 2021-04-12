@@ -1,8 +1,8 @@
 <div class="d-flex align-items-center animate" style="padding-left: 1rem; padding-bottom: 0.2rem; padding-top: 0.2rem"
      [ngStyle]="{'background-color': voted(track.spotifyTrackFull) == true && search == false ? VibrantColor : '', 'font-weight': voted(track.spotifyTrackFull) == true ? 'bold' : 'normal', 'color': voted(track.spotifyTrackFull) == true && search == false ? MutedColor : ''}"
-     [ngClass]="{'even':index % 2 == 0 && !voted(track.spotifyTrackFull), 'no_search': search == false, 'search': search == true}">
+     [ngClass]="{'even':even && !voted(track.spotifyTrackFull), 'no_search': search == false, 'search': search == true}">
   <img #cover src="{{track.spotifyTrackFull.album.images[1].url}}" class="cover" (load)="getImgColor()" crossorigin="anonymous">
-  <div class="flex-grow-1 ml-3" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">
+  <div class="flex-grow-1 ml-3 truncated" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">
     <span class="medium">{{track.spotifyTrackFull.name}}</span>
     <br>
     <span class="small op-60">{{getArtist(track.spotifyTrackFull.artists)}}</span>
