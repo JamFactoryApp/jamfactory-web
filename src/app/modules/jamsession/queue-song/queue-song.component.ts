@@ -1,9 +1,12 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {QueueHttpService} from '../../../core/http/queue.http.service';
 import {VoteRequestBody, QueueSong} from 'jamfactory-types';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
 import {QueueService} from '../../../core/services/queue.service';
 import {QueueStore} from '../../../core/stores/queue.store';
+import {ColorService} from '../../../core/services/color.service';
+
+declare var ColorThief: any;
 
 @Component({
   selector: 'app-queue-song',
@@ -17,15 +20,24 @@ export class QueueSongComponent implements OnInit {
   track: QueueSong;
 
   @Input()
-  index: number;
+  even: number;
 
   @Input()
   inQueue: boolean;
 
+  @Input()
+  search: boolean;
+
+  @ViewChild('cover') cover: ElementRef;
+
+  VibrantColor;
+  MutedColor;
+
   constructor(
     private queueApi: QueueHttpService,
     private queueService: QueueService,
-    private queueStore: QueueStore
+    private queueStore: QueueStore,
+    private colorService: ColorService
   ) {
   }
 
@@ -42,6 +54,29 @@ export class QueueSongComponent implements OnInit {
       }
     }
     return artist;
+  }
+
+  getImgColor(): void {
+    let vibrant;
+    let muted;
+
+    const check = this.colorService.checkImgStore(this.cover.nativeElement.src);
+
+    if (check === undefined) {
+      const colorThief = new ColorThief();
+      const palette = colorThief.getPalette(this.cover.nativeElement, 5, 50);
+      vibrant = palette[0];
+      muted = this.colorService.highestDiff(palette, vibrant);
+
+      this.colorService.addImgStore(vibrant, muted, this.cover.nativeElement.src);
+    } else {
+      vibrant = check[0];
+      muted = check[1];
+    }
+
+    this.VibrantColor = 'rgba(' + vibrant[0] + ',' + vibrant[1] + ',' + vibrant[2] + ')';
+    this.MutedColor = 'rgba(' + muted[0] + ',' + muted[1] + ',' + muted[2] + ')';
+
   }
 
   voted(track: TrackObjectFull): boolean {

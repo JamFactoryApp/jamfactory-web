@@ -28,7 +28,7 @@ export class Notification {
     this.level = level;
     return this;
   }
-  
+
   addCloseFunction(func: () => void): Notification {
     this.closeFunction = func;
     return this;

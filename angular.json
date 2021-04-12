@@ -29,7 +29,9 @@
             "styles": [
               "src/assets/scss/main.scss"
             ],
-            "scripts": []
+            "scripts": [
+              { "input": "node_modules/colorthief/dist/color-thief.umd.js", "inject": true, "bundleName": "colorthief" }
+            ]
           },
           "configurations": {
             "production": {

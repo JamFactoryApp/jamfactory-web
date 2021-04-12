@@ -8,6 +8,7 @@
   left: 0;
   height: auto;
   position: fixed;
+  z-index: 2;
 }
 
 .notifications-anker {
@@ -16,6 +17,7 @@
   right: 0;
   margin: 0.5em;
   z-index: 1200;
+  cursor: default;
 }
 
 .search {
@@ -23,7 +25,7 @@
   top: 35px;
   left: 0;
   width: 100%;
-  background-image: linear-gradient(to bottom, rgba(48, 48, 48, 1) 0%, rgba(48, 48, 48, 0.8));
+  background-image: linear-gradient(to bottom, rgba(48, 48, 48, 1) 0%, rgba(48, 48, 48, 0.9));
   box-shadow: 0 0 5px 0px #000;
   z-index: 50;
 }
@@ -56,7 +58,8 @@
   }
 
   .queue {
-    padding-top: 84px;
+    //padding-top: 84px;
+    margin-top: -15px;
     padding-bottom: 80px;
   }
 }

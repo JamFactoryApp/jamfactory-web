@@ -2,12 +2,18 @@
   background: #e7e7e7;
 }
 
-.voted-even {
-  background: #a3c3c3;
+.truncated {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.voted-odd {
-  background: #a3d3d3
+.no_search {
+  color: black;
+}
+
+.search {
+  color: white;
 }
 
 .op-60 {
