@@ -3,8 +3,13 @@ FROM node@sha256:9a28dee760ed940c6b72bd0b5aca05cdb04a05f4328f6308c59b3d59903e5c3
 
 WORKDIR /usr/src/app
 
+RUN apk add git openssh-client
+
 COPY package.json package-lock.json ./
-RUN npm install
+
+RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+RUN --mount=type=ssh,id=github npm install
 
 COPY . .
 RUN ./node_modules/.bin/ng build --prod
