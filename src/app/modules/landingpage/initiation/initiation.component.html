@@ -6,7 +6,7 @@
   <div class="row mt-4">
     <div class="col-md-4 offset-md-4 col-12 d-flex justify-content-center">
       <input style="text-transform:uppercase"  [ngStyle]="{'color': wrong ? 'red' : '#282828'}" type="text" class="form-control jam-label-input" id="labelInput" name="labelInput"
-             minlength="5" maxlength="5" [formControl]="labelField" (keyup)="wrong = false;" >
+             minlength="5" maxlength="5" [formControl]="labelField" (keydown)="input($event)" >
     </div>
   </div>
   <div class="row my-2">
