@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  JAMFACTORY_API_URL: 'https://example.com',
-  JAMFACTORY_WS_URL: 'wss://example.com/ws'
+  JAMFACTORY_API_URL: 'https://jamfactory.app',
+  JAMFACTORY_WS_URL: 'wss://jamfactory.app/ws'
 };
