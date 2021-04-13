@@ -38,7 +38,6 @@ export class LandingpageComponent implements OnInit {
   }
 
   checkForRedirect(): void {
-    console.log(this.authStore.authStatus.label);
     if (this.authStore.authStatus.label) {
 
       this.jam.getJamsession().subscribe(value => {
