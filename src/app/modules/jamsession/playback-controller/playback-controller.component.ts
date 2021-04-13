@@ -47,6 +47,7 @@ export class PlaybackControllerComponent implements OnInit {
   public intervallId: number;
   public devices: SpotifyDevices;
   private showedNoPlaybackNotification = false;
+  private timeout: number;
   public item = false;
 
   ngOnInit(): void {
@@ -77,11 +78,13 @@ export class PlaybackControllerComponent implements OnInit {
       }
     });
 
-    setTimeout(() => {this.checkNotifications();}, 1000);
+    this.timeout = setTimeout(() => {
+      this.checkNotifications();
+    }, 1000);
   }
 
   checkNotifications(): void {
-    if (!this.playback?.device_id && !this.showedNoPlaybackNotification) {
+    if (this.authStore.authStatus.user === 'Host' && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
       this.showedNoPlaybackNotification = true;
       this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
     }
@@ -103,9 +106,13 @@ export class PlaybackControllerComponent implements OnInit {
 
   leave(): void {
     this.colorService.clearImgStore();
+    clearTimeout(this.timeout);
     this.jamService.leaveJamSession().subscribe(value => {
       if (value.success) {
-        this.notificationService.show(new Notification('Successfully quit the JamSession').addHeader('JamSession quit', 'exit_to_app').setAutohide(5000));
+        this.notificationService.show(
+          new Notification('Successfully quit the JamSession')
+            .addHeader('JamSession quit', 'exit_to_app')
+            .setAutohide(5000));
         this.router.navigate(['./']);
       }
     });

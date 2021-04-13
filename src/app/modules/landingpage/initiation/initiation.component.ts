@@ -22,7 +22,8 @@ export class InitiationComponent implements OnInit {
     private router: Router,
     public authStore: AuthStore,
     private notificationService: NotificationService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
@@ -41,6 +42,13 @@ export class InitiationComponent implements OnInit {
       this.notificationService.clearAll();
       this.router.navigate(['/jam/' + value.label]);
     });
+  }
+
+  input(event: KeyboardEvent): void {
+    this.wrong = false;
+    if (this.labelField.value.length === 5 && event.key === 'Enter') {
+      this.join();
+    }
   }
 
   join(): void {

@@ -15,7 +15,7 @@ import {
   AddCollectionRequestBody,
   SocketQueueMessage,
   SocketPlaybackMessage,
-  SocketCloseMessage
+  SocketCloseMessage, JoinRequestBody
 } from 'jamfactory-types';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {QueueStore} from '../../core/stores/queue.store';
@@ -55,24 +55,46 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Check if the user already joined the jam session
     this.jamsessionService.getJamsession().subscribe(
-      value => this.jamStore.jamsession = value,
-      _ => {
-        this.jamsessionService.leaveJamSession().subscribe(() => {
-        });
-        this.router.navigate(['/']);
+      jamsession => {
+        this.jamStore.jamsession = jamsession;
+        this.getData();
+      },
+      () => {
+        // Try to join the JamSession
+        const body: JoinRequestBody = {
+          label: this.route.snapshot.params.jamlabel
+        };
+        this.jamsessionService.joinJamSession(body).subscribe(() => {
+          this.jamsessionService.getJamsession().subscribe(
+            jamsession => {
+              this.jamStore.jamsession = jamsession;
+              this.getData();
+            },
+            () => this.leaveOnError());
+        }, () => this.leaveOnError());
       });
+  }
+
+  leaveOnError(): void {
+    this.notificationService.show(new Notification('JamSession not found').addHeader('Not found', 'error_outline').setAutohide(5000).setLevel(2));
+    this.router.navigate(['/']);
+  }
+
+  getData(): void {
 
     this.jamsessionService.getPlayback().subscribe(
-      value => this.jamStore.playback = value);
+      playback => this.jamStore.playback = playback);
 
     this.queueApi.getQueue().subscribe(
-      value => this.queueStore.queue = value);
+      queue => this.queueStore.queue = queue);
 
     this.websocketService.socket.asObservable().subscribe(
-      value => this.websocketHandler(value),
+      message => this.websocketHandler(message),
       error => console.error(error),
       () => console.log('closed'));
+
   }
 
   websocketHandler(wsMessage): void {
@@ -88,10 +110,14 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       case 'close':
         switch (wsMessage.message) {
           case 'host':
-            this.notificationService.show(new Notification('Your JamSession was closed by the host').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {this.router.navigate(['/']); }));
+            this.notificationService.show(new Notification('Your JamSession was closed by the host').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {
+              this.router.navigate(['/']);
+            }));
             break;
           case  'inactivity':
-            this.notificationService.show(new Notification('Your JamSession was closed due to inactivity').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {this.router.navigate(['/']); }));
+            this.notificationService.show(new Notification('Your JamSession was closed due to inactivity').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {
+              this.router.navigate(['/']);
+            }));
             break;
         }
         break;
