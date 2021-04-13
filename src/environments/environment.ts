@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  JAMFACTORY_API_URL: 'http://localhost:3000',
-  JAMFACTORY_WS_URL: 'ws://localhost:3000/ws'
+  JAM_API_PORT: '3000',
+  JAM_WS_PROTOCOL: 'ws://'
 };
 
 /*

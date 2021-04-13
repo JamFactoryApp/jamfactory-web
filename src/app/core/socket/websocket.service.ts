@@ -7,7 +7,7 @@ import {SocketNotification} from 'jamfactory-types';
   providedIn: 'root'
 })
 export class WebsocketService {
-  private wsUrl = environment.JAMFACTORY_WS_URL;
+  private wsUrl = environment.JAM_WS_PROTOCOL + location.hostname + (location.port ? ':' + environment.JAM_API_PORT : '') + '/ws';
   public socket: WebSocketSubject<SocketNotification>;
 
   constructor() {

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  JAMFACTORY_API_URL: 'https://jamfactory.app',
-  JAMFACTORY_WS_URL: 'wss://jamfactory.app/ws'
+  JAM_API_PORT: '', // Should be handled a proxy backend
+  JAM_WS_PROTOCOL: 'wss://'
 };
