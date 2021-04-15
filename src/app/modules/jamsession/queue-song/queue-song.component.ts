@@ -102,17 +102,4 @@ export class QueueSongComponent implements OnInit {
     };
     this.queueService.vote(body);
   }
-
-  getVotes(): number {
-    if (this.search === true) {
-      for (let i = 0; i < this.queueStore.queue.tracks.length; i++) {
-        if (this.track.spotifyTrackFull.id === this.queueStore.queue.tracks[i].spotifyTrackFull.id && this.queueStore.queue.tracks[i].voted) {
-          return this.queueStore.queue.tracks[i].votes;
-        }
-      }
-      return 0;
-    } else {
-      return this.track.votes;
-    }
-  }
 }

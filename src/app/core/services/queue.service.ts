@@ -12,17 +12,17 @@ export class QueueService {
   constructor(private queueStore: QueueStore, private queueApi: QueueHttpService) { }
 
 
-  updateQueueFromSocket(list: QueueSong[]): void {
-    this.queueStore.queue.tracks = list.map((q) => {
-
+  updateQueueFromSocket(list: QueueSong[]): QueueSong[] {
+    return list.map((q) => {
       const song: QueueSong = {
         spotifyTrackFull: q.spotifyTrackFull,
-        votes: q.votes,
+        votes: 0,
         voted: false
       };
 
       this.queueStore.queue.tracks.forEach(value => {
         if (value.spotifyTrackFull.id === q.spotifyTrackFull.id) {
+          song.votes = value.votes;
           song.voted = value.voted;
         }
       });

@@ -59,17 +59,21 @@ export class SearchComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   handlerFunctionResize(e: MouseEvent): void {
     this.setSearchCount();
-}
+  }
 
   ngOnInit(): void {
     this.authStore.$authStatus.subscribe(value => {
       this.current = value;
     });
+
+    this.queueStore.$queue.subscribe(_ => {
+      this.searchResultsTracks = this.queueService.updateQueueFromSocket(this.searchResultsTracks);
+    });
   }
 
   searchEvent(): void {
-      clearTimeout(this.searchTimeout);
-      this.searchTimeout = setTimeout(() => this.searchTracks(), 100);
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => this.searchTracks(), 100);
   }
 
   setSearchCount(): void {
@@ -98,11 +102,14 @@ export class SearchComponent implements OnInit {
     this.spotifyService.putSearch(body).subscribe(value => {
       this.searchResultsPlaylists = [];
       value.tracks.items = value.tracks.items.sort((a, b) => b.popularity - a.popularity);
-      this.searchResultsTracks = value.tracks.items.map(track => {return {spotifyTrackFull: track, voted: false, votes: 0} as QueueSong;
-      });
+      this.searchResultsTracks = this.queueService.updateQueueFromSocket(value.tracks.items.map(track => {
+        return {spotifyTrackFull: track, voted: false, votes: 0} as QueueSong;
+      }));
 
-      if (this.searchCount === 1 ) {
-        window.requestAnimationFrame(() => {this.setSearchCount(); });
+      if (this.searchCount === 1) {
+        window.requestAnimationFrame(() => {
+          this.setSearchCount();
+        });
       }
     });
   }
