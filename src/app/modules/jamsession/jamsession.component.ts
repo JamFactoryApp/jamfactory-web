@@ -101,7 +101,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     switch (wsMessage.event) {
       case 'queue':
         const queuePayload: SocketQueueMessage = wsMessage.message as SocketQueueMessage;
-        this.queueService.updateQueueFromSocket(queuePayload.tracks);
+        this.queueStore.queue.tracks = this.queueService.updateQueueFromSocket(queuePayload.tracks);
         break;
       case 'playback':
         const playbackPayload: SocketPlaybackMessage = wsMessage.message as SocketPlaybackMessage;
