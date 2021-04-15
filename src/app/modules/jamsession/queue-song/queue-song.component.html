@@ -13,6 +13,6 @@
       <span class="material-icons" style="font-size: 20px"
             [ngStyle]="voted(track.spotifyTrackFull) ? {'color': 'darkred'} : {'color': ''}">{{voted(track.spotifyTrackFull) ? "favorite" : "favorite_border"}}</span>
     </button>
-    <div class="align-self-center votes-display " *ngIf="track.votes !== undefined">{{track.votes}}</div>
+    <div class="align-self-center votes-display " *ngIf="track.votes !== undefined">{{getVotes()}}</div>
   </div>
 </div>
