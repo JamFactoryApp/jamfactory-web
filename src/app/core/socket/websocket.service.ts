@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
-import {SocketNotification} from 'jamfactory-types';
+import {SocketNotification} from '@jamfactoryapp/jamfactory-types';
 
 @Injectable({
   providedIn: 'root'

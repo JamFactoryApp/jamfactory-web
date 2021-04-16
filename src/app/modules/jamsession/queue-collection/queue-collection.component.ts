@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {AddCollectionRequestBody} from 'jamfactory-types';
+import {AddCollectionRequestBody} from '@jamfactoryapp/jamfactory-types';
 import PlaylistObjectSimplified = SpotifyApi.PlaylistObjectSimplified;
 import AlbumObjectSimplified = SpotifyApi.AlbumObjectSimplified;
 import {QueueService} from '../../../core/services/queue.service';

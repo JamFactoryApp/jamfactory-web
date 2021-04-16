@@ -15,7 +15,7 @@ import {
   JoinRequestBody, JamAuthStatus,
   JamSessionDetails, AuthCurrentResponseBody,
   JamPlaybackBody, JamLabelBody, JamSuccessConfirmation
-} from 'jamfactory-types';
+} from '@jamfactoryapp/jamfactory-types';
 import {Router} from '@angular/router';
 import {ErrorService} from '../errors/error.service';
 import {catchError} from 'rxjs/operators';

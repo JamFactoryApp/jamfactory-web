@@ -7,7 +7,7 @@ import {
   SpotifySearchResponseBody,
   QueueSong,
   AuthCurrentResponseBody, JamAuthStatus
-} from 'jamfactory-types';
+} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../../core/services/queue.service';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {AuthStore} from '../../../core/stores/auth.store';

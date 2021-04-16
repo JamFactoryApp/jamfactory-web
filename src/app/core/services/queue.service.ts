@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AddCollectionRequestBody, QueueSong, VoteRequestBody} from 'jamfactory-types';
+import {AddCollectionRequestBody, QueueSong, VoteRequestBody} from '@jamfactoryapp/jamfactory-types';
 
 import {QueueHttpService} from '../http/queue.http.service';
 import {QueueStore} from '../stores/queue.store';
