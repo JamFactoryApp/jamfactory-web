@@ -1,10 +1,19 @@
-import {Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {QueueHttpService} from '../../../core/http/queue.http.service';
-import {VoteRequestBody, QueueSong} from '@jamfactoryapp/jamfactory-types';
+import {
+  VoteRequestBody,
+  QueueSong,
+  DeleteSongRequestBody,
+  JamSessionSetting,
+  SetJamSessionRequestBody
+} from '@jamfactoryapp/jamfactory-types';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
 import {QueueService} from '../../../core/services/queue.service';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {ColorService} from '../../../core/services/color.service';
+import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
+import {JamsessionStore} from '../../../core/stores/jamsession.store';
+import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 
 declare var ColorThief: any;
 
@@ -14,21 +23,27 @@ declare var ColorThief: any;
   styleUrls: ['./queue-song.component.scss']
 })
 
-export class QueueSongComponent implements OnInit {
+export class QueueSongComponent implements OnInit, AfterViewInit {
 
   @Input()
   track: QueueSong;
 
   @Input()
-  even: number;
+  index: number;
 
   @Input()
   inQueue: boolean;
 
   @Input()
+  host: boolean;
+
+
+  @Input()
   search: boolean;
 
   @ViewChild('cover') cover: ElementRef;
+
+  @ViewChild('tooltip') tooltip: NgbTooltip;
 
   VibrantColor;
   MutedColor;
@@ -37,11 +52,19 @@ export class QueueSongComponent implements OnInit {
     private queueApi: QueueHttpService,
     private queueService: QueueService,
     private queueStore: QueueStore,
+    private jamSessionService: JamsessionHttpService,
+    public jamSessionStore: JamsessionStore,
     private colorService: ColorService
   ) {
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    if (this.tooltip && !this.jamSessionStore.jamsession.active) {
+      this.tooltip.open();
+    }
   }
 
   getArtist(item): string {
@@ -101,5 +124,21 @@ export class QueueSongComponent implements OnInit {
       track: track.id
     };
     this.queueService.vote(body);
+  }
+
+  delete(track: QueueSong): void {
+    const body: DeleteSongRequestBody = {
+      track: track.spotifyTrackFull.id
+    };
+    this.queueService.delete(body);
+  }
+
+  active(value: boolean): void {
+    const body: SetJamSessionRequestBody = {
+      active: value
+    };
+    this.jamSessionService.putJamsession(body).subscribe( (jamSession) => {
+      this.jamSessionStore.jamsession = jamSession;
+    });
   }
 }

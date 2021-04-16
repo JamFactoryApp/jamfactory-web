@@ -35,10 +35,15 @@
 }
 
 .vote-btn {
-  background: radial-gradient(#f1f1f1, #dedede);
+  background: #dedede;
 }
 
 .cover {
   height: 64px;
   width: 64px;
+}
+
+.vl {
+  border-left: 1px solid #282828;
+  height: 32px;
 }

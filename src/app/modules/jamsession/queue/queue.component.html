@@ -1,7 +1,7 @@
 <div *ngIf="(queueStore.$queue | async) as queue">
 
-  <app-queue-song *ngFor="let track of queue.tracks; trackBy: trackFunction; let even = even" [inQueue]="false"
-                  [track]="track" [even]="even" [search]="false"></app-queue-song>
+  <app-queue-song *ngFor="let track of queue.tracks; trackBy: trackFunction; let index = index" [inQueue]="false"
+                  [track]="track" [index]="index" [host]="authStore.authStatus.user === 'Host'" [search]="false"></app-queue-song>
   <span *ngIf="queue.tracks.length ===0" style="padding-left: 10px">Currently there are no songs in the queue!</span>
 </div>
 
