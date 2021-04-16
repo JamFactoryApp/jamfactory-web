@@ -15,8 +15,8 @@ import {
   AddCollectionRequestBody,
   SocketQueueMessage,
   SocketPlaybackMessage,
-  SocketCloseMessage, JoinRequestBody
-} from 'jamfactory-types';
+  SocketCloseMessage, JoinRequestBody, SocketJamMessage
+} from '@jamfactoryapp/jamfactory-types';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {QueueStore} from '../../core/stores/queue.store';
 import {QueueService} from '../../core/services/queue.service';
@@ -99,6 +99,10 @@ export class JamsessionComponent implements OnInit, OnDestroy {
 
   websocketHandler(wsMessage): void {
     switch (wsMessage.event) {
+      case 'jam':
+        const jamPayload: SocketJamMessage = wsMessage.message as SocketJamMessage;
+        this.jamStore.jamsession = jamPayload;
+        break;
       case 'queue':
         const queuePayload: SocketQueueMessage = wsMessage.message as SocketQueueMessage;
         this.queueStore.queue.tracks = this.queueService.updateQueueFromSocket(queuePayload.tracks);

@@ -6,7 +6,7 @@ import {
   UserPlaylistsResponseBody,
   SpotifySearchRequestBody,
   SpotifySearchResponseBody,
-} from 'jamfactory-types';
+} from '@jamfactoryapp/jamfactory-types';
 import {catchError} from 'rxjs/operators';
 import {ErrorService} from '../errors/error.service';
 

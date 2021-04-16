@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {JamAuthStatus, JamQueue} from 'jamfactory-types';
+import {JamAuthStatus, JamQueue} from '@jamfactoryapp/jamfactory-types';
 
 @Injectable({
   providedIn: 'root'

@@ -8,7 +8,7 @@ import {
   AddCollectionRequestBody,
   AddCollectionResponseBody, JamSessionDetails,
   JamQueue, QueueSong, GetJamSessionResponseBody
-} from 'jamfactory-types';
+} from '@jamfactoryapp/jamfactory-types';
 import {catchError} from 'rxjs/operators';
 import {ErrorService} from '../errors/error.service';
 

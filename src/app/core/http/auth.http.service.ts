@@ -8,7 +8,7 @@ import {
   AuthCurrentResponseBody,
   JamAuthStatus,
   LogoutResponseBody
-} from 'jamfactory-types';
+} from '@jamfactoryapp/jamfactory-types';
 import {catchError} from 'rxjs/operators';
 import {ErrorService} from '../errors/error.service';
 

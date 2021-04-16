@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {QueueHttpService} from '../../../core/http/queue.http.service';
-import {VoteRequestBody, QueueSong} from 'jamfactory-types';
+import {VoteRequestBody, QueueSong} from '@jamfactoryapp/jamfactory-types';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
 import {QueueService} from '../../../core/services/queue.service';
 import {QueueStore} from '../../../core/stores/queue.store';

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {QueueSong} from 'jamfactory-types';
+import {QueueSong} from '@jamfactoryapp/jamfactory-types';
 import {QueueStore} from '../../../core/stores/queue.store';
 
 

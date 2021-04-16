@@ -9,7 +9,7 @@ import {
   JamAuthStatus,
   JamPlaybackBody,
   SpotifyDevices
-} from 'jamfactory-types';
+} from '@jamfactoryapp/jamfactory-types';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {AuthStore} from '../../../core/stores/auth.store';

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {JamAuthStatus, JoinRequestBody} from 'jamfactory-types';
+import {JamAuthStatus, JoinRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {FormControl} from '@angular/forms';
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';

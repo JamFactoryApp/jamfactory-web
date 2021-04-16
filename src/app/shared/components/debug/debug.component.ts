@@ -6,7 +6,8 @@ import {QueueHttpService} from '../../../core/http/queue.http.service';
 import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 import {FormBuilder} from '@angular/forms';
 import {WebsocketService} from '../../../core/socket/websocket.service';
-import * as JamFactoryApi from 'jamfactory-types';
+import * as JamFactoryApi from '@jamfactoryapp/jamfactory-types';
+import {JamIpVoting, JamSessionVoting} from '@jamfactoryapp/jamfactory-types';
 
 @Component({
   selector: 'app-landing-page',
@@ -101,7 +102,7 @@ export class DebugComponent implements OnInit {
     this.jamsessionService.putJamsession({
       name: this.putJamForm.value['name'],
       active: this.putJamForm.value['active'],
-      ip_voting: this.putJamForm.value['ip_voting']
+      voting_type: this.putJamForm.value['ip_voting'] ? 'session_voting' : 'ip_voting'
     }).subscribe(data => this.jamPut = data);
   }
 
