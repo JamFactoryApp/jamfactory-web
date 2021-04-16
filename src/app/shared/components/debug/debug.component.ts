@@ -101,7 +101,7 @@ export class DebugComponent implements OnInit {
   putJam(): void {
     this.jamsessionService.putJamsession({
       name: this.putJamForm.value['name'],
-      active: this.putJamForm.value['active'],
+      active: this.putJamForm.value['active'] === '' ? undefined : this.putJamForm.value['active'],
       voting_type: this.putJamForm.value['ip_voting'] ? 'session_voting' : 'ip_voting'
     }).subscribe(data => this.jamPut = data);
   }
