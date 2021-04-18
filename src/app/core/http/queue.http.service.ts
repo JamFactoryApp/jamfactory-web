@@ -29,7 +29,7 @@ export class QueueHttpService {
   }
 
   deleteQueueTrack(body: DeleteSongRequestBody): Observable<DeleteSongResponseBody> {
-    return this.http.put<DeleteSongResponseBody>('queue/delete', body).pipe(catchError(this.errorService.handle));
+    return this.http.request<DeleteSongResponseBody>('DELETE', 'queue/delete', {body}).pipe(catchError(this.errorService.handle));
   }
 
   putQueueCollection(body: AddCollectionRequestBody): Observable<JamQueue> {
