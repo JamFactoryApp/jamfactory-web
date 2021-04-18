@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import {QueueSong} from '@jamfactoryapp/jamfactory-types';
 import {QueueStore} from '../../../core/stores/queue.store';
+import {AuthStore} from '../../../core/stores/auth.store';
 
 
 @Component({
@@ -11,7 +12,8 @@ import {QueueStore} from '../../../core/stores/queue.store';
 export class QueueComponent implements OnInit {
 
   constructor(
-    public queueStore: QueueStore
+    public queueStore: QueueStore,
+    public authStore: AuthStore
   ) {
   }
 

@@ -36,6 +36,12 @@ export class QueueService {
     });
   }
 
+  delete(body: VoteRequestBody): void {
+    this.queueApi.deleteQueueTrack(body).subscribe((response) => {
+      this.queueStore.queue = response;
+    });
+  }
+
   addCollection(body: AddCollectionRequestBody): void {
     this.queueApi.putQueueCollection(body).subscribe((response) => {
       this.queueStore.queue = response;

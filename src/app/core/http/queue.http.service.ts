@@ -7,7 +7,7 @@ import {
   VoteResponseBody,
   AddCollectionRequestBody,
   AddCollectionResponseBody, JamSessionDetails,
-  JamQueue, QueueSong, GetJamSessionResponseBody
+  JamQueue, QueueSong, GetJamSessionResponseBody, DeleteSongRequestBody, DeleteSongResponseBody
 } from '@jamfactoryapp/jamfactory-types';
 import {catchError} from 'rxjs/operators';
 import {ErrorService} from '../errors/error.service';
@@ -26,6 +26,10 @@ export class QueueHttpService {
 
   putQueueVote(body: VoteRequestBody): Observable<JamQueue> {
     return this.http.put<VoteResponseBody>('queue/vote', body).pipe(catchError(this.errorService.handle));
+  }
+
+  deleteQueueTrack(body: DeleteSongRequestBody): Observable<DeleteSongResponseBody> {
+    return this.http.request<DeleteSongResponseBody>('DELETE', 'queue/delete', {body}).pipe(catchError(this.errorService.handle));
   }
 
   putQueueCollection(body: AddCollectionRequestBody): Observable<JamQueue> {

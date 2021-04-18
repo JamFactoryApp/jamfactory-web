@@ -50,11 +50,17 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private authStore: AuthStore,
     public notificationService: NotificationService
   ) {
-    this.websocketService.connect();
     this.authService.getCurrent().subscribe(value => authStore.authStatus = value);
   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.websocketService.connect();
+      this.websocketService.socket.asObservable().subscribe(
+        message => this.websocketHandler(message),
+        error => console.error(error),
+        () => console.log('closed'));
+    }, 2000);
     // Check if the user already joined the jam session
     this.jamsessionService.getJamsession().subscribe(
       jamsession => {
@@ -89,11 +95,6 @@ export class JamsessionComponent implements OnInit, OnDestroy {
 
     this.queueApi.getQueue().subscribe(
       queue => this.queueStore.queue = queue);
-
-    this.websocketService.socket.asObservable().subscribe(
-      message => this.websocketHandler(message),
-      error => console.error(error),
-      () => console.log('closed'));
 
   }
 
