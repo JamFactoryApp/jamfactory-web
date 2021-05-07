@@ -20,7 +20,9 @@ export class WebsocketService {
   }
 
   public close(): void {
-    this.socket.complete();
+    if (this.socket) {
+      this.socket.complete();
+    }
   }
 
   public connected(): boolean {
