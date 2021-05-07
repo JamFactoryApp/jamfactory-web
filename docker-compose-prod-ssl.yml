@@ -2,8 +2,6 @@ version: '3'
 
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile-prod-ssl
+    image: ghcr.io/jamfactoryapp/jamfactory-web:latest
     ports:
       - 8080:443
