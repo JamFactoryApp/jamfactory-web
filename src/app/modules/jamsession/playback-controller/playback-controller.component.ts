@@ -17,6 +17,7 @@ import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 import {NotificationService, Notification} from '../../../core/services/notification.service';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {ColorService} from '../../../core/services/color.service';
+import {WebsocketService} from '../../../core/socket/websocket.service';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class PlaybackControllerComponent implements OnInit {
     private jamStore: JamsessionStore,
     private authStore: AuthStore,
     private notificationService: NotificationService,
+    private websocketService: WebsocketService,
     private colorService: ColorService) {
   }
 
@@ -107,6 +109,7 @@ export class PlaybackControllerComponent implements OnInit {
   leave(): void {
     this.colorService.clearImgStore();
     clearTimeout(this.timeout);
+    this.websocketService.close();
     this.jamService.leaveJamSession().subscribe(value => {
       if (value.success) {
         this.notificationService.show(

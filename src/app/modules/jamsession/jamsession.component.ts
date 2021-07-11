@@ -22,6 +22,7 @@ import {QueueStore} from '../../core/stores/queue.store';
 import {QueueService} from '../../core/services/queue.service';
 import {AuthStore} from '../../core/stores/auth.store';
 import {NotificationService, Notification} from '../../core/services/notification.service';
+import {retry} from 'rxjs/operators';
 
 
 @Component({
@@ -55,11 +56,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.websocketService.connect();
-      this.websocketService.socket.asObservable().subscribe(
-        message => this.websocketHandler(message),
-        error => console.error(error),
-        () => console.log('closed'));
+      this.websocketService.connect((message) => this.websocketHandler(message));
     }, 2000);
     // Check if the user already joined the jam session
     this.jamsessionService.getJamsession().subscribe(
