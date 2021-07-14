@@ -1,7 +1,6 @@
-# JamFactory Web Release Notes
-### V0.1.0
+## V0.1.0
 
-#### Features Added
+### Features Added
 * Support for Spotify authorization.
 * Basic JamSession management by a Host (create and delete).
 * Basic Conductor control by a Host (start and stop conductor/queue).
@@ -15,9 +14,9 @@
 * Add Websocket Support to receive updates from the backend.
 * Display notification to notify the user about current events.
 
-#### Features Removed
+### Features Removed
 This is the first release. Nothing to remove.
 
 
-#### Bug Fixes
+### Bug Fixes
 No bugs were fixed with this release
