@@ -1,19 +1,13 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {QueueHttpService} from '../../../core/http/queue.http.service';
-import {
-  VoteRequestBody,
-  QueueSong,
-  DeleteSongRequestBody,
-  JamSessionSetting,
-  SetJamSessionRequestBody
-} from '@jamfactoryapp/jamfactory-types';
-import TrackObjectFull = SpotifyApi.TrackObjectFull;
+import {DeleteSongRequestBody, QueueSong, SetJamSessionRequestBody, VoteRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../../core/services/queue.service';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {ColorService} from '../../../core/services/color.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
+import TrackObjectFull = SpotifyApi.TrackObjectFull;
 
 declare var ColorThief: any;
 
@@ -137,7 +131,7 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
     const body: SetJamSessionRequestBody = {
       active: value
     };
-    this.jamSessionService.putJamsession(body).subscribe( (jamSession) => {
+    this.jamSessionService.putJamsession(body).subscribe((jamSession) => {
       this.jamSessionStore.jamsession = jamSession;
     });
   }

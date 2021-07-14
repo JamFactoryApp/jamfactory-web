@@ -9,7 +9,8 @@ export class ColorService {
 
   imgColors = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   /***************************************************************************************
    * The functions highestDiff(), rgbDiff(), rgbToCIELab(), rgbToXyz(), xyzToCIELab() and deltaE94()
@@ -139,6 +140,7 @@ export class ColorService {
 
     return Math.sqrt(xDL * xDL + xDC * xDC + xDH * xDH);
   }
+
   /***************************************************************************************/
 
   addImgStore(vibrant, muted, src): void {

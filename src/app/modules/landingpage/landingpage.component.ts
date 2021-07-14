@@ -43,7 +43,8 @@ export class LandingpageComponent implements OnInit {
       this.jam.getJamsession().subscribe(value => {
         this.jamStore.jamsession = value;
         this.router.navigate(['/jam/' + this.authStore.authStatus.label]);
-      }, error => {});
+      }, error => {
+      });
     }
   }
 }

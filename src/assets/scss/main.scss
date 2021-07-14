@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import "../../../node_modules/bootstrap";
-
 @import '~material-design-icons/iconfont/material-icons.css';
 @import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap');
 
@@ -21,9 +19,9 @@ body {
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-*{
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .header {

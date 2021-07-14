@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {AuthHttpService} from '../../core/http/auth.http.service';
@@ -7,22 +7,20 @@ import {QueueHttpService} from '../../core/http/queue.http.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {WebsocketService} from '../../core/socket/websocket.service';
 import {
+  AuthCurrentResponseBody,
   GetJamSessionResponseBody,
   GetPlaybackResponseBody,
+  JoinRequestBody,
   QueueSong,
-  AuthCurrentResponseBody,
-  VoteRequestBody,
-  AddCollectionRequestBody,
-  SocketQueueMessage,
+  SocketJamMessage,
   SocketPlaybackMessage,
-  SocketCloseMessage, JoinRequestBody, SocketJamMessage
+  SocketQueueMessage
 } from '@jamfactoryapp/jamfactory-types';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {QueueStore} from '../../core/stores/queue.store';
 import {QueueService} from '../../core/services/queue.service';
 import {AuthStore} from '../../core/stores/auth.store';
-import {NotificationService, Notification} from '../../core/services/notification.service';
-import {retry} from 'rxjs/operators';
+import {Notification, NotificationService} from '../../core/services/notification.service';
 
 
 @Component({

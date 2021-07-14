@@ -2,16 +2,14 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
 import {SocketNotification} from '@jamfactoryapp/jamfactory-types';
-import {retry} from 'rxjs/operators';
-import {JamsessionStore} from '../stores/jamsession.store';
 import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
-  private wsUrl = environment.JAM_WS_PROTOCOL + location.hostname + (location.port ? ':' + environment.JAM_API_PORT : '') + '/ws';
   public socket: WebSocketSubject<SocketNotification>;
+  private wsUrl = environment.JAM_WS_PROTOCOL + location.hostname + (location.port ? ':' + environment.JAM_API_PORT : '') + '/ws';
 
   constructor(private router: Router) {
   }
@@ -26,12 +24,6 @@ export class WebsocketService {
       () => console.log('closed'));
   }
 
-  private handleError(error: any, handler: (wsMessage: any) => void): void {
-    if (this.router.isActive('/jam', false)) {
-      setTimeout(() => this.connect(handler), 5000);
-    }
-  }
-
   public close(): void {
     if (this.socket) {
       this.socket.complete();
@@ -40,6 +32,12 @@ export class WebsocketService {
 
   public connected(): boolean {
     return !this.socket.closed;
+  }
+
+  private handleError(error: any, handler: (wsMessage: any) => void): void {
+    if (this.router.isActive('/jam', false)) {
+      setTimeout(() => this.connect(handler), 5000);
+    }
   }
 
   private getNewWebsocket(): WebSocketSubject<any> {

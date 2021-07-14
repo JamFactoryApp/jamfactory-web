@@ -8,7 +8,9 @@ import {NotificationService} from '../../../core/services/notification.service';
 })
 export class NotificationsComponent implements OnInit {
   @HostBinding('[class.ngb-toasts]') true;
-  constructor(public notificationService: NotificationService) { }
+
+  constructor(public notificationService: NotificationService) {
+  }
 
   ngOnInit(): void {
   }

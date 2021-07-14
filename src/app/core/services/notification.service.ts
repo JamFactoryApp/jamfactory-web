@@ -21,7 +21,8 @@ export class Notification {
     this.id = 0;
     this.header = undefined;
     this.headerIcon = undefined;
-    this.closeFunction = () => {};
+    this.closeFunction = () => {
+    };
   }
 
   setLevel(level: number): Notification {
@@ -48,7 +49,7 @@ export class Notification {
     return this;
   }
 
-  setId(id: number): Notification  {
+  setId(id: number): Notification {
     this.id = id;
     return this;
   }

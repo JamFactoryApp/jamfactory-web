@@ -1,20 +1,13 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {
-  SetPlaybackRequestBody,
-  AuthCurrentResponseBody,
-  GetPlaybackResponseBody,
-  JamAuthStatus,
-  JamPlaybackBody,
-  SpotifyDevices
-} from '@jamfactoryapp/jamfactory-types';
+import {JamAuthStatus, JamPlaybackBody, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {AuthStore} from '../../../core/stores/auth.store';
 import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
-import {NotificationService, Notification} from '../../../core/services/notification.service';
+import {Notification, NotificationService} from '../../../core/services/notification.service';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {ColorService} from '../../../core/services/color.service';
 import {WebsocketService} from '../../../core/socket/websocket.service';
@@ -29,6 +22,14 @@ export class PlaybackControllerComponent implements OnInit {
   Math = Math;
 
   @ViewChild('deviceTooltip', {static: false}) deviceTooltip: NgbTooltip;
+  public current: JamAuthStatus;
+  public playback: JamPlaybackBody;
+  public progressms: number;
+  public intervallId: number;
+  public devices: SpotifyDevices;
+  public item = false;
+  private showedNoPlaybackNotification = false;
+  private timeout: number;
 
   constructor(
     private authService: AuthHttpService,
@@ -42,15 +43,6 @@ export class PlaybackControllerComponent implements OnInit {
     private websocketService: WebsocketService,
     private colorService: ColorService) {
   }
-
-  public current: JamAuthStatus;
-  public playback: JamPlaybackBody;
-  public progressms: number;
-  public intervallId: number;
-  public devices: SpotifyDevices;
-  private showedNoPlaybackNotification = false;
-  private timeout: number;
-  public item = false;
 
   ngOnInit(): void {
 

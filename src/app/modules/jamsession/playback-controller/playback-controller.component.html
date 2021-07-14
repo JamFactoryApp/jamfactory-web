@@ -68,7 +68,8 @@
 
         <ng-template #tipContent id="tipContent">
           <div style="white-space: nowrap">
-            <span class="material-icons material-btn" style="font-size: 1rem; top: -2px;" *ngIf="playback?.playback.device.name">
+            <span class="material-icons material-btn" style="font-size: 1rem; top: -2px;"
+                  *ngIf="playback?.playback.device.name">
               speaker
             </span>
             {{playback?.playback.device.name ? playback?.playback.device.name : "Select a playback device"}}

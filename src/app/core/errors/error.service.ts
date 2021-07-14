@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 
@@ -8,7 +8,8 @@ import {Observable, throwError} from 'rxjs';
 
 export class ErrorService {
 
-  constructor() { }
+  constructor() {
+  }
 
   handle(error: HttpErrorResponse, caught: Observable<any>): Observable<any> {
     return throwError(error);

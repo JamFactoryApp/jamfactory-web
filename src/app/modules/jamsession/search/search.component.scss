@@ -12,12 +12,22 @@
 }
 
 /* align icon */
-.left-addon .glyphicon  { left:  0px;}
-.right-addon .glyphicon { right: 0px;}
+.left-addon .glyphicon {
+  left: 0px;
+}
+
+.right-addon .glyphicon {
+  right: 0px;
+}
 
 /* add padding  */
-.left-addon input  { padding-left:  30px; }
-.right-addon input { padding-right: 30px; }
+.left-addon input {
+  padding-left: 30px;
+}
+
+.right-addon input {
+  padding-right: 30px;
+}
 
 .search-input {
   margin-top: 9px;
@@ -28,7 +38,7 @@
 
 .user-playlist {
   color: white;
-  white-space:nowrap;
+  white-space: nowrap;
   font-size: 1.2em;
   padding-right: 16px;
   text-align: right;
@@ -40,13 +50,13 @@
   margin-right: 0;
 }
 
-.search-div{
+.search-div {
   height: 44px;
 }
 
 .user-text {
   color: white;
-  white-space:nowrap;
+  white-space: nowrap;
   font-size: 1.2em;
   font-style: inherit;
   float: right;
@@ -56,13 +66,13 @@
 
 .search-text {
   color: lightgray;
-  white-space:nowrap;
+  white-space: nowrap;
   font-size: 1.0em;
   padding-left: 16px;
   padding-top: 10px;
 }
 
-hr{
+hr {
   padding: 0px;
   margin: 0px;
 }

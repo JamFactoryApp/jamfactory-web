@@ -9,7 +9,9 @@
     </div>
   </div>
   <div class="btn-group-imitate p-3">
-    <button class="btn vote-btn material-btn" [ngStyle]="inQueue ? {'border-radius': '0.5rem'} : {'border-radius': '0.5rem 0 0 0.5rem'}" (click)="vote(collection)">
+    <button class="btn vote-btn material-btn"
+            [ngStyle]="inQueue ? {'border-radius': '0.5rem'} : {'border-radius': '0.5rem 0 0 0.5rem'}"
+            (click)="vote(collection)">
       <span class="material-icons">add</span>
     </button>
   </div>

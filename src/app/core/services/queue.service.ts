@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AddCollectionRequestBody, QueueSong, VoteRequestBody} from '@jamfactoryapp/jamfactory-types';
 
 import {QueueHttpService} from '../http/queue.http.service';
@@ -9,7 +9,8 @@ import {QueueStore} from '../stores/queue.store';
 })
 export class QueueService {
 
-  constructor(private queueStore: QueueStore, private queueApi: QueueHttpService) { }
+  constructor(private queueStore: QueueStore, private queueApi: QueueHttpService) {
+  }
 
 
   updateQueueFromSocket(list: QueueSong[]): QueueSong[] {

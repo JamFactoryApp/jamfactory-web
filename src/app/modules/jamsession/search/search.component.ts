@@ -1,13 +1,8 @@
-import {Component, HostListener, Input, OnInit, ElementRef, ViewChildren, QueryList, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 import {FormControl} from '@angular/forms';
 
-import {
-  SpotifySearchRequestBody,
-  SpotifySearchResponseBody,
-  QueueSong,
-  AuthCurrentResponseBody, JamAuthStatus
-} from '@jamfactoryapp/jamfactory-types';
+import {JamAuthStatus, QueueSong, SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../../core/services/queue.service';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {AuthStore} from '../../../core/stores/auth.store';
@@ -21,19 +16,8 @@ import {AuthStore} from '../../../core/stores/auth.store';
 
 export class SearchComponent implements OnInit {
 
-  constructor(
-    private spotifyService: SpotifyHttpService,
-    private elementRef: ElementRef,
-    private queueService: QueueService,
-    private queueStore: QueueStore,
-    private authStore: AuthStore
-  ) {
-  }
-
   public current: JamAuthStatus;
-
   @ViewChildren('SearchSong', {read: ElementRef}) searchSongs: QueryList<ElementRef>;
-
   searchField = new FormControl('');
   searchType = '';
   searchResultsTracks: QueueSong[] = [];
@@ -42,6 +26,15 @@ export class SearchComponent implements OnInit {
   searchCount = 1;
   searchShift = 0;
   searchTimeout: number;
+
+  constructor(
+    private spotifyService: SpotifyHttpService,
+    private elementRef: ElementRef,
+    private queueService: QueueService,
+    private queueStore: QueueStore,
+    private authStore: AuthStore
+  ) {
+  }
 
   // Close Search when clicking outsite of div
   @HostListener('document:click', ['$event'])
