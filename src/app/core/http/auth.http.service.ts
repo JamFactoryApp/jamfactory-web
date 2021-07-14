@@ -1,14 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 
-import {
-  LoginResponseBody,
-  AuthCurrentResponseBody,
-  JamAuthStatus,
-  LogoutResponseBody
-} from '@jamfactoryapp/jamfactory-types';
+import {AuthCurrentResponseBody, JamAuthStatus, LoginResponseBody, LogoutResponseBody} from '@jamfactoryapp/jamfactory-types';
 import {catchError} from 'rxjs/operators';
 import {ErrorService} from '../errors/error.service';
 
@@ -23,8 +18,8 @@ export class AuthHttpService {
   };
 
 
-
-  constructor(private http: HttpClient, private router: Router, private errorService: ErrorService) { }
+  constructor(private http: HttpClient, private router: Router, private errorService: ErrorService) {
+  }
 
   getCurrent(): Observable<JamAuthStatus> {
     return this.http
@@ -36,7 +31,7 @@ export class AuthHttpService {
     return this.http
       .get<LogoutResponseBody>('auth/logout', this.httpOptions)
       .pipe(catchError(this.errorService.handle));
-}
+  }
 
   getLogin(): Observable<LoginResponseBody> {
     return this.http

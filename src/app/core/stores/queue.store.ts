@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {JamAuthStatus, JamQueue} from '@jamfactoryapp/jamfactory-types';
+import {JamQueue} from '@jamfactoryapp/jamfactory-types';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,8 @@ export class QueueStore {
 
   private queueSubject: BehaviorSubject<JamQueue> = new BehaviorSubject<JamQueue>({tracks: []});
 
-  constructor() { }
+  constructor() {
+  }
 
   get queue(): JamQueue {
     return this.queueSubject.value;

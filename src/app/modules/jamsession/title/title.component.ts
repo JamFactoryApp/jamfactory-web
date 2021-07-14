@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
 
 @Component({
@@ -8,7 +8,8 @@ import {JamsessionStore} from '../../../core/stores/jamsession.store';
 })
 export class TitleComponent implements OnInit {
 
-  constructor(public jamStore: JamsessionStore) { }
+  constructor(public jamStore: JamsessionStore) {
+  }
 
   ngOnInit(): void {
   }

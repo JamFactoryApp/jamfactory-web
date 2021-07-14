@@ -1,20 +1,22 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
 import {
   CreateJamSessionResponseBody,
-  LeaveJamSessionResponseBody,
-  GetPlaybackResponseBody,
-  SetPlaybackResponseBody,
-  SetPlaybackRequestBody,
   GetJamSessionResponseBody,
-  SetJamSessionResponseBody,
-  SetJamSessionRequestBody,
+  GetPlaybackResponseBody,
+  JamLabelBody,
+  JamPlaybackBody,
+  JamSessionDetails,
+  JamSuccessConfirmation,
+  JoinRequestBody,
   JoinResponseBody,
-  JoinRequestBody, JamAuthStatus,
-  JamSessionDetails, AuthCurrentResponseBody,
-  JamPlaybackBody, JamLabelBody, JamSuccessConfirmation
+  LeaveJamSessionResponseBody,
+  SetJamSessionRequestBody,
+  SetJamSessionResponseBody,
+  SetPlaybackRequestBody,
+  SetPlaybackResponseBody
 } from '@jamfactoryapp/jamfactory-types';
 import {Router} from '@angular/router';
 import {ErrorService} from '../errors/error.service';
@@ -26,10 +28,11 @@ import {catchError} from 'rxjs/operators';
 })
 export class JamsessionHttpService {
 
-  constructor(private http: HttpClient, private router: Router, private errorService: ErrorService) { }
+  constructor(private http: HttpClient, private router: Router, private errorService: ErrorService) {
+  }
 
   getJamsession(): Observable<JamSessionDetails> {
-   return this.http.get<GetJamSessionResponseBody>('jam').pipe(catchError(this.errorService.handle));
+    return this.http.get<GetJamSessionResponseBody>('jam').pipe(catchError(this.errorService.handle));
   }
 
   putJamsession(body: SetJamSessionRequestBody): Observable<JamSessionDetails> {

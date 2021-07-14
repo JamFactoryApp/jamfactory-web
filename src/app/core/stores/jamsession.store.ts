@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {JamAuthStatus, JamPlaybackBody, JamSessionDetails} from '@jamfactoryapp/jamfactory-types';
+import {JamPlaybackBody, JamSessionDetails} from '@jamfactoryapp/jamfactory-types';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,8 @@ export class JamsessionStore {
   private jamsessionSubject: BehaviorSubject<JamSessionDetails> = new BehaviorSubject<JamSessionDetails>(undefined);
   private playbackSubject: BehaviorSubject<JamPlaybackBody> = new BehaviorSubject<JamPlaybackBody>(undefined);
 
-  constructor() { }
+  constructor() {
+  }
 
   get jamsession(): JamSessionDetails {
     return this.jamsessionSubject.value;

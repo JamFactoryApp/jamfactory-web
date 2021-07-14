@@ -1,9 +1,8 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AddCollectionRequestBody} from '@jamfactoryapp/jamfactory-types';
+import {QueueService} from '../../../core/services/queue.service';
 import PlaylistObjectSimplified = SpotifyApi.PlaylistObjectSimplified;
 import AlbumObjectSimplified = SpotifyApi.AlbumObjectSimplified;
-import {QueueService} from '../../../core/services/queue.service';
-
 
 
 @Component({
@@ -59,6 +58,11 @@ export class QueueCollectionComponent implements OnInit {
     return artist;
   }
 
-  isPlaylist(val): boolean { return val.constructor.name === 'PlaylistObjectSimplified'; }
-  isAlbum(val): boolean { return val.constructor.name === 'AlbumObjectSimplified'; }
+  isPlaylist(val): boolean {
+    return val.constructor.name === 'PlaylistObjectSimplified';
+  }
+
+  isAlbum(val): boolean {
+    return val.constructor.name === 'AlbumObjectSimplified';
+  }
 }

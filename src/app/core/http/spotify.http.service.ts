@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {
-  UserDevicesResponseBody,
-  UserPlaylistsResponseBody,
   SpotifySearchRequestBody,
   SpotifySearchResponseBody,
+  UserDevicesResponseBody,
+  UserPlaylistsResponseBody,
 } from '@jamfactoryapp/jamfactory-types';
 import {catchError} from 'rxjs/operators';
 import {ErrorService} from '../errors/error.service';
@@ -16,7 +16,8 @@ import {ErrorService} from '../errors/error.service';
 })
 export class SpotifyHttpService {
 
-  constructor(private http: HttpClient, private errorService: ErrorService) { }
+  constructor(private http: HttpClient, private errorService: ErrorService) {
+  }
 
   getDevices(): Observable<UserDevicesResponseBody> {
     return this.http.get<UserDevicesResponseBody>('spotify/devices').pipe(catchError(this.errorService.handle));

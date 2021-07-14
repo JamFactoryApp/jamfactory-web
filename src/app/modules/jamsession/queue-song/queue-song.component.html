@@ -1,7 +1,8 @@
 <div class="d-flex align-items-center animate" style="padding-left: 1rem; padding-bottom: 0.2rem; padding-top: 0.2rem"
      [ngStyle]="{'background-color': voted(track.spotifyTrackFull) == true && search == false ? VibrantColor : '', 'font-weight': voted(track.spotifyTrackFull) == true ? 'bold' : 'normal', 'color': voted(track.spotifyTrackFull) == true && search == false ? MutedColor : ''}"
      [ngClass]="{'even':index % 2 === 0 && !voted(track.spotifyTrackFull), 'no_search': search == false, 'search': search == true}">
-  <img #cover src="{{track.spotifyTrackFull.album.images[1].url}}" class="cover" (load)="getImgColor()" crossorigin="anonymous">
+  <img #cover src="{{track.spotifyTrackFull.album.images[1].url}}" class="cover" (load)="getImgColor()"
+       crossorigin="anonymous">
   <div class="flex-grow-1 ml-3 truncated" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">
     <span class="medium">{{track.spotifyTrackFull.name}}</span>
     <br>
@@ -9,12 +10,12 @@
   </div>
 
 
-
-
   <button class="btn btn-circle mx-1 material-btn" (click)="active(!jamSessionStore.jamsession.active)"
-          placement="left" ngbTooltip="{{!jamSessionStore.jamsession.active ? 'Start your Queue' : 'Stop the Queue'}}" #tooltip="ngbTooltip"
+          placement="left" ngbTooltip="{{!jamSessionStore.jamsession.active ? 'Start your Queue' : 'Stop the Queue'}}"
+          #tooltip="ngbTooltip"
           *ngIf="!search && host && index === 0" title="Settings">
-    <span class="material-icons">{{!jamSessionStore.jamsession.active ? 'play_circle_filled' : 'pause_circle_filled'}}</span>
+    <span
+      class="material-icons">{{!jamSessionStore.jamsession.active ? 'play_circle_filled' : 'pause_circle_filled'}}</span>
   </button>
   <button class="btn btn-circle mx-1 material-btn" (click)="delete(track)"
           *ngIf="!search && host" title="Settings">

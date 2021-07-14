@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {JamAuthStatus} from '@jamfactoryapp/jamfactory-types';
 
@@ -7,17 +7,16 @@ import {JamAuthStatus} from '@jamfactoryapp/jamfactory-types';
 })
 export class AuthStore {
 
+  public showedAuthSuccess = false;
   private defaultStatus: JamAuthStatus = {
     label: '',
     user: 'New',
     authorized: false
   };
-
-  public showedAuthSuccess = false;
-
   private authStatusSubject: BehaviorSubject<JamAuthStatus> = new BehaviorSubject<JamAuthStatus>(this.defaultStatus);
 
-  constructor() { }
+  constructor() {
+  }
 
   get authStatus(): JamAuthStatus {
     return this.authStatusSubject.value;

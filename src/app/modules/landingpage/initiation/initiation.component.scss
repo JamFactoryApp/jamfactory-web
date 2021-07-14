@@ -1,7 +1,7 @@
 .main {
   width: 100vw;
   height: 100px;
-  background:#282828;
+  background: #282828;
   box-shadow: 0 0 5px 0px #000;
 }
 
@@ -36,16 +36,12 @@
   color: lightgray;
 }
 
-
-
-
 .center {
   position: absolute;
   left: 15%;
   width: 70%;
   bottom: 0
 }
-
 
 @media (max-width: 768px) {
 
