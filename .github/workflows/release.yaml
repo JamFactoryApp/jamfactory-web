@@ -13,7 +13,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name:
-      run: sed '/^## ${{env.RELEASE_VERSION}}/,/^## /!d;//d' >> CHANGELOG.md
+      run: sed '/^## ${{env.RELEASE_VERSION}}/,/^## /!d;//d' RELEASE.md >> CHANGELOG.md
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
