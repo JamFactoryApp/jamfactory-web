@@ -13,11 +13,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name:
-      run: sed '/^## ${{env.RELEASE_VERSION}}/,/^## /!d;//d' >> ${{ github.workflow }}-CHANGELOG.md
+      run: sed '/^## ${{env.RELEASE_VERSION}}/,/^## /!d;//d' >> CHANGELOG.md
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        body_path: ${{ github.workflow }}-CHANGELOG.md
+        body_path: CHANGELOG.md
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
