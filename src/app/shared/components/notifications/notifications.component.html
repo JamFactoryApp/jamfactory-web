@@ -1,0 +1,15 @@
+<ngb-toast *ngFor="let n of notificationService.notifications" [class]="notificationService.getClasses(n.level)"
+           [autohide]="n.autohide" [delay]="n.delay" (hidden)="notificationService.remove(n); n.closeFunction()"
+           style="min-width: 200px">
+
+  <ng-template ngbToastHeader>
+    <span *ngIf="n.headerIcon" class="material-icons">{{n.headerIcon}}</span>
+    <strong class="mx-1">{{n.header}}</strong>
+  </ng-template>
+
+  <ng-template [ngIf]="notificationService.isTemplate(n)" [ngIfElse]="text">
+    <ng-template [ngTemplateOutlet]="n.message"></ng-template>
+  </ng-template>
+  <ng-template #text>{{ n.message }}</ng-template>
+</ngb-toast>
+

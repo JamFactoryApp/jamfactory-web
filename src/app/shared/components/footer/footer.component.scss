@@ -1,0 +1,28 @@
+.main {
+  width: 100vw;
+  height: 40px; /* Height of the footer */
+  background: #282828;
+  box-shadow: 0 0 5px 0px #000;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.footer-text {
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  color: lightgray;
+  font-size: 0.8em;
+  a {
+    color: lightgray;
+    font-style: inherit;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .footer-text {
+    font-size: 0.6em;
+  }
+}

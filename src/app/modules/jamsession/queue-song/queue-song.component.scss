@@ -1,0 +1,48 @@
+.even {
+  background: #e7e7e7;
+}
+
+.truncated {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.no_search {
+  color: black;
+}
+
+.search {
+  color: white;
+}
+
+.op-60 {
+  opacity: 0.6;
+}
+
+.btn-group-imitate {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.votes-display {
+  background: #828F9B;
+  color: white;
+  border-radius: 0 0.2rem 0.2rem 0;
+  padding: 0.5rem 1rem;
+}
+
+.vote-btn {
+  background: #dedede;
+}
+
+.cover {
+  height: 64px;
+  width: 64px;
+}
+
+.vl {
+  border-left: 1px solid #282828;
+  height: 32px;
+}

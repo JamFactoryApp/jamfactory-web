@@ -1,0 +1,13 @@
+Dockerfile*
+docker-compose*
+
+.git
+.gitignore
+
+dist
+e2e
+node_modules
+.editorconfig
+README.md
+
+yarn.lock

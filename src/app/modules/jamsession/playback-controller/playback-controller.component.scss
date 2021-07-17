@@ -1,0 +1,172 @@
+#playback {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px; /* Height of the footer */
+  background: #282828;
+  box-shadow: 0 0 5px 0px #000;
+}
+
+.corner-left {
+  position: absolute;
+  left: 0;
+  width: 25%;
+  float: left;
+  top: 0
+}
+
+.center {
+  position: absolute;
+  left: 25%;
+  width: 50%;
+  bottom: 0
+}
+
+.corner-right {
+  position: absolute;
+  right: 10px;
+  width: 25%;
+  top: 0
+}
+
+.album-cover {
+  position: absolute;
+  left: 0;
+  width: 100px;
+  height: 100px;
+}
+
+.playback-text {
+  float: right;
+  position: absolute;
+  margin-top: 10px;
+  left: 110px;
+}
+
+.title-text {
+  color: lightgray;
+  font-size: 1em;
+  white-space: nowrap;
+  float: left;
+}
+
+.artist-text {
+  color: gray;
+  float: left;
+  white-space: nowrap;
+  font-size: 0.8em;
+}
+
+.progress {
+  margin-top: 6px;
+  height: 5px;
+  border-radius: 5px;
+}
+
+.progress-text {
+  color: lightgray;
+  font-size: 0.8em;
+  position: relative;
+  top: -5px;
+}
+
+.progress-cell {
+  margin: 0px;
+  padding: 5px;
+}
+
+.progress-div {
+  width: 50%;
+}
+
+.btn-circle {
+  width: 40px;
+  height: 40px;
+  padding: 6px 0px;
+  border-radius: 40px;
+  font-size: 1em;
+  text-align: center;
+  border: none;
+  color: lightgray;
+}
+
+.center-table {
+  margin-top: auto;
+}
+
+.mobile-progress {
+  visibility: hidden;
+  width: 100%;
+  position: absolute;
+  top: -5px;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-button {
+  visibility: hidden;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #playback {
+    height: 80px;
+  }
+
+  .playback-text {
+    left: 90px;
+  }
+
+  .album-cover {
+    width: 80px;
+    height: 80px;
+    float: right;
+  }
+
+  .title-text {
+    color: lightgray;
+    font-size: 0.8em;
+  }
+
+  .artist-text {
+    color: gray;
+    font-size: 0.6em;
+  }
+
+  .progress-div {
+    visibility: hidden;
+  }
+
+  .mobile-progress {
+    visibility: visible;
+  }
+
+  .mobile-button {
+    visibility: visible;
+  }
+
+  .corner-right {
+    width: 40%;
+  }
+
+  .progress {
+    margin-top: 0px;
+    height: 5px;
+    border-radius: 0px;
+  }
+
+  .btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 0px 0px;
+    border-radius: 30px;
+    font-size: 0.6em;
+    text-align: center;
+    border: none;
+    color: lightgray;
+  }
+}

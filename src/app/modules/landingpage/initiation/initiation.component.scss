@@ -1,0 +1,56 @@
+.main {
+  width: 100vw;
+  height: 100px;
+  background: #282828;
+  box-shadow: 0 0 5px 0px #000;
+}
+
+.welcome-text {
+  margin-top: 30px;
+}
+
+.row {
+  padding: 0;
+  margin: 0;
+}
+
+.jam-label-input {
+  height: 75px;
+  width: 250px;
+  text-align: center;
+  font-size: 3em;
+  border-radius: 0px;
+  border: solid 2px #282828;
+  background-color: lightyellow;
+  font-family: 'Nerko One', cursive;
+}
+
+.vertical-center {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.btn {
+  background-color: #282828;
+  border: none;
+  color: lightgray;
+}
+
+.center {
+  position: absolute;
+  left: 15%;
+  width: 70%;
+  bottom: 0
+}
+
+@media (max-width: 768px) {
+
+  .main {
+    height: 50px; /* Height of the footer */
+  }
+
+  .hide {
+    visibility: hidden;
+  }
+
+}

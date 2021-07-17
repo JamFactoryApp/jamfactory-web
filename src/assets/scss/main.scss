@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../../../node_modules/bootstrap";
+@import '~material-design-icons/iconfont/material-icons.css';
+@import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap');
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.header {
+  top: 0;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+}
+
+.material-btn {
+  vertical-align: middle;
+  line-height: 0 !important;
+  position: relative;
+}

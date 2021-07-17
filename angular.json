@@ -24,13 +24,14 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/assets/scss/main.scss"
             ],
-            "scripts": []
+            "scripts": [
+              { "input": "node_modules/colorthief/dist/color-thief.umd.js", "inject": true, "bundleName": "colorthief" }
+            ]
           },
           "configurations": {
             "production": {
@@ -43,7 +44,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -53,11 +53,6 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
                 }
               ]
             }
@@ -66,6 +61,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "sslCert": "cert.pem",
+            "sslKey": "key.pem",
             "browserTarget": "jamfactory-web:build"
           },
           "configurations": {
@@ -88,11 +85,10 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/assets/scss/main.scss"
             ],
             "scripts": []
           }
@@ -123,6 +119,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "jamfactory-web"
 }
