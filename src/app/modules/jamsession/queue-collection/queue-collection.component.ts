@@ -3,6 +3,7 @@ import {AddCollectionRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../../core/services/queue.service';
 import PlaylistObjectSimplified = SpotifyApi.PlaylistObjectSimplified;
 import AlbumObjectSimplified = SpotifyApi.AlbumObjectSimplified;
+import {UtilService} from '../../../core/services/util.service';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class QueueCollectionComponent implements OnInit {
 
 
   constructor(
-    private queueService: QueueService
+    private queueService: QueueService,
+    public utils: UtilService
   ) {
   }
 
@@ -44,18 +46,6 @@ export class QueueCollectionComponent implements OnInit {
       type: 'playlist'
     };
     this.queueService.addCollection(body);
-  }
-
-  getArtist(item): string {
-    const len = item.length;
-    let artist: string = item[0].name;
-
-    if (len > 1) {
-      for (let i = 1; len > i; i++) {
-        artist = artist + ', ' + item[i].name;
-      }
-    }
-    return artist;
   }
 
   isPlaylist(val): boolean {

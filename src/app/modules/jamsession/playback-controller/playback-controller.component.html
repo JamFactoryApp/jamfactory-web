@@ -1,7 +1,7 @@
 <div id="playback">
   <div class="progress mobile-progress" *ngIf="item">
     <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-         [ngStyle]="{'width': getProgressAsString(progressms, playback.playback.item.duration_ms)}"></div>
+         [ngStyle]="{'width': utils.getPercentString(progressms, playback.playback.item.duration_ms)}"></div>
   </div>
 
 
@@ -35,18 +35,18 @@
     </div>
     <div class="row">
       <div class="col-1 progress-cell" style="text-align: right">
-        <span class="progress-text">{{getTime(progressms)}}</span>
+        <span class="progress-text">{{utils.millisecondsToTimeString(progressms)}}</span>
       </div>
 
       <div class="col-10 progress-cell">
         <div class="progress">
           <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-               [ngStyle]="{'width': getProgressAsString(progressms, playback.playback.item.duration_ms)}"></div>
+               [ngStyle]="{'width': utils.getPercentString(progressms, playback.playback.item.duration_ms)}"></div>
         </div>
       </div>
 
       <div class="col-1 progress-cell" style="text-align: left">
-        <span class="progress-text">{{getTime(playback.playback.item.duration_ms)}}</span>
+        <span class="progress-text">{{utils.millisecondsToTimeString(playback.playback.item.duration_ms)}}</span>
       </div>
 
     </div>

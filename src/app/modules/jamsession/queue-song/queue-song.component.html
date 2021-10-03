@@ -6,7 +6,7 @@
   <div class="flex-grow-1 ml-3 truncated" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">
     <span class="medium">{{track.spotifyTrackFull.name}}</span>
     <br>
-    <span class="small op-60">{{getArtist(track.spotifyTrackFull.artists)}}</span>
+    <span class="small op-60">{{utils.getArtistString(track.spotifyTrackFull.artists)}}</span>
   </div>
 
 

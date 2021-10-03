@@ -11,6 +11,7 @@ import {Notification, NotificationService} from '../../../core/services/notifica
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {ColorService} from '../../../core/services/color.service';
 import {WebsocketService} from '../../../core/socket/websocket.service';
+import {UtilService} from '../../../core/services/util.service';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class PlaybackControllerComponent implements OnInit {
     private router: Router,
     private queueStore: QueueStore,
     public jamStore: JamsessionStore,
+    public utils: UtilService,
     private authStore: UserStore,
     private notificationService: NotificationService,
     private websocketService: WebsocketService,
@@ -82,20 +84,6 @@ export class PlaybackControllerComponent implements OnInit {
       this.showedNoPlaybackNotification = true;
       this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
     }
-  }
-
-  getTime(milliseconds: number): string {
-    const minutes = Math.floor(milliseconds / (60 * 1000));
-    const seconds = Math.floor(milliseconds / 1000) - minutes * 60;
-    return this.str_pad_left(minutes, '0', 2) + ':' + this.str_pad_left(seconds, '0', 2);
-  }
-
-  getProgressAsString(current: number, duration: number): string {
-    return ((current / duration) * 100) + '%';
-  }
-
-  str_pad_left(time: number, pad: string, length: number): string {
-    return (new Array(length + 1).join(pad) + time).slice(-length);
   }
 
   leave(): void {

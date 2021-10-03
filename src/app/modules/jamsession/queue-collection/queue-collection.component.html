@@ -5,7 +5,7 @@
     <span class="medium">{{collection.name}}</span>
     <br>
     <div class="col" *ngIf="isAlbum(collection)">
-      <span class="small op-60">{{getArtist(collection.artists)}}</span>
+      <span class="small op-60">{{utils.getArtistString(collection.artists)}}</span>
     </div>
   </div>
   <div class="btn-group-imitate p-3">

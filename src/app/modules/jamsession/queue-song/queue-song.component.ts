@@ -8,6 +8,7 @@ import {JamsessionHttpService} from '../../../core/http/jamsession.http.service'
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
+import {UtilService} from '../../../core/services/util.service';
 
 declare var ColorThief: any;
 
@@ -48,7 +49,8 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
     private queueStore: QueueStore,
     private jamSessionService: JamsessionHttpService,
     public jamSessionStore: JamsessionStore,
-    private colorService: ColorService
+    private colorService: ColorService,
+    public utils: UtilService
   ) {
   }
 
@@ -59,18 +61,6 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
     if (this.tooltip && !this.jamSessionStore.jamSession.active) {
       this.tooltip.open();
     }
-  }
-
-  getArtist(item): string {
-    const len = item.length;
-    let artist: string = item[0].name;
-
-    if (len > 1) {
-      for (let i = 1; len > i; i++) {
-        artist = artist + ', ' + item[i].name;
-      }
-    }
-    return artist;
   }
 
   getImgColor(): void {
