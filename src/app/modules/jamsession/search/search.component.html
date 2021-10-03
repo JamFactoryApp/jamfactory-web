@@ -9,7 +9,7 @@
 
 
   <div class="col-2">
-    <span class="user-text" *ngIf="current">{{current.user}}</span>
+    <span class="user-text" *ngIf="userStore.currentUser">{{userStore.currentUser.display_name}}</span>
   </div>
 
 </div>

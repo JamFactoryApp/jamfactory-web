@@ -2,10 +2,10 @@ import {Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren} fr
 import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 import {FormControl} from '@angular/forms';
 
-import {JamAuthStatus, QueueSong, SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
+import {QueueSong, SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../../core/services/queue.service';
 import {QueueStore} from '../../../core/stores/queue.store';
-import {AuthStore} from '../../../core/stores/auth.store';
+import {UserStore} from '../../../core/stores/user.store';
 
 
 @Component({
@@ -16,7 +16,6 @@ import {AuthStore} from '../../../core/stores/auth.store';
 
 export class SearchComponent implements OnInit {
 
-  public current: JamAuthStatus;
   @ViewChildren('SearchSong', {read: ElementRef}) searchSongs: QueryList<ElementRef>;
   searchField = new FormControl('');
   searchType = '';
@@ -32,7 +31,7 @@ export class SearchComponent implements OnInit {
     private elementRef: ElementRef,
     private queueService: QueueService,
     private queueStore: QueueStore,
-    private authStore: AuthStore
+    public userStore: UserStore
   ) {
   }
 
@@ -55,10 +54,6 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authStore.$authStatus.subscribe(value => {
-      this.current = value;
-    });
-
     this.queueStore.$queue.subscribe(_ => {
       this.searchResultsTracks = this.queueService.updateQueueFromSocket(this.searchResultsTracks);
     });

@@ -10,12 +10,12 @@
   </div>
 
 
-  <button class="btn btn-circle mx-1 material-btn" (click)="active(!jamSessionStore.jamsession.active)"
-          placement="left" ngbTooltip="{{!jamSessionStore.jamsession.active ? 'Start your Queue' : 'Stop the Queue'}}"
+  <button class="btn btn-circle mx-1 material-btn" (click)="active(!jamSessionStore.jamSession.active)"
+          placement="left" ngbTooltip="{{!jamSessionStore.jamSession.active ? 'Start your Queue' : 'Stop the Queue'}}"
           #tooltip="ngbTooltip"
           *ngIf="!search && host && index === 0" title="Settings">
     <span
-      class="material-icons">{{!jamSessionStore.jamsession.active ? 'play_circle_filled' : 'pause_circle_filled'}}</span>
+      class="material-icons">{{!jamSessionStore.jamSession.active ? 'play_circle_filled' : 'pause_circle_filled'}}</span>
   </button>
   <button class="btn btn-circle mx-1 material-btn" (click)="delete(track)"
           *ngIf="!search && host" title="Settings">

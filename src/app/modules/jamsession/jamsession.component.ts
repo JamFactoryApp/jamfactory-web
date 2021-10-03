@@ -7,20 +7,20 @@ import {QueueHttpService} from '../../core/http/queue.http.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {WebsocketService} from '../../core/socket/websocket.service';
 import {
-  AuthCurrentResponseBody,
   GetJamSessionResponseBody,
   GetPlaybackResponseBody,
   JoinRequestBody,
   QueueSong,
-  SocketJamMessage,
+  SocketJamMessage, SocketMembersMessage,
   SocketPlaybackMessage,
   SocketQueueMessage
 } from '@jamfactoryapp/jamfactory-types';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {QueueStore} from '../../core/stores/queue.store';
 import {QueueService} from '../../core/services/queue.service';
-import {AuthStore} from '../../core/stores/auth.store';
+import {UserStore} from '../../core/stores/user.store';
 import {Notification, NotificationService} from '../../core/services/notification.service';
+import {UserHttpService} from '../../core/http/user.http.service';
 
 
 @Component({
@@ -30,7 +30,6 @@ import {Notification, NotificationService} from '../../core/services/notificatio
 })
 export class JamsessionComponent implements OnInit, OnDestroy {
   jamSession: GetJamSessionResponseBody;
-  current: AuthCurrentResponseBody;
   playback: GetPlaybackResponseBody;
   queue: QueueSong[] = [];
 
@@ -39,17 +38,18 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private authService: AuthHttpService,
-    private jamsessionService: JamsessionHttpService,
+    private userService: UserHttpService,
+    private jamSessionService: JamsessionHttpService,
     private jamStore: JamsessionStore,
     private queueStore: QueueStore,
     private queueService: QueueService,
     private queueApi: QueueHttpService,
     private spotifyService: SpotifyHttpService,
     private websocketService: WebsocketService,
-    private authStore: AuthStore,
+    private userStore: UserStore,
     public notificationService: NotificationService
   ) {
-    this.authService.getCurrent().subscribe(value => authStore.authStatus = value);
+    this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
   }
 
   ngOnInit(): void {
@@ -57,9 +57,9 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       this.websocketService.connect((message) => this.websocketHandler(message));
     }, 2000);
     // Check if the user already joined the jam session
-    this.jamsessionService.getJamsession().subscribe(
+    this.jamSessionService.getJamsession().subscribe(
       jamsession => {
-        this.jamStore.jamsession = jamsession;
+        this.jamStore.jamSession = jamsession;
         this.getData();
       },
       () => {
@@ -67,10 +67,10 @@ export class JamsessionComponent implements OnInit, OnDestroy {
         const body: JoinRequestBody = {
           label: this.route.snapshot.params.jamlabel
         };
-        this.jamsessionService.joinJamSession(body).subscribe(() => {
-          this.jamsessionService.getJamsession().subscribe(
+        this.jamSessionService.joinJamSession(body).subscribe(() => {
+          this.jamSessionService.getJamsession().subscribe(
             jamsession => {
-              this.jamStore.jamsession = jamsession;
+              this.jamStore.jamSession = jamsession;
               this.getData();
             },
             () => this.leaveOnError());
@@ -79,14 +79,18 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   }
 
   leaveOnError(): void {
-    this.notificationService.show(new Notification('JamSession not found').addHeader('Not found', 'error_outline').setAutohide(5000).setLevel(2));
+    this.notificationService.show(new Notification('JamSession not found')
+      .addHeader('Not found', 'error_outline').setAutohide(5000).setLevel(2));
     this.router.navigate(['/']);
   }
 
   getData(): void {
 
-    this.jamsessionService.getPlayback().subscribe(
+    this.jamSessionService.getPlayback().subscribe(
       playback => this.jamStore.playback = playback);
+
+    this.jamSessionService.getMembers().subscribe(
+      members => this.jamStore.members = members);
 
     this.queueApi.getQueue().subscribe(
       queue => this.queueStore.queue = queue);
@@ -97,7 +101,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     switch (wsMessage.event) {
       case 'jam':
         const jamPayload: SocketJamMessage = wsMessage.message as SocketJamMessage;
-        this.jamStore.jamsession = jamPayload;
+        this.jamStore.jamSession = jamPayload;
         break;
       case 'queue':
         const queuePayload: SocketQueueMessage = wsMessage.message as SocketQueueMessage;
@@ -106,6 +110,10 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       case 'playback':
         const playbackPayload: SocketPlaybackMessage = wsMessage.message as SocketPlaybackMessage;
         this.jamStore.playback = playbackPayload;
+        break;
+      case 'members':
+        const membersPayload: SocketMembersMessage = wsMessage.message as SocketMembersMessage;
+        this.jamStore.members = membersPayload;
         break;
       case 'close':
         switch (wsMessage.message) {

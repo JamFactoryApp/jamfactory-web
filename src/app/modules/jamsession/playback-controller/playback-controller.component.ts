@@ -2,10 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {JamAuthStatus, JamPlaybackBody, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
+import {JamPlaybackBody, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
-import {AuthStore} from '../../../core/stores/auth.store';
+import {UserStore} from '../../../core/stores/user.store';
 import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
 import {Notification, NotificationService} from '../../../core/services/notification.service';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +22,7 @@ export class PlaybackControllerComponent implements OnInit {
   Math = Math;
 
   @ViewChild('deviceTooltip', {static: false}) deviceTooltip: NgbTooltip;
-  public current: JamAuthStatus;
+  public currentUser: JamUser;
   public playback: JamPlaybackBody;
   public progressms: number;
   public intervallId: number;
@@ -37,8 +37,8 @@ export class PlaybackControllerComponent implements OnInit {
     private spotifyService: SpotifyHttpService,
     private router: Router,
     private queueStore: QueueStore,
-    private jamStore: JamsessionStore,
-    private authStore: AuthStore,
+    public jamStore: JamsessionStore,
+    private authStore: UserStore,
     private notificationService: NotificationService,
     private websocketService: WebsocketService,
     private colorService: ColorService) {
@@ -46,8 +46,8 @@ export class PlaybackControllerComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.authStore.$authStatus.subscribe(value => {
-      this.current = value;
+    this.authStore.$currentUser.subscribe(value => {
+      this.currentUser = value;
       this.getDevices();
     });
 
@@ -78,7 +78,7 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   checkNotifications(): void {
-    if (this.authStore.authStatus.user === 'Host' && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
+    if (this.jamStore.currentMember.rights.includes('Host') && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
       this.showedNoPlaybackNotification = true;
       this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
     }
@@ -114,7 +114,7 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   getDevices(): void {
-    if (this.current.user === 'Host') {
+    if (this.jamStore.currentMember.rights.includes('Host')) {
       this.spotifyService.getDevices().subscribe(value1 => {
         this.devices = value1;
       });

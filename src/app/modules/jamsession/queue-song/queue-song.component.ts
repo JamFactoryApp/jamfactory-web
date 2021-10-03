@@ -56,7 +56,7 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.tooltip && !this.jamSessionStore.jamsession.active) {
+    if (this.tooltip && !this.jamSessionStore.jamSession.active) {
       this.tooltip.open();
     }
   }
@@ -132,7 +132,7 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
       active: value
     };
     this.jamSessionService.putJamsession(body).subscribe((jamSession) => {
-      this.jamSessionStore.jamsession = jamSession;
+      this.jamSessionStore.jamSession = jamSession;
     });
   }
 }

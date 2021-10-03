@@ -4,7 +4,7 @@ import {FormControl} from '@angular/forms';
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {AuthStore} from '../../../core/stores/auth.store';
+import {UserStore} from '../../../core/stores/user.store';
 import {NotificationService} from '../../../core/services/notification.service';
 
 @Component({
@@ -18,9 +18,9 @@ export class InitiationComponent implements OnInit {
 
   constructor(
     private authService: AuthHttpService,
-    private jamsessionService: JamsessionHttpService,
+    private jamSessionService: JamsessionHttpService,
     private router: Router,
-    public authStore: AuthStore,
+    public userStore: UserStore,
     private notificationService: NotificationService
   ) {
   }
@@ -38,7 +38,7 @@ export class InitiationComponent implements OnInit {
   }
 
   create(): void {
-    this.jamsessionService.createJamsession().subscribe(value => {
+    this.jamSessionService.createJamSession().subscribe(value => {
       this.notificationService.clearAll();
       this.router.navigate(['/jam/' + value.label]);
     });
@@ -55,7 +55,7 @@ export class InitiationComponent implements OnInit {
     const body: JoinRequestBody = {
       label: this.labelField.value
     };
-    this.jamsessionService.joinJamSession(body).subscribe(value => {
+    this.jamSessionService.joinJamSession(body).subscribe(value => {
       this.router.navigate(['/jam/' + value.label]);
     }, error1 => {
       this.wrong = true;
