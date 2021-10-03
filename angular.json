@@ -60,22 +60,26 @@
                   "maximumError": "5mb"
                 }
               ]
-            }
+            },
+            "development": {}
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "sslCert": "cert.pem",
-            "sslKey": "key.pem",
-            "browserTarget": "jamfactory-web:build"
+            "sslKey": "key.pem"
           },
           "configurations": {
             "production": {
               "browserTarget": "jamfactory-web:build:production"
+            },
+            "development": {
+              "browserTarget": "jamfactory-web:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -115,14 +119,17 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "jamfactory-web:serve"
+            "protractorConfig": "e2e/protractor.conf.js"
           },
           "configurations": {
             "production": {
               "devServerTarget": "jamfactory-web:serve:production"
+            },
+            "development": {
+              "devServerTarget": "jamfactory-web:serve:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         }
       }
     }
