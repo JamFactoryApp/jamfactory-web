@@ -3,16 +3,16 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
 import {
-  CreateJamSessionResponseBody,
+  CreateJamSessionResponseBody, GetJamSessionMembersResponseBody,
   GetJamSessionResponseBody,
   GetPlaybackResponseBody,
-  JamLabelBody,
+  JamLabelBody, JamMember, JamMemberSettings,
   JamPlaybackBody,
   JamSessionDetails,
   JamSuccessConfirmation,
   JoinRequestBody,
   JoinResponseBody,
-  LeaveJamSessionResponseBody,
+  LeaveJamSessionResponseBody, SetJamSessionMembersRequestBody, SetJamSessionMembersResponseBody,
   SetJamSessionRequestBody,
   SetJamSessionResponseBody,
   SetPlaybackRequestBody,
@@ -47,7 +47,15 @@ export class JamsessionHttpService {
     return this.http.put<SetPlaybackResponseBody>('jam/playback', body).pipe(catchError(this.errorService.handle));
   }
 
-  createJamsession(): Observable<JamLabelBody> {
+  getMembers(): Observable<JamMember[]> {
+    return this.http.get<GetJamSessionMembersResponseBody>('jam/members').pipe(catchError(this.errorService.handle));
+  }
+
+  setMembers(body: SetJamSessionMembersRequestBody): Observable<JamMember[]> {
+    return this.http.put<SetJamSessionMembersResponseBody>('jam/members', body).pipe(catchError(this.errorService.handle));
+  }
+
+  createJamSession(): Observable<JamLabelBody> {
     return this.http.get<CreateJamSessionResponseBody>('jam/create').pipe(catchError(this.errorService.handle));
   }
 
