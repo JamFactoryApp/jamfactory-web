@@ -8,7 +8,7 @@ import {
   GetUserResponseBody,
   JamSuccessConfirmation,
   JamUser,
-  PutUserResponseBody
+  SetUserResponseBody
 } from '@jamfactoryapp/jamfactory-types';
 import {catchError} from 'rxjs/operators';
 import {ErrorService} from '../errors/error.service';
@@ -35,7 +35,7 @@ export class UserHttpService {
 
   setCurrentUser(): Observable<JamUser> {
     return this.http
-      .put<PutUserResponseBody>('me', this.httpOptions)
+      .put<SetUserResponseBody>('me', this.httpOptions)
       .pipe(catchError(this.errorService.handle));
   }
 

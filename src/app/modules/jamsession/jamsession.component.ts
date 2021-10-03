@@ -9,9 +9,16 @@ import {WebsocketService} from '../../core/socket/websocket.service';
 import {
   GetJamSessionResponseBody,
   GetPlaybackResponseBody,
+  JamCloseReasonHost, JamCloseReasonInactive,
+  JamSocketEventClose,
+  JamSocketEventJam,
+  JamSocketEventMembers,
+  JamSocketEventPlayback,
+  JamSocketEventQueue,
   JoinRequestBody,
   QueueSong,
-  SocketJamMessage, SocketMembersMessage,
+  SocketJamMessage,
+  SocketMembersMessage,
   SocketPlaybackMessage,
   SocketQueueMessage
 } from '@jamfactoryapp/jamfactory-types';
@@ -99,30 +106,30 @@ export class JamsessionComponent implements OnInit, OnDestroy {
 
   websocketHandler(wsMessage): void {
     switch (wsMessage.event) {
-      case 'jam':
+      case JamSocketEventJam:
         const jamPayload: SocketJamMessage = wsMessage.message as SocketJamMessage;
         this.jamStore.jamSession = jamPayload;
         break;
-      case 'queue':
+      case JamSocketEventQueue:
         const queuePayload: SocketQueueMessage = wsMessage.message as SocketQueueMessage;
         this.queueStore.queue.tracks = this.queueService.updateQueueFromSocket(queuePayload.tracks);
         break;
-      case 'playback':
+      case JamSocketEventPlayback:
         const playbackPayload: SocketPlaybackMessage = wsMessage.message as SocketPlaybackMessage;
         this.jamStore.playback = playbackPayload;
         break;
-      case 'members':
+      case JamSocketEventMembers:
         const membersPayload: SocketMembersMessage = wsMessage.message as SocketMembersMessage;
         this.jamStore.members = membersPayload;
         break;
-      case 'close':
+      case JamSocketEventClose:
         switch (wsMessage.message) {
-          case 'host':
+          case JamCloseReasonHost:
             this.notificationService.show(new Notification('Your JamSession was closed by the host').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {
               this.router.navigate(['/']);
             }));
             break;
-          case  'inactivity':
+          case  JamCloseReasonInactive:
             this.notificationService.show(new Notification('Your JamSession was closed due to inactivity').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {
               this.router.navigate(['/']);
             }));
