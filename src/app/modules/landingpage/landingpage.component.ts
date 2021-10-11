@@ -39,7 +39,7 @@ export class LandingpageComponent implements OnInit {
   }
 
   checkForRedirect(): void {
-    if (this.userStore.currentUser.joined_label) {
+    if (this.userStore.currentUser?.joined_label) {
 
       this.jam.getJamsession().subscribe(value => {
         this.jamStore.jamSession = value;

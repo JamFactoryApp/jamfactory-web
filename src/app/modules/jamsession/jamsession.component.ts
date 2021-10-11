@@ -6,28 +6,19 @@ import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {QueueHttpService} from '../../core/http/queue.http.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {WebsocketService} from '../../core/socket/websocket.service';
-import {
-  GetJamSessionResponseBody,
-  GetPlaybackResponseBody,
-  JamCloseReasonHost, JamCloseReasonInactive,
-  JamSocketEventClose,
-  JamSocketEventJam,
-  JamSocketEventMembers,
-  JamSocketEventPlayback,
-  JamSocketEventQueue,
-  JoinRequestBody,
-  QueueSong,
-  SocketJamMessage,
-  SocketMembersMessage,
-  SocketPlaybackMessage,
-  SocketQueueMessage
-} from '@jamfactoryapp/jamfactory-types';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {QueueStore} from '../../core/stores/queue.store';
 import {QueueService} from '../../core/services/queue.service';
 import {UserStore} from '../../core/stores/user.store';
 import {Notification, NotificationService} from '../../core/services/notification.service';
 import {UserHttpService} from '../../core/http/user.http.service';
+
+import {
+  GetJamSessionResponseBody,
+  GetPlaybackResponseBody,
+  JoinRequestBody,
+  QueueSong, SocketJamMessage, SocketMembersMessage, SocketPlaybackMessage, SocketQueueMessage
+} from '@jamfactoryapp/jamfactory-types';
 
 
 @Component({
@@ -97,7 +88,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       playback => this.jamStore.playback = playback);
 
     this.jamSessionService.getMembers().subscribe(
-      members => this.jamStore.members = members);
+      members => this.jamStore.members = members.members);
 
     this.queueApi.getQueue().subscribe(
       queue => this.queueStore.queue = queue);
@@ -106,30 +97,30 @@ export class JamsessionComponent implements OnInit, OnDestroy {
 
   websocketHandler(wsMessage): void {
     switch (wsMessage.event) {
-      case JamSocketEventJam:
+      case 'jam':
         const jamPayload: SocketJamMessage = wsMessage.message as SocketJamMessage;
         this.jamStore.jamSession = jamPayload;
         break;
-      case JamSocketEventQueue:
+      case 'queue':
         const queuePayload: SocketQueueMessage = wsMessage.message as SocketQueueMessage;
         this.queueStore.queue.tracks = this.queueService.updateQueueFromSocket(queuePayload.tracks);
         break;
-      case JamSocketEventPlayback:
+      case 'playback':
         const playbackPayload: SocketPlaybackMessage = wsMessage.message as SocketPlaybackMessage;
         this.jamStore.playback = playbackPayload;
         break;
-      case JamSocketEventMembers:
+      case 'members':
         const membersPayload: SocketMembersMessage = wsMessage.message as SocketMembersMessage;
-        this.jamStore.members = membersPayload;
+        this.jamStore.members = membersPayload.members;
         break;
-      case JamSocketEventClose:
+      case 'close':
         switch (wsMessage.message) {
-          case JamCloseReasonHost:
+          case 'host':
             this.notificationService.show(new Notification('Your JamSession was closed by the host').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {
               this.router.navigate(['/']);
             }));
             break;
-          case  JamCloseReasonInactive:
+          case  'inactive':
             this.notificationService.show(new Notification('Your JamSession was closed due to inactivity').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {
               this.router.navigate(['/']);
             }));

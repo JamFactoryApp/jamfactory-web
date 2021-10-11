@@ -6,7 +6,7 @@ import {
   CreateJamSessionResponseBody, GetJamSessionMembersResponseBody,
   GetJamSessionResponseBody,
   GetPlaybackResponseBody,
-  JamLabelBody, JamMember, JamMemberSettings,
+  JamLabelBody,
   JamPlaybackBody,
   JamSessionDetails,
   JamSuccessConfirmation,
@@ -47,11 +47,11 @@ export class JamsessionHttpService {
     return this.http.put<SetPlaybackResponseBody>('jam/playback', body).pipe(catchError(this.errorService.handle));
   }
 
-  getMembers(): Observable<JamMember[]> {
+  getMembers(): Observable<GetJamSessionMembersResponseBody> {
     return this.http.get<GetJamSessionMembersResponseBody>('jam/members').pipe(catchError(this.errorService.handle));
   }
 
-  setMembers(body: SetJamSessionMembersRequestBody): Observable<JamMember[]> {
+  setMembers(body: SetJamSessionMembersRequestBody): Observable<GetJamSessionMembersResponseBody> {
     return this.http.put<SetJamSessionMembersResponseBody>('jam/members', body).pipe(catchError(this.errorService.handle));
   }
 

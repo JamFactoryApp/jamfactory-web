@@ -23,11 +23,11 @@
       <div class="col text-center">
 
         <button class="btn btn-circle mx-4 material-btn" (click)="pausePlayback()"
-                *ngIf="this.jamStore.currentMember.rights.includes(JamRightHost) && playback.playback.is_playing">
+                *ngIf="this.jamStore.currentMember?.rights.includes(JamRightHost) && playback.playback.is_playing">
           <span class="material-icons">pause</span>
         </button>
         <button class="btn btn-circle mx-4 material-btn" (click)="resumePlayback()"
-                *ngIf="this.jamStore.currentMember.rights.includes(JamRightHost) && !playback.playback.is_playing">
+                *ngIf="this.jamStore.currentMember?.rights.includes(JamRightHost) && !playback.playback.is_playing">
           <span class="material-icons">play_arrow</span>
         </button>
 
@@ -58,11 +58,11 @@
 
 
         <button class="btn btn-circle mx-1 mobile-button material-btn" (click)="pausePlayback()"
-                *ngIf="item && this.jamStore.currentMember && this.jamStore.currentMember.rights.includes(JamRightHost) && playback.playback.is_playing">
+                *ngIf="item && this.jamStore.currentMember?.rights.includes(JamRightHost) && playback.playback.is_playing">
           <span class="material-icons">pause</span>
         </button>
         <button class="btn btn-circle mx-1 mobile-button material-btn" (click)="resumePlayback()"
-                *ngIf="item && this.jamStore.currentMember && this.jamStore.currentMember.rights.includes(JamRightHost) && !playback.playback.is_playing">
+                *ngIf="item && this.jamStore.currentMember?.rights.includes(JamRightHost) && !playback.playback.is_playing">
           <span class="material-icons">play_arrow</span>
         </button>
 
@@ -75,9 +75,9 @@
             {{playback?.playback.device.name ? playback?.playback.device.name : "Select a playback device"}}
           </div>
         </ng-template>
-        <div ngbDropdown placement="top" class="d-inline-block" *ngIf="this.jamStore.currentMember && this.jamStore.currentMember.rights.includes(JamRightHost)">
+        <div ngbDropdown placement="top" class="d-inline-block" *ngIf="this.jamStore.currentMember?.rights.includes(JamRightHost)">
           <button class="btn btn-circle mx-1 material-btn" id="dropdownDevice" ngbDropdownToggle
-                  #deviceTooltip="ngbTooltip" *ngIf="this.jamStore.currentMember && this.jamStore.currentMember.rights.includes(JamRightHost)" [ngbTooltip]="tipContent"
+                  #deviceTooltip="ngbTooltip" *ngIf="this.jamStore.currentMember?.rights.includes(JamRightHost)" [ngbTooltip]="tipContent"
                   (click)="getDevices()">
             <span class="material-icons">speaker_group</span>
           </button>
@@ -92,7 +92,7 @@
         </div>
 
         <button class="btn btn-circle mx-1 material-btn" (click)="openSettings()"
-                *ngIf="this.jamStore.currentMember && this.jamStore.currentMember.rights.includes(JamRightHost)" title="Settings">
+                *ngIf="this.jamStore.currentMember?.rights.includes(JamRightHost)" title="Settings">
           <span class="material-icons">settings</span>
         </button>
         <button class="btn btn-circle mx-1 material-btn" (click)="leave()" title="Leave JamSession">

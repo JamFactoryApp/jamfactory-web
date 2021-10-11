@@ -30,12 +30,15 @@
   margin-bottom: auto;
 }
 
-.btn {
+.btn-main {
   background-color: #282828;
   border: none;
   color: lightgray;
 }
 
+.btn-secondary {
+  border-color: #282828;
+}
 .center {
   position: absolute;
   left: 15%;

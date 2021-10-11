@@ -46,9 +46,11 @@ export class JamsessionStore {
 
   set members(members: JamMember[]) {
     this.membersSubject.next(members);
-    const currentMemberArr = members.filter(m => m.identifier === this.userStore.currentUser.identifier)
-    if (currentMemberArr.length === 1) {
-      this.currentMemberSubject.next(currentMemberArr[0]);
+    if (this.userStore.currentUser) {
+      const currentMemberArr = members.filter(m => m.identifier === this.userStore.currentUser.identifier);
+      if (currentMemberArr.length === 1) {
+        this.currentMemberSubject.next(currentMemberArr[0]);
+      }
     }
   }
 

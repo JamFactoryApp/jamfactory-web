@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthHttpService} from '../../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {JamPlaybackBody, JamRightHost, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
+import {JamPlaybackBody, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {UserStore} from '../../../core/stores/user.store';
@@ -32,7 +32,7 @@ export class PlaybackControllerComponent implements OnInit {
   private showedNoPlaybackNotification = false;
   private timeout: number;
 
-  readonly JamRightHost = JamRightHost;
+  readonly JamRightHost = 'Host';
 
   constructor(
     private authService: AuthHttpService,
@@ -82,7 +82,7 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   checkNotifications(): void {
-    if (this.jamStore.currentMember.rights.includes(JamRightHost) && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
+    if (this.jamStore.currentMember?.rights.includes(this.JamRightHost) && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
       this.showedNoPlaybackNotification = true;
       this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
     }
@@ -104,7 +104,7 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   getDevices(): void {
-    if (this.jamStore.currentMember.rights.includes(JamRightHost)) {
+    if (this.jamStore.currentMember?.rights.includes(this.JamRightHost)) {
       this.spotifyService.getDevices().subscribe(value1 => {
         this.devices = value1;
       });

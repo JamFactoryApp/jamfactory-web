@@ -6,6 +6,7 @@ import {JamsessionHttpService} from '../../../core/http/jamsession.http.service'
 import {Router} from '@angular/router';
 import {UserStore} from '../../../core/stores/user.store';
 import {NotificationService} from '../../../core/services/notification.service';
+import {UserHttpService} from '../../../core/http/user.http.service';
 
 @Component({
   selector: 'app-initiation',
@@ -20,6 +21,7 @@ export class InitiationComponent implements OnInit {
     private authService: AuthHttpService,
     private jamSessionService: JamsessionHttpService,
     private router: Router,
+    private userService: UserHttpService,
     public userStore: UserStore,
     private notificationService: NotificationService
   ) {
@@ -49,6 +51,14 @@ export class InitiationComponent implements OnInit {
     if (this.labelField.value.length === 5 && event.key === 'Enter') {
       this.join();
     }
+  }
+
+  logout(): void {
+    this.authService.getLogout().subscribe((res) => {
+        this.userService.getCurrentUser().subscribe(res2 => {
+          this.userStore.currentUser = res2;
+        });
+    });
   }
 
   join(): void {
