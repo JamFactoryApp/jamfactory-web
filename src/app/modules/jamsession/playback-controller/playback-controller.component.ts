@@ -82,7 +82,7 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   checkNotifications(): void {
-    if (this.jamStore.currentMember?.rights.includes(this.JamRightHost) && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
+    if (this.jamStore.currentMember?.permissions.includes(this.JamRightHost) && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
       this.showedNoPlaybackNotification = true;
       this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
     }
@@ -104,7 +104,7 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   getDevices(): void {
-    if (this.jamStore.currentMember?.rights.includes(this.JamRightHost)) {
+    if (this.jamStore.currentMember?.permissions.includes(this.JamRightHost)) {
       this.spotifyService.getDevices().subscribe(value1 => {
         this.devices = value1;
       });
