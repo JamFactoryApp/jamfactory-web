@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {UserStore} from '../../../core/stores/user.store';
+import {JamsessionStore} from '../../../core/stores/jamsession.store';
 
 
 @Component({
@@ -9,10 +10,11 @@ import {UserStore} from '../../../core/stores/user.store';
   styleUrls: ['./queue.component.scss']
 })
 export class QueueComponent implements OnInit {
-
+  readonly JamRightHost = 'Host';
   constructor(
     public queueStore: QueueStore,
-    public authStore: UserStore
+    public authStore: UserStore,
+    public jamStore: JamsessionStore
   ) {
   }
 

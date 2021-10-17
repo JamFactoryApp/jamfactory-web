@@ -20,11 +20,11 @@
   <div class="row">
     <div class="col mt-1">
       <div *ngFor="let track of searchResultsTracks.slice(0 + searchShift,searchCount + searchShift)">
-        <app-queue-song style="display: block" #SearchSong [inQueue]="false" [voteMethod]="voteMethod" [track]="track"
+        <app-queue-song style="display: block" #SearchSong [inQueue]="false" [track]="track"
                         [search]="true"></app-queue-song>
       </div>
       <div *ngFor="let playlist of searchResultsPlaylists.slice(0 + searchShift,searchCount + searchShift)">
-        <app-queue-collection style="display: block" [addMethod]="addMethod"
+        <app-queue-collection style="display: block"
                               [collection]="playlist"></app-queue-collection>
       </div>
 
@@ -33,8 +33,8 @@
         {{getSearchResultCount() > searchCount + searchShift ? 'Show more...' : 'Back to beginning'}}
       </div>
       <hr
-        *ngIf="getSearchResultCount() > searchCount && (current?.user === 'Host' && searchResultsPlaylists !== undefined)">
-      <div class="btn user-playlist" *ngIf="current?.user === 'Host' && searchResultsPlaylists !== undefined"
+        *ngIf="getSearchResultCount() > searchCount && this.jamStore.currentMember?.permissions.includes(JamRightHost) && searchResultsPlaylists !== undefined">
+      <div class="btn user-playlist" *ngIf="this.jamStore.currentMember?.permissions.includes(JamRightHost) && searchResultsPlaylists !== undefined"
            (click)="showUserPlaylists()">Show your playlists <span
         class="material-icons material-btn">navigate_next</span></div>
 

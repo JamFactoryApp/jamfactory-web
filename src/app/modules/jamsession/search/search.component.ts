@@ -6,6 +6,7 @@ import {QueueSong, SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-typ
 import {QueueService} from '../../../core/services/queue.service';
 import {QueueStore} from '../../../core/stores/queue.store';
 import {UserStore} from '../../../core/stores/user.store';
+import {JamsessionStore} from '../../../core/stores/jamsession.store';
 
 
 @Component({
@@ -25,13 +26,14 @@ export class SearchComponent implements OnInit {
   searchCount = 1;
   searchShift = 0;
   searchTimeout: number;
-
+  readonly JamRightHost = 'Host';
   constructor(
     private spotifyService: SpotifyHttpService,
     private elementRef: ElementRef,
     private queueService: QueueService,
     private queueStore: QueueStore,
-    public userStore: UserStore
+    public userStore: UserStore,
+    public jamStore: JamsessionStore
   ) {
   }
 
