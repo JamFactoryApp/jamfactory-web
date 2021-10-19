@@ -5,4 +5,4 @@ services:
     image: ghcr.io/jamfactoryapp/jamfactory-web:latest
     restart: always
     ports:
-      - 8080:80
+      - "8080:80"

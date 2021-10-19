@@ -4,4 +4,4 @@ services:
   web:
     image: ghcr.io/jamfactoryapp/jamfactory-web:latest
     ports:
-      - 8080:443
+      - "8080:443"

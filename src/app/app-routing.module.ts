@@ -9,7 +9,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'jam/:jamlabel',
+    path: ':jamlabel',
     loadChildren: () => import('./modules/jamsession/jamsession.module').then(m => m.JamsessionModule)
   },
   {
