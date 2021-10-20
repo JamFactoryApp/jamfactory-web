@@ -38,6 +38,7 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
   @ViewChild('tooltip') tooltip: NgbTooltip;
 
   public host: boolean;
+  public voted: boolean;
   public songColor: SongColor = {
     vibrant: [231, 231, 231],
     muted: [0, 0, 0],
@@ -57,6 +58,7 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.host = this.permissions.hasPermission(this.permissions.Host)
+    this.voted = this.getVoted(this.track.spotifyTrackFull);
   }
 
   ngAfterViewInit(): void {
@@ -71,7 +73,7 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
     }
   }
 
-  voted(track: TrackObjectFull): boolean {
+  getVoted(track: TrackObjectFull): boolean {
     if (this.queueStore.queue.tracks === undefined) {
       return false;
     }
