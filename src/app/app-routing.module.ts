@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {JamsessionComponent} from './components/jamsession/jamsession.component';
-import {RedirectGuard} from './core/guard/redirect.guard';
+import {RedirectGuard} from './core/guards/redirect.guard';
 
 const routes: Routes = [
   {

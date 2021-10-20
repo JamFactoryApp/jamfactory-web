@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 
 import {LoginResponseBody, LogoutResponseBody} from '@jamfactoryapp/jamfactory-types';
 import {catchError} from 'rxjs/operators';
-import {ErrorService} from '../errors/error.service';
+import {ErrorService} from '../services/error.service';
 
 @Injectable({
   providedIn: 'root'

@@ -33,8 +33,8 @@
         {{getSearchResultCount() > searchCount + searchShift ? 'Show more...' : 'Back to beginning'}}
       </div>
       <hr
-        *ngIf="getSearchResultCount() > searchCount && this.jamStore.currentMember?.permissions.includes(JamRightHost) && searchResultsPlaylists !== undefined">
-      <div class="btn user-playlist" *ngIf="this.jamStore.currentMember?.permissions.includes(JamRightHost) && searchResultsPlaylists !== undefined"
+        *ngIf="getSearchResultCount() > searchCount && this.permissions.hasPermission(this.permissions.Host) && searchResultsPlaylists !== undefined">
+      <div class="btn user-playlist" *ngIf="this.permissions.hasPermission(this.permissions.Host) && searchResultsPlaylists !== undefined"
            (click)="showUserPlaylists()">Show your playlists <span
         class="material-icons material-btn">navigate_next</span></div>
 

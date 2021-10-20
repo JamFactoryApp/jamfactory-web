@@ -9,6 +9,7 @@ import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
 import {UtilService} from '../../core/services/util.service';
+import {PermissionsService} from '../../core/services/permissions.service';
 
 declare var ColorThief: any;
 
@@ -30,10 +31,6 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
   inQueue: boolean;
 
   @Input()
-  host: boolean;
-
-
-  @Input()
   search: boolean;
 
   @ViewChild('cover') cover: ElementRef;
@@ -43,6 +40,8 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
   VibrantColor;
   MutedColor;
 
+  public host: boolean;
+
   constructor(
     private queueApi: QueueHttpService,
     private queueService: QueueService,
@@ -50,11 +49,13 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
     private jamSessionService: JamsessionHttpService,
     public jamSessionStore: JamsessionStore,
     private colorService: ColorService,
-    public utils: UtilService
+    public utils: UtilService,
+    public permissions: PermissionsService
   ) {
   }
 
   ngOnInit(): void {
+    this.host = this.permissions.hasPermission(this.permissions.Host)
   }
 
   ngAfterViewInit(): void {

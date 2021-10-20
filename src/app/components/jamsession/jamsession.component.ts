@@ -5,7 +5,7 @@ import {AuthHttpService} from '../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {QueueHttpService} from '../../core/http/queue.http.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
-import {WebsocketService} from '../../core/socket/websocket.service';
+import {WebsocketService} from '../../core/services/websocket.service';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {QueueStore} from '../../core/stores/queue.store';
 import {QueueService} from '../../core/services/queue.service';

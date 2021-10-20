@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {QueueStore} from '../../core/stores/queue.store';
 import {UserStore} from '../../core/stores/user.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
+import {PermissionsService} from '../../core/services/permissions.service';
 
 
 @Component({
@@ -14,7 +15,8 @@ export class QueueComponent implements OnInit {
   constructor(
     public queueStore: QueueStore,
     public authStore: UserStore,
-    public jamStore: JamsessionStore
+    public jamStore: JamsessionStore,
+    public permissions: PermissionsService
   ) {
   }
 

@@ -19,7 +19,7 @@ import {
   SetPlaybackResponseBody
 } from '@jamfactoryapp/jamfactory-types';
 import {Router} from '@angular/router';
-import {ErrorService} from '../errors/error.service';
+import {ErrorService} from '../services/error.service';
 import {catchError} from 'rxjs/operators';
 
 

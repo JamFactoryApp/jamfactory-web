@@ -4,7 +4,6 @@
          [ngStyle]="{'width': utils.getPercentString(progressms, playback.playback.item.duration_ms)}"></div>
   </div>
 
-
   <div class="corner-left">
     <img *ngIf="item" class="album-cover" [src]="playback.playback.item.album.images[1].url" alt="album cover">
     <img *ngIf="!item" class="album-cover" src="../../../assets/gopher.png" alt="album cover">
@@ -23,11 +22,11 @@
       <div class="col text-center">
 
         <button class="btn btn-circle mx-4 material-btn" (click)="pausePlayback()"
-                *ngIf="this.jamStore.currentMember?.permissions.includes(JamRightHost) && playback.playback.is_playing">
+                *ngIf="this.permissions.hasPermission(this.permissions.Host) && playback.playback.is_playing">
           <span class="material-icons">pause</span>
         </button>
         <button class="btn btn-circle mx-4 material-btn" (click)="resumePlayback()"
-                *ngIf="this.jamStore.currentMember?.permissions.includes(JamRightHost) && !playback.playback.is_playing">
+                *ngIf="this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing">
           <span class="material-icons">play_arrow</span>
         </button>
 
@@ -58,11 +57,11 @@
 
 
         <button class="btn btn-circle mx-1 mobile-button material-btn" (click)="pausePlayback()"
-                *ngIf="item && this.jamStore.currentMember?.permissions.includes(JamRightHost) && playback.playback.is_playing">
+                *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && playback.playback.is_playing">
           <span class="material-icons">pause</span>
         </button>
         <button class="btn btn-circle mx-1 mobile-button material-btn" (click)="resumePlayback()"
-                *ngIf="item && this.jamStore.currentMember?.permissions.includes(JamRightHost) && !playback.playback.is_playing">
+                *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing">
           <span class="material-icons">play_arrow</span>
         </button>
 
@@ -75,9 +74,9 @@
             {{playback?.playback.device.name ? playback?.playback.device.name : "Select a playback device"}}
           </div>
         </ng-template>
-        <div ngbDropdown placement="top" class="d-inline-block" *ngIf="this.jamStore.currentMember?.permissions.includes(JamRightHost)">
+        <div ngbDropdown placement="top" class="d-inline-block" *ngIf="this.permissions.hasPermission(this.permissions.Host)">
           <button class="btn btn-circle mx-1 material-btn" id="dropdownDevice" ngbDropdownToggle
-                  #deviceTooltip="ngbTooltip" *ngIf="this.jamStore.currentMember?.permissions.includes(JamRightHost)" [ngbTooltip]="tipContent"
+                  #deviceTooltip="ngbTooltip" *ngIf="this.permissions.hasPermission(this.permissions.Host)" [ngbTooltip]="tipContent"
                   (click)="getDevices()">
             <span class="material-icons">speaker_group</span>
           </button>
@@ -91,18 +90,11 @@
           </div>
         </div>
 
-        <button class="btn btn-circle mx-1 material-btn" (click)="openSettings()"
-                *ngIf="this.jamStore.currentMember?.permissions.includes(JamRightHost)" title="Settings">
-          <span class="material-icons">settings</span>
-        </button>
         <button class="btn btn-circle mx-1 material-btn" (click)="leave()" title="Leave JamSession">
           <span class="material-icons">exit_to_app</span>
         </button>
 
       </div>
     </div>
-
   </div>
-
-
 </div>

@@ -10,9 +10,9 @@ import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {Notification, NotificationService} from '../../core/services/notification.service';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {ColorService} from '../../core/services/color.service';
-import {WebsocketService} from '../../core/socket/websocket.service';
+import {WebsocketService} from '../../core/services/websocket.service';
 import {UtilService} from '../../core/services/util.service';
-
+import {PermissionsService} from '../../core/services/permissions.service';
 
 @Component({
   selector: 'app-playback-controller',
@@ -32,8 +32,6 @@ export class PlaybackControllerComponent implements OnInit {
   private showedNoPlaybackNotification = false;
   private timeout: number;
 
-  readonly JamRightHost = 'Host';
-
   constructor(
     private authService: AuthHttpService,
     private jamService: JamsessionHttpService,
@@ -41,6 +39,7 @@ export class PlaybackControllerComponent implements OnInit {
     private router: Router,
     private queueStore: QueueStore,
     public jamStore: JamsessionStore,
+    public permissions: PermissionsService,
     public utils: UtilService,
     private authStore: UserStore,
     private notificationService: NotificationService,
@@ -82,7 +81,7 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   checkNotifications(): void {
-    if (this.jamStore.currentMember?.permissions.includes(this.JamRightHost) && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
+    if (this.permissions.hasPermission(this.permissions.Host) && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
       this.showedNoPlaybackNotification = true;
       this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
     }
@@ -104,7 +103,7 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   getDevices(): void {
-    if (this.jamStore.currentMember?.permissions.includes(this.JamRightHost)) {
+    if (this.permissions.hasPermission(this.permissions.Host)) {
       this.spotifyService.getDevices().subscribe(value1 => {
         this.devices = value1;
       });
@@ -147,7 +146,4 @@ export class PlaybackControllerComponent implements OnInit {
     this.intervallId = undefined;
   }
 
-  openSettings(): void {
-    this.router.navigate(['/' + 'debug']);
-  }
 }

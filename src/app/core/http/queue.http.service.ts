@@ -12,7 +12,7 @@ import {
   VoteResponseBody
 } from '@jamfactoryapp/jamfactory-types';
 import {catchError} from 'rxjs/operators';
-import {ErrorService} from '../errors/error.service';
+import {ErrorService} from '../services/error.service';
 
 
 @Injectable({
