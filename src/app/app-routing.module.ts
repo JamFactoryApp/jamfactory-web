@@ -1,17 +1,26 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {JamsessionComponent} from './components/jamsession/jamsession.component';
+import {RedirectGuard} from './core/guard/redirect.guard';
 
 const routes: Routes = [
+  {
+    path: '',
+    canActivate: [RedirectGuard],
+    component: RedirectGuard,
+    data: {
+      externalUrl: '../'
+    }
+  },
   {
     path: ':jamlabel',
     component: JamsessionComponent
   },
   {
     path: '**',
-    component: PageNotFoundComponent
+    redirectTo: ''
   }
+
 ];
 
 @NgModule({

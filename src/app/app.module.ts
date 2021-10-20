@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {BrowserModule} from '@angular/platform-browser';
-import {httpInterceptorProviders} from './core/interceptors/index';
+import {httpInterceptorProviders} from './core/interceptors';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
@@ -18,11 +17,11 @@ import {SearchComponent} from './components/search/search.component';
 import {JamsessionComponent} from './components/jamsession/jamsession.component';
 import {QueueCollectionComponent} from './components/queue-collection/queue-collection.component';
 import {TitleComponent} from './components/title/title.component';
+import {RedirectGuard} from './core/guard/redirect.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent,
     FooterComponent,
     HeaderComponent,
     NotificationsComponent,
@@ -32,7 +31,8 @@ import {TitleComponent} from './components/title/title.component';
     SearchComponent,
     JamsessionComponent,
     QueueCollectionComponent,
-    TitleComponent
+    TitleComponent,
+    RedirectGuard
   ],
   imports: [
     AppRoutingModule,
@@ -44,7 +44,8 @@ import {TitleComponent} from './components/title/title.component';
     CommonModule,
   ],
   providers: [
-    httpInterceptorProviders
+    httpInterceptorProviders,
+    RedirectGuard
   ],
   bootstrap: [AppComponent]
 })
