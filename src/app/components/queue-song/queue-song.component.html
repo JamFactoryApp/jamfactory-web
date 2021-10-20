@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center animate" style="padding-left: 1rem; padding-bottom: 0.2rem; padding-top: 0.2rem"
-     [ngStyle]="{'background-color': voted(track.spotifyTrackFull) == true && search == false ? VibrantColor : '', 'font-weight': voted(track.spotifyTrackFull) == true ? 'bold' : 'normal', 'color': voted(track.spotifyTrackFull) == true && search == false ? MutedColor : ''}"
+     [ngStyle]="{'background-color': voted(track.spotifyTrackFull) == true && search == false ? this.colorService.vec3ToRGBAString(this.songColor.vibrant) : '', 'font-weight': voted(track.spotifyTrackFull) == true ? 'bold' : 'normal', 'color': voted(track.spotifyTrackFull) == true && search == false ? this.colorService.vec3ToRGBAString(this.songColor.muted) : ''}"
      [ngClass]="{'even':index % 2 === 0 && !voted(track.spotifyTrackFull), 'no_search': search == false, 'search': search == true}">
   <img #cover src="{{track.spotifyTrackFull.album.images[1].url}}" class="cover" (load)="getImgColor()"
        crossorigin="anonymous">

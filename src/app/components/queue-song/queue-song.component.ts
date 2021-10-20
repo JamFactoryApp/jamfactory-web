@@ -3,15 +3,15 @@ import {QueueHttpService} from '../../core/http/queue.http.service';
 import {DeleteSongRequestBody, QueueSong, SetJamSessionRequestBody, VoteRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../core/services/queue.service';
 import {QueueStore} from '../../core/stores/queue.store';
-import {ColorService} from '../../core/services/color.service';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
 import {UtilService} from '../../core/services/util.service';
 import {PermissionsService} from '../../core/services/permissions.service';
+import {ColorService, SongColor} from '../../core/services/color.service';
 
-declare var ColorThief: any;
+
 
 @Component({
   selector: 'app-queue-song',
@@ -37,18 +37,19 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
 
   @ViewChild('tooltip') tooltip: NgbTooltip;
 
-  VibrantColor;
-  MutedColor;
-
   public host: boolean;
+  public songColor: SongColor = {
+    vibrant: [231, 231, 231],
+    muted: [0, 0, 0],
+  };
 
   constructor(
     private queueApi: QueueHttpService,
     private queueService: QueueService,
     private queueStore: QueueStore,
+    public colorService: ColorService,
     private jamSessionService: JamsessionHttpService,
     public jamSessionStore: JamsessionStore,
-    private colorService: ColorService,
     public utils: UtilService,
     public permissions: PermissionsService
   ) {
@@ -65,26 +66,9 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
   }
 
   getImgColor(): void {
-    let vibrant;
-    let muted;
-
-    const check = this.colorService.checkImgStore(this.cover.nativeElement.src);
-
-    if (check === undefined) {
-      const colorThief = new ColorThief();
-      const palette = colorThief.getPalette(this.cover.nativeElement, 5, 50);
-      vibrant = palette[0];
-      muted = this.colorService.highestDiff(palette, vibrant);
-
-      this.colorService.addImgStore(vibrant, muted, this.cover.nativeElement.src);
-    } else {
-      vibrant = check[0];
-      muted = check[1];
+    if (!this.search) {
+      this.songColor = this.colorService.getImgColor(this.cover.nativeElement);
     }
-
-    this.VibrantColor = 'rgba(' + vibrant[0] + ',' + vibrant[1] + ',' + vibrant[2] + ')';
-    this.MutedColor = 'rgba(' + muted[0] + ',' + muted[1] + ',' + muted[2] + ')';
-
   }
 
   voted(track: TrackObjectFull): boolean {

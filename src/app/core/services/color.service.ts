@@ -1,15 +1,61 @@
 import {Injectable} from '@angular/core';
 
+declare var ColorThief: any;
 type Vec3 = [number, number, number];
+
+export interface SongColor {
+  vibrant: Vec3;
+  muted: Vec3;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ColorService {
 
-  imgColors = [];
+  private imgColors: SongColor[] = [];
+  private colorThief: any;
+  private maxDelta = 60.0;
 
   constructor() {
+    this.colorThief = new ColorThief();
+  }
+
+  vec3ToRGBAString(vec: Vec3): string {
+    return 'rgba(' + vec[0] + ',' + vec[1] + ',' + vec[2] + ')';
+  }
+
+  getImgColor(element: any): SongColor {
+    const check = this.checkImgStore(element.src);
+
+    if (check === undefined) {
+
+      const palette = this.colorThief.getPalette(element, 3, 50);
+      const songColor: SongColor = {
+        vibrant: palette[0],
+        muted: this.highestDiff(palette, palette[0])
+      };
+      if (this.deltaE94(songColor.vibrant, songColor.muted) < this.maxDelta) {
+        songColor.muted = this.bwContrast(songColor.vibrant);
+      }
+
+      this.addImgStore(songColor, element.src);
+      return songColor;
+    } else {
+      return check;
+    }
+  }
+
+  addImgStore(songColor: SongColor, src: any): void {
+    this.imgColors[src] = songColor;
+  }
+
+  checkImgStore(src): SongColor {
+    return this.imgColors[src];
+  }
+
+  clearImgStore(): void {
+    this.imgColors = [];
   }
 
   /***************************************************************************************
@@ -143,19 +189,11 @@ export class ColorService {
 
   /***************************************************************************************/
 
-  addImgStore(vibrant, muted, src): void {
-    this.imgColors[src] = [vibrant, muted];
+  bwContrast(rgb: Vec3): Vec3 {
+    // http://stackoverflow.com/a/3943023/112731
+    return (rgb[0] * 0.299 + rgb[1] * 0.587 + rgb[2] * 0.114) > 186
+      ? [0, 0, 0]
+      : [255, 255, 255];
   }
 
-  checkImgStore(src): any[] {
-    return this.imgColors[src];
-  }
-
-  getImgStore(): any[] {
-    return this.imgColors;
-  }
-
-  clearImgStore(): void {
-    this.imgColors = [];
-  }
 }
