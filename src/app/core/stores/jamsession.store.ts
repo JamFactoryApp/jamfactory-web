@@ -10,8 +10,6 @@ export class JamsessionStore {
 
   private jamSessionSubject: BehaviorSubject<JamSessionDetails> = new BehaviorSubject<JamSessionDetails>(undefined);
   private playbackSubject: BehaviorSubject<JamPlaybackBody> = new BehaviorSubject<JamPlaybackBody>(undefined);
-  private membersSubject: BehaviorSubject<JamMember[]> = new BehaviorSubject<JamMember[]>([]);
-  private currentMemberSubject: BehaviorSubject<JamMember> = new BehaviorSubject<JamMember>(undefined);
 
   constructor(private userStore: UserStore) {
   }
@@ -40,29 +38,4 @@ export class JamsessionStore {
     return new Observable(fn => this.playbackSubject.subscribe(fn));
   }
 
-  get members(): JamMember[] {
-    return this.membersSubject.value;
-  }
-
-  set members(members: JamMember[]) {
-    this.membersSubject.next(members);
-    if (this.userStore.currentUser) {
-      const currentMemberArr = members.filter(m => m.identifier === this.userStore.currentUser.identifier);
-      if (currentMemberArr.length === 1) {
-        this.currentMemberSubject.next(currentMemberArr[0]);
-      }
-    }
-  }
-
-  get $members(): Observable<JamMember[]> {
-    return new Observable(fn => this.membersSubject.subscribe(fn));
-  }
-
-  get currentMember(): JamMember {
-    return this.currentMemberSubject.value;
-  }
-
-  get $currentMember(): Observable<JamMember> {
-    return new Observable(fn => this.currentMemberSubject.subscribe(fn));
-  }
 }

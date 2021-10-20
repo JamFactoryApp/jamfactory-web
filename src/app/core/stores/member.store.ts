@@ -21,10 +21,14 @@ export class MemberStore {
 
   set members(members: JamMember[]) {
     this.membersSubject.next(members);
+
     if (this.userStore.currentUser) {
       const currentMemberArr = members.filter(m => m.identifier === this.userStore.currentUser.identifier);
+
       if (currentMemberArr.length === 1) {
+
         this.currentMemberSubject.next(currentMemberArr[0]);
+
       }
     }
   }

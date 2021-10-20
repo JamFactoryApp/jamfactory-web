@@ -7,6 +7,7 @@ import {QueueService} from '../../core/services/queue.service';
 import {QueueStore} from '../../core/stores/queue.store';
 import {UserStore} from '../../core/stores/user.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
+import {PermissionsService} from '../../core/services/permissions.service';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class SearchComponent implements OnInit {
     private queueService: QueueService,
     private queueStore: QueueStore,
     public userStore: UserStore,
-    public jamStore: JamsessionStore
+    public jamStore: JamsessionStore,
+    public permissions: PermissionsService,
   ) {
   }
 

@@ -19,6 +19,7 @@ import {
   JoinRequestBody,
   QueueSong, SocketJamMessage, SocketMembersMessage, SocketPlaybackMessage, SocketQueueMessage
 } from '@jamfactoryapp/jamfactory-types';
+import {MemberStore} from '../../core/stores/member.store';
 
 
 @Component({
@@ -45,6 +46,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private spotifyService: SpotifyHttpService,
     private websocketService: WebsocketService,
     private userStore: UserStore,
+    private memberStore: MemberStore,
     public notificationService: NotificationService
   ) {
     this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
@@ -88,7 +90,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       playback => this.jamStore.playback = playback);
 
     this.jamSessionService.getMembers().subscribe(
-      members => this.jamStore.members = members.members);
+      members => this.memberStore.members = members.members);
 
     this.queueApi.getQueue().subscribe(
       queue => this.queueStore.queue = queue);
@@ -111,7 +113,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
         break;
       case 'members':
         const membersPayload: SocketMembersMessage = wsMessage.message as SocketMembersMessage;
-        this.jamStore.members = membersPayload.members;
+        this.memberStore.members = membersPayload.members;
         break;
       case 'close':
         switch (wsMessage.message) {
