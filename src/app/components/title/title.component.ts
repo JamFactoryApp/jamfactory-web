@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {JamsessionStore} from '../../../core/stores/jamsession.store';
+import {JamsessionStore} from '../../core/stores/jamsession.store';
 
 @Component({
   selector: 'app-title',

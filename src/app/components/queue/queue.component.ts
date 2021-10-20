@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {QueueStore} from '../../../core/stores/queue.store';
-import {UserStore} from '../../../core/stores/user.store';
-import {JamsessionStore} from '../../../core/stores/jamsession.store';
+import {QueueStore} from '../../core/stores/queue.store';
+import {UserStore} from '../../core/stores/user.store';
+import {JamsessionStore} from '../../core/stores/jamsession.store';
 
 
 @Component({

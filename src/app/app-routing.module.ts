@@ -1,16 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
+import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
+import {JamsessionComponent} from './components/jamsession/jamsession.component';
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () => import('./modules/landingpage/landingpage.module').then(m => m.LandingpageModule),
-    pathMatch: 'full'
-  },
-  {
     path: ':jamlabel',
-    loadChildren: () => import('./modules/jamsession/jamsession.module').then(m => m.JamsessionModule)
+    component: JamsessionComponent
   },
   {
     path: '**',

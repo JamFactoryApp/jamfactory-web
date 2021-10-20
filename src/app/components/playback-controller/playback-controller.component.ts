@@ -1,17 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthHttpService} from '../../../core/http/auth.http.service';
-import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
+import {AuthHttpService} from '../../core/http/auth.http.service';
+import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
 import {JamPlaybackBody, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
-import {QueueStore} from '../../../core/stores/queue.store';
-import {JamsessionStore} from '../../../core/stores/jamsession.store';
-import {UserStore} from '../../../core/stores/user.store';
-import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
-import {Notification, NotificationService} from '../../../core/services/notification.service';
+import {QueueStore} from '../../core/stores/queue.store';
+import {JamsessionStore} from '../../core/stores/jamsession.store';
+import {UserStore} from '../../core/stores/user.store';
+import {SpotifyHttpService} from '../../core/http/spotify.http.service';
+import {Notification, NotificationService} from '../../core/services/notification.service';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
-import {ColorService} from '../../../core/services/color.service';
-import {WebsocketService} from '../../../core/socket/websocket.service';
-import {UtilService} from '../../../core/services/util.service';
+import {ColorService} from '../../core/services/color.service';
+import {WebsocketService} from '../../core/socket/websocket.service';
+import {UtilService} from '../../core/services/util.service';
 
 
 @Component({

@@ -1,12 +1,12 @@
 import {Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {SpotifyHttpService} from '../../../core/http/spotify.http.service';
+import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {FormControl} from '@angular/forms';
 
 import {QueueSong, SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
-import {QueueService} from '../../../core/services/queue.service';
-import {QueueStore} from '../../../core/stores/queue.store';
-import {UserStore} from '../../../core/stores/user.store';
-import {JamsessionStore} from '../../../core/stores/jamsession.store';
+import {QueueService} from '../../core/services/queue.service';
+import {QueueStore} from '../../core/stores/queue.store';
+import {UserStore} from '../../core/stores/user.store';
+import {JamsessionStore} from '../../core/stores/jamsession.store';
 
 
 @Component({

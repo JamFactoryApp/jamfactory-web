@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {QueueHttpService} from '../../../core/http/queue.http.service';
+import {QueueHttpService} from '../../core/http/queue.http.service';
 import {DeleteSongRequestBody, QueueSong, SetJamSessionRequestBody, VoteRequestBody} from '@jamfactoryapp/jamfactory-types';
-import {QueueService} from '../../../core/services/queue.service';
-import {QueueStore} from '../../../core/stores/queue.store';
-import {ColorService} from '../../../core/services/color.service';
-import {JamsessionHttpService} from '../../../core/http/jamsession.http.service';
-import {JamsessionStore} from '../../../core/stores/jamsession.store';
+import {QueueService} from '../../core/services/queue.service';
+import {QueueStore} from '../../core/stores/queue.store';
+import {ColorService} from '../../core/services/color.service';
+import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
+import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
-import {UtilService} from '../../../core/services/util.service';
+import {UtilService} from '../../core/services/util.service';
 
 declare var ColorThief: any;
 
