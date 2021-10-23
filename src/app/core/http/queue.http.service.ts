@@ -8,6 +8,12 @@ import {
   DeleteSongResponseBody,
   GetQueueResponseBody,
   JamQueue,
+  JamQueueHistory,
+  JamSuccessConfirmation,
+  QueueExportRequestBody,
+  QueueExportResponseBody,
+  QueueHistoryRequestBody,
+  QueueHistoryResponseBody,
   VoteRequestBody,
   VoteResponseBody
 } from '@jamfactoryapp/jamfactory-types';
@@ -37,5 +43,13 @@ export class QueueHttpService {
 
   putQueueCollection(body: AddCollectionRequestBody): Observable<JamQueue> {
     return this.http.put<AddCollectionResponseBody>('queue/collection', body).pipe(catchError(this.errorService.handle));
+  }
+
+  getQueueHistory(): Observable<JamQueueHistory> {
+    return this.http.get<QueueHistoryResponseBody>('queue/history').pipe(catchError(this.errorService.handle));
+  }
+
+  putQueueExport(body: QueueExportRequestBody): Observable<JamSuccessConfirmation> {
+    return this.http.put<QueueExportResponseBody>('queue/export', body).pipe(catchError(this.errorService.handle));
   }
 }
