@@ -1,21 +1,26 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
+import {JamsessionComponent} from './components/jamsession/jamsession.component';
+import {RedirectGuard} from './core/guards/redirect.guard';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./modules/landingpage/landingpage.module').then(m => m.LandingpageModule),
-    pathMatch: 'full'
+    canActivate: [RedirectGuard],
+    component: RedirectGuard,
+    data: {
+      externalUrl: '../'
+    }
   },
   {
-    path: 'jam/:jamlabel',
-    loadChildren: () => import('./modules/jamsession/jamsession.module').then(m => m.JamsessionModule)
+    path: ':jamlabel',
+    component: JamsessionComponent
   },
   {
     path: '**',
-    component: PageNotFoundComponent
+    redirectTo: ''
   }
+
 ];
 
 @NgModule({

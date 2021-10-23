@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
 import {
-  CreateJamSessionResponseBody,
+  CreateJamSessionResponseBody, GetJamSessionMembersResponseBody,
   GetJamSessionResponseBody,
   GetPlaybackResponseBody,
   JamLabelBody,
@@ -12,14 +12,14 @@ import {
   JamSuccessConfirmation,
   JoinRequestBody,
   JoinResponseBody,
-  LeaveJamSessionResponseBody,
+  LeaveJamSessionResponseBody, SetJamSessionMembersRequestBody, SetJamSessionMembersResponseBody,
   SetJamSessionRequestBody,
   SetJamSessionResponseBody,
   SetPlaybackRequestBody,
   SetPlaybackResponseBody
 } from '@jamfactoryapp/jamfactory-types';
 import {Router} from '@angular/router';
-import {ErrorService} from '../errors/error.service';
+import {ErrorService} from '../services/error.service';
 import {catchError} from 'rxjs/operators';
 
 
@@ -47,7 +47,15 @@ export class JamsessionHttpService {
     return this.http.put<SetPlaybackResponseBody>('jam/playback', body).pipe(catchError(this.errorService.handle));
   }
 
-  createJamsession(): Observable<JamLabelBody> {
+  getMembers(): Observable<GetJamSessionMembersResponseBody> {
+    return this.http.get<GetJamSessionMembersResponseBody>('jam/members').pipe(catchError(this.errorService.handle));
+  }
+
+  setMembers(body: SetJamSessionMembersRequestBody): Observable<GetJamSessionMembersResponseBody> {
+    return this.http.put<SetJamSessionMembersResponseBody>('jam/members', body).pipe(catchError(this.errorService.handle));
+  }
+
+  createJamSession(): Observable<JamLabelBody> {
     return this.http.get<CreateJamSessionResponseBody>('jam/create').pipe(catchError(this.errorService.handle));
   }
 

@@ -3,7 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 
-import {LoginResponseBody, LogoutResponseBody} from '@jamfactoryapp/jamfactory-types';
+import {
+  DeleteUserResponseBody,
+  GetUserResponseBody,
+  JamSuccessConfirmation,
+  JamUser,
+  SetUserResponseBody
+} from '@jamfactoryapp/jamfactory-types';
 import {catchError} from 'rxjs/operators';
 import {ErrorService} from '../services/error.service';
 
@@ -11,7 +17,7 @@ import {ErrorService} from '../services/error.service';
   providedIn: 'root'
 })
 
-export class AuthHttpService {
+export class UserHttpService {
 
   private httpOptions = {
     withCredentials: true,
@@ -21,15 +27,21 @@ export class AuthHttpService {
   constructor(private http: HttpClient, private router: Router, private errorService: ErrorService) {
   }
 
-  getLogout(): Observable<LogoutResponseBody> {
+  getCurrentUser(): Observable<JamUser> {
     return this.http
-      .get<LogoutResponseBody>('auth/logout', this.httpOptions)
+      .get<GetUserResponseBody>('me', this.httpOptions)
       .pipe(catchError(this.errorService.handle));
   }
 
-  getLogin(): Observable<LoginResponseBody> {
+  setCurrentUser(): Observable<JamUser> {
     return this.http
-      .get<LoginResponseBody>('auth/login', this.httpOptions)
+      .put<SetUserResponseBody>('me', this.httpOptions)
+      .pipe(catchError(this.errorService.handle));
+  }
+
+  deleteCurrentUser(): Observable<JamSuccessConfirmation> {
+    return this.http
+      .delete<DeleteUserResponseBody>('me', this.httpOptions)
       .pipe(catchError(this.errorService.handle));
   }
 }

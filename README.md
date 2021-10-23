@@ -22,7 +22,7 @@ JamFactory consists of independent applications that form the ecosystem together
 
 ### Built With
 
-JamFactory is build among others using these awesome projects 
+JamFactory Web is build among others using these awesome projects 
 * [Angular](https://angular.io/)
 * [Bootstrap](https://getbootstrap.com/)
 
@@ -36,7 +36,7 @@ JamFactory Web project was generated with [Angular CLI](https://github.com/angul
 
 ### Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/jam`. The app will automatically reload if you change any of the source files.
 
 ### Code scaffolding
 

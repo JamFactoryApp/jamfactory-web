@@ -3,11 +3,12 @@ docker-compose*
 
 .git
 .gitignore
-
+.github
+docs
 dist
 e2e
 node_modules
 .editorconfig
 README.md
 
-yarn.lock
+

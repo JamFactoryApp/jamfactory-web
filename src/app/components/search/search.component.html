@@ -1,0 +1,43 @@
+<div class="row search-div">
+  <div class="col-10">
+    <div class="inner-addon left-addon">
+      <i class="glyphicon"><span class="material-icons">search</span></i>
+      <input type="text" class="form-control search-input" placeholder="Search" (keyup)="searchEvent()"
+             [formControl]="searchField"/>
+    </div>
+  </div>
+
+
+  <div class="col-2">
+    <span class="user-text" *ngIf="userStore.currentUser">{{userStore.currentUser.display_name}}</span>
+  </div>
+
+</div>
+<hr>
+<div class="search-result" *ngIf="searchType !== ''">
+
+  <div class="search-text" *ngIf="searchResultsTracks.length === 0">No results!</div>
+  <div class="row">
+    <div class="col mt-1">
+      <div *ngFor="let track of searchResultsTracks.slice(0 + searchShift,searchCount + searchShift)">
+        <app-queue-song style="display: block" #SearchSong [inQueue]="false" [track]="track"
+                        [search]="true"></app-queue-song>
+      </div>
+      <div *ngFor="let playlist of searchResultsPlaylists.slice(0 + searchShift,searchCount + searchShift)">
+        <app-queue-collection style="display: block"
+                              [collection]="playlist"></app-queue-collection>
+      </div>
+
+
+      <div class="btn user-playlist" *ngIf="getSearchResultCount() > searchCount" (click)="showMore()">
+        {{getSearchResultCount() > searchCount + searchShift ? 'Show more...' : 'Back to beginning'}}
+      </div>
+      <hr
+        *ngIf="getSearchResultCount() > searchCount && this.permissions.hasPermission(this.permissions.Host) && searchResultsPlaylists !== undefined">
+      <div class="btn user-playlist" *ngIf="this.permissions.hasPermission(this.permissions.Host) && searchResultsPlaylists !== undefined"
+           (click)="showUserPlaylists()">Show your playlists <span
+        class="material-icons material-btn">navigate_next</span></div>
+
+    </div>
+  </div>
+</div>

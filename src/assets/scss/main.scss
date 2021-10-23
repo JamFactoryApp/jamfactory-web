@@ -3,6 +3,10 @@
 @import '~material-design-icons/iconfont/material-icons.css';
 @import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap');
 
+*{
+  transition: 0.5s;
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 body::-webkit-scrollbar {
   display: none;
