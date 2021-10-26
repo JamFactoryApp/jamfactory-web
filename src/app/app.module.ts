@@ -16,6 +16,7 @@ import {JamsessionComponent} from './components/jamsession/jamsession.component'
 import {QueueCollectionComponent} from './components/queue-collection/queue-collection.component';
 import {TitleComponent} from './components/title/title.component';
 import {RedirectGuard} from './core/guards/redirect.guard';
+import { CreateComponent } from './components/create/create.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {RedirectGuard} from './core/guards/redirect.guard';
     JamsessionComponent,
     QueueCollectionComponent,
     TitleComponent,
-    RedirectGuard
+    RedirectGuard,
+    CreateComponent
   ],
   imports: [
     AppRoutingModule,

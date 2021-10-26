@@ -62,7 +62,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
         this.jamStore.jamSession = jamsession;
         this.getData();
       },
-      () => {
+      (error1) => {
         // Try to join the JamSession
         const body: JoinRequestBody = {
           label: this.route.snapshot.params.jamlabel
@@ -73,15 +73,13 @@ export class JamsessionComponent implements OnInit, OnDestroy {
               this.jamStore.jamSession = jamsession;
               this.getData();
             },
-            () => this.leaveOnError());
-        }, () => this.leaveOnError());
+            (error) => this.leaveOnError(error));
+        }, (error) => this.leaveOnError(error));
       });
   }
 
-  leaveOnError(): void {
-    this.notificationService.show(new Notification('JamSession not found')
-      .addHeader('Not found', 'error_outline').setAutohide(5000).setLevel(2));
-    this.router.navigate(['/']);
+  leaveOnError(error): void {
+    this.router.navigate(['/'], { queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
   }
 
   getData(): void {
