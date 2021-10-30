@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthHttpService} from '../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {JamPlaybackBody, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
+import {JamPlaybackBody, JamPlaySongBody, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
 import {QueueStore} from '../../core/stores/queue.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {UserStore} from '../../core/stores/user.store';
@@ -13,6 +13,7 @@ import {ColorService} from '../../core/services/color.service';
 import {WebsocketService} from '../../core/services/websocket.service';
 import {UtilService} from '../../core/services/util.service';
 import {PermissionsService} from '../../core/services/permissions.service';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-playback-controller',
@@ -28,9 +29,11 @@ export class PlaybackControllerComponent implements OnInit {
   public progressms: number;
   public intervallId: number;
   public devices: SpotifyDevices;
+  public showVolume: boolean;
   public item = false;
   private showedNoPlaybackNotification = false;
   private timeout: number;
+  public currentVolume: FormControl = new FormControl(0);
 
   constructor(
     private authService: AuthHttpService,
@@ -63,6 +66,7 @@ export class PlaybackControllerComponent implements OnInit {
         this.notificationService.clearId(1);
       }
 
+      this.currentVolume.patchValue(this.playback?.playback.device.volume_percent);
 
       if (this.playback?.playback?.is_playing && this.progressms < this.playback.playback.item.duration_ms) {
 
@@ -117,6 +121,27 @@ export class PlaybackControllerComponent implements OnInit {
     this.jamService.putPlayback(body).subscribe((value) => {
       this.jamStore.playback = value;
     });
+  }
+
+  onVolumeChange(): void {
+    const body: SetPlaybackRequestBody = {
+      volume: this.currentVolume.value
+    };
+    this.jamService.putPlayback(body).subscribe((value) => {
+      this.jamStore.playback = value;
+    });
+  }
+
+  onSkip(): void {
+    if (this.queueStore.queue.tracks.length !== 0) {
+      const body: JamPlaySongBody = {
+        track: this.queueStore.queue.tracks[0].spotifyTrackFull.id,
+        remove: true
+      };
+      this.jamService.playSong(body).subscribe((value) => {
+        
+      });
+    }
   }
 
   resumePlayback(): void {

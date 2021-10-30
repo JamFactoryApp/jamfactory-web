@@ -5,9 +5,9 @@ import {HttpClient} from '@angular/common/http';
 import {
   CreateJamSessionResponseBody, GetJamSessionMembersResponseBody,
   GetJamSessionResponseBody,
-  GetPlaybackResponseBody,
+  GetPlaybackResponseBody, GetPlayResponseBody,
   JamLabelBody,
-  JamPlaybackBody,
+  JamPlaybackBody, JamPlaySongBody,
   JamSessionDetails,
   JamSuccessConfirmation,
   JoinRequestBody,
@@ -65,5 +65,9 @@ export class JamsessionHttpService {
 
   leaveJamSession(): Observable<JamSuccessConfirmation> {
     return this.http.get<LeaveJamSessionResponseBody>('jam/leave').pipe(catchError(this.errorService.handle));
+  }
+
+  playSong(body: JamPlaySongBody): Observable<JamSuccessConfirmation> {
+    return this.http.put<GetPlayResponseBody>('jam/play', body).pipe(catchError(this.errorService.handle));
   }
 }

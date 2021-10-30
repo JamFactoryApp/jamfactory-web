@@ -65,7 +65,8 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       (error1) => {
         // Try to join the JamSession
         const body: JoinRequestBody = {
-          label: this.route.snapshot.params.jamlabel
+          label: this.route.snapshot.params.jamlabel,
+          password: ''
         };
         this.jamSessionService.joinJamSession(body).subscribe(() => {
           this.jamSessionService.getJamsession().subscribe(

@@ -20,7 +20,9 @@
   <div class="progress-div center" *ngIf="item">
     <div class="row">
       <div class="col text-center">
-
+        <button class="btn btn-circle mx-4 material-btn"
+                *ngIf="this.permissions.hasPermission(this.permissions.Host)">
+        </button>
         <button class="btn btn-circle mx-4 material-btn" (click)="pausePlayback()"
                 *ngIf="this.permissions.hasPermission(this.permissions.Host) && playback.playback.is_playing">
           <span class="material-icons">pause</span>
@@ -28,6 +30,10 @@
         <button class="btn btn-circle mx-4 material-btn" (click)="resumePlayback()"
                 *ngIf="this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing">
           <span class="material-icons">play_arrow</span>
+        </button>
+        <button class="btn btn-circle mx-4 material-btn" (click)="onSkip()"
+                *ngIf="this.permissions.hasPermission(this.permissions.Host)">
+          <span class="material-icons">skip_next</span>
         </button>
 
       </div>
@@ -89,10 +95,16 @@
             <button ngbDropdownItem *ngIf="devices.devices.length === 0">No devices found</button>
           </div>
         </div>
-
+        <button class="btn btn-circle mx-1 material-btn" title="Leave JamSession" (click)="showVolume = !showVolume">
+          <span class="material-icons">volume_up</span>
+          <div class="volume-container" *ngIf="showVolume">
+            <input type="range" orient="vertical" (change)="onVolumeChange()" [formControl]="currentVolume">
+          </div>
+        </button>
         <button class="btn btn-circle mx-1 material-btn" (click)="leave()" title="Leave JamSession">
           <span class="material-icons">exit_to_app</span>
         </button>
+
 
       </div>
     </div>
