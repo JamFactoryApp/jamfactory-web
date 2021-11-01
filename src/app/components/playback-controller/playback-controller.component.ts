@@ -139,7 +139,7 @@ export class PlaybackControllerComponent implements OnInit {
         remove: true
       };
       this.jamService.playSong(body).subscribe((value) => {
-        
+
       });
     }
   }

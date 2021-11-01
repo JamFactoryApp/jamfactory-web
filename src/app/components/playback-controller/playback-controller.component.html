@@ -59,9 +59,7 @@
 
   <div class="corner-right">
     <div class="row" style="padding-top: 25px">
-      <div class="col text-right">
-
-
+      <div class="col text-end">
         <button class="btn btn-circle mx-1 mobile-button material-btn" (click)="pausePlayback()"
                 *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && playback.playback.is_playing">
           <span class="material-icons">pause</span>
