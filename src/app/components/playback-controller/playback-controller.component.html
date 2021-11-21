@@ -68,6 +68,10 @@
                 *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing">
           <span class="material-icons">play_arrow</span>
         </button>
+        <button class="btn btn-circle mx-1 mobile-button material-btn" (click)="onSkip()"
+                *ngIf="this.permissions.hasPermission(this.permissions.Host)">
+          <span class="material-icons">skip_next</span>
+        </button>
 
         <ng-template #tipContent id="tipContent">
           <div style="white-space: nowrap">
