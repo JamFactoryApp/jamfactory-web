@@ -1,4 +1,16 @@
-<div class="main">
-  <p class="text-center title-text">{{(jamStore.$jamSession | async)?.name}} - {{(jamStore.$jamSession |
-    async)?.label}}</p>
+<!--<div class="main">-->
+<!--  <p class="text-center title-text">{{(jamStore.$jamSession | async)?.name}} - {{(jamStore.$jamSession |-->
+<!--    async)?.label}}</p>-->
+<!--</div>-->
+
+<div class="jamsession-header d-flex jy-center al-center">
+  <div id="menu-button" class="menu-button d-flex jy-center al-center">
+    <i id="menu-button-icon" class="material-icons-outlined menu-button-icon">menu</i>
+  </div>
+  <div class="jamlabel">{{(jamStore.$jamSession | async)?.name}} - {{(jamStore.$jamSession | async)?.label}}</div>
+</div>
+<div class="search-input-container d-flex al-center">
+  <span class="material-icons-outlined search-input-icon">search</span>
+  <input id="search-input" type="text" placeholder="Search..." class="search-input-box w-100" (keyup)="searchEvent()"
+         [formControl]="searchField">
 </div>

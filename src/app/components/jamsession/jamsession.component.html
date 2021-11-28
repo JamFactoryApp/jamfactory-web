@@ -1,20 +1,32 @@
-<div class="main">
+<!--<div class="main">-->
 
-  <app-title id="title" class="title"></app-title>
+<!--  <app-title id="title" class="title"></app-title>-->
 
-  <div id="search" class="search">
-    <app-search></app-search>
-  </div>
+<!--  <div id="search" class="search">-->
+<!--    <app-search></app-search>-->
+<!--  </div>-->
 
-  <div id="jamNotificationAnker" class="notifications-anker">
-    <app-notifications></app-notifications>
-  </div>
+<!--  <div id="jamNotificationAnker" class="notifications-anker">-->
+<!--    <app-notifications></app-notifications>-->
+<!--  </div>-->
 
-  <div class="queue">
-    <app-queue></app-queue>
-  </div>
+<!--  <div class="queue">-->
+<!--    <app-queue></app-queue>-->
+<!--  </div>-->
 
-  <div class="footer">
-    <app-playback-controller></app-playback-controller>
-  </div>
-</div>
+<!--  <div class="footer">-->
+<!--    <app-playback-controller></app-playback-controller>-->
+<!--  </div>-->
+<!--</div>-->
+
+<app-sidebar id="sidebar" class="sidebar move-content-left"></app-sidebar>
+
+<main>
+  <app-title id="header" class="header d-flex al-center w-100"></app-title>
+
+  <app-search id="search-box" class="search-result-container none"></app-search>
+
+  <app-queue id="main-content" class="main d-flex w-100"></app-queue>
+
+  <app-playback-controller id="footer" class="footer w-100"></app-playback-controller>
+</main>

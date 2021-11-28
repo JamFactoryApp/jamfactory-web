@@ -17,6 +17,7 @@ import {QueueCollectionComponent} from './components/queue-collection/queue-coll
 import {TitleComponent} from './components/title/title.component';
 import {RedirectGuard} from './core/guards/redirect.guard';
 import { CreateComponent } from './components/create/create.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CreateComponent } from './components/create/create.component';
     QueueCollectionComponent,
     TitleComponent,
     RedirectGuard,
-    CreateComponent
+    CreateComponent,
+    SidebarComponent
   ],
   imports: [
     AppRoutingModule,
