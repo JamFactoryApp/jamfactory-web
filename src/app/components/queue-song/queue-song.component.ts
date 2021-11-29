@@ -12,7 +12,6 @@ import {PermissionsService} from '../../core/services/permissions.service';
 import {ColorService, SongColor} from '../../core/services/color.service';
 
 
-
 @Component({
   selector: 'app-queue-song',
   templateUrl: './queue-song.component.html',
@@ -57,7 +56,7 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.host = this.permissions.hasPermission(this.permissions.Host)
+    this.host = this.permissions.hasPermission(this.permissions.Host);
     this.voted = this.getVoted(this.track.spotifyTrackFull);
   }
 
@@ -82,11 +81,18 @@ export class QueueSongComponent implements OnInit, AfterViewInit {
       return false;
     }
 
-    for (let i = 0; i < this.queueStore.queue.tracks.length; i++) {
-      if (track.id === this.queueStore.queue.tracks[i].spotifyTrackFull.id && this.queueStore.queue.tracks[i].voted) {
+    for (const item of this.queueStore.queue.tracks) {
+      if (track.id === item.spotifyTrackFull.id && item.voted) {
         return true;
       }
     }
+
+    // for (let i = 0; i < this.queueStore.queue.tracks.length; i++) {
+    //   if (track.id === this.queueStore.queue.tracks[i].spotifyTrackFull.id && this.queueStore.queue.tracks[i].voted) {
+    //     return true;
+    //   }
+    // }
+
     return false;
   }
 

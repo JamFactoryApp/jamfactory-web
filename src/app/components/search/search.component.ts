@@ -8,6 +8,7 @@ import {QueueStore} from '../../core/stores/queue.store';
 import {UserStore} from '../../core/stores/user.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {PermissionsService} from '../../core/services/permissions.service';
+import {SearchStore} from '../../core/stores/search.store';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class SearchComponent implements OnInit {
     private queueService: QueueService,
     private queueStore: QueueStore,
     public userStore: UserStore,
+    public searchStore: SearchStore,
     public jamStore: JamsessionStore,
     public permissions: PermissionsService,
   ) {
@@ -63,16 +65,14 @@ export class SearchComponent implements OnInit {
       this.searchResultsTracks = this.queueService.updateQueueFromSocket(this.searchResultsTracks);
     });
 
-    this.spotifyService.getSearch().subscribe(value => {
+    this.searchStore.$search.subscribe(value => {
 
-      if (value.tracks !== undefined) {
+      if (value !== undefined) {
         this.searchResultsPlaylists = [];
         value.tracks.items = value.tracks.items.sort((a, b) => b.popularity - a.popularity);
         this.searchResultsTracks = this.queueService.updateQueueFromSocket(value.tracks.items.map(track => {
           return {spotifyTrackFull: track, voted: false, votes: 0} as QueueSong;
         }));
-
-        console.log(this.searchResultsTracks);
       }
 
       // if (this.searchCount === 1) {

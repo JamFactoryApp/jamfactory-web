@@ -5,6 +5,7 @@ import {QueueStore} from '../../core/stores/queue.store';
 import {QueueSong, SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../core/services/queue.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
+import {SearchStore} from '../../core/stores/search.store';
 
 @Component({
   selector: 'app-title',
@@ -19,7 +20,7 @@ export class TitleComponent implements OnInit {
   searchResultsTracks: QueueSong[] = [];
   searchTimeout: number;
 
-  constructor(public jamStore: JamsessionStore, private spotifyService: SpotifyHttpService) {
+  constructor(public jamStore: JamsessionStore, private spotifyService: SpotifyHttpService, public searchStore: SearchStore) {
   }
 
   ngOnInit(): void {
@@ -44,11 +45,9 @@ export class TitleComponent implements OnInit {
       type: this.searchType
     };
 
-    this.spotifyService.putSearch(body);
-
-    // this.spotifyService.getSearch().subscribe(value => {
-    //   console.log(value);
-    // });
+    this.spotifyService.putSearch(body).subscribe(value => {
+      this.searchStore.search = value;
+    });
   }
 
 }
