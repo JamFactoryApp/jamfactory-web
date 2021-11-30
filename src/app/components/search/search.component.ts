@@ -27,7 +27,7 @@ export class SearchComponent implements OnInit {
   searchResultsAlbums: SpotifyApi.AlbumObjectSimplified[] = [];
   searchCount = 8;
   searchShift = 0;
-  searchTimeout: number;
+  emptySearch: boolean;
   readonly JamRightHost = 'Host';
 
   constructor(
@@ -68,12 +68,16 @@ export class SearchComponent implements OnInit {
     this.searchStore.$search.subscribe(value => {
 
       if (value !== undefined) {
+        this.emptySearch = false;
         this.searchResultsPlaylists = [];
         value.tracks.items = value.tracks.items.sort((a, b) => b.popularity - a.popularity);
         this.searchResultsTracks = this.queueService.updateQueueFromSocket(value.tracks.items.map(track => {
           return {spotifyTrackFull: track, voted: false, votes: 0} as QueueSong;
         }));
         console.log(this.searchResultsTracks);
+      } else {
+        console.log('TEST');
+        this.emptySearch = true;
       }
 
       // if (this.searchCount === 1) {

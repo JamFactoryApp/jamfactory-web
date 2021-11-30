@@ -16,8 +16,6 @@ export class TitleComponent implements OnInit {
 
   searchField = new FormControl('');
   searchType = '';
-  searchShift = 0;
-  searchResultsTracks: QueueSong[] = [];
   searchTimeout: number;
 
   constructor(public jamStore: JamsessionStore, private spotifyService: SpotifyHttpService, public searchStore: SearchStore) {
@@ -33,10 +31,9 @@ export class TitleComponent implements OnInit {
 
   searchTracks(): void {
     this.searchType = 'track';
-    this.searchShift = 0;
     if (this.searchField.value === '') {
-      this.searchResultsTracks = [];
       this.searchType = '';
+      this.searchStore.search = undefined;
       return;
     }
 

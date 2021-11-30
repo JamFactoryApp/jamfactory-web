@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {QueueSong} from '@jamfactoryapp/jamfactory-types';
+import {QueueSong, VoteRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {UtilService} from '../../core/services/util.service';
+import TrackObjectFull = SpotifyApi.TrackObjectFull;
+import {QueueService} from '../../core/services/queue.service';
 
 @Component({
   selector: 'app-search-song',
@@ -15,9 +17,16 @@ export class SearchSongComponent implements OnInit {
   @Input()
   isVoted: boolean;
 
-  constructor(public utils: UtilService) { }
+  constructor(public utils: UtilService, private queueService: QueueService) { }
 
   ngOnInit(): void {
+  }
+
+  vote(track: TrackObjectFull): void {
+    const body: VoteRequestBody = {
+      track: track.id
+    };
+    this.queueService.vote(body);
   }
 
 }
