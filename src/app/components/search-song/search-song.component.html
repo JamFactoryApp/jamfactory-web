@@ -1,0 +1,14 @@
+<div class="search-result-img-container d-flex al-center">
+  <img src="{{songInfo.spotifyTrackFull.album.images[1].url}}"
+       alt="Album Cover" class="search-result-img"/>
+</div>
+<div class="search-result-text-container d-flex al-center h-100">
+  <div>
+    <div class="search-result-title">{{songInfo.spotifyTrackFull.name}}</div>
+    <div class="search-result-artist">{{utils.getArtistString(songInfo.spotifyTrackFull.artists)}}</div>
+  </div>
+</div>
+<div class="d-flex jy-center al-center h-100">
+  <i *ngIf="isVoted === false" class="material-icons-outlined search-result-icon">favorite_border</i>
+  <i *ngIf="isVoted === true" class="material-icons-outlined search-result-icon" style="color: #F72C25">favorite</i>
+</div>

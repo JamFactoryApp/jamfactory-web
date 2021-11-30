@@ -21,11 +21,11 @@ export class SearchComponent implements OnInit {
 
   @ViewChildren('SearchSong', {read: ElementRef}) searchSongs: QueryList<ElementRef>;
   searchField = new FormControl('');
-  searchType = '';
+  searchType = 'track';
   searchResultsTracks: QueueSong[] = [];
   searchResultsPlaylists: SpotifyApi.PlaylistObjectSimplified[] = [];
   searchResultsAlbums: SpotifyApi.AlbumObjectSimplified[] = [];
-  searchCount = 1;
+  searchCount = 8;
   searchShift = 0;
   searchTimeout: number;
   readonly JamRightHost = 'Host';
@@ -73,6 +73,7 @@ export class SearchComponent implements OnInit {
         this.searchResultsTracks = this.queueService.updateQueueFromSocket(value.tracks.items.map(track => {
           return {spotifyTrackFull: track, voted: false, votes: 0} as QueueSong;
         }));
+        console.log(this.searchResultsTracks);
       }
 
       // if (this.searchCount === 1) {
@@ -135,26 +136,34 @@ export class SearchComponent implements OnInit {
   //   });
   // }
   //
-  // getSearchResultCount(): number {
-  //   let x = 0;
-  //   if (this.searchType === 'track') {
-  //     x = this.searchResultsTracks.length;
-  //   }
-  //   if (this.searchType === 'album ') {
-  //     x = this.searchResultsAlbums.length;
-  //   }
-  //   if (this.searchType === 'playlist') {
-  //     x = this.searchResultsPlaylists.length;
-  //   }
-  //   return x;
-  // }
-  //
-  // showMore(): void {
-  //   this.searchShift += this.searchCount;
-  //   if (this.searchShift > this.getSearchResultCount()) {
-  //     this.searchShift = 0;
-  //   }
-  // }
+  getSearchResultCount(): number {
+    let x = 0;
+    if (this.searchType === 'track') {
+      x = this.searchResultsTracks.length;
+    }
+    if (this.searchType === 'album ') {
+      x = this.searchResultsAlbums.length;
+    }
+    if (this.searchType === 'playlist') {
+      x = this.searchResultsPlaylists.length;
+    }
+    return x;
+  }
+
+  showMore(): void {
+    this.searchShift += this.searchCount;
+    if (this.searchShift > this.getSearchResultCount()) {
+      this.searchShift = 0;
+    }
+  }
+
+  showLess(): void {
+    if (this.searchShift === 0) {
+      this.searchShift = 0;
+    } else {
+      this.searchShift -= this.searchCount;
+    }
+  }
 
 
 }

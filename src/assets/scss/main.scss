@@ -585,7 +585,7 @@ span.search-input-icon {
   position: absolute;
   top: 70px;
   height: 75vh;
-  z-index: 2;
+  z-index: 3;
   padding: 10px;
 }
 
@@ -661,7 +661,6 @@ span.search-input-icon {
 
 .search-result-icon {
   font-size: 32px;
-  color: #3a5c44;
   color: hsla(0, 0%, 100%, .8);
   cursor: pointer;
   padding-right: 20px;

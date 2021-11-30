@@ -42,139 +42,21 @@
 <!--  </div>-->
 <!--</div>-->
 
-<div *ngFor="let track of searchResultsTracks">
-  <div>{{track.spotifyTrackFull.name}}</div>
+<div class="search-result w-100 h-100">
+  <div class="search-result-main w-100">
+    <app-search-song *ngFor="let track of searchResultsTracks.slice(0 + searchShift,searchCount + searchShift)"
+                     [songInfo]="track" [isVoted]="track.voted"
+                     class="search-result-main-element d-flex jy-center al-center w-100"></app-search-song>
+  </div>
+  <div class="search-result-footer d-flex al-center w-100">
+    <div class="search-result-footer-container w-100 h-100">
+      <div *ngIf="searchShift !== 0" (click)="showLess()"
+           class="search-result-back-button d-flex jy-center al-center h-100">Previous page...
+      </div>
+      <div class="search-result-next-button d-flex jy-center al-center h-100"
+           *ngIf="getSearchResultCount() > searchCount"
+           (click)="showMore()">{{getSearchResultCount() > searchCount + searchShift ? 'Next page...' : 'Back to beginning'}}
+      </div>
+    </div>
+  </div>
 </div>
-
-<!--<div class="search-result w-100 h-100">-->
-<!--  <div class="search-result-main w-100">-->
-<!--    <div class="search-result-main-element d-flex jy-center al-center w-100">-->
-<!--      <div class="search-result-img-container d-flex al-center">-->
-<!--        <img src="https://i.scdn.co/image/ab67616d00001e02b11bdc91cb9ac6b14f5c1dae"-->
-<!--             alt="Album Cover" class="search-result-img"/>-->
-<!--      </div>-->
-<!--      <div class="search-result-text-container d-flex al-center h-100">-->
-<!--        <div>-->
-<!--          <div class="search-result-title">Stay With Me</div>-->
-<!--          <div class="search-result-artist">Sam Smith</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="d-flex jy-center al-center h-100">-->
-<!--        <i class="material-icons-outlined search-result-icon">favorite_border</i>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="search-result-main-element d-flex jy-center al-center w-100">-->
-<!--      <div class="search-result-img-container d-flex al-center">-->
-<!--        <img src="https://i.scdn.co/image/ab67616d00001e02b11bdc91cb9ac6b14f5c1dae"-->
-<!--             alt="Album Cover" class="search-result-img"/>-->
-<!--      </div>-->
-<!--      <div class="search-result-text-container d-flex al-center h-100">-->
-<!--        <div>-->
-<!--          <div class="search-result-title">I'm Not The Only One</div>-->
-<!--          <div class="search-result-artist">Sam Smith</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="d-flex jy-center al-center h-100">-->
-<!--        <i class="material-icons-outlined search-result-icon">favorite_border</i>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="search-result-main-element d-flex jy-center al-center w-100">-->
-<!--      <div class="search-result-img-container d-flex al-center">-->
-<!--        <img src="https://i.scdn.co/image/ab67616d00001e02005cd7d0ae87b081601f6cca"-->
-<!--             alt="Album Cover" class="search-result-img"/>-->
-<!--      </div>-->
-<!--      <div class="search-result-text-container d-flex al-center h-100">-->
-<!--        <div>-->
-<!--          <div class="search-result-title">Too Good At Goodbyes</div>-->
-<!--          <div class="search-result-artist">Sam Smith</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="d-flex jy-center al-center h-100">-->
-<!--        <i class="material-icons-outlined search-result-icon">favorite_border</i>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="search-result-main-element d-flex jy-center al-center w-100">-->
-<!--      <div class="search-result-img-container d-flex al-center">-->
-<!--        <img src="https://i.scdn.co/image/ab67616d00001e02f207514228c0a5db1ae3b116"-->
-<!--             alt="Album Cover" class="search-result-img"/>-->
-<!--      </div>-->
-<!--      <div class="search-result-text-container d-flex al-center h-100">-->
-<!--        <div>-->
-<!--          <div class="search-result-title">Diamonds</div>-->
-<!--          <div class="search-result-artist">Sam Smith</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="d-flex jy-center al-center h-100">-->
-<!--        <i class="material-icons-outlined search-result-icon">favorite_border</i>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="search-result-main-element d-flex jy-center al-center w-100">-->
-<!--      <div class="search-result-img-container d-flex al-center">-->
-<!--        <img src="https://i.scdn.co/image/ab67616d00001e023b52eca47232bedfbb5e9443"-->
-<!--             alt="Album Cover" class="search-result-img"/>-->
-<!--      </div>-->
-<!--      <div class="search-result-text-container d-flex al-center h-100">-->
-<!--        <div>-->
-<!--          <div class="search-result-title">Dancing With A Stranger (with Normani)</div>-->
-<!--          <div class="search-result-artist">Sam Smith, Normani</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="d-flex jy-center al-center h-100">-->
-<!--        <i class="material-icons-outlined search-result-icon">favorite_border</i>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="search-result-main-element d-flex jy-center al-center w-100">-->
-<!--      <div class="search-result-img-container d-flex al-center">-->
-<!--        <img src="https://i.scdn.co/image/ab67616d00001e02ccdcbd450e42fc7b27a82a1f"-->
-<!--             alt="Album Cover" class="search-result-img"/>-->
-<!--      </div>-->
-<!--      <div class="search-result-text-container d-flex al-center h-100">-->
-<!--        <div>-->
-<!--          <div class="search-result-title">Promises (with Sam Smith)</div>-->
-<!--          <div class="search-result-artist">Calvin Harris, Sam Smith, Jessie Reyez</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="d-flex jy-center al-center h-100">-->
-<!--        <i class="material-icons-outlined search-result-icon">favorite_border</i>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="search-result-main-element d-flex jy-center al-center w-100">-->
-<!--      <div class="search-result-img-container d-flex al-center">-->
-<!--        <img src="https://i.scdn.co/image/ab67616d00001e0276bc1c851462191faec76bf8"-->
-<!--             alt="Album Cover" class="search-result-img"/>-->
-<!--      </div>-->
-<!--      <div class="search-result-text-container d-flex al-center h-100">-->
-<!--        <div>-->
-<!--          <div class="search-result-title">How Do You Sleep?</div>-->
-<!--          <div class="search-result-artist">Sam Smith</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="d-flex jy-center al-center h-100">-->
-<!--        <i class="material-icons-outlined search-result-icon">favorite_border</i>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="search-result-main-element d-flex jy-center al-center w-100">-->
-<!--      <div class="search-result-img-container d-flex al-center">-->
-<!--        <img src="https://i.scdn.co/image/ab67616d00001e020d1f3930676c34a23dbf5c46"-->
-<!--             alt="Album Cover" class="search-result-img"/>-->
-<!--      </div>-->
-<!--      <div class="search-result-text-container d-flex al-center h-100">-->
-<!--        <div>-->
-<!--          <div class="search-result-title">Diamonds</div>-->
-<!--          <div class="search-result-artist">Sam Smith</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="d-flex jy-center al-center h-100">-->
-<!--        <i class="material-icons-outlined search-result-icon">favorite_border</i>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="search-result-footer d-flex al-center w-100">-->
-<!--    <div class="search-result-footer-container w-100 h-100">-->
-<!--      <div class="search-result-back-button d-flex jy-center al-center h-100">Previous page...-->
-<!--      </div>-->
-<!--      <div class="search-result-next-button d-flex jy-center al-center h-100">Next page...-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

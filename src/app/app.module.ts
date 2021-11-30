@@ -18,6 +18,7 @@ import {TitleComponent} from './components/title/title.component';
 import {RedirectGuard} from './core/guards/redirect.guard';
 import { CreateComponent } from './components/create/create.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SearchSongComponent } from './components/search-song/search-song.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     TitleComponent,
     RedirectGuard,
     CreateComponent,
-    SidebarComponent
+    SidebarComponent,
+    SearchSongComponent
   ],
   imports: [
     AppRoutingModule,
