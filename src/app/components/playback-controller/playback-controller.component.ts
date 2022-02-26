@@ -14,13 +14,11 @@ import {WebsocketService} from '../../core/services/websocket.service';
 import {UtilService} from '../../core/services/util.service';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {FormControl} from '@angular/forms';
-import {PlaybackAnimation} from './playback-animation';
 
 @Component({
   selector: 'app-playback-controller',
   templateUrl: './playback-controller.component.html',
-  styleUrls: ['./playback-controller.component.scss'],
-  animations: PlaybackAnimation,
+  styleUrls: ['./playback-controller.component.scss']
 })
 export class PlaybackControllerComponent implements OnInit, AfterContentInit {
 
@@ -118,36 +116,12 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     }
   }
 
-  leave(): void {
-    this.colorService.clearImgStore();
-    clearTimeout(this.timeout);
-    this.websocketService.close();
-    this.jamService.leaveJamSession().subscribe(value => {
-      if (value.success) {
-        this.notificationService.show(
-          new Notification('Successfully quit the JamSession')
-            .addHeader('JamSession quit', 'exit_to_app')
-            .setAutohide(5000));
-        this.router.navigate(['./']);
-      }
-    });
-  }
-
   getDevices(): void {
     if (this.permissions.hasPermission(this.permissions.Host)) {
       this.spotifyService.getDevices().subscribe(value1 => {
         this.devices = value1;
       });
     }
-  }
-
-  selectDevice(deviceid: string): void {
-    const body: SetPlaybackRequestBody = {
-      device_id: deviceid
-    };
-    this.jamService.putPlayback(body).subscribe((value) => {
-      this.jamStore.playback = value;
-    });
   }
 
   onVolumeChange(): void {
@@ -205,9 +179,9 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   /*This sucks balls, but is the best solution that actually works*/
   getProgressForContainer(): void {
     this.songProgress = Number(((this.progressms * 100) / this.playback?.playback?.item.duration_ms).toFixed(2));
-    document.getElementById('progress-bar').style.transition = '0.5s';
+    document.getElementById('progress-bar').style.transition = '0.5s linear';
     setTimeout(() => {
-      document.getElementById('progress-bar').style.transition = this.durationRest + 's';
+      document.getElementById('progress-bar').style.transition = this.durationRest + 's linear';
       document.getElementById('progress-bar').style.backgroundPosition = 'right 100% bottom 100%';
     }, 1000);
   }

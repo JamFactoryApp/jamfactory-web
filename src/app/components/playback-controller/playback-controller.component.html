@@ -131,10 +131,7 @@
        [style]="{'background-image': 'linear-gradient(to left, #23232b 50%, ' + colorService.vec3ToRGBAString(songColor.vibrant, 0.4) + ' 50%)'}"
        [ngStyle]="{'background-position': 'right ' + songProgress + '% bottom 100%'}"></div>
 
-  <!--  [@playbackAnimation]="{value: playback?.playback?.is_playing, params : { songProgress: songProgress, duration: durationRest }}"-->
-<!--  'animation': item && playback.playback.is_playing ? 'fill_progress ' + durationRest + 's linear' : ''-->
-
-  <div class="d-flex jy-center al-center" [style]="{'color': colorService.vec3ToRGBAString(songColor.vibrant)}"
+  <div class="d-flex jy-center al-center" [style]="{'color': colorService.vec3ToRGBAString(songColor.vibrant, 1)}"
        style="position: relative">
     <div class="footer-listen-content d-flex al-center h-100">
       <div class="footer-cover-container d-flex al-center">
