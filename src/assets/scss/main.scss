@@ -5,6 +5,10 @@
 @import url('https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp');
 @import url('https://fonts.googleapis.com/css?family=Oswald:400');
 
+:root {
+  --progress: 'right 0% bottom 100%';
+}
+
 /*HTML ELEMENTS*/
 html {
   -webkit-text-size-adjust: none;
@@ -743,10 +747,12 @@ span.search-input-icon {
   top: 0;
   height: 100%;
   width: 100%;
-  background: rgba(58, 92, 68, 0.4);
-  background: linear-gradient(to left, #23232b 50%, rgba(58, 92, 68, 0.4) 50%);
+  //background: rgba(58, 92, 68, 0.4);
+  //background: linear-gradient(to left, #23232b 50%, rgba(58, 92, 68, 0.4) 50%);
   background-size: 200% 100%;
-  animation: fill_progress 180s infinite linear;
+  //background-position: right bottom;
+  //transition: 6s ease-in-out;
+  //animation: fill_progress 180s infinite linear;
   /*animation: fill_progress 10s infinite linear;*/
   border-radius: inherit;
   /*border-bottom-right-radius: unset;*/
@@ -754,8 +760,10 @@ span.search-input-icon {
   z-index: 0;
 }
 
+
 @keyframes fill_progress {
   from {
+    //background-position: var(--progress);
     background-position: right bottom;
   }
   to {
@@ -776,11 +784,13 @@ span.search-input-icon {
   padding: 10px 10px 0 10px;
   font-weight: bold;
   font-size: 22px;
+  color: inherit;
 }
 
 .footer-artist {
   padding: 0 10px 10px 10px;
   font-size: 14px;
+  color: inherit;
 }
 
 .footer-listen-content {

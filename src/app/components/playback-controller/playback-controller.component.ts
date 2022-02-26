@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthHttpService} from '../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
@@ -9,19 +9,22 @@ import {UserStore} from '../../core/stores/user.store';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {Notification, NotificationService} from '../../core/services/notification.service';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
-import {ColorService} from '../../core/services/color.service';
+import {ColorService, SongColor} from '../../core/services/color.service';
 import {WebsocketService} from '../../core/services/websocket.service';
 import {UtilService} from '../../core/services/util.service';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {FormControl} from '@angular/forms';
+import {PlaybackAnimation} from './playback-animation';
 
 @Component({
   selector: 'app-playback-controller',
   templateUrl: './playback-controller.component.html',
-  styleUrls: ['./playback-controller.component.scss']
+  styleUrls: ['./playback-controller.component.scss'],
+  animations: PlaybackAnimation,
 })
-export class PlaybackControllerComponent implements OnInit {
-  Math = Math;
+export class PlaybackControllerComponent implements OnInit, AfterContentInit {
+
+  @ViewChild('cover') cover: ElementRef;
 
   @ViewChild('deviceTooltip', {static: false}) deviceTooltip: NgbTooltip;
   public currentUser: JamUser;
@@ -34,6 +37,13 @@ export class PlaybackControllerComponent implements OnInit {
   private showedNoPlaybackNotification = false;
   private timeout: number;
   public currentVolume: FormControl = new FormControl(0);
+  public songColor: SongColor = {
+    vibrant: [231, 231, 231],
+    muted: [0, 0, 0],
+  };
+  public songProgress = 0;
+  public durationRest = 0;
+  public playStatus = false;
 
   constructor(
     private authService: AuthHttpService,
@@ -47,7 +57,7 @@ export class PlaybackControllerComponent implements OnInit {
     private authStore: UserStore,
     private notificationService: NotificationService,
     private websocketService: WebsocketService,
-    private colorService: ColorService) {
+    public colorService: ColorService) {
   }
 
   ngOnInit(): void {
@@ -58,9 +68,19 @@ export class PlaybackControllerComponent implements OnInit {
     });
 
     this.jamStore.$playback.subscribe(value => {
+      const lastPlayback = this.playback;
+
       this.playback = value;
       this.progressms = this.playback?.playback?.progress_ms;
       this.item = this.playback !== undefined && this.playback?.playback?.item !== null;
+
+      if ((lastPlayback.playback.item.name !== value.playback.item.name) ||
+        (lastPlayback.playback.is_playing !== value.playback.is_playing) ||
+        (Math.abs(value.playback.progress_ms - lastPlayback.playback.progress_ms)) >= 10000) {
+        this.getProgressForContainer();
+        this.getRestDuration();
+        this.playStatus = this.playback.playback.is_playing;
+      }
 
       if (this.playback?.device_id) {
         this.notificationService.clearId(1);
@@ -82,6 +102,13 @@ export class PlaybackControllerComponent implements OnInit {
     this.timeout = setTimeout(() => {
       this.checkNotifications();
     }, 1000);
+  }
+
+  ngAfterContentInit(): void {
+    setTimeout(() => {
+      this.getProgressForContainer();
+      this.getRestDuration();
+    }, 500);
   }
 
   checkNotifications(): void {
@@ -169,6 +196,24 @@ export class PlaybackControllerComponent implements OnInit {
     });
     clearInterval(this.intervallId);
     this.intervallId = undefined;
+  }
+
+  getImgColor(): void {
+    this.songColor = this.colorService.getImgColor(this.cover.nativeElement);
+  }
+
+  /*This sucks balls, but is the best solution that actually works*/
+  getProgressForContainer(): void {
+    this.songProgress = Number(((this.progressms * 100) / this.playback?.playback?.item.duration_ms).toFixed(2));
+    document.getElementById('progress-bar').style.transition = '0.5s';
+    setTimeout(() => {
+      document.getElementById('progress-bar').style.transition = this.durationRest + 's';
+      document.getElementById('progress-bar').style.backgroundPosition = 'right 100% bottom 100%';
+    }, 1000);
+  }
+
+  getRestDuration(): void {
+    this.durationRest = (this.playback?.playback?.item.duration_ms - this.progressms) / 1000;
   }
 
 }

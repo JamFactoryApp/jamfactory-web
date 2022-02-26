@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserModule} from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {httpInterceptorProviders} from './core/interceptors';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NotificationsComponent} from './components/notifications/notifications.component';
@@ -39,6 +40,7 @@ import { SearchSongComponent } from './components/search-song/search-song.compon
   imports: [
     AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
     NgbModule,
     FormsModule,
     HttpClientModule,

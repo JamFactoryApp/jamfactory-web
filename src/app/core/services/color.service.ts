@@ -21,8 +21,8 @@ export class ColorService {
     this.colorThief = new ColorThief();
   }
 
-  vec3ToRGBAString(vec: Vec3): string {
-    return 'rgba(' + vec[0] + ',' + vec[1] + ',' + vec[2] + ')';
+  vec3ToRGBAString(vec: Vec3, opacity: number = 1): string {
+    return 'rgba(' + vec[0] + ',' + vec[1] + ',' + vec[2] + ',' + opacity + ')';
   }
 
   getImgColor(element: any): SongColor {

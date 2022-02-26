@@ -108,7 +108,8 @@
 <!--    </div>-->
 <!--  </div>-->
 <!--</div>-->
-
+<!--{{playback.playback.item.duration_ms|json}}-->
+<!--{{progressms}}-->
 <div class="footer-content" style="position: relative">
 
   <div class="main-notification">
@@ -126,34 +127,47 @@
     </div>
   </div>
 
-  <div class="footer-playback-progress-container"></div>
+  <div id="progress-bar" class="footer-playback-progress-container"
+       [style]="{'background-image': 'linear-gradient(to left, #23232b 50%, ' + colorService.vec3ToRGBAString(songColor.vibrant, 0.4) + ' 50%)'}"
+       [ngStyle]="{'background-position': 'right ' + songProgress + '% bottom 100%'}"></div>
 
-  <div class="d-flex jy-center al-center" style="position: relative">
+  <!--  [@playbackAnimation]="{value: playback?.playback?.is_playing, params : { songProgress: songProgress, duration: durationRest }}"-->
+<!--  'animation': item && playback.playback.is_playing ? 'fill_progress ' + durationRest + 's linear' : ''-->
+
+  <div class="d-flex jy-center al-center" [style]="{'color': colorService.vec3ToRGBAString(songColor.vibrant)}"
+       style="position: relative">
     <div class="footer-listen-content d-flex al-center h-100">
       <div class="footer-cover-container d-flex al-center">
-        <img src="https://images-na.ssl-images-amazon.com/images/I/71SSQ3hSgEL._SL1024_.jpg"
-             alt="Album Cover" class="footer-cover"/>
+        <img #cover *ngIf="item" [src]="playback.playback.item.album.images[1].url" (load)="getImgColor()"
+             alt="Album Cover" class="footer-cover" crossOrigin="anonymous"/>
       </div>
-      <div class="footer-song-desc-container h-100" style="color: black">
-        <div class="footer-title">Boomerang</div>
-        <div class="footer-artist">Imagine Dragons</div>
+      <div class="footer-song-desc-container h-100" [style]="{'color': colorService.vec3ToRGBAString(songColor.muted)}">
+        <div *ngIf="item" class="footer-title">{{playback.playback.item.name}}</div>
+        <div *ngIf="item" class="footer-artist">{{playback.playback.item.artists[0].name}}</div>
       </div>
     </div>
 
     <div class="footer-control-button-container d-flex al-center footer-control-button-util">
       <div class="d-flex jy-center al-center">
-        <div id="play-pause" class="footer-control-button d-flex jy-center al-center">
-          <i id="ppbutton" class="material-icons footer-button-icons">play_arrow</i>
+        <div id="play-pause" *ngIf="item && this.permissions.hasPermission(this.permissions.Host)"
+             class="footer-control-button d-flex jy-center al-center">
+          <i *ngIf="!playback.playback.is_playing"
+             (click)="resumePlayback()" class="material-icons footer-button-icons">play_arrow</i>
+          <i *ngIf="playback.playback.is_playing"
+             (click)="pausePlayback()" class="material-icons footer-button-icons">pause</i>
         </div>
         <div class="footer-button-divider"></div>
-        <div class="footer-control-button d-flex jy-center al-center">
-          <i class="material-icons footer-button-icons">skip_next</i>
+        <div class="footer-control-button d-flex jy-center al-center"
+             *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
+          <i (click)="onSkip()" class="material-icons footer-button-icons">skip_next</i>
         </div>
         <div class="footer-button-divider"></div>
-        <div class="footer-control-button footer-volume-control-button">
+        <div class="footer-control-button footer-volume-control-button"
+             *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
           <div class="footer-volume-container">
             <div class="footer-volume-slider">
-              <input class="footer-volume" type="range" orient="vertical"/>
+              <input class="footer-volume" type="range" orient="vertical" (change)="onVolumeChange()"
+                     [formControl]="currentVolume"/>
             </div>
           </div>
           <div class="d-flex jy-center al-center">
@@ -165,7 +179,7 @@
           <i class="material-icons-outlined footer-button-icons">queue_music</i>
         </div>
         <div class="footer-button-divider"></div>
-        <div id="notification-button"
+        <div id="notification-button" *ngIf="item && this.permissions.hasPermission(this.permissions.Host)"
              class="footer-control-button footer-device-change-button d-flex jy-center al-center"
              style="position: relative">
           <div class="footer-notification-new"></div>
