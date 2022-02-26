@@ -200,12 +200,14 @@ body {
 .sidebar-section {
   width: 100%;
   padding: 15px;
+  cursor: default;
 }
 
 .sidebar-section-header {
   font-size: 18px;
   font-weight: bold;
   color: #808c9f;
+  cursor: default;
 }
 
 .sidebar-section-content {
@@ -796,6 +798,7 @@ span.search-input-icon {
   float: left;
   margin-right: auto;
   padding-left: 10px;
+  cursor: default;
 }
 
 .footer-control-button-container {

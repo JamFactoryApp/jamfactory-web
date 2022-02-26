@@ -94,4 +94,12 @@ export class SidebarComponent implements OnInit {
     return nameArray[0];
   }
 
+  copyToClipboard(): void {
+    const range = document.createRange();
+    range.selectNode(document.getElementById('sidebar-jamlabel-text'));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+  }
 }

@@ -25,7 +25,7 @@
             <i class="material-icons-outlined sidebar-section-label-icon">content_copy</i>
           </div>
           <div class="sidebar-host-divider"></div>
-          <div id="sidebar-jamlabel-text" class="sidebar-host-name">{{(jamStore.$jamSession | async)?.label}}</div>
+          <div id="sidebar-jamlabel-text" class="sidebar-host-name" (click)="copyToClipboard()">{{(jamStore.$jamSession | async)?.label}}</div>
         </div>
       </div>
     </div>
