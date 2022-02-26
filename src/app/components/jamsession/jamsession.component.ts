@@ -20,6 +20,7 @@ import {
   QueueSong, SocketJamMessage, SocketMembersMessage, SocketPlaybackMessage, SocketQueueMessage
 } from '@jamfactoryapp/jamfactory-types';
 import {MemberStore} from '../../core/stores/member.store';
+import {MenuStore} from '../../core/stores/menu.store';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   jamSession: GetJamSessionResponseBody;
   playback: GetPlaybackResponseBody;
   queue: QueueSong[] = [];
+  public menuStatus: boolean;
 
   constructor(
     private router: Router,
@@ -47,7 +49,8 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private websocketService: WebsocketService,
     private userStore: UserStore,
     private memberStore: MemberStore,
-    public notificationService: NotificationService
+    public notificationService: NotificationService,
+    public menuStore: MenuStore
   ) {
     this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
   }
@@ -77,10 +80,14 @@ export class JamsessionComponent implements OnInit, OnDestroy {
             (error) => this.leaveOnError(error));
         }, (error) => this.leaveOnError(error));
       });
+
+    this.menuStore.$status.subscribe(value => {
+      this.menuStatus = value;
+    });
   }
 
   leaveOnError(error): void {
-    this.router.navigate(['/'], { queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
+    this.router.navigate(['/'], {queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
   }
 
   getData(): void {

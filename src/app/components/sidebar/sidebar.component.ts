@@ -4,8 +4,12 @@ import {ColorService} from '../../core/services/color.service';
 import {WebsocketService} from '../../core/services/websocket.service';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {SetPlaybackRequestBody} from '@jamfactoryapp/jamfactory-types';
+import {JamPlaybackBody, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
+import {MenuStore} from '../../core/stores/menu.store';
+import {UserStore} from '../../core/stores/user.store';
+import {PermissionsService} from '../../core/services/permissions.service';
+import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,6 +18,11 @@ import {JamsessionStore} from '../../core/stores/jamsession.store';
 })
 export class SidebarComponent implements OnInit {
 
+  public menuStatus: boolean;
+  public currentUser: JamUser;
+  public devices: SpotifyDevices;
+  public playback: JamPlaybackBody;
+
   constructor(
     public colorService: ColorService,
     private notificationService: NotificationService,
@@ -21,10 +30,28 @@ export class SidebarComponent implements OnInit {
     private jamService: JamsessionHttpService,
     private router: Router,
     public jamStore: JamsessionStore,
+    public menuStore: MenuStore,
+    private authStore: UserStore,
+    public permissions: PermissionsService,
+    private spotifyService: SpotifyHttpService,
   ) {
   }
 
   ngOnInit(): void {
+    this.menuStore.$status.subscribe(value => {
+      this.menuStatus = value;
+    });
+
+    this.authStore.$currentUser.subscribe(value => {
+      this.currentUser = value;
+      setTimeout(() => {
+        this.getDevices();
+      }, 500);
+    });
+
+    this.jamStore.$playback.subscribe(value => {
+      this.playback = value;
+    });
   }
 
   leave(): void {
@@ -41,6 +68,14 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  getDevices(): void {
+    if (this.permissions.hasPermission(this.permissions.Host)) {
+      this.spotifyService.getDevices().subscribe(value => {
+        this.devices = value;
+      });
+    }
+  }
+
   selectDevice(deviceid: string): void {
     const body: SetPlaybackRequestBody = {
       device_id: deviceid
@@ -48,6 +83,15 @@ export class SidebarComponent implements OnInit {
     this.jamService.putPlayback(body).subscribe((value) => {
       this.jamStore.playback = value;
     });
+  }
+
+  toggleMenu(): void {
+    this.menuStore.status = !this.menuStatus;
+  }
+
+  getUserName(JamSessionName: string): string {
+    const nameArray = JamSessionName.split('\'');
+    return nameArray[0];
   }
 
 }

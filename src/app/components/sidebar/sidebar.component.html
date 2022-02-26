@@ -1,10 +1,10 @@
 <div id="sidebar-container" class="sidebar-container">
   <div class="sidebar-header d-flex al-center">
-    <div id="menu-button-mob" class="menu-button menu-button-mob d-flex jy-center al-center">
+    <div id="menu-button-mob" class="menu-button menu-button-mob d-flex jy-center al-center" (click)="toggleMenu()">
       <i id="menu-button-icon-mob" class="material-icons-outlined menu-button-icon">close</i>
     </div>
-    <div id="sidebar-leave" class="sidebar-header-leave">
-      <i class="material-icons-outlined sidebar-leave-button" (click)="leave()">logout</i>
+    <div id="sidebar-leave" class="sidebar-header-leave" (click)="leave()">
+      <i class="material-icons-outlined sidebar-leave-button">logout</i>
     </div>
   </div>
   <div class="sidebar-content">
@@ -16,7 +16,7 @@
         <div class="sidebar-section-host-container d-flex al-center">
           <img src="https://www.w3schools.com/howto/img_avatar.png" class="sidebar-host-img">
           <div class="sidebar-host-divider"></div>
-          <div class="sidebar-host-name">Pallemann</div>
+          <div class="sidebar-host-name">{{getUserName((jamStore.$jamSession | async)?.name)}}</div>
         </div>
 
         <div id="sidebar-jamlabel-container"
@@ -25,7 +25,7 @@
             <i class="material-icons-outlined sidebar-section-label-icon">content_copy</i>
           </div>
           <div class="sidebar-host-divider"></div>
-          <div id="sidebar-jamlabel-text" class="sidebar-host-name">NEMHS</div>
+          <div id="sidebar-jamlabel-text" class="sidebar-host-name">{{(jamStore.$jamSession | async)?.label}}</div>
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@
             <i class="material-icons sidebar-device-icon">speaker_group</i>
           </div>
           <div class="sidebar-host-divider"></div>
-          <div class="sidebar-host-name">Host Computer</div>
+          <div class="sidebar-host-name">{{playback?.playback?.device.name}}</div>
         </div>
 
         <div class="d-flex al-center w-100" style="height: 10px;"></div>
@@ -72,9 +72,7 @@
           <details>
             <summary>Select Playback Device...</summary>
             <ul>
-              <li>Device 1</li>
-              <li>Device 2</li>
-              <li>Device 3</li>
+              <li class="device-item" [ngClass]="device.id === playback?.device_id ? 'active' : ''" *ngFor="let device of devices?.devices" (click)="selectDevice(device.id)">{{device.name}}</li>
             </ul>
           </details>
         </div>

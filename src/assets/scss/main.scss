@@ -159,9 +159,9 @@ body {
   box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 1);
 }
 
-/*.sidebar-active {*/
-/*    width: 400px;*/
-/*}*/
+.sidebar-active {
+  width: 400px;
+}
 
 .sidebar-container {
   position: relative;
@@ -1794,4 +1794,5 @@ i.expand_more_list_icon {
     padding: 10px 10px 10px 10px;
   }
 }
+
 /*##########################################################################################*/

@@ -108,8 +108,6 @@
 <!--    </div>-->
 <!--  </div>-->
 <!--</div>-->
-<!--{{playback.playback.item.duration_ms|json}}-->
-<!--{{progressms}}-->
 <div class="footer-content" style="position: relative">
 
   <div class="main-notification">
@@ -172,13 +170,13 @@
           </div>
         </div>
         <div class="footer-button-divider"></div>
-        <div class="footer-control-button footer-device-change-button d-flex jy-center al-center">
+        <div class="footer-control-button footer-device-change-button d-flex jy-center al-center"
+             *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
           <i class="material-icons-outlined footer-button-icons">queue_music</i>
         </div>
         <div class="footer-button-divider"></div>
-        <div id="notification-button" *ngIf="item && this.permissions.hasPermission(this.permissions.Host)"
-             class="footer-control-button footer-device-change-button d-flex jy-center al-center"
-             style="position: relative">
+        <div id="notification-button" class="footer-control-button footer-device-change-button d-flex jy-center al-center"
+             style="position: relative" (click)="toggleMenu()">
           <div class="footer-notification-new"></div>
           <i class="material-icons footer-button-icons">notifications</i>
         </div>

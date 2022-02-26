@@ -14,6 +14,7 @@ import {WebsocketService} from '../../core/services/websocket.service';
 import {UtilService} from '../../core/services/util.service';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {FormControl} from '@angular/forms';
+import {MenuStore} from '../../core/stores/menu.store';
 
 @Component({
   selector: 'app-playback-controller',
@@ -43,6 +44,8 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   public durationRest = 0;
   public playStatus = false;
 
+  public menuStatus: boolean;
+
   constructor(
     private authService: AuthHttpService,
     private jamService: JamsessionHttpService,
@@ -55,14 +58,14 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     private authStore: UserStore,
     private notificationService: NotificationService,
     private websocketService: WebsocketService,
-    public colorService: ColorService) {
+    public colorService: ColorService,
+    public menuStore: MenuStore) {
   }
 
   ngOnInit(): void {
 
-    this.authStore.$currentUser.subscribe(value => {
-      this.currentUser = value;
-      this.getDevices();
+    this.menuStore.$status.subscribe(value => {
+      this.menuStatus = value;
     });
 
     this.jamStore.$playback.subscribe(value => {
@@ -128,14 +131,6 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     if (this.permissions.hasPermission(this.permissions.Host) && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
       this.showedNoPlaybackNotification = true;
       this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
-    }
-  }
-
-  getDevices(): void {
-    if (this.permissions.hasPermission(this.permissions.Host)) {
-      this.spotifyService.getDevices().subscribe(value1 => {
-        this.devices = value1;
-      });
     }
   }
 
@@ -211,6 +206,10 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     document.getElementById('progress-bar').style.transition = '0.5s linear';
     document.getElementById('progress-bar').style.backgroundPosition = 'right bottom';
     this.songColor = {vibrant: [231, 231, 231], muted: [0, 0, 0]};
+  }
+
+  toggleMenu(): void {
+    this.menuStore.status = !this.menuStatus;
   }
 
 }

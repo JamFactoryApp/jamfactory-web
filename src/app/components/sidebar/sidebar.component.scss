@@ -1,0 +1,11 @@
+.device-item {
+  cursor: pointer;
+
+  &:hover {
+    background: black;
+  }
+}
+
+.active {
+  background: rgba(255, 255, 255, 0.1);
+}
