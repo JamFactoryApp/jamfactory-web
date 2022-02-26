@@ -72,12 +72,27 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
       this.progressms = this.playback?.playback?.progress_ms;
       this.item = this.playback !== undefined && this.playback?.playback?.item !== null;
 
-      if ((lastPlayback.playback.item.name !== value.playback.item.name) ||
-        (lastPlayback.playback.is_playing !== value.playback.is_playing) ||
-        (Math.abs(value.playback.progress_ms - lastPlayback.playback.progress_ms)) >= 10000) {
+      if (value !== undefined) {
+        if (value.playback.item === null) {
+          this.resetPlaybackProgress();
+        }
+      }
+
+      if (lastPlayback?.playback?.item === null && value?.playback?.item !== null) {
+        this.playStatus = this.playback.playback.is_playing;
         this.getProgressForContainer();
         this.getRestDuration();
+      }
+
+      if ((lastPlayback?.playback?.item?.name !== value?.playback?.item?.name) ||
+        (lastPlayback.playback.is_playing !== value.playback.is_playing) ||
+        (Math.abs(value.playback.progress_ms - lastPlayback.playback.progress_ms)) >= 10000 ||
+        this.playStatus !== value.playback.is_playing) {
         this.playStatus = this.playback.playback.is_playing;
+        setTimeout(() => {
+          this.getProgressForContainer();
+          this.getRestDuration();
+        }, 500);
       }
 
       if (this.playback?.device_id) {
@@ -182,12 +197,20 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     document.getElementById('progress-bar').style.transition = '0.5s linear';
     setTimeout(() => {
       document.getElementById('progress-bar').style.transition = this.durationRest + 's linear';
-      document.getElementById('progress-bar').style.backgroundPosition = 'right 100% bottom 100%';
+      if (this.playStatus) {
+        document.getElementById('progress-bar').style.backgroundPosition = 'right 100% bottom 100%';
+      }
     }, 1000);
   }
 
   getRestDuration(): void {
     this.durationRest = (this.playback?.playback?.item.duration_ms - this.progressms) / 1000;
+  }
+
+  resetPlaybackProgress(): void {
+    document.getElementById('progress-bar').style.transition = '0.5s linear';
+    document.getElementById('progress-bar').style.backgroundPosition = 'right bottom';
+    this.songColor = {vibrant: [231, 231, 231], muted: [0, 0, 0]};
   }
 
 }
