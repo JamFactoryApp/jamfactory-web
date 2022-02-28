@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {FormControl} from '@angular/forms';
 import {QueueStore} from '../../core/stores/queue.store';
@@ -16,6 +16,8 @@ import {SearchViewStore} from '../../core/stores/search-view.store';
 })
 export class TitleComponent implements OnInit {
 
+  @ViewChild('search') search: ElementRef;
+
   public searchField = new FormControl('');
   public searchType = '';
   public searchTimeout: number;
@@ -31,9 +33,23 @@ export class TitleComponent implements OnInit {
   ) {
   }
 
+  // Close Search when clicking outsite of search
+  // @HostListener('document:click', ['$event'])
+  // clickout(event): void {
+  //   if (!this.search.nativeElement.contains(event.target)) {
+  //     this.searchViewStore.status = false;
+  //   }
+  // }
+
   ngOnInit(): void {
     this.menuStore.$status.subscribe(value => {
       this.menuStatus = value;
+    });
+
+    this.searchViewStore.$status.subscribe(value => {
+      if (value === false) {
+        this.searchField.reset();
+      }
     });
   }
 

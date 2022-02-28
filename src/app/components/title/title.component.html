@@ -5,7 +5,7 @@
   </div>
   <div class="jamlabel">{{(jamStore.$jamSession | async)?.name}} - {{(jamStore.$jamSession | async)?.label}}</div>
 </div>
-<div class="search-input-container d-flex al-center">
+<div #search class="search-input-container d-flex al-center">
   <span class="material-icons-outlined search-input-icon">search</span>
   <input id="search-input" type="text" placeholder="Search..." class="search-input-box w-100" (keyup)="searchEvent()"
          [ngStyle]="{'pointer-events': this.menuStatus ? 'none' : ''}" [formControl]="searchField">

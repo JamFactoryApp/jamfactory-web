@@ -1,7 +1,6 @@
-import {Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {FormControl} from '@angular/forms';
-
 import {QueueSong, SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../core/services/queue.service';
 import {QueueStore} from '../../core/stores/queue.store';
@@ -39,27 +38,19 @@ export class SearchComponent implements OnInit {
     public userStore: UserStore,
     public searchStore: SearchStore,
     public jamStore: JamsessionStore,
-    public permissions: PermissionsService
+    public permissions: PermissionsService,
+    private eRef: ElementRef,
+    public searchViewStore: SearchViewStore
   ) {
   }
 
   // Close Search when clicking outsite of div
-  // @HostListener('document:click', ['$event'])
-  // handlerFunctionClick(e: MouseEvent): void {
-  //   if (!this.elementRef.nativeElement.contains(e.target)) {
-  //     this.searchField.patchValue('');
-  //     this.searchResultsTracks = [];
-  //     this.searchResultsPlaylists = [];
-  //     this.searchResultsAlbums = [];
-  //     this.searchType = '';
-  //   }
-  // }
-
-  // Update search count on window resize
-  // @HostListener('window:resize', ['$event'])
-  // handlerFunctionResize(e: MouseEvent): void {
-  //   this.setSearchCount();
-  // }
+  @HostListener('document:click', ['$event'])
+  clickout(event): void {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      this.searchViewStore.status = false;
+    }
+  }
 
   ngOnInit(): void {
     this.queueStore.$queue.subscribe(_ => {
