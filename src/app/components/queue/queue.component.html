@@ -11,7 +11,7 @@
     <ng-container *ngIf="queueViewStatus == true">
       <div id="card-table" class="card-main-container re-scroll">
         <app-queue-song *ngFor="let track of queue; trackBy: trackFunction; let index = index"
-                        [queueView]="queueViewStatus" [track]="track" [index]="index"></app-queue-song>
+                        [queueView]="queueViewStatus" [track]="track" [index]="index + 1"></app-queue-song>
         <span *ngIf="queue.length === 0">Currently there are no songs in the queue!</span>
       </div>
     </ng-container>
