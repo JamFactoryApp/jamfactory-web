@@ -10,6 +10,7 @@ import {MenuStore} from '../../core/stores/menu.store';
 import {UserStore} from '../../core/stores/user.store';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
+import {QueueViewStore} from '../../core/stores/queue-view.store';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,6 +20,7 @@ import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 export class SidebarComponent implements OnInit {
 
   public menuStatus: boolean;
+  public queueViewStatus: boolean;
   public currentUser: JamUser;
   public devices: SpotifyDevices;
   public playback: JamPlaybackBody;
@@ -34,6 +36,7 @@ export class SidebarComponent implements OnInit {
     private authStore: UserStore,
     public permissions: PermissionsService,
     private spotifyService: SpotifyHttpService,
+    private queueViewStore: QueueViewStore
   ) {
   }
 
@@ -51,6 +54,10 @@ export class SidebarComponent implements OnInit {
 
     this.jamStore.$playback.subscribe(value => {
       this.playback = value;
+    });
+
+    this.queueViewStore.$status.subscribe(value => {
+      this.queueViewStatus = value;
     });
   }
 
@@ -90,8 +97,7 @@ export class SidebarComponent implements OnInit {
   }
 
   getUserName(JamSessionName: string): string {
-    const nameArray = JamSessionName.split('\'');
-    return nameArray[0];
+    return JamSessionName?.split('\'')[0];
   }
 
   copyToClipboard(): void {
@@ -101,5 +107,9 @@ export class SidebarComponent implements OnInit {
     window.getSelection().addRange(range);
     document.execCommand('copy');
     window.getSelection().removeAllRanges();
+  }
+
+  switchQueueView(status: boolean): void {
+    this.queueViewStore.status = status;
   }
 }

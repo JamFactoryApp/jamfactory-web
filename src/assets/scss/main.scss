@@ -31,6 +31,7 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
   line-height: normal;
+  color: #808c9f;
 }
 
 *::-webkit-scrollbar {
@@ -714,6 +715,7 @@ span.search-input-icon {
   /*position: absolute;*/
   /*position: fixed;*/
   padding: 15px;
+  z-index: 2;
 }
 
 .footer-content {
@@ -1124,6 +1126,7 @@ i.main-notification-icon {
   font-size: 75px;
   font-weight: 600;
   font-family: Oswald, sans-serif;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .card-number-accent {
@@ -1153,11 +1156,12 @@ i.main-notification-icon {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .card-song-artist {
   font-size: 18px;
-  color: hsla(0, 0%, 100%, .5);
+  color: rgba(255, 255, 255, 0.8);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1183,6 +1187,7 @@ i.main-notification-icon {
   background: rgba(255, 255, 255, 0.05);
   /*background: rgba(42, 42, 60, 0.8);*/
   min-width: 0;
+  position: relative;
 }
 
 .list-element-height {
@@ -1209,7 +1214,7 @@ i.main-notification-icon {
   right: 0;
   padding: 5px 5px 0 5px;
   cursor: pointer;
-  z-index: 2;
+  z-index: 1;
 }
 
 i.expand_more_list_icon {

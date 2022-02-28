@@ -1,0 +1,93 @@
+<div class="list-element list-element-height d-flex w-100" [ngClass]="expandElement ? 'expanded' : ''"
+     [style]="{'background-image': voted ? 'linear-gradient(to right, ' + colorService.vec3ToRGBAString(songColor.vibrant, 0.25) + ' 30%, rgba(255, 255, 255, 0.05) 40%)' : ''}">
+
+  <div id="expand_more_list" class="expand_more_list" (click)="openExpandedView()"
+       [ngClass]="closedArrow ? 'rotate_expand' : ''">
+    <i class="material-icons-outlined expand_more_list_icon">expand_more</i>
+  </div>
+
+  <div id="list_elem_content" class="d-flex al-center w-100 list-element-height"
+       style="position: relative;">
+    <div class="cover-container d-flex jy-center al-center h-100">
+      <img #cover src="{{track.spotifyTrackFull.album.images[1].url}}" (load)="getImgColor()"
+           alt="Album Cover" class="list-cover" crossOrigin="anonymous"/>
+    </div>
+    <div class="list-song-text-container d-flex al-center h-100">
+      <div>
+        <div class="list-song-song">{{track.spotifyTrackFull.name}}</div>
+        <div class="list-song-artist">{{utils.getArtistString(track.spotifyTrackFull.artists)}}</div>
+      </div>
+    </div>
+    <div class="list-icon-container d-flex jy-center al-center h-100">
+      <i class="material-icons-outlined vote-icon" (click)="vote(track.spotifyTrackFull)"
+         [ngStyle]="voted ? {'color': '#F72C25'} : {'color': ''}">{{voted ? "favorite" : "favorite_border"}}</i>
+      <div class="list-like-counter d-flex jy-center al-center">{{track.votes}}</div>
+    </div>
+    <div id="list_elem_content_border" class="list_elem_content_border"
+         [ngClass]="showExpandedBorder ? 'visible' : 'not-visible'"></div>
+  </div>
+
+  <div #listAdditional id="list_element_additional"
+       class="w-100 h-100 list-element-heightV2 list-element-additional"
+       [ngClass]="[showExpandedContent1 ? 'block' : 'none', showExpandedContent2 ? 'visible' : 'not-visible']">
+
+    <div class="additional-info-row additional-info-big">
+      <div class="d-flex al-center jy-center additional-info-column">
+        <div class="d-flex al-center jy-center additional-info-container">
+          <div class="additional-info-header">Release Date:</div>
+          <div class="additional-info-text">{{getReleaseDate(track.spotifyTrackFull.album.release_date)}}</div>
+        </div>
+      </div>
+      <div class="d-flex al-center jy-center additional-info-column">
+        <div class="d-flex al-center jy-center additional-info-container">
+          <div class="additional-info-header">Length:</div>
+          <div class="additional-info-text">{{getSongDuration(track.spotifyTrackFull.duration_ms)}}</div>
+        </div>
+      </div>
+      <div class="d-flex al-center jy-center additional-info-column">
+        <div class="d-flex al-center jy-center additional-info-container">
+          <div class="additional-info-header">Album:</div>
+          <div class="additional-info-text">{{track.spotifyTrackFull.album.name}}</div>
+        </div>
+      </div>
+      <div class="d-flex al-center jy-center additional-info-column">
+        <div class="d-flex al-center jy-center additional-info-container">
+          <div class="additional-info-header">Artists:</div>
+          <div class="additional-info-text">{{utils.getArtistString(track.spotifyTrackFull.artists)}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="additional-info-small h-100 w-100">
+      <div class="w-100 h-50 d-flex al-center jy-center additional-info-small-container">
+        <div class="h-50 w-50 d-flex al-center">
+          <div class="d-flex al-center jy-center additional-info-container">
+            <div class="additional-info-header">Release Date:</div>
+            <div class="additional-info-text">{{getReleaseDate(track.spotifyTrackFull.album.release_date)}}</div>
+          </div>
+        </div>
+        <div class="h-50 w-50 d-flex al-center">
+          <div class="d-flex al-center jy-center additional-info-container">
+            <div class="additional-info-header">Length:</div>
+            <div class="additional-info-text">{{getSongDuration(track.spotifyTrackFull.duration_ms)}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="w-100 h-50 d-flex al-center jy-center additional-info-small-container">
+        <div class="h-50 w-50 d-flex al-center">
+          <div class="d-flex al-center jy-center additional-info-container">
+            <div class="additional-info-header">Album:</div>
+            <div class="additional-info-text">{{track.spotifyTrackFull.album.name}}</div>
+          </div>
+        </div>
+        <div class="h-50 w-50 d-flex al-center">
+          <div class="d-flex al-center jy-center additional-info-container">
+            <div class="additional-info-header">Artists:</div>
+            <div class="additional-info-text">{{utils.getArtistString(track.spotifyTrackFull.artists)}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height: 5px"></div>

@@ -3,6 +3,7 @@ import {QueueStore} from '../../core/stores/queue.store';
 import {UserStore} from '../../core/stores/user.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {PermissionsService} from '../../core/services/permissions.service';
+import {QueueViewStore} from '../../core/stores/queue-view.store';
 
 
 @Component({
@@ -12,15 +13,21 @@ import {PermissionsService} from '../../core/services/permissions.service';
 })
 export class QueueComponent implements OnInit {
   readonly JamRightHost = 'Host';
+  public queueViewStatus: boolean;
+
   constructor(
     public queueStore: QueueStore,
     public authStore: UserStore,
     public jamStore: JamsessionStore,
-    public permissions: PermissionsService
+    public permissions: PermissionsService,
+    public queueViewStore: QueueViewStore,
   ) {
   }
 
   ngOnInit(): void {
+    this.queueViewStore.$status.subscribe(value => {
+      this.queueViewStatus = value;
+    });
   }
 
   public trackFunction(index, item): string {

@@ -4,22 +4,22 @@ import {BehaviorSubject, Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MenuStore {
+export class QueueViewStore {
 
-  private menuToggle: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private queueViewToggle: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() {
   }
 
   get status(): boolean {
-    return this.menuToggle.value;
+    return this.queueViewToggle.value;
   }
 
   set status(value: boolean) {
-    this.menuToggle.next(value);
+    this.queueViewToggle.next(value);
   }
 
   get $status(): Observable<boolean> {
-    return new Observable(fn => this.menuToggle.subscribe(fn));
+    return new Observable(fn => this.queueViewToggle.subscribe(fn));
   }
 }

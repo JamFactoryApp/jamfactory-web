@@ -1,40 +1,49 @@
-<div class="d-flex align-items-center animate" style="padding-left: 1rem; padding-bottom: 0.2rem; padding-top: 0.2rem"
-     [ngStyle]="{'background-color': voted && search == false ? colorService.vec3ToRGBAString(songColor.vibrant) : '', 'font-weight': voted ? 'bold' : 'normal', 'color': voted && search == false ? colorService.vec3ToRGBAString(songColor.muted) : ''}"
-     [ngClass]="{'even':index % 2 === 0 && !voted, 'no_search': search == false, 'search': search == true}">
-  <img #cover src="{{track.spotifyTrackFull.album.images[1].url}}" class="cover" (load)="getImgColor()"
-       crossorigin="anonymous">
-  <div class="flex-grow-1 ml-3 truncated" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">
-    <span class="medium">{{track.spotifyTrackFull.name}}</span>
-    <br>
-    <span class="small op-60">{{utils.getArtistString(track.spotifyTrackFull.artists)}}</span>
-  </div>
+<ng-container *ngIf="queueView == false">
+  <app-queue-song-list [track]="track"></app-queue-song-list>
+</ng-container>
+
+<ng-container *ngIf="queueView == true">
+  <app-queue-song-cards [track]="track" [index]="index"></app-queue-song-cards>
+</ng-container>
 
 
-  <button class="btn btn-circle mx-1 material-btn" (click)="active(!jamSessionStore.jamSession.active)"
-          placement="left" ngbTooltip="{{!jamSessionStore.jamSession.active ? 'Start your Queue' : 'Stop the Queue'}}"
-          #tooltip="ngbTooltip"
-          *ngIf="!search && host && index === 0" title="Settings">
-    <span
-      class="material-icons" [ngStyle]="{'color': voted && search == false ? colorService.vec3ToRGBAString(songColor.muted) : ''}">{{!jamSessionStore.jamSession.active ? 'play_circle_filled' : 'pause_circle_filled'}}</span>
-  </button>
-  <button class="btn btn-circle mx-1 material-btn" (click)="delete(track)"
-          *ngIf="!search && host" title="Settings">
-    <span class="material-icons" [ngStyle]="{'color': voted && search == false ? colorService.vec3ToRGBAString(songColor.muted) : ''}">delete</span>
-  </button>
-  <div class="vl" *ngIf="!search && host">
-  </div>
+<!--<div class="d-flex align-items-center animate" style="padding-left: 1rem; padding-bottom: 0.2rem; padding-top: 0.2rem"-->
+<!--     [ngStyle]="{'background-color': voted && search == false ? colorService.vec3ToRGBAString(songColor.vibrant) : '', 'font-weight': voted ? 'bold' : 'normal', 'color': voted && search == false ? colorService.vec3ToRGBAString(songColor.muted) : ''}"-->
+<!--     [ngClass]="{'even':index % 2 === 0 && !voted, 'no_search': search == false, 'search': search == true}">-->
+<!--  <img #cover src="{{track.spotifyTrackFull.album.images[1].url}}" class="cover" (load)="getImgColor()"-->
+<!--       crossorigin="anonymous">-->
+<!--  <div class="flex-grow-1 ml-3 truncated" [ngStyle]="inQueue ? {'color': 'white'} : {'color': ''}">-->
+<!--    <span class="medium">{{track.spotifyTrackFull.name}}</span>-->
+<!--    <br>-->
+<!--    <span class="small op-60">{{utils.getArtistString(track.spotifyTrackFull.artists)}}</span>-->
+<!--  </div>-->
 
 
-  <div class="btn-group-imitate p-3 btn" (click)="vote(track.spotifyTrackFull)">
-    <button class="btn vote-btn material-btn"
-            [ngStyle]="{'border-radius': inQueue ? '0.2rem' : '0.2rem 0 0 0.2rem'}">
-      <span class="material-icons" style="font-size: 20px"
-            [ngStyle]="voted ? {'color': 'darkred'} : {'color': ''}">{{voted ? "favorite" : "favorite_border"}}</span>
-    </button>
-    <div class="align-self-center votes-display " *ngIf="track.votes !== undefined">{{track.votes}}</div>
-  </div>
-</div>
+<!--  <button class="btn btn-circle mx-1 material-btn" (click)="active(!jamSessionStore.jamSession.active)"-->
+<!--          placement="left" ngbTooltip="{{!jamSessionStore.jamSession.active ? 'Start your Queue' : 'Stop the Queue'}}"-->
+<!--          #tooltip="ngbTooltip"-->
+<!--          *ngIf="!search && host && index === 0" title="Settings">-->
+<!--    <span-->
+<!--      class="material-icons" [ngStyle]="{'color': voted && search == false ? colorService.vec3ToRGBAString(songColor.muted) : ''}">{{!jamSessionStore.jamSession.active ? 'play_circle_filled' : 'pause_circle_filled'}}</span>-->
+<!--  </button>-->
+<!--  <button class="btn btn-circle mx-1 material-btn" (click)="delete(track)"-->
+<!--          *ngIf="!search && host" title="Settings">-->
+<!--    <span class="material-icons" [ngStyle]="{'color': voted && search == false ? colorService.vec3ToRGBAString(songColor.muted) : ''}">delete</span>-->
+<!--  </button>-->
+<!--  <div class="vl" *ngIf="!search && host">-->
+<!--  </div>-->
 
-<!--[class.even]="index % 2 === 0 && !voted" [class.no_search]="!search" [class.search]="search"-->
-<!--[style.background-color]="expression"-->
-<!--https://angular.io/guide/attribute-binding#attribute-class-and-style-bindings-->
+
+<!--  <div class="btn-group-imitate p-3 btn" (click)="vote(track.spotifyTrackFull)">-->
+<!--    <button class="btn vote-btn material-btn"-->
+<!--            [ngStyle]="{'border-radius': inQueue ? '0.2rem' : '0.2rem 0 0 0.2rem'}">-->
+<!--      <span class="material-icons" style="font-size: 20px"-->
+<!--            [ngStyle]="voted ? {'color': 'darkred'} : {'color': ''}">{{voted ? "favorite" : "favorite_border"}}</span>-->
+<!--    </button>-->
+<!--    <div class="align-self-center votes-display " *ngIf="track.votes !== undefined">{{track.votes}}</div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;[class.even]="index % 2 === 0 && !voted" [class.no_search]="!search" [class.search]="search"&ndash;&gt;-->
+<!--&lt;!&ndash;[style.background-color]="expression"&ndash;&gt;-->
+<!--&lt;!&ndash;https://angular.io/guide/attribute-binding#attribute-class-and-style-bindings&ndash;&gt;-->

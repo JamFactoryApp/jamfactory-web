@@ -9,6 +9,7 @@ import {UserStore} from '../../core/stores/user.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {SearchStore} from '../../core/stores/search.store';
+import {SearchViewStore} from '../../core/stores/search-view.store';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class SearchComponent implements OnInit {
     public userStore: UserStore,
     public searchStore: SearchStore,
     public jamStore: JamsessionStore,
-    public permissions: PermissionsService,
+    public permissions: PermissionsService
   ) {
   }
 
@@ -74,9 +75,7 @@ export class SearchComponent implements OnInit {
         this.searchResultsTracks = this.queueService.updateQueueFromSocket(value.tracks.items.map(track => {
           return {spotifyTrackFull: track, voted: false, votes: 0} as QueueSong;
         }));
-        console.log(this.searchResultsTracks);
       } else {
-        console.log('TEST');
         this.emptySearch = true;
       }
 
@@ -168,6 +167,4 @@ export class SearchComponent implements OnInit {
       this.searchShift -= this.searchCount;
     }
   }
-
-
 }

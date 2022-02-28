@@ -20,6 +20,8 @@ import {RedirectGuard} from './core/guards/redirect.guard';
 import { CreateComponent } from './components/create/create.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SearchSongComponent } from './components/search-song/search-song.component';
+import { QueueSongListComponent } from './components/queue-song/queue-song-list/queue-song-list.component';
+import { QueueSongCardsComponent } from './components/queue-song/queue-song-cards/queue-song-cards.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { SearchSongComponent } from './components/search-song/search-song.compon
     RedirectGuard,
     CreateComponent,
     SidebarComponent,
-    SearchSongComponent
+    SearchSongComponent,
+    QueueSongListComponent,
+    QueueSongCardsComponent
   ],
   imports: [
     AppRoutingModule,

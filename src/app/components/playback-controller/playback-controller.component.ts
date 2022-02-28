@@ -88,10 +88,10 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
       }
 
       if ((lastPlayback?.playback?.item?.name !== value?.playback?.item?.name) ||
-        (lastPlayback.playback.is_playing !== value.playback.is_playing) ||
-        (Math.abs(value.playback.progress_ms - lastPlayback.playback.progress_ms)) >= 10000 ||
-        this.playStatus !== value.playback.is_playing) {
-        this.playStatus = this.playback.playback.is_playing;
+        (lastPlayback?.playback?.is_playing !== value?.playback?.is_playing) ||
+        (Math.abs(value?.playback?.progress_ms - lastPlayback?.playback?.progress_ms)) >= 10000 ||
+        this.playStatus !== value?.playback?.is_playing) {
+        this.playStatus = this.playback?.playback?.is_playing;
         setTimeout(() => {
           this.getProgressForContainer();
           this.getRestDuration();
@@ -150,7 +150,6 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
         remove: true
       };
       this.jamService.playSong(body).subscribe((value) => {
-
       });
     }
   }
@@ -188,7 +187,7 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
 
   /*This sucks balls, but is the best solution that actually works*/
   getProgressForContainer(): void {
-    this.songProgress = Number(((this.progressms * 100) / this.playback?.playback?.item.duration_ms).toFixed(2));
+    this.songProgress = Number(((this.progressms * 100) / this.playback?.playback?.item?.duration_ms).toFixed(2));
     document.getElementById('progress-bar').style.transition = '0.5s linear';
     setTimeout(() => {
       document.getElementById('progress-bar').style.transition = this.durationRest + 's linear';
@@ -199,7 +198,7 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   }
 
   getRestDuration(): void {
-    this.durationRest = (this.playback?.playback?.item.duration_ms - this.progressms) / 1000;
+    this.durationRest = (this.playback?.playback?.item?.duration_ms - this.progressms) / 1000;
   }
 
   resetPlaybackProgress(): void {

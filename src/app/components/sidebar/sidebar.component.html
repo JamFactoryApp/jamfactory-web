@@ -25,7 +25,8 @@
             <i class="material-icons-outlined sidebar-section-label-icon">content_copy</i>
           </div>
           <div class="sidebar-host-divider"></div>
-          <div id="sidebar-jamlabel-text" class="sidebar-host-name" (click)="copyToClipboard()">{{(jamStore.$jamSession | async)?.label}}</div>
+          <div id="sidebar-jamlabel-text" class="sidebar-host-name"
+               (click)="copyToClipboard()">{{(jamStore.$jamSession | async)?.label}}</div>
         </div>
       </div>
     </div>
@@ -36,14 +37,14 @@
       <div class="sidebar-section-header">Change view</div>
 
       <div style="padding: 10px;" class="d-flex jy-center al-center w-100 h-100">
-        <div id="list-view" class="view-button d-flex jy-center al-center list-view-button active">
+        <div id="list-view" class="view-button d-flex jy-center al-center list-view-button" [ngClass]="queueViewStatus ? '' : 'active'" (click)="switchQueueView(false)">
           <i class="material-icons-outlined view-button-icon">table_rows</i>
           <div class="card-view-button-text">List-View</div>
         </div>
 
         <div class="view-button-divider"></div>
 
-        <div id="card-view" class="view-button d-flex jy-center al-center card-view-button">
+        <div id="card-view" class="view-button d-flex jy-center al-center card-view-button" [ngClass]="queueViewStatus ? 'active' : ''" (click)="switchQueueView(true)">
           <i class="material-icons-outlined view-button-icon">view_week</i>
           <div class="card-view-button-text">Card-View</div>
         </div>
@@ -72,7 +73,8 @@
           <details>
             <summary>Select Playback Device...</summary>
             <ul>
-              <li class="device-item" [ngClass]="device.id === playback?.device_id ? 'active' : ''" *ngFor="let device of devices?.devices" (click)="selectDevice(device.id)">{{device.name}}</li>
+              <li class="device-item" [ngClass]="device.id === playback?.device_id ? 'active' : ''"
+                  *ngFor="let device of devices?.devices" (click)="selectDevice(device.id)">{{device.name}}</li>
             </ul>
           </details>
         </div>

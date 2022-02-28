@@ -21,6 +21,7 @@ import {
 } from '@jamfactoryapp/jamfactory-types';
 import {MemberStore} from '../../core/stores/member.store';
 import {MenuStore} from '../../core/stores/menu.store';
+import {SearchViewStore} from '../../core/stores/search-view.store';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   playback: GetPlaybackResponseBody;
   queue: QueueSong[] = [];
   public menuStatus: boolean;
+  public searchViewStatus: boolean;
 
   constructor(
     private router: Router,
@@ -50,7 +52,8 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private userStore: UserStore,
     private memberStore: MemberStore,
     public notificationService: NotificationService,
-    public menuStore: MenuStore
+    public menuStore: MenuStore,
+    public searchViewStore: SearchViewStore
   ) {
     this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
   }
@@ -59,6 +62,10 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.websocketService.connect((message) => this.websocketHandler(message));
     }, 2000);
+
+    this.searchViewStore.$status.subscribe(value => {
+      this.searchViewStatus = value;
+    });
     // Check if the user already joined the jam session
     this.jamSessionService.getJamsession().subscribe(
       jamsession => {

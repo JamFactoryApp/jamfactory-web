@@ -7,6 +7,7 @@ import {QueueService} from '../../core/services/queue.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {SearchStore} from '../../core/stores/search.store';
 import {MenuStore} from '../../core/stores/menu.store';
+import {SearchViewStore} from '../../core/stores/search-view.store';
 
 @Component({
   selector: 'app-title',
@@ -25,7 +26,9 @@ export class TitleComponent implements OnInit {
     public jamStore: JamsessionStore,
     private spotifyService: SpotifyHttpService,
     public searchStore: SearchStore,
-    public menuStore: MenuStore) {
+    public menuStore: MenuStore,
+    public searchViewStore: SearchViewStore
+  ) {
   }
 
   ngOnInit(): void {
@@ -44,6 +47,7 @@ export class TitleComponent implements OnInit {
     if (this.searchField.value === '') {
       this.searchType = '';
       this.searchStore.search = undefined;
+      this.searchViewStore.status = false;
       return;
     }
 
@@ -55,10 +59,12 @@ export class TitleComponent implements OnInit {
     this.spotifyService.putSearch(body).subscribe(value => {
       this.searchStore.search = value;
     });
+    this.searchViewStore.status = true;
   }
 
   toggleMenu(): void {
     this.menuStore.status = !this.menuStatus;
+    this.searchViewStore.status = false;
   }
 
 }
