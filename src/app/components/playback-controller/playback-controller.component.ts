@@ -56,10 +56,11 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     public permissions: PermissionsService,
     public utils: UtilService,
     private authStore: UserStore,
-    private notificationService: NotificationService,
+    public notificationService: NotificationService,
     private websocketService: WebsocketService,
     public colorService: ColorService,
-    public menuStore: MenuStore) {
+    public menuStore: MenuStore,
+  ) {
   }
 
   ngOnInit(): void {
@@ -209,6 +210,11 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
 
   toggleMenu(): void {
     this.menuStore.status = !this.menuStatus;
+  }
+
+  getBestColor(): string {
+    const bestColor = this.colorService.getBestSuitedColor(this.songColor.vibrant, this.songColor.muted, [42, 42, 52]);
+    return this.colorService.vec3ToRGBAString(bestColor, 1);
   }
 
 }

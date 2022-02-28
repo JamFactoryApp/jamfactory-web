@@ -12,7 +12,7 @@
       <div id="card-table" class="card-main-container re-scroll">
         <app-queue-song *ngFor="let track of queue; trackBy: trackFunction; let index = index"
                         [queueView]="queueViewStatus" [track]="track" [index]="index + 1"></app-queue-song>
-        <span *ngIf="queue.length === 0">Currently there are no songs in the queue!</span>
+        <span style="color: hsla(0, 0%, 100%, .8)" *ngIf="queue.length === 0">Currently there are no songs in the queue!</span>
       </div>
     </ng-container>
 
@@ -20,7 +20,7 @@
       <div id="list-table" class="list-table">
         <app-queue-song *ngFor="let track of queue; trackBy: trackFunction; let index = index"
                         [queueView]="queueViewStatus" [track]="track" [index]="index"></app-queue-song>
-        <span *ngIf="queue.length === 0">Currently there are no songs in the queue!</span>
+        <span style="color: hsla(0, 0%, 100%, .8)" *ngIf="queue.length === 0">Currently there are no songs in the queue!</span>
       </div>
     </ng-container>
   </ng-container>

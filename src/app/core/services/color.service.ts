@@ -58,6 +58,17 @@ export class ColorService {
     this.imgColors = [];
   }
 
+  getBestSuitedColor(col1: Vec3, col2: Vec3, baseCol: Vec3): Vec3 {
+    const firstCol = this.contrast(col1, baseCol);
+    const secondCol = this.contrast(col2, baseCol);
+
+    if (firstCol > secondCol) {
+      return col1;
+    } else {
+      return col2;
+    }
+  }
+
   /***************************************************************************************
    * The functions highestDiff(), rgbDiff(), rgbToCIELab(), rgbToXyz(), xyzToCIELab() and deltaE94()
    * were adapted from npm package node-vibrant.
@@ -195,5 +206,27 @@ export class ColorService {
       ? [0, 0, 0]
       : [255, 255, 255];
   }
+
+  /*Functions from https://stackoverflow.com/questions/9733288/how-to-programmatically-calculate-the-contrast-ratio-between-two-colors*/
+  luminance(r, g, b): any {
+    const a = [r, g, b].map((v) => {
+      v /= 255;
+      return v <= 0.03928
+        ? v / 12.92
+        : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+  }
+
+  contrast(rgb1, rgb2): number {
+    const lum1 = this.luminance(rgb1[0], rgb1[1], rgb1[2]);
+    const lum2 = this.luminance(rgb2[0], rgb2[1], rgb2[2]);
+    const brightest = Math.max(lum1, lum2);
+    const darkest = Math.min(lum1, lum2);
+    return (brightest + 0.05)
+      / (darkest + 0.05);
+  }
+
+  /***************************************************************************************/
 
 }

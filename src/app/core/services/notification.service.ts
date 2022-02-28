@@ -89,11 +89,24 @@ export class NotificationService {
   getClasses(level: number): string {
     switch (level) {
       case 0:
-        return '';
+        return 'sidebar-notification-info';
       case 1:
-        return 'bg-success text-light';
+        // return 'bg-success text-light';
+        return 'sidebar-notification-success';
       case 2:
-        return 'bg-danger text-light';
+        // return 'bg-danger text-light';
+        return 'sidebar-notification-failure';
+    }
+  }
+
+  getIcons(level: number): string {
+    switch (level) {
+      case 0:
+        return 'info';
+      case 1:
+        return 'check_circle';
+      case 2:
+        return 'warning';
     }
   }
 }

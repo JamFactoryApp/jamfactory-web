@@ -37,14 +37,16 @@
       <div class="sidebar-section-header">Change view</div>
 
       <div style="padding: 10px;" class="d-flex jy-center al-center w-100 h-100">
-        <div id="list-view" class="view-button d-flex jy-center al-center list-view-button" [ngClass]="queueViewStatus ? '' : 'active'" (click)="switchQueueView(false)">
+        <div id="list-view" class="view-button d-flex jy-center al-center list-view-button"
+             [ngClass]="queueViewStatus ? '' : 'active'" (click)="switchQueueView(false)">
           <i class="material-icons-outlined view-button-icon">table_rows</i>
           <div class="card-view-button-text">List-View</div>
         </div>
 
         <div class="view-button-divider"></div>
 
-        <div id="card-view" class="view-button d-flex jy-center al-center card-view-button" [ngClass]="queueViewStatus ? 'active' : ''" (click)="switchQueueView(true)">
+        <div id="card-view" class="view-button d-flex jy-center al-center card-view-button"
+             [ngClass]="queueViewStatus ? 'active' : ''" (click)="switchQueueView(true)">
           <i class="material-icons-outlined view-button-icon">view_week</i>
           <div class="card-view-button-text">Card-View</div>
         </div>
@@ -64,12 +66,13 @@
             <i class="material-icons sidebar-device-icon">speaker_group</i>
           </div>
           <div class="sidebar-host-divider"></div>
-          <div class="sidebar-host-name">{{playback?.playback?.device.name}}</div>
+          <div
+            class="sidebar-host-name">{{playback?.playback?.device.name === '' ? 'No playback device found' : playback?.playback?.device.name}}</div>
         </div>
 
         <div class="d-flex al-center w-100" style="height: 10px;"></div>
 
-        <div class="d-flex al-center jy-center" style="width: 100%; height: 50px">
+        <div class="sidebar-device-selection d-flex al-center jy-center w-100">
           <details>
             <summary>Select Playback Device...</summary>
             <ul>
@@ -88,99 +91,28 @@
 
       <div class="sidebar-section-content">
 
-        <div class="d-flex al-center sidebar-notification-container sidebar-notification-success">
-          <div class="d-flex al-center notification-left-container h-100">
-            <!--                                    <div class="d-flex al-center jy-center notification-icon-container notification-icon-success">-->
-            <i class="material-icons-outlined notification-icon"
-               style="color: #4AAD52; font-size: 35px">check_circle</i>
-            <!--                                    </div>-->
-          </div>
+        <ng-container *ngFor="let n of notificationService.notifications">
+          <div class="d-flex al-center sidebar-notification-container"
+               [ngClass]="notificationService.getClasses(n.level)">
+            <div class="d-flex al-center notification-left-container h-100">
+              <i class="material-icons-outlined notification-icon">{{notificationService.getIcons(n.level)}}</i>
+            </div>
 
-          <div class="d-flex al-center jy-center notification-middle-container h-100">
-            <div class="d-flex al-center jy-center notification-text-container">
-              <div class="notification-text-success">This is a success notification.</div>
+            <div class="d-flex al-center jy-center notification-middle-container h-100">
+              <div class="d-flex al-center jy-center notification-text-container">
+                <div class="notification-text">{{n.header}}</div>
+              </div>
+            </div>
+
+            <div class="d-flex al-center jy-center notification-right-container h-100" (click)="notificationService.remove(n)">
+              <div class="d-flex al-center jy-center notification-delete-container">
+                <i class="material-icons-outlined notification-delete-icon">close</i>
+              </div>
             </div>
           </div>
+          <div class="sidebar-notification-divider"></div>
+        </ng-container>
 
-          <div class="d-flex al-center jy-center notification-right-container h-100">
-            <div class="d-flex al-center jy-center notification-delete-container">
-              <i class="material-icons-outlined notification-delete-icon"
-                 style="color: #4AAD52; font-weight: bold;">close</i>
-            </div>
-          </div>
-        </div>
-
-        <div class="sidebar-notification-divider"></div>
-
-        <div class="d-flex al-center jy-center sidebar-notification-container sidebar-notification-info">
-          <div class="d-flex al-center notification-left-container h-100">
-            <!--                                    <div class="d-flex al-center jy-center notification-icon-container notification-icon-info">-->
-            <i class="material-icons-outlined notification-icon"
-               style="color: #058ED9; font-size: 35px">info</i>
-            <!--                                    </div>-->
-          </div>
-
-          <div class="d-flex al-center jy-center notification-middle-container h-100">
-            <div class="d-flex al-center jy-center notification-text-container">
-              <div class="notification-text-info">This is an info notification.</div>
-            </div>
-          </div>
-
-          <div class="d-flex al-center jy-center notification-right-container h-100">
-            <div class="d-flex al-center jy-center notification-delete-container">
-              <i class="material-icons-outlined notification-delete-icon"
-                 style="color: #058ED9; font-weight: bold;">close</i>
-            </div>
-          </div>
-        </div>
-
-        <div class="sidebar-notification-divider"></div>
-
-        <div class="d-flex al-center jy-center sidebar-notification-container sidebar-notification-warning">
-          <div class="d-flex al-center notification-left-container h-100">
-            <!--                                    <div class="d-flex al-center jy-center notification-icon-container notification-icon-warning">-->
-            <i class="material-icons-outlined notification-icon"
-               style="color: #C9512C; font-size: 35px">warning</i>
-            <!--                                    </div>-->
-          </div>
-
-          <div class="d-flex al-center jy-center notification-middle-container h-100">
-            <div class="d-flex al-center jy-center notification-text-container">
-              <div class="notification-text-warning">This is a warning notification.</div>
-            </div>
-          </div>
-
-          <div class="d-flex al-center jy-center notification-right-container h-100">
-            <div class="d-flex al-center jy-center notification-delete-container">
-              <i class="material-icons-outlined notification-delete-icon"
-                 style="color: #C9512C; font-weight: bold;">close</i>
-            </div>
-          </div>
-        </div>
-
-        <div class="sidebar-notification-divider"></div>
-
-        <div class="d-flex al-center jy-center sidebar-notification-container sidebar-notification-failure">
-          <div class="d-flex al-center notification-left-container h-100">
-            <!--                                    <div class="d-flex al-center jy-center notification-icon-container notification-icon-failure">-->
-            <i class="material-icons-outlined notification-icon"
-               style="color: #A41623; font-size: 35px">warning</i>
-            <!--                                    </div>-->
-          </div>
-
-          <div class="d-flex al-center jy-center notification-middle-container h-100">
-            <div class="d-flex al-center jy-center notification-text-container">
-              <div class="notification-text-failure">This is an error notification.</div>
-            </div>
-          </div>
-
-          <div class="d-flex al-center jy-center notification-right-container h-100">
-            <div class="d-flex al-center jy-center notification-delete-container">
-              <i class="material-icons-outlined notification-delete-icon"
-                 style="color: #A41623; font-weight: bold;">close</i>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 

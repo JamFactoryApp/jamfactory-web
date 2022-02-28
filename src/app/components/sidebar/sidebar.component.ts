@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     public colorService: ColorService,
-    private notificationService: NotificationService,
+    public notificationService: NotificationService,
     private websocketService: WebsocketService,
     private jamService: JamsessionHttpService,
     private router: Router,
