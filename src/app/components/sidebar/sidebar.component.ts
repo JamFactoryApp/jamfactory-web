@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
 import {Notification, NotificationService} from '../../core/services/notification.service';
 import {ColorService} from '../../core/services/color.service';
 import {WebsocketService} from '../../core/services/websocket.service';
@@ -36,8 +36,20 @@ export class SidebarComponent implements OnInit {
     private authStore: UserStore,
     public permissions: PermissionsService,
     private spotifyService: SpotifyHttpService,
-    private queueViewStore: QueueViewStore
+    private queueViewStore: QueueViewStore,
+    private eRef: ElementRef
   ) {
+  }
+
+  // Close Search when clicking outsite of search
+  @HostListener('document:click', ['$event'])
+  clickout(event): void {
+    if (this.menuStatus) {
+      if (!this.eRef.nativeElement.contains(event.target)) {
+        this.menuStore.status = false;
+        console.log('OUTSIDE SIDEBAR');
+      }
+    }
   }
 
   ngOnInit(): void {

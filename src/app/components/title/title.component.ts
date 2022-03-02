@@ -84,9 +84,11 @@ export class TitleComponent implements OnInit {
   }
 
   toggleMenu(): void {
-    this.menuStore.status = !this.menuStatus;
-    this.searchViewStore.statusSearchBar = false;
-    this.searchViewStore.statusSearchBox = false;
+    setTimeout(() => {
+      this.menuStore.status = !this.menuStatus;
+      this.searchViewStore.statusSearchBar = false;
+      this.searchViewStore.statusSearchBox = false;
+    }, 10);
   }
 
 }
