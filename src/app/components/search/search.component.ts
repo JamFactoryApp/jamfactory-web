@@ -1,10 +1,8 @@
-import {Component, ElementRef, HostListener, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
-import {FormControl} from '@angular/forms';
-import {QueueSong, SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
+import {QueueSong} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../core/services/queue.service';
 import {QueueStore} from '../../core/stores/queue.store';
-import {UserStore} from '../../core/stores/user.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {SearchStore} from '../../core/stores/search.store';
@@ -20,7 +18,6 @@ import {SearchViewStore} from '../../core/stores/search-view.store';
 export class SearchComponent implements OnInit {
 
   @ViewChildren('SearchSong', {read: ElementRef}) searchSongs: QueryList<ElementRef>;
-  searchField = new FormControl('');
   searchType = 'track';
   searchResultsTracks: QueueSong[] = [];
   searchResultsPlaylists: SpotifyApi.PlaylistObjectSimplified[] = [];
@@ -28,14 +25,12 @@ export class SearchComponent implements OnInit {
   searchCount = 8;
   searchShift = 0;
   emptySearch: boolean;
-  readonly JamRightHost = 'Host';
 
   constructor(
     private spotifyService: SpotifyHttpService,
     private elementRef: ElementRef,
     private queueService: QueueService,
     private queueStore: QueueStore,
-    public userStore: UserStore,
     public searchStore: SearchStore,
     public jamStore: JamsessionStore,
     public permissions: PermissionsService,
@@ -67,67 +62,9 @@ export class SearchComponent implements OnInit {
       } else {
         this.emptySearch = true;
       }
-
-      // if (this.searchCount === 1) {
-      //   window.requestAnimationFrame(() => {
-      //     this.setSearchCount();
-      //   });
-      // }
     });
   }
 
-  // searchEvent(): void {
-  //   clearTimeout(this.searchTimeout);
-  //   this.searchTimeout = setTimeout(() => this.searchTracks(), 100);
-  // }
-  //
-  // setSearchCount(): void {
-  //   if (!this.searchSongs.first) {
-  //     this.searchCount = 1;
-  //   } else {
-  //     const itemHeight = this.searchSongs.first.nativeElement.offsetHeight;
-  //     const height = window.innerHeight;
-  //     this.searchCount = Math.ceil(((height - 150) * 0.65) / itemHeight);
-  //   }
-  // }
-  //
-  // searchTracks(): void {
-  //   this.searchType = 'track';
-  //   this.searchShift = 0;
-  //   if (this.searchField.value === '') {
-  //     this.searchResultsTracks = [];
-  //     this.searchType = '';
-  //     return;
-  //   }
-  //
-  //   const body: SpotifySearchRequestBody = {
-  //     text: this.searchField.value,
-  //     type: this.searchType
-  //   };
-  //   // this.spotifyService.putSearch(body).subscribe(value => {
-  //   //   this.searchResultsPlaylists = [];
-  //   //   value.tracks.items = value.tracks.items.sort((a, b) => b.popularity - a.popularity);
-  //   //   this.searchResultsTracks = this.queueService.updateQueueFromSocket(value.tracks.items.map(track => {
-  //   //     return {spotifyTrackFull: track, voted: false, votes: 0} as QueueSong;
-  //   //   }));
-  //   //
-  //   //   if (this.searchCount === 1) {
-  //   //     window.requestAnimationFrame(() => {
-  //   //       this.setSearchCount();
-  //   //     });
-  //   //   }
-  //   // });
-  // }
-  //
-  // showUserPlaylists(): void {
-  //   this.searchShift = 0;
-  //   this.spotifyService.getPlaylists().subscribe(value => {
-  //     this.searchType = 'playlist';
-  //     this.searchResultsTracks = [];
-  //     this.searchResultsPlaylists = value.playlists.items;
-  //   });
-  // }
-  //
   getSearchResultCount(): number {
     let x = 0;
     if (this.searchType === 'track') {

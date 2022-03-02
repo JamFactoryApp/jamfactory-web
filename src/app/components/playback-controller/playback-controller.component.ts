@@ -5,12 +5,10 @@ import {Router} from '@angular/router';
 import {JamPlaybackBody, JamPlaySongBody, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
 import {QueueStore} from '../../core/stores/queue.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
-import {UserStore} from '../../core/stores/user.store';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {Notification, NotificationService} from '../../core/services/notification.service';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {ColorService, SongColor} from '../../core/services/color.service';
-import {WebsocketService} from '../../core/services/websocket.service';
 import {UtilService} from '../../core/services/util.service';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {FormControl} from '@angular/forms';
@@ -55,9 +53,7 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     public jamStore: JamsessionStore,
     public permissions: PermissionsService,
     public utils: UtilService,
-    private authStore: UserStore,
     public notificationService: NotificationService,
-    private websocketService: WebsocketService,
     public colorService: ColorService,
     public menuStore: MenuStore,
   ) {

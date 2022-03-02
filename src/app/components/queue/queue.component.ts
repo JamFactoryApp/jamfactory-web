@@ -12,7 +12,6 @@ import {QueueViewStore} from '../../core/stores/queue-view.store';
   styleUrls: ['./queue.component.scss']
 })
 export class QueueComponent implements OnInit {
-  readonly JamRightHost = 'Host';
   public queueViewStatus: boolean;
 
   constructor(
