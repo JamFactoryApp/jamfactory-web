@@ -23,6 +23,7 @@ export class TitleComponent implements OnInit {
   public searchTimeout: number;
 
   public menuStatus: boolean;
+  public searchViewBar: boolean;
 
   constructor(
     public jamStore: JamsessionStore,
@@ -34,20 +35,22 @@ export class TitleComponent implements OnInit {
   }
 
   // Close Search when clicking outsite of search
-  // @HostListener('document:click', ['$event'])
-  // clickout(event): void {
-  //   if (!this.search.nativeElement.contains(event.target)) {
-  //     this.searchViewStore.status = false;
-  //   }
-  // }
+  @HostListener('document:click', ['$event'])
+  clickout(event): void {
+    this.searchViewStore.statusSearchBar = this.search.nativeElement.contains(event.target);
+  }
 
   ngOnInit(): void {
     this.menuStore.$status.subscribe(value => {
       this.menuStatus = value;
     });
 
-    this.searchViewStore.$status.subscribe(value => {
-      if (value === false) {
+    this.searchViewStore.$statusSearchBar.subscribe(value => {
+      this.searchViewBar = value;
+    });
+
+    this.searchViewStore.$statusSearchBox.subscribe(value => {
+      if (value === false && this.searchViewBar === false) {
         this.searchField.reset();
       }
     });
@@ -63,7 +66,8 @@ export class TitleComponent implements OnInit {
     if (this.searchField.value === '') {
       this.searchType = '';
       this.searchStore.search = undefined;
-      this.searchViewStore.status = false;
+      this.searchViewStore.statusSearchBar = false;
+      this.searchViewStore.statusSearchBox = false;
       return;
     }
 
@@ -75,12 +79,14 @@ export class TitleComponent implements OnInit {
     this.spotifyService.putSearch(body).subscribe(value => {
       this.searchStore.search = value;
     });
-    this.searchViewStore.status = true;
+    this.searchViewStore.statusSearchBar = true;
+    this.searchViewStore.statusSearchBox = true;
   }
 
   toggleMenu(): void {
     this.menuStore.status = !this.menuStatus;
-    this.searchViewStore.status = false;
+    this.searchViewStore.statusSearchBar = false;
+    this.searchViewStore.statusSearchBox = false;
   }
 
 }

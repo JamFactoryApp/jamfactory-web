@@ -18,14 +18,18 @@
 <!--    <app-playback-controller></app-playback-controller>-->
 <!--  </div>-->
 <!--</div>-->
-<app-sidebar id="sidebar" [ngClass]="menuStatus ? 'sidebar-active sidebar-box-shadow' : 'move-content-left'" class="sidebar"></app-sidebar>
+<app-sidebar id="sidebar" [ngClass]="menuStatus ? 'sidebar-active sidebar-box-shadow' : 'move-content-left'"
+             class="sidebar"></app-sidebar>
 
 <main [ngStyle]="{'pointer-events': this.menuStatus ? 'none' : ''}">
-  <app-title id="header" [ngClass]="menuStatus ? 'move-content-right' : ''" class="header d-flex al-center w-100"></app-title>
+  <app-title id="header" [ngClass]="menuStatus ? 'move-content-right' : ''"
+             class="header d-flex al-center w-100"></app-title>
 
-  <app-search *ngIf="searchViewStatus" id="search-box" [ngClass]="menuStatus ? 'move-content-right' : ''" class="search-result-container"></app-search>
+  <app-search *ngIf="(searchBarViewStatus || searchBoxViewStatus)" id="search-box"
+              [ngClass]="menuStatus ? 'move-content-right' : ''" class="search-result-container"></app-search>
 
   <app-queue id="main-content" [ngClass]="menuStatus ? 'move-content-right' : ''" class="main d-flex w-100"></app-queue>
 
-  <app-playback-controller id="footer" [ngClass]="menuStatus ? 'move-content-right' : ''" class="footer w-100"></app-playback-controller>
+  <app-playback-controller id="footer" [ngClass]="menuStatus ? 'move-content-right' : ''"
+                           class="footer w-100"></app-playback-controller>
 </main>

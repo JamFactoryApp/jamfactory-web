@@ -34,7 +34,8 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   playback: GetPlaybackResponseBody;
   queue: QueueSong[] = [];
   public menuStatus: boolean;
-  public searchViewStatus: boolean;
+  public searchBoxViewStatus: boolean;
+  public searchBarViewStatus: boolean;
 
   constructor(
     private router: Router,
@@ -63,8 +64,11 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       this.websocketService.connect((message) => this.websocketHandler(message));
     }, 2000);
 
-    this.searchViewStore.$status.subscribe(value => {
-      this.searchViewStatus = value;
+    this.searchViewStore.$statusSearchBox.subscribe(value => {
+      this.searchBoxViewStatus = value;
+    });
+    this.searchViewStore.$statusSearchBar.subscribe(value => {
+      this.searchBarViewStatus = value;
     });
     // Check if the user already joined the jam session
     this.jamSessionService.getJamsession().subscribe(

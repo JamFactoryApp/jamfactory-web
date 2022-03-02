@@ -47,9 +47,7 @@ export class SearchComponent implements OnInit {
   // Close Search when clicking outsite of div
   @HostListener('document:click', ['$event'])
   clickout(event): void {
-    if (!this.eRef.nativeElement.contains(event.target)) {
-      this.searchViewStore.status = false;
-    }
+    this.searchViewStore.statusSearchBox = this.eRef.nativeElement.contains(event.target);
   }
 
   ngOnInit(): void {
