@@ -33,7 +33,7 @@ export class QueueComponent implements OnInit {
     if (!item) {
       return null;
     }
-    return item.id;
+    return item.id + '+' + item.votes + '+' + String(item.voted);
   }
 
 }
