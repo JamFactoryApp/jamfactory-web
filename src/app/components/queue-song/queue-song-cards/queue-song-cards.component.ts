@@ -24,118 +24,14 @@ export class QueueSongCardsComponent implements OnInit, AfterViewInit {
   @Input()
   index: number;
 
-  @ViewChild('cover') cover: ElementRef;
-
-  @ViewChild('tooltip') tooltip: NgbTooltip;
-
-  @ViewChild('listAdditional') listAdditional: ElementRef;
-
-  public host: boolean;
-  public voted: boolean;
-  public songColor: SongColor = {
-    vibrant: [231, 231, 231],
-    muted: [0, 0, 0],
-  };
-  public expandedView: boolean;
-  public closedArrow: boolean;
-  public expandElement: boolean;
-  public showExpandedBorder: boolean;
-  public showExpandedContent1: boolean;
-  public showExpandedContent2: boolean;
-
   constructor(
-    private queueApi: QueueHttpService,
-    private queueService: QueueService,
-    private queueStore: QueueStore,
-    public colorService: ColorService,
-    private jamSessionService: JamsessionHttpService,
-    public jamSessionStore: JamsessionStore,
-    public utils: UtilService,
-    public permissions: PermissionsService
+    public utils: UtilService
   ) {
   }
 
   ngOnInit(): void {
-    this.host = this.permissions.hasPermission(this.permissions.Host);
-    this.voted = this.getVoted(this.track.spotifyTrackFull);
-    this.expandedView = false;
-    this.closedArrow = false;
-    this.expandElement = false;
-    this.showExpandedBorder = false;
-    this.showExpandedContent1 = false;
-    this.showExpandedContent2 = false;
   }
 
   ngAfterViewInit(): void {
-    if (this.tooltip && !this.jamSessionStore.jamSession.active) {
-      this.tooltip.open();
-    }
-  }
-
-  getImgColor(): void {
-    this.songColor = this.colorService.getImgColor(this.cover.nativeElement);
-  }
-
-  getVoted(track: TrackObjectFull): boolean {
-    if (this.queueStore.queue.tracks === undefined) {
-      return false;
-    }
-
-    if (this.queueStore.queue.tracks.length === 0) {
-      return false;
-    }
-
-    for (const item of this.queueStore.queue.tracks) {
-      if (track.id === item.spotifyTrackFull.id && item.voted) {
-        return true;
-      }
-    }
-
-    // for (let i = 0; i < this.queueStore.queue.tracks.length; i++) {
-    //   if (track.id === this.queueStore.queue.tracks[i].spotifyTrackFull.id && this.queueStore.queue.tracks[i].voted) {
-    //     return true;
-    //   }
-    // }
-
-    for (const item of this.queueStore.queue.tracks) {
-      if (track.id === item.spotifyTrackFull.id && item.voted) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  vote(track: TrackObjectFull): void {
-    const body: VoteRequestBody = {
-      track: track.id
-    };
-    this.queueService.vote(body);
-  }
-
-  delete(track: QueueSong): void {
-    const body: DeleteSongRequestBody = {
-      track: track.spotifyTrackFull.id
-    };
-    this.queueService.delete(body);
-  }
-
-  active(value: boolean): void {
-    const body: SetJamSessionRequestBody = {
-      active: value
-    };
-    this.jamSessionService.putJamsession(body).subscribe((jamSession) => {
-      this.jamSessionStore.jamSession = jamSession;
-    });
-  }
-
-  getSongDuration(millisecond: number): string {
-    const minutes = Math.floor(millisecond / 60000);
-    const seconds = Number(((millisecond % 60000) / 1000).toFixed(0));
-    return (
-      seconds === 60 ?
-        (minutes + 1) + ':00' :
-        minutes + ':' + (seconds < 10 ? '0' : '') + seconds
-    );
   }
 }

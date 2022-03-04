@@ -1,5 +1,6 @@
 <div class="list-element list-element-height d-flex w-100" [ngClass]="expandElement ? 'expanded' : ''"
-     [style]="{'background-image': voted ? 'linear-gradient(to right, ' + colorService.vec3ToRGBAString(songColor.vibrant, 0.25) + ' 30%, rgba(255, 255, 255, 0.05) 40%)' : ''}">
+     [style]="{'background-image': voted ? 'linear-gradient(to right, ' + colorService.vec3ToRGBAString(songColor.vibrant, 0.25) + ' 30%, rgba(255, 255, 255, 0.05) 40%, rgba(255, 255, 255, 0.05) 100%)' : '',
+     'background': voted ? '' : 'rgba(255, 255, 255, 0.05)'}">
 
   <div id="expand_more_list" class="expand_more_list" (click)="openExpandedView()"
        [ngClass]="closedArrow ? 'rotate_expand' : ''">

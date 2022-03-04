@@ -47,7 +47,6 @@ export class SidebarComponent implements OnInit {
     if (this.menuStatus) {
       if (!this.eRef.nativeElement.contains(event.target)) {
         this.menuStore.status = false;
-        console.log('OUTSIDE SIDEBAR');
       }
     }
   }

@@ -43,6 +43,9 @@ export class SearchComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   clickout(event): void {
     this.viewStore.statusSearchBox = this.eRef.nativeElement.contains(event.target);
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      console.log('OUTSIDE RESULT');
+    }
   }
 
   ngOnInit(): void {
@@ -87,10 +90,12 @@ export class SearchComponent implements OnInit {
   }
 
   showLess(): void {
-    if (this.searchShift === 0) {
-      this.searchShift = 0;
-    } else {
-      this.searchShift -= this.searchCount;
-    }
+    setTimeout(() => {
+      if (this.searchShift === 0) {
+        this.searchShift = 0;
+      } else {
+        this.searchShift -= this.searchCount;
+      }
+    }, 10);
   }
 }

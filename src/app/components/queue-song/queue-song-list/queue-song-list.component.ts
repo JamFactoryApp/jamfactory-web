@@ -10,6 +10,7 @@ import {JamsessionStore} from '../../../core/stores/jamsession.store';
 import {UtilService} from '../../../core/services/util.service';
 import {PermissionsService} from '../../../core/services/permissions.service';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-queue-song-list',
@@ -88,18 +89,6 @@ export class QueueSongListComponent implements OnInit, AfterViewInit {
       }
     }
 
-    // for (let i = 0; i < this.queueStore.queue.tracks.length; i++) {
-    //   if (track.id === this.queueStore.queue.tracks[i].spotifyTrackFull.id && this.queueStore.queue.tracks[i].voted) {
-    //     return true;
-    //   }
-    // }
-
-    for (const item of this.queueStore.queue.tracks) {
-      if (track.id === item.spotifyTrackFull.id && item.voted) {
-        return true;
-      }
-    }
-
     return false;
   }
 
@@ -137,52 +126,7 @@ export class QueueSongListComponent implements OnInit, AfterViewInit {
   }
 
   getReleaseDate(date: string): string {
-    const dateArray = date.split('-');
-
-    let month = '';
-    switch (dateArray[2]) {
-      case '01':
-        month = 'January';
-        break;
-      case '02':
-        month = 'February';
-        break;
-      case '03':
-        month = 'March';
-        break;
-      case '04':
-        month = 'April';
-        break;
-      case '05':
-        month = 'May';
-        break;
-      case '06':
-        month = 'June';
-        break;
-      case '07':
-        month = 'July';
-        break;
-      case '08':
-        month = 'August';
-        break;
-      case '09':
-        month = 'September';
-        break;
-      case '10':
-        month = 'October';
-        break;
-      case '11':
-        month = 'November';
-        break;
-      case '12':
-        month = 'December';
-        break;
-
-    }
-    const day = dateArray[1];
-    const year = dateArray[0];
-
-    return month + ' ' + day + ', ' + year;
+    return formatDate(date, 'longDate', 'en-US');
   }
 
   openExpandedView(): void {

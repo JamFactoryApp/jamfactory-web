@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {AuthHttpService} from '../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
@@ -13,6 +13,7 @@ import {UtilService} from '../../core/services/util.service';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {FormControl} from '@angular/forms';
 import {MenuStore} from '../../core/stores/menu.store';
+import {ViewStore} from '../../core/stores/view.store';
 
 @Component({
   selector: 'app-playback-controller',
@@ -43,6 +44,8 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   public playStatus = false;
 
   public menuStatus: boolean;
+  public searchBoxViewStatus: boolean;
+  public searchBarViewStatus: boolean;
 
   constructor(
     private authService: AuthHttpService,
@@ -56,13 +59,34 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     public notificationService: NotificationService,
     public colorService: ColorService,
     public menuStore: MenuStore,
+    public searchViewStore: ViewStore
   ) {
+  }
+
+  // Control pause/play with space
+  @HostListener('window:keydown.space', ['$event'])
+  setPausePlay(event: KeyboardEvent): void {
+    if (this.permissions.hasPermission(this.permissions.Host) && (!this.searchBoxViewStatus && !this.searchBarViewStatus)) {
+      event.preventDefault();
+      if (this.playStatus) {
+        this.pausePlayback();
+      } else {
+        this.resumePlayback();
+      }
+    }
   }
 
   ngOnInit(): void {
 
     this.menuStore.$status.subscribe(value => {
       this.menuStatus = value;
+    });
+
+    this.searchViewStore.$view.subscribe(value => {
+      this.searchBoxViewStatus = value.searchResultViewToggle;
+    });
+    this.searchViewStore.$view.subscribe(value => {
+      this.searchBarViewStatus = value.searchBarViewToggle;
     });
 
     this.jamStore.$playback.subscribe(value => {
@@ -161,7 +185,6 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   }
 
   pausePlayback(): void {
-
     const body: SetPlaybackRequestBody = {
       playing: false
     };

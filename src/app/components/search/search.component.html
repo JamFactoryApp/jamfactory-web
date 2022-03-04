@@ -6,9 +6,9 @@
   </div>
   <div class="search-result-footer d-flex al-center w-100">
     <div class="search-result-footer-container w-100 h-100">
-      <div *ngIf="searchShift !== 0" (click)="showLess()"
-           class="search-result-back-button d-flex jy-center al-center h-100">Previous page...
-      </div>
+      <div class="search-result-back-button d-flex jy-center al-center h-100"
+           *ngIf="searchShift !== 0"
+           (click)="showLess()">Previous page...</div>
       <div class="search-result-next-button d-flex jy-center al-center h-100"
            *ngIf="getSearchResultCount() > searchCount"
            (click)="showMore()">{{getSearchResultCount() > searchCount + searchShift ? 'Next page...' : 'Back to beginning'}}
