@@ -135,14 +135,10 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       case 'close':
         switch (wsMessage.message) {
           case 'host':
-            this.notificationService.show(new Notification('Your JamSession was closed by the host').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {
-              this.router.navigate(['/']);
-            }));
+            this.router.navigate(['/']);
             break;
           case  'inactive':
-            this.notificationService.show(new Notification('Your JamSession was closed due to inactivity').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {
-              this.router.navigate(['/']);
-            }));
+            this.router.navigate(['/']);
             break;
         }
         break;

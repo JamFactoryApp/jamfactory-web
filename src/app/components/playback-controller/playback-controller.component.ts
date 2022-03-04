@@ -127,7 +127,7 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   checkNotifications(): void {
     if (this.permissions.hasPermission(this.permissions.Host) && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
       this.showedNoPlaybackNotification = true;
-      this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
+      this.notificationService.show(new Notification('No playback device found').setLevel(2).setId(1));
     }
   }
 
