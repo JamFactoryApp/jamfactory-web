@@ -6,7 +6,7 @@ import {QueueStore} from '../../core/stores/queue.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {SearchStore} from '../../core/stores/search.store';
-import {SearchViewStore} from '../../core/stores/search-view.store';
+import {ViewStore} from '../../core/stores/view.store';
 
 
 @Component({
@@ -35,14 +35,14 @@ export class SearchComponent implements OnInit {
     public jamStore: JamsessionStore,
     public permissions: PermissionsService,
     private eRef: ElementRef,
-    public searchViewStore: SearchViewStore
+    public viewStore: ViewStore
   ) {
   }
 
   // Close Search when clicking outsite of div
   @HostListener('document:click', ['$event'])
   clickout(event): void {
-    this.searchViewStore.statusSearchBox = this.eRef.nativeElement.contains(event.target);
+    this.viewStore.statusSearchBox = this.eRef.nativeElement.contains(event.target);
   }
 
   ngOnInit(): void {

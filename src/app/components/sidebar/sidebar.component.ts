@@ -10,7 +10,7 @@ import {MenuStore} from '../../core/stores/menu.store';
 import {UserStore} from '../../core/stores/user.store';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
-import {QueueViewStore} from '../../core/stores/queue-view.store';
+import {ViewStore} from '../../core/stores/view.store';
 
 @Component({
   selector: 'app-sidebar',
@@ -36,7 +36,7 @@ export class SidebarComponent implements OnInit {
     private authStore: UserStore,
     public permissions: PermissionsService,
     private spotifyService: SpotifyHttpService,
-    private queueViewStore: QueueViewStore,
+    private viewStore: ViewStore,
     private eRef: ElementRef
   ) {
   }
@@ -68,8 +68,8 @@ export class SidebarComponent implements OnInit {
       this.playback = value;
     });
 
-    this.queueViewStore.$status.subscribe(value => {
-      this.queueViewStatus = value;
+    this.viewStore.$view.subscribe(value => {
+      this.queueViewStatus = value.cardMode;
     });
   }
 
@@ -118,6 +118,6 @@ export class SidebarComponent implements OnInit {
   }
 
   switchQueueView(status: boolean): void {
-    this.queueViewStore.status = status;
+    this.viewStore.cardMode = status;
   }
 }

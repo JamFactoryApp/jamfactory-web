@@ -21,7 +21,7 @@ import {
 } from '@jamfactoryapp/jamfactory-types';
 import {MemberStore} from '../../core/stores/member.store';
 import {MenuStore} from '../../core/stores/menu.store';
-import {SearchViewStore} from '../../core/stores/search-view.store';
+import {ViewStore} from '../../core/stores/view.store';
 
 
 @Component({
@@ -54,7 +54,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private memberStore: MemberStore,
     public notificationService: NotificationService,
     public menuStore: MenuStore,
-    public searchViewStore: SearchViewStore
+    public searchViewStore: ViewStore
   ) {
     this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
   }
@@ -64,11 +64,11 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       this.websocketService.connect((message) => this.websocketHandler(message));
     }, 2000);
 
-    this.searchViewStore.$statusSearchBox.subscribe(value => {
-      this.searchBoxViewStatus = value;
+    this.searchViewStore.$view.subscribe(value => {
+      this.searchBoxViewStatus = value.searchResultViewToggle;
     });
-    this.searchViewStore.$statusSearchBar.subscribe(value => {
-      this.searchBarViewStatus = value;
+    this.searchViewStore.$view.subscribe(value => {
+      this.searchBarViewStatus = value.searchBarViewToggle;
     });
     // Check if the user already joined the jam session
     this.jamSessionService.getJamsession().subscribe(

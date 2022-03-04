@@ -7,7 +7,7 @@ import {QueueService} from '../../core/services/queue.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {SearchStore} from '../../core/stores/search.store';
 import {MenuStore} from '../../core/stores/menu.store';
-import {SearchViewStore} from '../../core/stores/search-view.store';
+import {ViewStore} from '../../core/stores/view.store';
 
 @Component({
   selector: 'app-title',
@@ -30,7 +30,7 @@ export class TitleComponent implements OnInit {
     private spotifyService: SpotifyHttpService,
     public searchStore: SearchStore,
     public menuStore: MenuStore,
-    public searchViewStore: SearchViewStore
+    public searchViewStore: ViewStore
   ) {
   }
 
@@ -45,12 +45,12 @@ export class TitleComponent implements OnInit {
       this.menuStatus = value;
     });
 
-    this.searchViewStore.$statusSearchBar.subscribe(value => {
-      this.searchViewBar = value;
+    this.searchViewStore.$view.subscribe(value => {
+      this.searchViewBar = value.searchBarViewToggle;
     });
 
-    this.searchViewStore.$statusSearchBox.subscribe(value => {
-      if (value === false && this.searchViewBar === false) {
+    this.searchViewStore.$view.subscribe(value => {
+      if (value.searchResultViewToggle === false && this.searchViewBar === false) {
         this.searchField.reset();
       }
     });

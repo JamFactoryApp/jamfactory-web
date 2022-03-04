@@ -3,7 +3,7 @@ import {QueueStore} from '../../core/stores/queue.store';
 import {UserStore} from '../../core/stores/user.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {PermissionsService} from '../../core/services/permissions.service';
-import {QueueViewStore} from '../../core/stores/queue-view.store';
+import {ViewStore} from '../../core/stores/view.store';
 
 
 @Component({
@@ -19,13 +19,13 @@ export class QueueComponent implements OnInit {
     public authStore: UserStore,
     public jamStore: JamsessionStore,
     public permissions: PermissionsService,
-    public queueViewStore: QueueViewStore,
+    public viewStore: ViewStore,
   ) {
   }
 
   ngOnInit(): void {
-    this.queueViewStore.$status.subscribe(value => {
-      this.queueViewStatus = value;
+    this.viewStore.$view.subscribe(value => {
+      this.queueViewStatus = value.cardMode;
     });
   }
 
