@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {first} from 'rxjs';
 
 declare var ColorThief: any;
 type Vec3 = [number, number, number];
@@ -62,10 +63,29 @@ export class ColorService {
     const firstCol = this.contrast(col1, baseCol);
     const secondCol = this.contrast(col2, baseCol);
 
-    if (firstCol > secondCol) {
-      return col1;
+    if (secondCol > 15) {
+      if (firstCol >= 2) {
+        return col1;
+      } else {
+        return col2;
+      }
+    }
+
+    if (firstCol >= 2 || secondCol >= 2) {
+      if (firstCol > secondCol) {
+        return col1;
+      } else {
+        return col2;
+      }
     } else {
-      return col2;
+      const blackCol = this.contrast([0, 0, 0], baseCol);
+      const whiteCol = this.contrast([255, 255, 255], baseCol);
+
+      if (whiteCol > blackCol) {
+        return col1;
+      } else {
+        return col2;
+      }
     }
   }
 

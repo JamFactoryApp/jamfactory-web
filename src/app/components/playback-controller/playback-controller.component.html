@@ -4,7 +4,8 @@
     <div class="main-notification">
       <div class="d-flex al-center sidebar-notification-container" [ngClass]="notificationService.getClasses(n.level)">
         <div class="d-flex al-center jy-center h-100">
-          <i class="material-icons-outlined main-notification-icon notification-icon">{{notificationService.getIcons(n.level)}}</i>
+          <i
+            class="material-icons-outlined main-notification-icon notification-icon">{{notificationService.getIcons(n.level)}}</i>
         </div>
 
         <div class="d-flex al-center jy-center h-100 main-notification-text">
@@ -27,7 +28,8 @@
         <img #cover *ngIf="item" [src]="playback.playback.item.album.images[1].url" (load)="getImgColor()"
              alt="Album Cover" class="footer-cover" crossOrigin="anonymous"/>
       </div>
-      <div class="footer-song-desc-container h-100" [style]="{'color': colorService.vec3ToRGBAString(songColor.muted)}">
+      <div class="footer-song-desc-container h-100"
+           [style]="{'color': getBestColor( songColor.muted, [255, 255, 255], [35, 35, 43])}">
         <div *ngIf="item" class="footer-title">{{playback.playback.item.name}}</div>
         <div *ngIf="item" class="footer-artist">{{playback.playback.item.artists[0].name}}</div>
       </div>
@@ -61,11 +63,11 @@
           </div>
         </div>
 
-<!--        Lyrics button to be inplemented later TODO-->
-<!--        <div class="footer-button-divider"></div>-->
-<!--        <div class="footer-control-button footer-device-change-button d-flex jy-center al-center">-->
-<!--          <i class="material-icons-outlined footer-button-icons">queue_music</i>-->
-<!--        </div>-->
+        <!--        Lyrics button to be inplemented later TODO-->
+        <!--        <div class="footer-button-divider"></div>-->
+        <!--        <div class="footer-control-button footer-device-change-button d-flex jy-center al-center">-->
+        <!--          <i class="material-icons-outlined footer-button-icons">queue_music</i>-->
+        <!--        </div>-->
 
 
         <div class="footer-button-divider"></div>

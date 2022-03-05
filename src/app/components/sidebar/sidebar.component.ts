@@ -97,6 +97,8 @@ export class SidebarComponent implements OnInit {
     this.jamService.putPlayback(body).subscribe((value) => {
       this.jamStore.playback = value;
     });
+
+    document.querySelector('details').removeAttribute('open');
   }
 
   toggleMenu(): void {

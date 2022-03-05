@@ -61,27 +61,34 @@
 
         <div class="sidebar-section-content">
 
-          <div class="d-flex al-center"
-               style="padding: 8px; background: rgba(236, 154, 41, 0.1); border-radius: 20px; float: left; margin-right: auto; width: 100%;">
-            <div class="sidebar-section-label-icon-container d-flex jy-center al-center">
-              <i class="material-icons sidebar-device-icon">speaker_group</i>
-            </div>
-            <div class="sidebar-host-divider"></div>
-            <div
-              class="sidebar-host-name">{{playback?.playback?.device.name === '' ? 'No playback device found' : playback?.playback?.device.name}}</div>
-          </div>
-
-          <div class="d-flex al-center w-100" style="height: 10px;"></div>
-
-          <div class="sidebar-device-selection d-flex al-center jy-center w-100">
-            <details>
-              <summary>Select Playback Device...</summary>
+          <div class="sidebar-device-selection d-flex al-center">
+            <details class="d-flex al-center jy-center">
+              <summary class="d-flex al-center">
+                <div class="sidebar-section-label-icon-container d-flex jy-center al-center">
+                  <i class="material-icons sidebar-device-icon">speaker_group</i>
+                </div>
+                <div class="sidebar-host-divider"></div>
+                <div
+                  class="sidebar-host-name">{{playback?.playback?.device.name === '' ? 'No playback device found' : playback?.playback?.device.name}}</div>
+              </summary>
               <ul>
                 <li class="device-item" [ngClass]="device.id === playback?.device_id ? 'active' : ''"
                     *ngFor="let device of devices?.devices" (click)="selectDevice(device.id)">{{device.name}}</li>
               </ul>
             </details>
           </div>
+
+          <div class="d-flex al-center w-100" style="height: 10px;"></div>
+
+<!--          <div class="sidebar-device-selection d-flex al-center jy-center w-100">-->
+<!--            <details>-->
+<!--              <summary>Select Playback Device...</summary>-->
+<!--              <ul>-->
+<!--                <li class="device-item" [ngClass]="device.id === playback?.device_id ? 'active' : ''"-->
+<!--                    *ngFor="let device of devices?.devices" (click)="selectDevice(device.id)">{{device.name}}</li>-->
+<!--              </ul>-->
+<!--            </details>-->
+<!--          </div>-->
         </div>
       </div>
       <div class="sidebar-divider"></div>

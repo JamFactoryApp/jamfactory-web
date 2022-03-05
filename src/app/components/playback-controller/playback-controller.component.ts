@@ -15,6 +15,8 @@ import {FormControl} from '@angular/forms';
 import {MenuStore} from '../../core/stores/menu.store';
 import {ViewStore} from '../../core/stores/view.store';
 
+type Vec3 = [number, number, number];
+
 @Component({
   selector: 'app-playback-controller',
   templateUrl: './playback-controller.component.html',
@@ -231,8 +233,8 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     this.menuStore.status = !this.menuStatus;
   }
 
-  getBestColor(): string {
-    const bestColor = this.colorService.getBestSuitedColor(this.songColor.vibrant, this.songColor.muted, [42, 42, 52]);
+  getBestColor(col1: Vec3 = this.songColor.vibrant, col2: Vec3 = this.songColor.muted, baseCol: Vec3 = [42, 42, 52]): string {
+    const bestColor = this.colorService.getBestSuitedColor(col1, col2, baseCol);
     return this.colorService.vec3ToRGBAString(bestColor, 1);
   }
 
