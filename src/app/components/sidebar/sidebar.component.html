@@ -100,7 +100,7 @@
       <div class="sidebar-section-content">
 
         <ng-container *ngFor="let n of notificationService.notifications">
-          <div class="d-flex al-center sidebar-notification-container"
+          <div class="d-flex al-center sidebar-notification-container" style="padding: 10px 10px 10px 15px;"
                [ngClass]="notificationService.getClasses(n.level)">
             <div class="d-flex al-center notification-left-container h-100">
               <i class="material-icons-outlined notification-icon">{{notificationService.getIcons(n.level)}}</i>
