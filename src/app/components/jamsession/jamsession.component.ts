@@ -98,7 +98,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   }
 
   leaveOnError(error): void {
-    this.router.navigate(['/'], {queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
+    this.router.navigate(['jam'], {queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
   }
 
   getData(): void {
@@ -135,10 +135,10 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       case 'close':
         switch (wsMessage.message) {
           case 'host':
-            this.router.navigate(['/']);
+            this.router.navigate(['jam']);
             break;
           case  'inactive':
-            this.router.navigate(['/']);
+            this.router.navigate(['jam']);
             break;
         }
         break;

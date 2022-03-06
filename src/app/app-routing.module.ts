@@ -6,7 +6,15 @@ import {CreateComponent} from './components/create/create.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'jam/create',
+    component: CreateComponent
+  },
+  {
+    path: 'jam/:jamlabel',
+    component: JamsessionComponent
+  },
+  {
+    path: 'jam',
     canActivate: [RedirectGuard],
     component: RedirectGuard,
     data: {
@@ -14,16 +22,8 @@ const routes: Routes = [
     }
   },
   {
-    path: 'create',
-    component: CreateComponent
-  },
-  {
-    path: ':jamlabel',
-    component: JamsessionComponent
-  },
-  {
     path: '**',
-    redirectTo: ''
+    redirectTo: 'jam'
   }
 
 ];

@@ -13,9 +13,9 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.jam.createJamSession().subscribe(res => {
-      this.router.navigate([res.label]);
+      this.router.navigate(['jam', res.label]);
     }, error => {
-      this.router.navigate(['/'], { queryParams: {error: error.message}});
+      this.router.navigate(['jam'], { queryParams: {error: error.error.replace('\n', '')}});
     });
   }
 }
