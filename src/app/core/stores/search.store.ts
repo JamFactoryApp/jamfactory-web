@@ -13,7 +13,8 @@ import {
 export class SearchStore {
 
   private searchSubject: BehaviorSubject<SpotifySearchResponseBody> = new BehaviorSubject<SpotifySearchResponseBody>(undefined);
-
+  public searchType = 'track';
+  public searchString = '';
   constructor() {
   }
 

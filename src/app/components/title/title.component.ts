@@ -19,7 +19,6 @@ export class TitleComponent implements OnInit {
   @ViewChild('search') search: ElementRef;
 
   public searchField = new FormControl('');
-  public searchType = '';
   public searchTimeout: number;
 
   public menuStatus: boolean;
@@ -62,18 +61,17 @@ export class TitleComponent implements OnInit {
   }
 
   searchTracks(): void {
-    this.searchType = 'track';
     if (this.searchField.value === '') {
-      this.searchType = '';
+      this.searchStore.searchString = '';
       this.searchStore.search = undefined;
       this.searchViewStore.statusSearchBar = false;
       this.searchViewStore.statusSearchBox = false;
       return;
     }
-
+    this.searchStore.searchString = this.searchField.value;
     const body: SpotifySearchRequestBody = {
       text: this.searchField.value,
-      type: this.searchType
+      type:  this.searchStore.searchType
     };
 
     this.spotifyService.putSearch(body).subscribe(value => {
