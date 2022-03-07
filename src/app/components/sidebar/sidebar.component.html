@@ -80,15 +80,15 @@
 
           <div class="d-flex al-center w-100" style="height: 10px;"></div>
 
-<!--          <div class="sidebar-device-selection d-flex al-center jy-center w-100">-->
-<!--            <details>-->
-<!--              <summary>Select Playback Device...</summary>-->
-<!--              <ul>-->
-<!--                <li class="device-item" [ngClass]="device.id === playback?.device_id ? 'active' : ''"-->
-<!--                    *ngFor="let device of devices?.devices" (click)="selectDevice(device.id)">{{device.name}}</li>-->
-<!--              </ul>-->
-<!--            </details>-->
-<!--          </div>-->
+          <!--          <div class="sidebar-device-selection d-flex al-center jy-center w-100">-->
+          <!--            <details>-->
+          <!--              <summary>Select Playback Device...</summary>-->
+          <!--              <ul>-->
+          <!--                <li class="device-item" [ngClass]="device.id === playback?.device_id ? 'active' : ''"-->
+          <!--                    *ngFor="let device of devices?.devices" (click)="selectDevice(device.id)">{{device.name}}</li>-->
+          <!--              </ul>-->
+          <!--            </details>-->
+          <!--          </div>-->
         </div>
       </div>
       <div class="sidebar-divider"></div>
@@ -126,27 +126,30 @@
     </div>
 
     <div class="sidebar-divider"></div>
+    <ng-container *ngIf="this.permissions.hasPermission(this.permissions.Host)">
+      <div class="sidebar-section">
+        <div class="sidebar-section-header">Options</div>
+        <div class="sidebar-section-content">
+          <div class="sidebar-subsection-header">Name</div>
+          <div class="sidebar-subsection-content">
+            <input id="name-input" type="text" placeholder="" class="sidebar-options-input w-100"
+                   [formControl]="nameField">
+          </div>
+          <div class="sidebar-subsection-header">Password</div>
+          <div class="sidebar-subsection-content">
+            <input id="password-input" [type]="!hasPassword ? 'text' : 'password'" placeholder="Change password"
+                   class="sidebar-options-input w-100"
+                   [formControl]="passwordField">
+          </div>
+          <div class="sidebar-subsection-content">
+            <button class="button button-green" (click)="saveSettings()">Save</button>
+          </div>
+        </div>
 
-    <div class="sidebar-section">
-      <div class="sidebar-section-header">Options</div>
-      <div class="sidebar-section-content">
-        <div class="sidebar-subsection-header">Name</div>
-        <div class="sidebar-subsection-content">
-        <input id="name-input" type="text" placeholder="" class="sidebar-options-input w-100"
-               [formControl]="nameField">
-        </div>
-        <div class="sidebar-subsection-header">Password</div>
-        <div class="sidebar-subsection-content">
-          <input id="password-input" [type]="!hasPassword ? 'text' : 'password'" placeholder="Change password" class="sidebar-options-input w-100"
-                 [formControl]="passwordField">
-        </div>
-        <div class="sidebar-subsection-content">
-        <button class="button button-green" (click)="saveSettings()">Save</button>
-        </div>
       </div>
+      <div class="sidebar-divider"></div>
+    </ng-container>
 
-    </div>
 
-    <div class="sidebar-divider"></div>
   </div>
 </div>
