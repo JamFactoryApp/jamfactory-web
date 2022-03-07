@@ -1,16 +1,19 @@
 import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
-import {Notification, NotificationService} from '../../core/services/notification.service';
+import {NotificationService} from '../../core/services/notification.service';
 import {ColorService} from '../../core/services/color.service';
 import {WebsocketService} from '../../core/services/websocket.service';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {JamPlaybackBody, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
+import {JamPlaybackBody, JamSessionSetting, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {MenuStore} from '../../core/stores/menu.store';
 import {UserStore} from '../../core/stores/user.store';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {ViewStore} from '../../core/stores/view.store';
+import {FormControl} from '@angular/forms';
+import {Modal, ModalService} from '../../core/services/modal.service';
+import {MemberStore} from '../../core/stores/member.store';
 
 @Component({
   selector: 'app-sidebar',
@@ -25,6 +28,10 @@ export class SidebarComponent implements OnInit {
   public devices: SpotifyDevices;
   public playback: JamPlaybackBody;
 
+  public passwordField = new FormControl('');
+  public hasPassword: boolean = false;
+  public nameField = new FormControl('');
+
   constructor(
     public colorService: ColorService,
     public notificationService: NotificationService,
@@ -37,7 +44,9 @@ export class SidebarComponent implements OnInit {
     public permissions: PermissionsService,
     private spotifyService: SpotifyHttpService,
     private viewStore: ViewStore,
-    private eRef: ElementRef
+    public membersStore: MemberStore,
+    private eRef: ElementRef,
+    private modal: ModalService
   ) {
   }
 
@@ -61,6 +70,12 @@ export class SidebarComponent implements OnInit {
       setTimeout(() => {
         this.getDevices();
       }, 500);
+    });
+
+    this.jamStore.$jamSession.subscribe(value => {
+      if (value) {
+        this.nameField.patchValue(value.name);
+      }
     });
 
     this.jamStore.$playback.subscribe(value => {
@@ -120,5 +135,38 @@ export class SidebarComponent implements OnInit {
 
   switchQueueView(status: boolean): void {
     this.viewStore.cardMode = status;
+  }
+
+  saveSettings(): void {
+    const body: JamSessionSetting = {
+      name: this.nameField.value
+    };
+    if (this.passwordField.value !== '') {
+      body.password = this.passwordField.value;
+    }
+    this.jamService.putJamsession(body).subscribe(value => {
+      this.jamStore.jamSession = value;
+      if (this.passwordField.value !== '') {
+        this.hasPassword = true;
+      }
+    });
+  }
+
+  addModal(): void {
+    const modal: Modal = {
+      header: 'Password',
+      message: 'This JamSession requires a password to enter',
+      buttonText: 'Enter',
+      placeholder: '',
+      withInput: true,
+      level: 0,
+      label: 'Password',
+      callback: this.modalCallback
+    };
+    this.modal.add(modal);
+  }
+
+  modalCallback(input: string): void {
+    console.log(input);
   }
 }

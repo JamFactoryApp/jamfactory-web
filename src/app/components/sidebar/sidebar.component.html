@@ -16,7 +16,7 @@
         <div class="sidebar-section-host-container d-flex al-center">
           <img src="https://www.w3schools.com/howto/img_avatar.png" class="sidebar-host-img">
           <div class="sidebar-host-divider"></div>
-          <div class="sidebar-host-name">{{getUserName((jamStore.$jamSession | async)?.name)}}</div>
+          <div class="sidebar-host-name">{{getUserName((membersStore.$currentHost | async)?.display_name)}}</div>
         </div>
 
         <div id="sidebar-jamlabel-container"
@@ -129,6 +129,22 @@
 
     <div class="sidebar-section">
       <div class="sidebar-section-header">Options</div>
+      <div class="sidebar-section-content">
+        <div class="sidebar-subsection-header">Name</div>
+        <div class="sidebar-subsection-content">
+        <input id="name-input" type="text" placeholder="" class="sidebar-options-input w-100"
+               [formControl]="nameField">
+        </div>
+        <div class="sidebar-subsection-header">Password</div>
+        <div class="sidebar-subsection-content">
+          <input id="password-input" [type]="!hasPassword ? 'text' : 'password'" placeholder="Change password" class="sidebar-options-input w-100"
+                 [formControl]="passwordField">
+        </div>
+        <div class="sidebar-subsection-content">
+        <button class="button button-green" (click)="saveSettings()">Save</button>
+        </div>
+      </div>
+
     </div>
 
     <div class="sidebar-divider"></div>

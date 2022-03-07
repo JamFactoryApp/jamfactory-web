@@ -10,18 +10,23 @@ import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {QueueStore} from '../../core/stores/queue.store';
 import {QueueService} from '../../core/services/queue.service';
 import {UserStore} from '../../core/stores/user.store';
-import {Notification, NotificationService} from '../../core/services/notification.service';
+import {NotificationService} from '../../core/services/notification.service';
 import {UserHttpService} from '../../core/http/user.http.service';
 
 import {
   GetJamSessionResponseBody,
   GetPlaybackResponseBody,
   JoinRequestBody,
-  QueueSong, SocketJamMessage, SocketMembersMessage, SocketPlaybackMessage, SocketQueueMessage
+  QueueSong,
+  SocketJamMessage,
+  SocketMembersMessage,
+  SocketPlaybackMessage,
+  SocketQueueMessage
 } from '@jamfactoryapp/jamfactory-types';
 import {MemberStore} from '../../core/stores/member.store';
 import {MenuStore} from '../../core/stores/menu.store';
 import {ViewStore} from '../../core/stores/view.store';
+import {Modal, ModalService} from '../../core/services/modal.service';
 
 
 @Component({
@@ -54,16 +59,13 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private memberStore: MemberStore,
     public notificationService: NotificationService,
     public menuStore: MenuStore,
-    public searchViewStore: ViewStore
+    public searchViewStore: ViewStore,
+    private modal: ModalService
   ) {
     this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.websocketService.connect((message) => this.websocketHandler(message));
-    }, 2000);
-
     this.searchViewStore.$view.subscribe(value => {
       this.searchBoxViewStatus = value.searchResultViewToggle;
     });
@@ -78,18 +80,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       },
       (error1) => {
         // Try to join the JamSession
-        const body: JoinRequestBody = {
-          label: this.route.snapshot.params.jamlabel,
-          password: ''
-        };
-        this.jamSessionService.joinJamSession(body).subscribe(() => {
-          this.jamSessionService.getJamsession().subscribe(
-            jamsession => {
-              this.jamStore.jamSession = jamsession;
-              this.getData();
-            },
-            (error) => this.leaveOnError(error));
-        }, (error) => this.leaveOnError(error));
+        this.joinWithPassword('');
       });
 
     this.menuStore.$status.subscribe(value => {
@@ -97,12 +88,45 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     });
   }
 
+  joinWithPassword(password: string): void {
+    console.log(this.route);
+    const body: JoinRequestBody = {
+      label: this.route.snapshot.params.jamlabel,
+      password
+    };
+    this.jamSessionService.joinJamSession(body).subscribe(() => {
+      this.jamSessionService.getJamsession().subscribe(
+        jamsession => {
+          this.jamStore.jamSession = jamsession;
+          this.getData();
+        },
+        (error) => this.leaveOnError(error));
+    }, (error) => this.leaveOnError(error));
+  }
+
   leaveOnError(error): void {
-    this.router.navigate(['jam'], {queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
+    console.log(error);
+    if (error.error === 'wrong password\n') {
+      const modal: Modal = {
+        header: 'Password',
+        message: 'This JamSession requires a password to enter',
+        buttonText: 'Enter',
+        placeholder: '',
+        withInput: true,
+        level: 0,
+        label: 'Password',
+        callback: (password: string) => this.joinWithPassword(password)
+      };
+      this.modal.add(modal);
+    } else {
+      this.router.navigate(['jam'], {queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
+    }
   }
 
   getData(): void {
-
+    setTimeout(() => {
+      this.websocketService.connect((message) => this.websocketHandler(message));
+    }, 2000);
     this.jamSessionService.getPlayback().subscribe(
       playback => this.jamStore.playback = playback);
 

@@ -1,0 +1,28 @@
+import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {ModalService} from '../../core/services/modal.service';
+import {FormControl} from '@angular/forms';
+
+@Component({
+  selector: 'app-modals',
+  templateUrl: './modals.component.html',
+  styleUrls: ['./modals.component.scss']
+})
+export class ModalsComponent implements OnInit {
+
+  public modalField = new FormControl('');
+
+  constructor(public modalService: ModalService) {
+  }
+
+  onButton(): void {
+    if (this.modalService.modals.length !== 0) {
+      this.modalService.modals[0].callback(this.modalField.value);
+      this.modalService.remove(this.modalService.modals[0]);
+    }
+  }
+
+
+  ngOnInit(): void {
+  }
+
+}
