@@ -11,7 +11,7 @@ export class MemberStore {
 
   private membersSubject: BehaviorSubject<JamMember[]> = new BehaviorSubject<JamMember[]>([]);
   private currentMemberSubject: BehaviorSubject<JamMember> = new BehaviorSubject<JamMember>(undefined);
-  private isHostSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(undefined);
+  private currentHostSubject: BehaviorSubject<JamMember> = new BehaviorSubject<JamMember>(undefined);
 
   constructor(private userStore: UserStore, private notifications: NotificationService) {
   }
@@ -35,7 +35,6 @@ export class MemberStore {
       newMembers.forEach(newMember => {
         this.notifications.show(new Notification(newMember.display_name + ' joined'));
       });
-
     }
     this.membersSubject.next(members);
     if (this.userStore.currentUser) {
@@ -43,6 +42,10 @@ export class MemberStore {
       if (currentMemberArr.length === 1) {
         this.currentMemberSubject.next(currentMemberArr[0]);
       }
+    }
+    const currentHostArr = members.filter(m => m.permissions.includes('Host'));
+    if (currentHostArr.length >= 1) {
+      this.currentHostSubject.next(currentHostArr[0]);
     }
   }
 
@@ -56,6 +59,14 @@ export class MemberStore {
 
   get $currentMember(): Observable<JamMember> {
     return new Observable(fn => this.currentMemberSubject.subscribe(fn));
+  }
+
+  get currentHost(): JamMember {
+    return this.currentHostSubject.value;
+  }
+
+  get $currentHost(): Observable<JamMember> {
+    return new Observable(fn => this.currentHostSubject.subscribe(fn));
   }
 
 }

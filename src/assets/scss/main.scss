@@ -45,6 +45,12 @@ body {
   background: rgb(31, 31, 45);
 }
 
+button {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
 /*@-moz-document url-prefix() {*/
 /*    body {*/
 /*        min-height: 100vh;*/
@@ -210,8 +216,19 @@ body {
   cursor: default;
 }
 
+.sidebar-subsection-header {
+  font-size: 14px;
+  color: #808c9f;
+  cursor: default;
+}
+
 .sidebar-section-content {
   padding: 10px;
+}
+
+.sidebar-subsection-content {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .sidebar-section-host-container {
@@ -1827,3 +1844,57 @@ i.expand_more_list_icon {
 }
 
 /*##########################################################################################*/
+.button {
+  width: 100%;
+  height: 30px;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.button.disabled {
+  cursor: default;
+}
+.button-green {
+  background: rgba(149, 198, 35, 0.10);
+  color: #95C623;
+}
+
+.button-green:hover {
+  background: rgba(149, 198, 35, 0.15);
+}
+
+.button-green.disabled {
+  background: rgba(149, 198, 35, 0.05);
+  color: #5c7a15;
+}
+
+.button-blue {
+  background: rgba(0, 166, 237, 0.1);
+  color: #00A6ED;
+  border-radius: 20px;
+}
+
+.button-blue:hover {
+  background: rgba(0, 166, 237, 0.15);
+}
+
+.button-blue.disabled {
+  background: rgba(0, 166, 237, 0.05);
+  color: #005980;
+}
+
+.button-orange {
+  background: rgba(255, 149, 10, 0.1);
+  color: #FF950A;
+}
+
+.button-orange:hover {
+  background: rgba(255, 149, 10, 0.15);
+}
+
+.button-orange.disabled {
+  background: rgba(255, 149, 10, 0.05);
+  color: #804a03;
+}
