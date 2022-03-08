@@ -9,3 +9,15 @@
 .active {
   background: rgba(255, 255, 255, 0.1);
 }
+
+.sidebar-options-input {
+  border: 0;
+  outline: 0;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgb(236, 154, 41);
+  border-radius: 10px;
+  height: 20px;
+  width: 100%;
+  font-size: 14px;
+  padding: 20px 10px 20px 10px;
+}

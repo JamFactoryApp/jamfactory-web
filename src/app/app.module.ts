@@ -5,7 +5,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {httpInterceptorProviders} from './core/interceptors';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {NotificationsComponent} from './components/notifications/notifications.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
@@ -22,11 +21,11 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SearchSongComponent } from './components/search-song/search-song.component';
 import { QueueSongListComponent } from './components/queue-song/queue-song-list/queue-song-list.component';
 import { QueueSongCardsComponent } from './components/queue-song/queue-song-cards/queue-song-cards.component';
+import { ModalsComponent } from './components/modals/modals.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotificationsComponent,
     QueueSongComponent,
     PlaybackControllerComponent,
     QueueComponent,
@@ -39,7 +38,8 @@ import { QueueSongCardsComponent } from './components/queue-song/queue-song-card
     SidebarComponent,
     SearchSongComponent,
     QueueSongListComponent,
-    QueueSongCardsComponent
+    QueueSongCardsComponent,
+    ModalsComponent
   ],
   imports: [
     AppRoutingModule,
