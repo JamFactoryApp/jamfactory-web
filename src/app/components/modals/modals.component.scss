@@ -31,8 +31,7 @@
 .modal {
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 1);
     background: rgb(31, 31, 45);
-    width: 400px;
-    min-height: 200px;
+    width: 450px;
   border-radius: 15px;
 }
 
@@ -41,8 +40,8 @@
 }
 
 .modal-header {
-  padding: 10px;
-  height: 40px;
+  padding: 15px;
+  height: 50px;
   font-size: 18px;
   font-weight: bold;
   color: #808c9f;
@@ -50,19 +49,18 @@
 }
 
 .modal-body {
-  padding: 10px;
-  min-height: 110px;
+  padding: 20px;
+  min-height: 100px;
 }
 
 .modal-text {
-  padding-bottom: 10px;
   color: hsla(0, 0%, 100%, .8);
+  padding-bottom: 10px;
 }
 
 .modal-actions {
-  padding: 10px;
-  height: 50px;
-  /*border-bottom: 2px solid rgba(255, 255, 255, 0.1);*/
+  padding: 15px;
+  height: 60px;
   color: hsla(0, 0%, 100%, .8);
 }
 
