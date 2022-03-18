@@ -13,8 +13,8 @@
                [formControl]="modalField">
       </div>
       <div class="modal-divider"></div>
-      <div class="modal-actions">
-        <button class="button" [ngClass]="modalService.getClasses(modalService.modals[0].level)" (click)="onButton()">{{modalService.modals[0].buttonText}}</button>
+      <div class="modal-actions d-flex jy-center w-100">
+        <button class="button" style="margin: 0% 5%" *ngFor="let btn of modalService.modals[0].buttons" [ngClass]="modalService.getClasses(btn.level)" (click)="onButton(btn.text)">{{btn.text}}</button>
       </div>
     </div>
   </div>

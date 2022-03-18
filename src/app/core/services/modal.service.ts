@@ -6,9 +6,8 @@ export class Modal {
   withInput: boolean;
   label: string;
   placeholder: string;
-  level: number;
-  buttonText: string;
-  callback: (input: string) => void;
+  buttons: { text: string, level: number }[];
+  callback: (button: string, input: string) => void;
   constructor(
   ) {
   }

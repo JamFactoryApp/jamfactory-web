@@ -30,18 +30,18 @@ export class UserHttpService {
   getCurrentUser(): Observable<JamUser> {
     return this.http
       .get<GetUserResponseBody>('me', this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+      .pipe(catchError((err, caught) => this.errorService.handle(err, caught)));
   }
 
   setCurrentUser(): Observable<JamUser> {
     return this.http
       .put<SetUserResponseBody>('me', this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+      .pipe(catchError((err, caught) => this.errorService.handle(err, caught)));
   }
 
   deleteCurrentUser(): Observable<JamSuccessConfirmation> {
     return this.http
       .delete<DeleteUserResponseBody>('me', this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+      .pipe(catchError((err, caught) => this.errorService.handle(err, caught)));
   }
 }

@@ -151,22 +151,4 @@ export class SidebarComponent implements OnInit {
       }
     });
   }
-
-  addModal(): void {
-    const modal: Modal = {
-      header: 'Password',
-      message: 'This JamSession requires a password to enter',
-      buttonText: 'Enter',
-      placeholder: '',
-      withInput: true,
-      level: 0,
-      label: 'Password',
-      callback: this.modalCallback
-    };
-    this.modal.add(modal);
-  }
-
-  modalCallback(input: string): void {
-    console.log(input);
-  }
 }

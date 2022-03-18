@@ -68,10 +68,9 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.searchViewStore.$view.subscribe(value => {
       this.searchBoxViewStatus = value.searchResultViewToggle;
-    });
-    this.searchViewStore.$view.subscribe(value => {
       this.searchBarViewStatus = value.searchBarViewToggle;
     });
+
     // Check if the user already joined the jam session
     this.jamSessionService.getJamsession().subscribe(
       jamsession => {
@@ -89,7 +88,6 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   }
 
   joinWithPassword(password: string): void {
-    console.log(this.route);
     const body: JoinRequestBody = {
       label: this.route.snapshot.params.jamlabel,
       password
@@ -100,22 +98,20 @@ export class JamsessionComponent implements OnInit, OnDestroy {
           this.jamStore.jamSession = jamsession;
           this.getData();
         },
-        (error) => this.leaveOnError(error));
-    }, (error) => this.leaveOnError(error));
+        (error) => this.handleJoinError(error));
+    }, (error) => this.handleJoinError(error));
   }
 
-  leaveOnError(error): void {
-    console.log(error);
+  handleJoinError(error): void {
     if (error.error === 'wrong password\n') {
       const modal: Modal = {
         header: 'Password',
         message: 'This JamSession requires a password to enter',
-        buttonText: 'Enter',
+        buttons: [{text: 'Enter', level: 0}],
         placeholder: '',
         withInput: true,
-        level: 0,
         label: 'Password',
-        callback: (password: string) => this.joinWithPassword(password)
+        callback: (btn: string, password: string) => this.joinWithPassword(password)
       };
       this.modal.add(modal);
     } else {
