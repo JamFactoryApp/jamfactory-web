@@ -1,9 +1,9 @@
-FROM node:14-alpine
+FROM node:14
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm install
 
 COPY . .
-CMD ["./node_modules/.bin/ng", "serve", "--host", "0.0.0.0"]
+CMD ["app/node_modules/.bin/ng", "serve", "--host", "0.0.0.0"]
