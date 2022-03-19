@@ -213,7 +213,7 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   }
 
   toggleMenu(): void {
-    this.viewStore.menu = !this.viewStore.view.menu;
+    setTimeout(() => this.viewStore.menu = !this.viewStore.view.menu, 20);
   }
 
   getBestColor(col1: Vec3 = this.songColor.vibrant, col2: Vec3 = this.songColor.muted, baseCol: Vec3 = [42, 42, 52]): string {

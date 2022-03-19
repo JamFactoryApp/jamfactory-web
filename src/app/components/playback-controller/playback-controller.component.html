@@ -37,20 +37,21 @@
 
     <div class="footer-control-button-container d-flex al-center footer-control-button-util">
       <div class="d-flex jy-center al-center">
-        <div id="play-pause" *ngIf="item && this.permissions.hasPermission(this.permissions.Host)"
+        <button (click)="resumePlayback()" *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing"
              class="footer-control-button d-flex jy-center al-center">
-          <i *ngIf="!playback.playback.is_playing"
-             (click)="resumePlayback()" class="material-icons footer-button-icons">play_arrow</i>
-          <i *ngIf="playback.playback.is_playing"
-             (click)="pausePlayback()" class="material-icons footer-button-icons">pause</i>
-        </div>
-        <div class="footer-button-divider"></div>
-        <div class="footer-control-button d-flex jy-center al-center"
+          <i class="material-icons footer-button-icons">play_arrow</i>
+        </button>
+        <button (click)="pausePlayback()" *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && playback.playback.is_playing"
+                class="footer-control-button d-flex jy-center al-center">
+          <i class="material-icons footer-button-icons">pause</i>
+        </button>
+
+        <button class="footer-control-button d-flex jy-center al-center" (click)="onSkip()"
              *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
-          <i (click)="onSkip()" class="material-icons footer-button-icons">skip_next</i>
-        </div>
-        <div class="footer-button-divider"></div>
-        <div class="footer-control-button footer-volume-control-button"
+          <i class="material-icons footer-button-icons">skip_next</i>
+        </button>
+
+        <button class="footer-control-button"
              *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
           <div class="footer-volume-container">
             <div class="footer-volume-slider">
@@ -61,22 +62,13 @@
           <div class="d-flex jy-center al-center">
             <i class="material-icons footer-button-icons">volume_up</i>
           </div>
-        </div>
+        </button>
 
-        <!--        Lyrics button to be inplemented later TODO-->
-        <!--        <div class="footer-button-divider"></div>-->
-        <!--        <div class="footer-control-button footer-device-change-button d-flex jy-center al-center">-->
-        <!--          <i class="material-icons-outlined footer-button-icons">queue_music</i>-->
-        <!--        </div>-->
-
-
-        <div class="footer-button-divider"></div>
-        <div id="notification-button"
-             class="footer-control-button footer-device-change-button d-flex jy-center al-center"
-             style="position: relative" (click)="toggleMenu()">
-          <div class="footer-notification-new"></div>
-          <i class="material-icons footer-button-icons">notifications</i>
-        </div>
+        <button id="notification-button"
+             class="footer-control-button d-flex jy-center al-center" (click)="toggleMenu()">
+          <div class="footer-notification-new" *ngIf="notificationService.notifications.length !== 0"></div>
+          <i  class="material-icons footer-button-icons">notifications</i>
+        </button>
       </div>
     </div>
   </div>
