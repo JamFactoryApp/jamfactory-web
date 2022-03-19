@@ -37,6 +37,7 @@
 
     <div class="footer-control-button-container d-flex al-center footer-control-button-util">
       <div class="d-flex jy-center al-center">
+
         <button (click)="resumePlayback()" *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing"
              class="footer-control-button d-flex jy-center al-center">
           <i class="material-icons footer-button-icons">play_arrow</i>

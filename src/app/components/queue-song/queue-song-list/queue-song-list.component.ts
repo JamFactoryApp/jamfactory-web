@@ -22,6 +22,9 @@ export class QueueSongListComponent implements OnInit, AfterViewInit {
   @Input()
   track: QueueSong;
 
+  @Input()
+  index: number;
+
   @ViewChild('cover') cover: ElementRef;
 
   @ViewChild('tooltip') tooltip: NgbTooltip;

@@ -960,6 +960,17 @@ span.search-input-icon {
   cursor: pointer;
 }
 
+.start-conductor-button {
+  padding: 10px;
+  margin: 5px;
+  font-weight: bold;
+  color: hsla(0, 0%, 100%, .8);
+  background: rgba(109, 109, 109, 0.4);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .material-icons.footer-button-icons {
   font-size: 22px;
 }
