@@ -1,12 +1,9 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {FormControl} from '@angular/forms';
-import {QueueStore} from '../../core/stores/queue.store';
-import {QueueSong, SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
-import {QueueService} from '../../core/services/queue.service';
+import {SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {SearchStore} from '../../core/stores/search.store';
-import {MenuStore} from '../../core/stores/menu.store';
 import {ViewStore} from '../../core/stores/view.store';
 
 @Component({
@@ -22,14 +19,10 @@ export class TitleComponent implements OnInit {
   public searchType = '';
   public searchTimeout: number;
 
-  public menuStatus: boolean;
-  public searchViewBar: boolean;
-
   constructor(
     public jamStore: JamsessionStore,
     private spotifyService: SpotifyHttpService,
     public searchStore: SearchStore,
-    public menuStore: MenuStore,
     public searchViewStore: ViewStore
   ) {
   }
@@ -41,16 +34,9 @@ export class TitleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.menuStore.$status.subscribe(value => {
-      this.menuStatus = value;
-    });
 
     this.searchViewStore.$view.subscribe(value => {
-      this.searchViewBar = value.searchBarViewToggle;
-    });
-
-    this.searchViewStore.$view.subscribe(value => {
-      if (value.searchResultViewToggle === false && this.searchViewBar === false) {
+      if (value.searchResultViewToggle === false && value.searchBarViewToggle === false) {
         this.searchField.reset();
       }
     });
@@ -85,7 +71,7 @@ export class TitleComponent implements OnInit {
 
   toggleMenu(): void {
     setTimeout(() => {
-      this.menuStore.status = !this.menuStatus;
+      this.searchViewStore.menu = !this.searchViewStore.view.menu;
       this.searchViewStore.statusSearchBar = false;
       this.searchViewStore.statusSearchBox = false;
     }, 10);

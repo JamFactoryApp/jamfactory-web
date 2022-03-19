@@ -22,6 +22,7 @@ import { SearchSongComponent } from './components/search-song/search-song.compon
 import { QueueSongListComponent } from './components/queue-song/queue-song-list/queue-song-list.component';
 import { QueueSongCardsComponent } from './components/queue-song/queue-song-cards/queue-song-cards.component';
 import { ModalsComponent } from './components/modals/modals.component';
+import {Router} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -58,4 +59,8 @@ import { ModalsComponent } from './components/modals/modals.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(private router: Router) {
+    // Reload JamSession Component on label change
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 }

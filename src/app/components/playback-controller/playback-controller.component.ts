@@ -12,7 +12,6 @@ import {ColorService, SongColor} from '../../core/services/color.service';
 import {UtilService} from '../../core/services/util.service';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {FormControl} from '@angular/forms';
-import {MenuStore} from '../../core/stores/menu.store';
 import {ViewStore} from '../../core/stores/view.store';
 
 type Vec3 = [number, number, number];
@@ -45,10 +44,6 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   public durationRest = 0;
   public playStatus = false;
 
-  public menuStatus: boolean;
-  public searchBoxViewStatus: boolean;
-  public searchBarViewStatus: boolean;
-
   constructor(
     private authService: AuthHttpService,
     private jamService: JamsessionHttpService,
@@ -60,15 +55,15 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     public utils: UtilService,
     public notificationService: NotificationService,
     public colorService: ColorService,
-    public menuStore: MenuStore,
-    public searchViewStore: ViewStore
+    public viewStore: ViewStore
   ) {
   }
 
   // Control pause/play with space
   @HostListener('window:keydown.space', ['$event'])
   setPausePlay(event: KeyboardEvent): void {
-    if (this.permissions.hasPermission(this.permissions.Host) && (!this.searchBoxViewStatus && !this.searchBarViewStatus)) {
+    if (this.permissions.hasPermission(this.permissions.Host) &&
+      (!this.viewStore.view.searchBarViewToggle && !this.viewStore.view.searchResultViewToggle)) {
       event.preventDefault();
       if (this.playStatus) {
         this.pausePlayback();
@@ -79,18 +74,6 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   }
 
   ngOnInit(): void {
-
-    this.menuStore.$status.subscribe(value => {
-      this.menuStatus = value;
-    });
-
-    this.searchViewStore.$view.subscribe(value => {
-      this.searchBoxViewStatus = value.searchResultViewToggle;
-    });
-    this.searchViewStore.$view.subscribe(value => {
-      this.searchBarViewStatus = value.searchBarViewToggle;
-    });
-
     this.jamStore.$playback.subscribe(value => {
       const lastPlayback = this.playback;
 
@@ -230,7 +213,7 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   }
 
   toggleMenu(): void {
-    this.menuStore.status = !this.menuStatus;
+    this.viewStore.menu = !this.viewStore.view.menu;
   }
 
   getBestColor(col1: Vec3 = this.songColor.vibrant, col2: Vec3 = this.songColor.muted, baseCol: Vec3 = [42, 42, 52]): string {
