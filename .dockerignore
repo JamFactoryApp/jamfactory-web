@@ -4,6 +4,7 @@ docker-compose*
 .git
 .gitignore
 .github
+.idea
 docs
 dist
 e2e
