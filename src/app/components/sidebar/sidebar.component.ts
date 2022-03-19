@@ -27,7 +27,8 @@ export class SidebarComponent implements OnInit {
   public playback: JamPlaybackBody;
 
   public passwordField = new FormControl('');
-  public hasPassword: boolean = false;
+  public hasPassword = false;
+  public copyIcon = 'content_copy';
   public nameField = new FormControl('');
 
   constructor(
@@ -53,6 +54,7 @@ export class SidebarComponent implements OnInit {
     if (this.viewStore.view.menu) {
       if (!this.eRef.nativeElement.contains(event.target)) {
         this.viewStore.menu = false;
+        this.copyIcon = 'content_copy';
       }
     }
   }
@@ -118,12 +120,9 @@ export class SidebarComponent implements OnInit {
   }
 
   copyToClipboard(): void {
-    const range = document.createRange();
-    range.selectNode(document.getElementById('sidebar-jamlabel-text'));
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-    document.execCommand('copy');
-    window.getSelection().removeAllRanges();
+    navigator.clipboard.writeText(window.location.host + window.location.pathname ).then( () =>
+      this.copyIcon = 'done'
+    );
   }
 
   switchQueueView(status: boolean): void {
