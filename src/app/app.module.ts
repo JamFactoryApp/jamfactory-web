@@ -24,6 +24,7 @@ import { QueueSongCardsComponent } from './components/queue-song/queue-song-card
 import {SearchPlaylistComponent} from './components/search/search-playlist/search-playlist.component';
 import {SearchAlbumComponent} from './components/search/search-album/search-album.component';
 import { ModalsComponent } from './components/modals/modals.component';
+import {Router} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -62,4 +63,8 @@ import { ModalsComponent } from './components/modals/modals.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(private router: Router) {
+    // Reload JamSession Component on label change
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 }

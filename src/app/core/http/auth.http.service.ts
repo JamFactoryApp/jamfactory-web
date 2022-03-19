@@ -24,12 +24,12 @@ export class AuthHttpService {
   getLogout(): Observable<LogoutResponseBody> {
     return this.http
       .get<LogoutResponseBody>('auth/logout', this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+      .pipe(catchError((err, caught) => this.errorService.handle(err, caught)));
   }
 
   getLogin(): Observable<LoginResponseBody> {
     return this.http
       .get<LoginResponseBody>('auth/login', this.httpOptions)
-      .pipe(catchError(this.errorService.handle));
+      .pipe(catchError((err, caught) => this.errorService.handle(err, caught)));
   }
 }

@@ -14,9 +14,9 @@ export class ModalsComponent implements OnInit {
   constructor(public modalService: ModalService) {
   }
 
-  onButton(): void {
+  onButton(btn: string): void {
     if (this.modalService.modals.length !== 0) {
-      this.modalService.modals[0].callback(this.modalField.value);
+      this.modalService.modals[0].callback(btn, this.modalField.value);
       this.modalService.remove(this.modalService.modals[0]);
     }
   }

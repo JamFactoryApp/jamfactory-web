@@ -20,14 +20,14 @@ export class SpotifyHttpService {
   }
 
   getDevices(): Observable<UserDevicesResponseBody> {
-    return this.http.get<UserDevicesResponseBody>('spotify/devices').pipe(catchError(this.errorService.handle));
+    return this.http.get<UserDevicesResponseBody>('spotify/devices').pipe(catchError((err, caught) => this.errorService.handle(err, caught)));
   }
 
   getPlaylists(): Observable<UserPlaylistsResponseBody> {
-    return this.http.get<UserPlaylistsResponseBody>('spotify/playlists').pipe(catchError(this.errorService.handle));
+    return this.http.get<UserPlaylistsResponseBody>('spotify/playlists').pipe(catchError((err, caught) => this.errorService.handle(err, caught)));
   }
 
   putSearch(body: SpotifySearchRequestBody): Observable<SpotifySearchResponseBody> {
-    return this.http.put<SpotifySearchResponseBody>('spotify/search', body).pipe(catchError(this.errorService.handle));
+    return this.http.put<SpotifySearchResponseBody>('spotify/search', body).pipe(catchError((err, caught) => this.errorService.handle(err, caught)));
   }
 }

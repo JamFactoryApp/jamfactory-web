@@ -6,7 +6,6 @@ import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
 import {JamPlaybackBody, JamSessionSetting, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
-import {MenuStore} from '../../core/stores/menu.store';
 import {UserStore} from '../../core/stores/user.store';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
@@ -22,7 +21,6 @@ import {MemberStore} from '../../core/stores/member.store';
 })
 export class SidebarComponent implements OnInit {
 
-  public menuStatus: boolean;
   public queueViewStatus: boolean;
   public currentUser: JamUser;
   public devices: SpotifyDevices;
@@ -39,7 +37,6 @@ export class SidebarComponent implements OnInit {
     private jamService: JamsessionHttpService,
     private router: Router,
     public jamStore: JamsessionStore,
-    public menuStore: MenuStore,
     private authStore: UserStore,
     public permissions: PermissionsService,
     private spotifyService: SpotifyHttpService,
@@ -53,18 +50,14 @@ export class SidebarComponent implements OnInit {
   // Close Search when clicking outsite of search
   @HostListener('document:click', ['$event'])
   clickout(event): void {
-    if (this.menuStatus) {
+    if (this.viewStore.view.menu) {
       if (!this.eRef.nativeElement.contains(event.target)) {
-        this.menuStore.status = false;
+        this.viewStore.menu = false;
       }
     }
   }
 
   ngOnInit(): void {
-    this.menuStore.$status.subscribe(value => {
-      this.menuStatus = value;
-    });
-
     this.authStore.$currentUser.subscribe(value => {
       this.currentUser = value;
       setTimeout(() => {
@@ -117,7 +110,7 @@ export class SidebarComponent implements OnInit {
   }
 
   toggleMenu(): void {
-    this.menuStore.status = !this.menuStatus;
+    this.viewStore.menu = !this.viewStore.view.menu;
   }
 
   getUserName(JamSessionName: string): string {
@@ -150,23 +143,5 @@ export class SidebarComponent implements OnInit {
         this.hasPassword = true;
       }
     });
-  }
-
-  addModal(): void {
-    const modal: Modal = {
-      header: 'Password',
-      message: 'This JamSession requires a password to enter',
-      buttonText: 'Enter',
-      placeholder: '',
-      withInput: true,
-      level: 0,
-      label: 'Password',
-      callback: this.modalCallback
-    };
-    this.modal.add(modal);
-  }
-
-  modalCallback(input: string): void {
-    console.log(input);
   }
 }

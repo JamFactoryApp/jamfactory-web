@@ -10,23 +10,20 @@ import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {QueueStore} from '../../core/stores/queue.store';
 import {QueueService} from '../../core/services/queue.service';
 import {UserStore} from '../../core/stores/user.store';
-import {NotificationService} from '../../core/services/notification.service';
+import {Notification, NotificationService} from '../../core/services/notification.service';
 import {UserHttpService} from '../../core/http/user.http.service';
 
 import {
-  GetJamSessionResponseBody,
-  GetPlaybackResponseBody,
   JoinRequestBody,
-  QueueSong,
   SocketJamMessage,
   SocketMembersMessage,
   SocketPlaybackMessage,
   SocketQueueMessage
 } from '@jamfactoryapp/jamfactory-types';
 import {MemberStore} from '../../core/stores/member.store';
-import {MenuStore} from '../../core/stores/menu.store';
 import {ViewStore} from '../../core/stores/view.store';
-import {Modal, ModalService} from '../../core/services/modal.service';
+import {ModalService} from '../../core/services/modal.service';
+import {createAlreadyMemberModal, createCloseModal, createJoinModal} from '../../core/static/modals';
 
 
 @Component({
@@ -35,13 +32,6 @@ import {Modal, ModalService} from '../../core/services/modal.service';
   styleUrls: ['./jamsession.component.scss']
 })
 export class JamsessionComponent implements OnInit, OnDestroy {
-  jamSession: GetJamSessionResponseBody;
-  playback: GetPlaybackResponseBody;
-  queue: QueueSong[] = [];
-  public menuStatus: boolean;
-  public searchBoxViewStatus: boolean;
-  public searchBarViewStatus: boolean;
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -58,7 +48,6 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private userStore: UserStore,
     private memberStore: MemberStore,
     public notificationService: NotificationService,
-    public menuStore: MenuStore,
     public searchViewStore: ViewStore,
     private modal: ModalService
   ) {
@@ -66,30 +55,28 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.searchViewStore.$view.subscribe(value => {
-      this.searchBoxViewStatus = value.searchResultViewToggle;
-    });
-    this.searchViewStore.$view.subscribe(value => {
-      this.searchBarViewStatus = value.searchBarViewToggle;
-    });
-    // Check if the user already joined the jam session
+    const label = this.route.snapshot.params.jamlabel;
+    // Check if the user already joined the jam session specified in the url
     this.jamSessionService.getJamsession().subscribe(
-      jamsession => {
-        this.jamStore.jamSession = jamsession;
-        this.getData();
+      jamSession => {
+        // User is already a member of a JamSession.
+        // Compare url with response
+        if (jamSession.label !== label) {
+          // User wants to join a different JamSession
+          this.modal.add(createAlreadyMemberModal(this));
+        } else {
+          // Correct JamSession. Load the Data.
+          this.jamStore.jamSession = jamSession;
+          this.getData();
+        }
       },
-      (error1) => {
+      (error) => {
         // Try to join the JamSession
         this.joinWithPassword('');
       });
-
-    this.menuStore.$status.subscribe(value => {
-      this.menuStatus = value;
-    });
   }
 
   joinWithPassword(password: string): void {
-    console.log(this.route);
     const body: JoinRequestBody = {
       label: this.route.snapshot.params.jamlabel,
       password
@@ -100,24 +87,13 @@ export class JamsessionComponent implements OnInit, OnDestroy {
           this.jamStore.jamSession = jamsession;
           this.getData();
         },
-        (error) => this.leaveOnError(error));
-    }, (error) => this.leaveOnError(error));
+        (error) => this.handleJoinError(error));
+    }, (error) => this.handleJoinError(error));
   }
 
-  leaveOnError(error): void {
-    console.log(error);
+  handleJoinError(error): void {
     if (error.error === 'wrong password\n') {
-      const modal: Modal = {
-        header: 'Password',
-        message: 'This JamSession requires a password to enter',
-        buttonText: 'Enter',
-        placeholder: '',
-        withInput: true,
-        level: 0,
-        label: 'Password',
-        callback: (password: string) => this.joinWithPassword(password)
-      };
-      this.modal.add(modal);
+      this.modal.add(createJoinModal(this));
     } else {
       this.router.navigate(['jam'], {queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
     }
@@ -159,11 +135,13 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       case 'close':
         switch (wsMessage.message) {
           case 'host':
-            this.router.navigate(['jam']);
+            this.modal.add(createCloseModal(this, 'by the host'));
             break;
           case  'inactive':
-            this.router.navigate(['jam']);
+            this.modal.add(createCloseModal(this, 'due to inactivity'));
             break;
+          case 'warning':
+            this.notificationService.show(new Notification('Inactivity warning').setLevel(2).setId(1));
         }
         break;
       default:
