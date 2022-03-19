@@ -16,7 +16,6 @@ export class TitleComponent implements OnInit {
   @ViewChild('search') search: ElementRef;
 
   public searchField = new FormControl('');
-  public searchType = '';
   public searchTimeout: number;
 
   constructor(
@@ -31,6 +30,7 @@ export class TitleComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   clickout(event): void {
     this.searchViewStore.statusSearchBar = this.search.nativeElement.contains(event.target);
+    console.log('OUTSIDE SEARCH BAR:', !this.search.nativeElement.contains(event.target));
   }
 
   ngOnInit(): void {
@@ -48,23 +48,22 @@ export class TitleComponent implements OnInit {
   }
 
   searchTracks(): void {
-    this.searchType = 'track';
     if (this.searchField.value === '') {
-      this.searchType = '';
-      this.searchStore.search = undefined;
+      this.searchStore.searchString = '';
       this.searchViewStore.statusSearchBar = false;
       this.searchViewStore.statusSearchBox = false;
       return;
     }
-
-    const body: SpotifySearchRequestBody = {
-      text: this.searchField.value,
-      type: this.searchType
-    };
-
-    this.spotifyService.putSearch(body).subscribe(value => {
-      this.searchStore.search = value;
-    });
+    if ( this.searchStore.searchType !== 'personal') {
+      this.searchStore.searchString = this.searchField.value;
+      const body: SpotifySearchRequestBody = {
+        text: this.searchField.value,
+        type: this.searchStore.searchType
+      };
+      this.spotifyService.putSearch(body).subscribe(value => {
+        this.searchStore.search = value;
+      });
+    }
     this.searchViewStore.statusSearchBar = true;
     this.searchViewStore.statusSearchBox = true;
   }

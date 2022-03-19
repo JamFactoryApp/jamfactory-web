@@ -18,9 +18,11 @@ import {TitleComponent} from './components/title/title.component';
 import {RedirectGuard} from './core/guards/redirect.guard';
 import { CreateComponent } from './components/create/create.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { SearchSongComponent } from './components/search-song/search-song.component';
+import { SearchSongComponent } from './components/search/search-song/search-song.component';
 import { QueueSongListComponent } from './components/queue-song/queue-song-list/queue-song-list.component';
 import { QueueSongCardsComponent } from './components/queue-song/queue-song-cards/queue-song-cards.component';
+import {SearchPlaylistComponent} from './components/search/search-playlist/search-playlist.component';
+import {SearchAlbumComponent} from './components/search/search-album/search-album.component';
 import { ModalsComponent } from './components/modals/modals.component';
 import {Router} from '@angular/router';
 
@@ -38,6 +40,8 @@ import {Router} from '@angular/router';
     CreateComponent,
     SidebarComponent,
     SearchSongComponent,
+    SearchPlaylistComponent,
+    SearchAlbumComponent,
     QueueSongListComponent,
     QueueSongCardsComponent,
     ModalsComponent

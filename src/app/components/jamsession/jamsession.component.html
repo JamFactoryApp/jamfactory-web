@@ -4,7 +4,6 @@
 <main [ngStyle]="{'pointer-events': (searchViewStore.$view | async).menu ? 'none' : ''}">
   <app-title id="header" [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''"
              class="header d-flex al-center w-100"></app-title>
-
   <app-search *ngIf="(searchViewStore.$view | async).searchBarViewToggle || (searchViewStore.$view | async).searchResultViewToggle" id="search-box"
               [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''" class="search-result-container"></app-search>
 

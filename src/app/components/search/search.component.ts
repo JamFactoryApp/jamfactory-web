@@ -1,12 +1,13 @@
-import {Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
-import {QueueSong} from '@jamfactoryapp/jamfactory-types';
+import {QueueSong, SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../core/services/queue.service';
 import {QueueStore} from '../../core/stores/queue.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {SearchStore} from '../../core/stores/search.store';
 import {ViewStore} from '../../core/stores/view.store';
+import SearchResponse = SpotifyApi.SearchResponse;
 
 
 @Component({
@@ -17,8 +18,7 @@ import {ViewStore} from '../../core/stores/view.store';
 
 export class SearchComponent implements OnInit {
 
-  @ViewChildren('SearchSong', {read: ElementRef}) searchSongs: QueryList<ElementRef>;
-  searchType = 'track';
+  @ViewChild('Dropdown', {read: ElementRef, static: false}) dropdownMenu: ElementRef;
   searchResultsTracks: QueueSong[] = [];
   searchResultsPlaylists: SpotifyApi.PlaylistObjectSimplified[] = [];
   searchResultsAlbums: SpotifyApi.AlbumObjectSimplified[] = [];
@@ -28,7 +28,6 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private spotifyService: SpotifyHttpService,
-    private elementRef: ElementRef,
     private queueService: QueueService,
     private queueStore: QueueStore,
     public searchStore: SearchStore,
@@ -42,10 +41,8 @@ export class SearchComponent implements OnInit {
   // Close Search when clicking outsite of div
   @HostListener('document:click', ['$event'])
   clickout(event): void {
-    this.viewStore.statusSearchBox = this.eRef.nativeElement.contains(event.target);
-    if (!this.eRef.nativeElement.contains(event.target)) {
-      console.log('OUTSIDE RESULT');
-    }
+    this.viewStore.statusSearchBox = this.eRef.nativeElement.contains(event.target) || this.dropdownMenu?.nativeElement.contains(event.target);
+    console.log('OUTSIDE RESULT:', !(this.eRef.nativeElement.contains(event.target) || this.dropdownMenu?.nativeElement.contains(event.target)));
   }
 
   ngOnInit(): void {
@@ -56,27 +53,56 @@ export class SearchComponent implements OnInit {
     this.searchStore.$search.subscribe(value => {
 
       if (value !== undefined) {
-        this.emptySearch = false;
-        this.searchResultsPlaylists = [];
-        value.tracks.items = value.tracks.items.sort((a, b) => b.popularity - a.popularity);
-        this.searchResultsTracks = this.queueService.updateQueueFromSocket(value.tracks.items.map(track => {
-          return {spotifyTrackFull: track, voted: false, votes: 0} as QueueSong;
-        }));
+        this.updateResults(value);
       } else {
         this.emptySearch = true;
+        console.log('EMPTY SEARCH')
       }
     });
   }
 
+  updateResults(searchResults: SearchResponse): void {
+    if (this.searchStore.searchType === 'personal') {
+      this.spotifyService.getPlaylists().subscribe(value => {
+        this.searchResultsPlaylists = value.playlists.items;
+        this.emptySearch = false;
+        this.searchResultsTracks = [];
+        this.searchResultsAlbums = [];
+      });
+      return;
+    }
+    this.emptySearch = false;
+    switch (this.searchStore.searchType) {
+      case 'track':
+        searchResults.tracks.items = searchResults.tracks.items.sort((a, b) => b.popularity - a.popularity);
+        this.searchResultsPlaylists = [];
+        this.searchResultsAlbums = [];
+        this.searchResultsTracks = this.queueService.updateQueueFromSocket(searchResults.tracks.items.map(track => {
+          return {spotifyTrackFull: track, voted: false, votes: 0} as QueueSong;
+        }));
+        break;
+      case 'album':
+        this.searchResultsPlaylists = [];
+        this.searchResultsTracks = [];
+        this.searchResultsAlbums = searchResults.albums.items;
+        break;
+      case 'playlist':
+        this.searchResultsTracks = [];
+        this.searchResultsAlbums = [];
+        this.searchResultsPlaylists = searchResults.playlists.items;
+        break;
+    }
+  }
+
   getSearchResultCount(): number {
     let x = 0;
-    if (this.searchType === 'track') {
+    if (this.searchStore.searchType === 'track') {
       x = this.searchResultsTracks.length;
     }
-    if (this.searchType === 'album ') {
+    if (this.searchStore.searchType === 'album ') {
       x = this.searchResultsAlbums.length;
     }
-    if (this.searchType === 'playlist') {
+    if (this.searchStore.searchType === 'playlist' || this.searchStore.searchType === 'personal') {
       x = this.searchResultsPlaylists.length;
     }
     return x;
@@ -84,7 +110,7 @@ export class SearchComponent implements OnInit {
 
   showMore(): void {
     this.searchShift += this.searchCount;
-    if (this.searchShift > this.getSearchResultCount()) {
+    if (this.searchShift >= this.getSearchResultCount()) {
       this.searchShift = 0;
     }
   }
@@ -97,5 +123,28 @@ export class SearchComponent implements OnInit {
         this.searchShift -= this.searchCount;
       }
     }, 10);
+  }
+
+  setMode(mode: string): void {
+    this.viewStore.statusSearchBar = true;
+    this.viewStore.statusSearchBox = true;
+    this.searchStore.searchType = mode;
+    if (mode !== 'personal') {
+      const body: SpotifySearchRequestBody = {
+        text: this.searchStore.searchString,
+        type: this.searchStore.searchType
+      };
+
+      this.spotifyService.putSearch(body).subscribe(value => {
+        this.searchStore.search = value;
+      });
+    } else {
+      this.spotifyService.getPlaylists().subscribe(value => {
+        this.searchResultsPlaylists = value.playlists.items;
+        this.emptySearch = false;
+        this.searchResultsTracks = [];
+        this.searchResultsAlbums = [];
+      });
+    }
   }
 }

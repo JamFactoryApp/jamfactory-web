@@ -3,16 +3,50 @@
     <app-search-song *ngFor="let track of searchResultsTracks.slice(0 + searchShift,searchCount + searchShift)"
                      [songInfo]="track" [isVoted]="track.voted"
                      class="search-result-main-element d-flex jy-center al-center w-100"></app-search-song>
+    <app-search-playlist *ngFor="let playlist of searchResultsPlaylists.slice(0 + searchShift,searchCount + searchShift)"
+                     [playlist]="playlist"
+                     class="search-result-main-element d-flex jy-center al-center w-100"></app-search-playlist>
+    <app-search-album *ngFor="let album of searchResultsAlbums.slice(0 + searchShift,searchCount + searchShift)"
+                     [album]="album"
+                     class="search-result-main-element d-flex jy-center al-center w-100"></app-search-album>
   </div>
-  <div class="search-result-footer d-flex al-center w-100">
-    <div class="search-result-footer-container w-100 h-100">
-      <div class="search-result-back-button d-flex jy-center al-center h-100"
-           *ngIf="searchShift !== 0"
-           (click)="showLess()">Previous page...</div>
-      <div class="search-result-next-button d-flex jy-center al-center h-100"
+  <div class="search-result-footer d-flex al-center jy-center w-100">
+    <div class="search-result-button-container">
+      <button class="search-result-button" style="float: left"
+              *ngIf="searchShift !== 0"
+              (click)="showLess()">Previous page...</button>
+    </div>
+    <ng-container *ngIf="this.permissions.hasPermission(this.permissions.Host)">
+      <div class="search-result-radio-container" >
+        <button class="search-result-radio"
+                (click)="setMode('track')" [class.search-result-radio-active]="searchStore.searchType === 'track'">Tracks</button>
+        <button class="search-result-radio"
+                (click)="setMode('album')" [class.search-result-radio-active]="searchStore.searchType === 'album'">Albums</button>
+        <button class="search-result-radio"
+                (click)="setMode('playlist')" [class.search-result-radio-active]="searchStore.searchType === 'playlist'">Playlists</button>
+        <button class="search-result-radio"
+                (click)="setMode('personal')" [class.search-result-radio-active]="searchStore.searchType === 'personal'">Personal</button>
+      </div>
+      <div class="search-result-dropdown-container d-flex al-center">
+        <details class="d-flex al-center jy-center">
+          <summary class="d-flex al-center"><li>{{searchStore.searchType[0].toUpperCase() + searchStore.searchType.slice(1)}}</li></summary>
+          <ul>
+            <li (click)="setMode('track')" *ngIf="searchStore.searchType !== 'track'">Tracks</li>
+            <li (click)="setMode('album')" *ngIf="searchStore.searchType !== 'album'">Albums</li>
+            <li (click)="setMode('playlist')" *ngIf="searchStore.searchType !== 'playlist'">Playlists</li>
+            <li (click)="setMode('personal')" *ngIf="searchStore.searchType !== 'personal'">Personal</li>
+        </ul>
+        </details>
+
+
+      </div>
+
+    </ng-container>
+    <div class="search-result-button-container">
+      <button class="search-result-button" style="float: right"
            *ngIf="getSearchResultCount() > searchCount"
            (click)="showMore()">{{getSearchResultCount() > searchCount + searchShift ? 'Next page...' : 'Back to beginning'}}
-      </div>
+      </button>
     </div>
   </div>
 </div>

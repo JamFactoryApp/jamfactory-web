@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {QueueSong, VoteRequestBody} from '@jamfactoryapp/jamfactory-types';
-import {UtilService} from '../../core/services/util.service';
+import {UtilService} from '../../../core/services/util.service';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
-import {QueueService} from '../../core/services/queue.service';
+import {QueueService} from '../../../core/services/queue.service';
 
 @Component({
   selector: 'app-search-song',
