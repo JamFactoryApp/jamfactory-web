@@ -108,7 +108,7 @@ export class SidebarComponent implements OnInit {
       this.jamStore.playback = value;
     });
 
-    document.querySelector('details').removeAttribute('open');
+    document.getElementById('deviceSelectDropdown').removeAttribute('open');
   }
 
   toggleMenu(): void {

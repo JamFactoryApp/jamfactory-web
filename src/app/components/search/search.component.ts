@@ -18,7 +18,7 @@ import SearchResponse = SpotifyApi.SearchResponse;
 
 export class SearchComponent implements OnInit {
 
-  @ViewChild('Dropdown', {read: ElementRef, static: false}) dropdownMenu: ElementRef;
+  @ViewChild('dropdown', {read: ElementRef, static: false}) dropdownMenu: ElementRef;
   searchResultsTracks: QueueSong[] = [];
   searchResultsPlaylists: SpotifyApi.PlaylistObjectSimplified[] = [];
   searchResultsAlbums: SpotifyApi.AlbumObjectSimplified[] = [];
@@ -56,7 +56,7 @@ export class SearchComponent implements OnInit {
         this.updateResults(value);
       } else {
         this.emptySearch = true;
-        console.log('EMPTY SEARCH')
+        console.log('EMPTY SEARCH');
       }
     });
   }
@@ -126,25 +126,29 @@ export class SearchComponent implements OnInit {
   }
 
   setMode(mode: string): void {
-    this.viewStore.statusSearchBar = true;
-    this.viewStore.statusSearchBox = true;
-    this.searchStore.searchType = mode;
-    if (mode !== 'personal') {
-      const body: SpotifySearchRequestBody = {
-        text: this.searchStore.searchString,
-        type: this.searchStore.searchType
-      };
+    // WHAT?
+    // this.viewStore.statusSearchBar = true;
+    // this.viewStore.statusSearchBox = true;
+    setTimeout(() => {
+      this.searchStore.searchType = mode;
+      if (mode !== 'personal') {
+        const body: SpotifySearchRequestBody = {
+          text: this.searchStore.searchString,
+          type: this.searchStore.searchType
+        };
 
-      this.spotifyService.putSearch(body).subscribe(value => {
-        this.searchStore.search = value;
-      });
-    } else {
-      this.spotifyService.getPlaylists().subscribe(value => {
-        this.searchResultsPlaylists = value.playlists.items;
-        this.emptySearch = false;
-        this.searchResultsTracks = [];
-        this.searchResultsAlbums = [];
-      });
-    }
+        this.spotifyService.putSearch(body).subscribe(value => {
+          this.searchStore.search = value;
+        });
+      } else {
+        this.spotifyService.getPlaylists().subscribe(value => {
+          this.searchResultsPlaylists = value.playlists.items;
+          this.emptySearch = false;
+          this.searchResultsTracks = [];
+          this.searchResultsAlbums = [];
+        });
+      }
+      document.getElementById('searchTypeDropdown').removeAttribute('open');
+    }, 20);
   }
 }

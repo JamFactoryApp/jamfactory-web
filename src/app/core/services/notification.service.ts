@@ -36,7 +36,9 @@ export class NotificationService {
   }
 
   remove(n: Notification): void {
-    this.notifications = this.notifications.filter(t => t !== n);
+    setTimeout(() => {
+      this.notifications = this.notifications.filter(t => t !== n);
+    }, 20);
   }
 
   clearAll(): void {

@@ -25,7 +25,6 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
 
   @ViewChild('cover') cover: ElementRef;
 
-  @ViewChild('deviceTooltip', {static: false}) deviceTooltip: NgbTooltip;
   public currentUser: JamUser;
   public playback: JamPlaybackBody;
   public progressms: number;
