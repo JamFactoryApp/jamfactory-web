@@ -216,6 +216,18 @@ button {
   font-weight: bold;
   color: #808c9f;
   cursor: default;
+
+  .sidebar-notification-counter {
+    display: inline-block;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 7px;
+    height: 27px;
+    min-width: 27px;
+    text-align: center;
+  }
 }
 
 .sidebar-subsection-header {
@@ -226,6 +238,11 @@ button {
 
 .sidebar-section-content {
   padding: 10px;
+
+  .sidebar-section-notifications {
+    height: 135px;
+    overflow: auto;
+  }
 }
 
 .sidebar-subsection-content {
@@ -804,6 +821,7 @@ span.search-input-icon {
     color: hsla(0, 0%, 100%, .8);
     height: 100%;
     border-radius: 5px;
+
     &:hover {
       background: rgba(0, 0, 0, 0.1);
     }
@@ -828,6 +846,7 @@ span.search-input-icon {
   color: hsla(0, 0%, 100%, .8);
   height: 100%;
   border-radius: 5px;
+
   &:hover {
     background-color: hsla(0, 0%, 20%, .8);
   }
@@ -1363,10 +1382,24 @@ i.main-notification-icon {
   padding: 5px 5px 0 5px;
   cursor: pointer;
   z-index: 1;
+
+  i {
+    color: hsla(0, 0%, 100%, .8);
+  }
 }
 
-i.expand_more_list_icon {
-  color: hsla(0, 0%, 100%, .8);
+.delete-track_list {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px 5px 0 5px;
+  cursor: pointer;
+  z-index: 1;
+
+  i {
+    color: hsla(0, 0%, 100%, .8);
+    font-size: 14px;
+  }
 }
 
 .cover-container {
@@ -1976,6 +2009,7 @@ i.expand_more_list_icon {
 .button.disabled {
   cursor: default;
 }
+
 .button-green {
   background: rgba(149, 198, 35, 0.10);
   color: #95C623;

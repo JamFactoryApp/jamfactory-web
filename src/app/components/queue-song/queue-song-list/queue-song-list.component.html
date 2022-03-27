@@ -4,7 +4,12 @@
 
   <div id="expand_more_list" class="expand_more_list" (click)="openExpandedView()"
        [ngClass]="closedArrow ? 'rotate_expand' : ''">
-    <i class="material-icons-outlined expand_more_list_icon">expand_more</i>
+    <i class="material-icons-outlined">expand_more</i>
+  </div>
+
+  <div *ngIf="this.permissions.hasPermission(this.permissions.Host)" class="delete-track_list" title="delete"
+       (click)="delete(track)">
+    <i class="material-icons-outlined">close</i>
   </div>
 
   <div id="list_elem_content" class="d-flex al-center w-100 list-element-height"
@@ -21,8 +26,9 @@
     </div>
 
     <div class="list-icon-container d-flex jy-center al-center h-100">
-      <button *ngIf="this.permissions.hasPermission(this.permissions.Host) && index === 0 && !(this.jamSessionStore.$jamSession | async).active"
-              class="start-conductor-button d-flex jy-center al-center" (click)="active(true)">
+      <button
+        *ngIf="this.permissions.hasPermission(this.permissions.Host) && index === 0 && !(this.jamSessionStore.$jamSession | async).active"
+        class="start-conductor-button d-flex jy-center al-center" (click)="active(true)">
         <i class="material-icons footer-button-icons">play_arrow</i>Start your queue
       </button>
       <i class="material-icons-outlined vote-icon" (click)="vote(track.spotifyTrackFull)"

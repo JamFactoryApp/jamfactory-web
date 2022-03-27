@@ -85,33 +85,43 @@
     </ng-container>
 
     <div class="sidebar-section">
-      <div class="sidebar-section-header">Notifications</div>
+      <div class="sidebar-section-header">Notifications
+        <div class="sidebar-notification-counter">
+          {{notificationService.notifications.length}}
+        </div>
+      </div>
 
       <div class="sidebar-section-content">
+        <div class="sidebar-section-notifications">
 
-        <ng-container *ngFor="let n of notificationService.notifications">
-          <div class="d-flex al-center sidebar-notification-container" style="padding: 10px 10px 10px 15px;"
-               [ngClass]="notificationService.getClasses(n.level)">
-            <div class="d-flex al-center notification-left-container h-100">
-              <i class="material-icons-outlined notification-icon">{{notificationService.getIcons(n.level)}}</i>
-            </div>
-
-            <div class="d-flex al-center jy-center notification-middle-container h-100">
-              <div class="d-flex al-center jy-center notification-text-container">
-                <div class="notification-text">{{n.message}}</div>
-              </div>
-            </div>
-
-            <div class="d-flex al-center jy-center notification-right-container h-100"
-                 (click)="notificationService.remove(n)">
-              <div class="d-flex al-center jy-center notification-delete-container">
-                <i class="material-icons-outlined notification-delete-icon">close</i>
-              </div>
-            </div>
+          <div *ngIf="notificationService.notifications.length === 0" style="color: #808c9f; opacity: 0.7;">
+            There are no new notifications!
           </div>
-          <div class="sidebar-notification-divider"></div>
-        </ng-container>
 
+          <ng-container *ngFor="let n of notificationService.notifications">
+            <div class="d-flex al-center sidebar-notification-container" style="padding: 10px 10px 10px 15px;"
+                 [ngClass]="notificationService.getClasses(n.level)">
+              <div class="d-flex al-center notification-left-container h-100">
+                <i class="material-icons-outlined notification-icon">{{notificationService.getIcons(n.level)}}</i>
+              </div>
+
+              <div class="d-flex al-center jy-center notification-middle-container h-100">
+                <div class="d-flex al-center jy-center notification-text-container">
+                  <div class="notification-text">{{n.message}}</div>
+                </div>
+              </div>
+
+              <div class="d-flex al-center jy-center notification-right-container h-100"
+                   (click)="notificationService.remove(n)">
+                <div class="d-flex al-center jy-center notification-delete-container">
+                  <i class="material-icons-outlined notification-delete-icon">close</i>
+                </div>
+              </div>
+            </div>
+            <div class="sidebar-notification-divider"></div>
+          </ng-container>
+
+        </div>
       </div>
     </div>
 
