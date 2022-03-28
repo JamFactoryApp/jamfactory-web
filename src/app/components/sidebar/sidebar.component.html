@@ -39,7 +39,11 @@
       <div style="padding: 10px;" class="d-flex jy-center al-center w-100 h-100">
         <div id="list-view" class="view-button d-flex jy-center al-center list-view-button"
              [ngClass]="queueViewStatus ? '' : 'active'" (click)="switchQueueView(false)">
-          <i class="material-icons-outlined view-button-icon">table_rows</i>
+          <i class="material-icons-outlined view-button-icon" style="position: relative;">table_rows</i>
+<!--          <div class="main-content-queue-counter-container">-->
+<!--            <div class="queue-counter-text">4</div>-->
+<!--            <i class="material-icons-outlined queue-counter-icon">table_rows</i>-->
+<!--          </div>-->
           <div class="card-view-button-text">List-View</div>
         </div>
 

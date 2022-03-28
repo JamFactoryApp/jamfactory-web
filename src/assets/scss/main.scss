@@ -1231,6 +1231,40 @@ i.main-notification-icon {
   padding-bottom: 120px;
 }
 
+.main-content-queue-counter-container {
+  //position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  z-index: 1;
+
+  .queue-counter-text {
+    position: relative;
+    display: inline-block;
+    color: black;
+    padding: 2px 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    min-width: 37px;
+    text-align: center;
+    z-index: 2;
+
+    &:after {
+      content: '';
+      position: absolute;
+      border-radius: 100%;
+    }
+  }
+
+  .queue-counter-icon {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 40px;
+    margin-left: -22px;
+    -webkit-mask-image: radial-gradient(circle 50px at 0px, transparent 25px, #000 0);
+  }
+}
+
 /*######################################################################*/
 /*CARD VIEW*/
 .card-container {
