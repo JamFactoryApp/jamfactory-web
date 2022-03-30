@@ -47,7 +47,7 @@ export function createJoinModal(ctx: any): Modal {
 export function createCloseModal(ctx: any, reason: string): Modal {
   const modal: Modal = {
     header: 'JamSession closed',
-    message: 'Your JamSession was ' + reason,
+    message: 'Your JamSession was closed ' + reason,
     buttons: [{text: 'Leave', level: 0}],
     placeholder: '',
     withInput: false,
