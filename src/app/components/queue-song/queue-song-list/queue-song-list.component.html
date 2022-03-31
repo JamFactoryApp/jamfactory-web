@@ -29,7 +29,7 @@
       <button
         *ngIf="this.permissions.hasPermission(this.permissions.Host) && index === 0 && !(this.jamSessionStore.$jamSession | async).active"
         class="start-conductor-button d-flex jy-center al-center" (click)="active(true)">
-        <i class="material-icons footer-button-icons">play_arrow</i>Start your queue
+        <i class="material-icons queue-list-button-icons">play_arrow</i>Start your queue
       </button>
       <i class="material-icons-outlined vote-icon" (click)="vote(track.spotifyTrackFull)"
          [ngStyle]="voted ? {'color': '#F72C25'} : {'color': ''}">{{voted ? "favorite" : "favorite_border"}}</i>

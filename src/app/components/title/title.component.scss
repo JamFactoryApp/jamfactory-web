@@ -1,3 +1,4 @@
+/*TITLE*/
 .main {
   width: 100vw;
   height: 35px; /* Height of the footer */
@@ -12,13 +13,93 @@
   font-size: 1.5em;
 }
 
-@media (max-width: 768px) {
+.search-input-box {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--main-accent-color);
+  font-size: 20px;
+  padding: 20px 10px 20px 10px;
+}
 
+.search-input-box:hover {
+  display: block;
+}
+
+.search-input-box::placeholder {
+  color: var(--main-accent-color);
+  opacity: 1;
+}
+
+.search-input-container {
+  background: rgba(255, 255, 255, 0.05);
+  float: left;
+  border-radius: 10px;
+  width: 40%;
+  cursor: default;
+}
+
+span.search-input-icon {
+  padding-left: 20px;
+  color: var(--main-accent-color);
+  font-size: 32px;
+}
+
+.jamlabel {
+  padding: 10px;
+  font-weight: bold;
+  font-size: 25px;
+  cursor: default;
+  color: var(--main-accent-color);
+}
+
+#menu-button-icon {
+  opacity: 1;
+}
+
+.jamsession-header {
+  float: left;
+  margin-right: auto;
+}
+
+/*######################################################################*/
+/*MEDIA QUERIES*/
+@media screen and (max-width: 1200px) {
+  .search-input-container {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
   .main {
     height: 20px;
   }
 
   .title-text {
     font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 768px), (max-height: 768px) {
+  .jamlabel {
+    display: none;
+  }
+
+  .search-input-container {
+    width: 100%;
+  }
+
+  .jamsession-header {
+    padding-right: 10px;
+  }
+}
+
+@media screen and (max-width: 992px), (max-height: 450px) {
+  .jamlabel {
+    font-size: 20px;
+  }
+
+  .search-input-container {
+    width: 60%;
   }
 }

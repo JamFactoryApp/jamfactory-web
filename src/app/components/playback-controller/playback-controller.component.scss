@@ -1,0 +1,285 @@
+/*FOOTER*/
+.footer-content {
+  background: #23232b;
+  box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .1);
+  bottom: 0;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 15px;
+  color: black;
+}
+
+.footer-cover {
+  border-radius: 10px;
+  box-shadow: 0 5px 20px -5px #000;
+  height: 65px;
+  width: 65px;
+}
+
+.footer-playback-progress-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-size: 200% 100%;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+
+@keyframes fill_progress {
+  from {
+    background-position: right bottom;
+  }
+  to {
+    background-position: left bottom;
+  }
+}
+
+.footer-cover-container {
+  float: left;
+  padding-right: 15px;
+}
+
+.footer-song-desc-container {
+  float: left;
+}
+
+.footer-title {
+  padding: 10px 10px 0 10px;
+  font-weight: bold;
+  font-size: 22px;
+  color: inherit;
+}
+
+.footer-artist {
+  padding: 0 10px 10px 10px;
+  font-size: 14px;
+  color: inherit;
+}
+
+.footer-listen-content {
+  float: left;
+  margin-right: auto;
+  padding-left: 10px;
+  cursor: default;
+}
+
+.footer-control-button-container {
+  padding: 10px;
+}
+
+.footer-control-button {
+  padding: 15px;
+  margin: 5px;
+  background: #2a2a34;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  float: left;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.material-icons.footer-button-icons {
+  font-size: 22px;
+}
+
+.material-icons-outlined.footer-button-icons {
+  font-size: 22px;
+}
+
+.footer-notification-new {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 9px;
+  background: red;
+  margin: 0 0 10px 10px;
+  border: 1px solid #2a2a34;
+  animation: pulsating 0.8s infinite alternate-reverse;
+}
+
+@keyframes pulsating {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.4);
+  }
+}
+
+.main-notification {
+  position: absolute;
+  right: 25px;
+  z-index: -2;
+  transform-origin: right;
+  animation: move-in-notification 10s ease-out forwards;
+}
+
+@keyframes move-in-notification {
+  0% {
+    bottom: 0;
+  }
+  5% {
+    bottom: 105%;
+  }
+  97% {
+    bottom: 105%;
+  }
+  100% {
+    bottom: 0;
+  }
+}
+
+i.main-notification-icon {
+  animation: icon-size 10s ease-out forwards;
+}
+
+@keyframes icon-size {
+  0% {
+    padding: 5px;
+    font-size: 35px;
+  }
+  87% {
+    padding: 5px;
+    font-size: 35px;
+  }
+  90% {
+    padding: 0;
+    font-size: 32px;
+  }
+  100% {
+    padding: 0;
+    font-size: 32px;
+  }
+}
+
+.main-notification-text-container {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.main-notification-text {
+  transform-origin: right;
+  display: block;
+  animation: notification_shrink 10s forwards;
+}
+
+@keyframes notification_shrink {
+  0% {
+    opacity: 1;
+    width: 225px;
+    padding: 0 5px;
+  }
+  87% {
+    opacity: 1;
+    width: 225px;
+    padding: 0 5px;
+  }
+  90% {
+    opacity: 0;
+    width: 0;
+    padding: 0;
+  }
+  100% {
+    opacity: 0;
+    width: 0;
+    padding: 0;
+  }
+}
+
+.footer-volume-container {
+  position: absolute;
+  bottom: 65%;
+  padding-bottom: 10px;
+  margin-left: -11px;
+}
+
+.footer-volume-slider {
+  padding: 10px;
+  background: #2b2b32;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+.footer-control-button:hover .footer-volume-slider {
+  display: block;
+}
+
+/*######################################################################*/
+/*MEDIA QUERIES*/
+@media screen and (max-width: 992px), (max-height: 450px) {
+  .footer-content {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .footer-control-button-util {
+    padding: 10px 10px 10px 5px;
+  }
+}
+
+@media screen and (max-width: 400px), (max-height: 400px) {
+  .footer-content {
+    padding: 10px 10px 10px 10px;
+  }
+}
+
+@media screen and (max-width: 450px), (max-height: 450px) {
+  .footer-cover-container {
+    padding-right: 0;
+  }
+
+  .material-icons-outlined.footer-button-icons {
+    font-size: 22px;
+  }
+
+  .material-icons.footer-button-icons {
+    font-size: 22px;
+  }
+
+  .footer-control-button {
+    padding: 5px;
+  }
+
+  .footer-listen-content {
+    padding-left: 0;
+  }
+
+  .footer-notification-new {
+    width: 6px;
+    height: 6px;
+    border-radius: 6px;
+  }
+}
+
+@media screen and (max-width: 576px), (max-height: 576px) {
+  .footer-control-button {
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .footer-control-button-util {
+    padding: 5px 5px 5px 3px;
+  }
+
+  .footer-title {
+    font-size: 18px;
+  }
+
+  .footer-artist {
+    font-size: 12px;
+  }
+
+  .footer-cover-container {
+    padding-right: 5px;
+  }
+
+  .footer-cover {
+    height: 50px;
+    width: 50px;
+  }
+}

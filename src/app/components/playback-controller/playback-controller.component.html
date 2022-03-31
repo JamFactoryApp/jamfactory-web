@@ -2,7 +2,7 @@
 
   <ng-container *ngFor="let n of notificationService.notifications">
     <div class="main-notification">
-      <div class="d-flex al-center sidebar-notification-container" [ngClass]="notificationService.getClasses(n.level)">
+      <div class="d-flex al-center notification-container" [ngClass]="notificationService.getClasses(n.level)">
         <div class="d-flex al-center jy-center h-100">
           <i
             class="material-icons-outlined main-notification-icon notification-icon">{{notificationService.getIcons(n.level)}}</i>

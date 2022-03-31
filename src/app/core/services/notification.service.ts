@@ -56,13 +56,11 @@ export class NotificationService {
   getClasses(level: number): string {
     switch (level) {
       case 0:
-        return 'sidebar-notification-info';
+        return 'notification-info';
       case 1:
-        // return 'bg-success text-light';
-        return 'sidebar-notification-success';
+        return 'notification-success';
       case 2:
-        // return 'bg-danger text-light';
-        return 'sidebar-notification-failure';
+        return 'notification-failure';
     }
   }
 
