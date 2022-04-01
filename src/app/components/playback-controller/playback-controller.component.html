@@ -1,109 +1,75 @@
-<div id="playback">
-  <div class="progress mobile-progress" *ngIf="item">
-    <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-         [ngStyle]="{'width': utils.getPercentString(progressms, playback.playback.item.duration_ms)}"></div>
-  </div>
+<div class="footer-content" style="position: relative">
 
-  <div class="corner-left">
-    <img *ngIf="item" class="album-cover" [src]="playback.playback.item.album.images[1].url" alt="album cover">
-    <img *ngIf="!item" class="album-cover" src="../../../assets/gopher.png" alt="album cover">
-    <p class="playback-text" *ngIf="item">
-      <span class="title-text">{{playback.playback.item.name}}</span><br>
-      <span class="artist-text">{{playback.playback.item.artists[0].name}}</span>
-    </p>
+  <ng-container *ngFor="let n of notificationService.notifications">
+    <div class="main-notification">
+      <div class="d-flex al-center notification-container" [ngClass]="notificationService.getClasses(n.level)">
+        <div class="d-flex al-center jy-center h-100">
+          <i
+            class="material-icons-outlined main-notification-icon notification-icon">{{notificationService.getIcons(n.level)}}</i>
+        </div>
 
-    <p class="playback-text" *ngIf="!item">
-      <span class="title-text">No playback found</span><br>
-    </p>
-  </div>
-
-  <div class="progress-div center" *ngIf="item">
-    <div class="row">
-      <div class="col text-center">
-        <button class="btn btn-circle mx-4 material-btn"
-                *ngIf="this.permissions.hasPermission(this.permissions.Host)">
-        </button>
-        <button class="btn btn-circle mx-4 material-btn" (click)="pausePlayback()"
-                *ngIf="this.permissions.hasPermission(this.permissions.Host) && playback.playback.is_playing">
-          <span class="material-icons">pause</span>
-        </button>
-        <button class="btn btn-circle mx-4 material-btn" (click)="resumePlayback()"
-                *ngIf="this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing">
-          <span class="material-icons">play_arrow</span>
-        </button>
-        <button class="btn btn-circle mx-4 material-btn" (click)="onSkip()"
-                *ngIf="this.permissions.hasPermission(this.permissions.Host)">
-          <span class="material-icons">skip_next</span>
-        </button>
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-1 progress-cell" style="text-align: right">
-        <span class="progress-text">{{utils.millisecondsToTimeString(progressms)}}</span>
-      </div>
-
-      <div class="col-10 progress-cell">
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-               [ngStyle]="{'width': utils.getPercentString(progressms, playback.playback.item.duration_ms)}"></div>
+        <div class="d-flex al-center jy-center h-100 main-notification-text">
+          <div class="d-flex al-center jy-center notification-text-container main-notification-text-container">
+            <div class="notification-text">{{n.message}}</div>
+          </div>
         </div>
       </div>
-
-      <div class="col-1 progress-cell" style="text-align: left">
-        <span class="progress-text">{{utils.millisecondsToTimeString(playback.playback.item.duration_ms)}}</span>
-      </div>
-
     </div>
-  </div>
+  </ng-container>
 
-  <div class="corner-right">
-    <div class="row" style="padding-top: 25px">
-      <div class="col text-end">
-        <button class="btn btn-circle mx-1 mobile-button material-btn" (click)="pausePlayback()"
-                *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && playback.playback.is_playing">
-          <span class="material-icons">pause</span>
+  <div id="progress-bar" class="footer-playback-progress-container"
+       [style]="{'background-image': 'linear-gradient(to left, #23232b 50%, ' + colorService.vec3ToRGBAString(songColor.vibrant, 0.4) + ' 50%)'}"
+       [ngStyle]="{'background-position': 'right ' + songProgress + '% bottom 100%'}"></div>
+
+  <div class="d-flex jy-center al-center" [style]="{'color': getBestColor()}"
+       style="position: relative">
+    <div class="footer-listen-content d-flex al-center h-100">
+      <div class="footer-cover-container d-flex al-center">
+        <img #cover *ngIf="item" [src]="playback.playback.item.album.images[1].url" (load)="getImgColor()"
+             alt="Album Cover" class="footer-cover" crossOrigin="anonymous"/>
+      </div>
+      <div class="footer-song-desc-container h-100"
+           [style]="{'color': getBestColor( songColor.muted, [255, 255, 255], [35, 35, 43])}">
+        <div *ngIf="item" class="footer-title">{{playback.playback.item.name}}</div>
+        <div *ngIf="item" class="footer-artist">{{playback.playback.item.artists[0].name}}</div>
+      </div>
+    </div>
+
+    <div class="footer-control-button-container d-flex al-center footer-control-button-util">
+      <div class="d-flex jy-center al-center">
+
+        <button (click)="resumePlayback()" *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing"
+             class="footer-control-button d-flex jy-center al-center">
+          <i class="material-icons footer-button-icons">play_arrow</i>
         </button>
-        <button class="btn btn-circle mx-1 mobile-button material-btn" (click)="resumePlayback()"
-                *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing">
-          <span class="material-icons">play_arrow</span>
+        <button (click)="pausePlayback()" *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && playback.playback.is_playing"
+                class="footer-control-button d-flex jy-center al-center">
+          <i class="material-icons footer-button-icons">pause</i>
         </button>
 
-        <ng-template #tipContent id="tipContent">
-          <div style="white-space: nowrap">
-            <span class="material-icons material-btn" style="font-size: 1rem; top: -2px;"
-                  *ngIf="playback?.playback.device.name">
-              speaker
-            </span>
-            {{playback?.playback.device.name ? playback?.playback.device.name : "Select a playback device"}}
+        <button class="footer-control-button d-flex jy-center al-center" (click)="onSkip()"
+             *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
+          <i class="material-icons footer-button-icons">skip_next</i>
+        </button>
+
+        <button class="footer-control-button"
+             *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
+          <div class="footer-volume-container">
+            <div class="footer-volume-slider">
+              <input class="footer-volume" type="range" orient="vertical" (change)="onVolumeChange()"
+                     [formControl]="currentVolume"/>
+            </div>
           </div>
-        </ng-template>
-        <div ngbDropdown placement="top" class="d-inline-block" *ngIf="this.permissions.hasPermission(this.permissions.Host)">
-          <button class="btn btn-circle mx-1 material-btn" id="dropdownDevice" ngbDropdownToggle
-                  #deviceTooltip="ngbTooltip" *ngIf="this.permissions.hasPermission(this.permissions.Host)" [ngbTooltip]="tipContent"
-                  (click)="getDevices()">
-            <span class="material-icons">speaker_group</span>
-          </button>
-          <div ngbDropdownMenu aria-labelledby="dropdownDevice" *ngIf="devices">
-            <button ngbDropdownItem [ngClass]="device.id === playback?.device_id ? 'active' : ''"
-                    *ngFor="let device of devices.devices" (click)="selectDevice(device.id)">
-              <span class="material-icons material-btn mr-1" style="font-size: 1rem; top: -2px;">speaker</span>
-              {{device.name}}
-            </button>
-            <button ngbDropdownItem *ngIf="devices.devices.length === 0">No devices found</button>
-          </div>
-        </div>
-        <button class="btn btn-circle mx-1 material-btn" title="Leave JamSession" (click)="showVolume = !showVolume">
-          <span class="material-icons">volume_up</span>
-          <div class="volume-container" *ngIf="showVolume">
-            <input type="range" orient="vertical" (change)="onVolumeChange()" [formControl]="currentVolume">
+          <div class="d-flex jy-center al-center">
+            <i class="material-icons footer-button-icons">volume_up</i>
           </div>
         </button>
-        <button class="btn btn-circle mx-1 material-btn" (click)="leave()" title="Leave JamSession">
-          <span class="material-icons">exit_to_app</span>
+
+        <button id="notification-button"
+             class="footer-control-button d-flex jy-center al-center" (click)="toggleMenu()">
+          <div class="footer-notification-new" *ngIf="notificationService.notifications.length !== 0"></div>
+          <i  class="material-icons footer-button-icons">notifications</i>
         </button>
-
-
       </div>
     </div>
   </div>

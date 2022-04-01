@@ -14,12 +14,16 @@ import {Notification, NotificationService} from '../../core/services/notificatio
 import {UserHttpService} from '../../core/http/user.http.service';
 
 import {
-  GetJamSessionResponseBody,
-  GetPlaybackResponseBody,
   JoinRequestBody,
-  QueueSong, SocketJamMessage, SocketMembersMessage, SocketPlaybackMessage, SocketQueueMessage
+  SocketJamMessage,
+  SocketMembersMessage,
+  SocketPlaybackMessage,
+  SocketQueueMessage
 } from '@jamfactoryapp/jamfactory-types';
 import {MemberStore} from '../../core/stores/member.store';
+import {ViewStore} from '../../core/stores/view.store';
+import {ModalService} from '../../core/services/modal.service';
+import {createAlreadyMemberModal, createCloseModal, createJoinModal} from '../../core/static/modals';
 
 
 @Component({
@@ -28,10 +32,6 @@ import {MemberStore} from '../../core/stores/member.store';
   styleUrls: ['./jamsession.component.scss']
 })
 export class JamsessionComponent implements OnInit, OnDestroy {
-  jamSession: GetJamSessionResponseBody;
-  playback: GetPlaybackResponseBody;
-  queue: QueueSong[] = [];
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -47,44 +47,62 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private websocketService: WebsocketService,
     private userStore: UserStore,
     private memberStore: MemberStore,
-    public notificationService: NotificationService
+    public notificationService: NotificationService,
+    public searchViewStore: ViewStore,
+    private modal: ModalService
   ) {
     this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.websocketService.connect((message) => this.websocketHandler(message));
-    }, 2000);
-    // Check if the user already joined the jam session
+    const label = this.route.snapshot.params.jamlabel;
+    // Check if the user already joined the jam session specified in the url
     this.jamSessionService.getJamsession().subscribe(
-      jamsession => {
-        this.jamStore.jamSession = jamsession;
-        this.getData();
+      jamSession => {
+        // User is already a member of a JamSession.
+        // Compare url with response
+        if (jamSession.label !== label) {
+          // User wants to join a different JamSession
+          this.modal.add(createAlreadyMemberModal(this));
+        } else {
+          // Correct JamSession. Load the Data.
+          this.jamStore.jamSession = jamSession;
+          this.getData();
+        }
       },
-      (error1) => {
+      (error) => {
         // Try to join the JamSession
-        const body: JoinRequestBody = {
-          label: this.route.snapshot.params.jamlabel,
-          password: ''
-        };
-        this.jamSessionService.joinJamSession(body).subscribe(() => {
-          this.jamSessionService.getJamsession().subscribe(
-            jamsession => {
-              this.jamStore.jamSession = jamsession;
-              this.getData();
-            },
-            (error) => this.leaveOnError(error));
-        }, (error) => this.leaveOnError(error));
+        this.joinWithPassword('');
       });
   }
 
-  leaveOnError(error): void {
-    this.router.navigate(['/'], { queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
+  joinWithPassword(password: string): void {
+    const body: JoinRequestBody = {
+      label: this.route.snapshot.params.jamlabel,
+      password
+    };
+    this.jamSessionService.joinJamSession(body).subscribe(() => {
+      this.jamSessionService.getJamsession().subscribe(
+        jamsession => {
+          this.jamStore.jamSession = jamsession;
+          this.getData();
+        },
+        (error) => this.handleJoinError(error));
+    }, (error) => this.handleJoinError(error));
+  }
+
+  handleJoinError(error): void {
+    if (error.error === 'wrong password\n') {
+      this.modal.add(createJoinModal(this));
+    } else {
+      this.router.navigate(['jam'], {queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
+    }
   }
 
   getData(): void {
-
+    setTimeout(() => {
+      this.websocketService.connect((message) => this.websocketHandler(message));
+    }, 2000);
     this.jamSessionService.getPlayback().subscribe(
       playback => this.jamStore.playback = playback);
 
@@ -117,15 +135,13 @@ export class JamsessionComponent implements OnInit, OnDestroy {
       case 'close':
         switch (wsMessage.message) {
           case 'host':
-            this.notificationService.show(new Notification('Your JamSession was closed by the host').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {
-              this.router.navigate(['/']);
-            }));
+            this.modal.add(createCloseModal(this, 'by the host'));
             break;
           case  'inactive':
-            this.notificationService.show(new Notification('Your JamSession was closed due to inactivity').setLevel(2).addHeader('JamSession closed', 'exit_to_app').addCloseFunction(() => {
-              this.router.navigate(['/']);
-            }));
+            this.modal.add(createCloseModal(this, 'due to inactivity'));
             break;
+          case 'warning':
+            this.notificationService.show(new Notification('Inactivity warning').setLevel(2).setId(1));
         }
         break;
       default:

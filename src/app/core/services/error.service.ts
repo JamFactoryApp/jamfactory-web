@@ -11,7 +11,16 @@ export class ErrorService {
   constructor() {
   }
 
-  handle(error: HttpErrorResponse, caught: Observable<any>): Observable<any> {
-    return throwError(error);
+  handle(caughtError: HttpErrorResponse, caught: Observable<any>): Observable<any> {
+    return throwError(() => {
+      const error: HttpErrorResponse = new HttpErrorResponse(
+        {
+          error: caughtError.error.replace('\n', ''),
+          headers: caughtError.headers,
+          status: caughtError.status,
+          statusText: caughtError.statusText
+        });
+      return error;
+    });
   }
 }

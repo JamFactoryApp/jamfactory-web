@@ -3,49 +3,19 @@ import {Injectable, TemplateRef} from '@angular/core';
 export class Notification {
 
   message: string | TemplateRef<any>;
-  autohide: boolean;
-  delay: number;
   id: number;
   level: number;
-  header: string;
-  headerIcon: string;
-  closeFunction: () => void;
 
   constructor(
     message: string | TemplateRef<any>,
   ) {
     this.message = message;
-    this.autohide = false;
-    this.delay = 0;
     this.level = 0;
     this.id = 0;
-    this.header = undefined;
-    this.headerIcon = undefined;
-    this.closeFunction = () => {
-    };
   }
 
   setLevel(level: number): Notification {
     this.level = level;
-    return this;
-  }
-
-  addCloseFunction(func: () => void): Notification {
-    this.closeFunction = func;
-    return this;
-  }
-
-  setAutohide(delay: number): Notification {
-    this.autohide = true;
-    this.delay = delay;
-    return this;
-  }
-
-  addHeader(header: string, icon?: string): Notification {
-    this.header = header;
-    if (icon) {
-      this.headerIcon = icon;
-    }
     return this;
   }
 
@@ -54,7 +24,6 @@ export class Notification {
     return this;
   }
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -67,7 +36,9 @@ export class NotificationService {
   }
 
   remove(n: Notification): void {
-    this.notifications = this.notifications.filter(t => t !== n);
+    setTimeout(() => {
+      this.notifications = this.notifications.filter(t => t !== n);
+    }, 20);
   }
 
   clearAll(): void {
@@ -78,10 +49,6 @@ export class NotificationService {
     this.notifications = this.notifications.filter(t => t.id !== id);
   }
 
-  clearPersistent(): void {
-    this.notifications = this.notifications.filter(t => t.autohide === true);
-  }
-
   isTemplate(n: Notification): boolean {
     return n.message instanceof TemplateRef;
   }
@@ -89,11 +56,22 @@ export class NotificationService {
   getClasses(level: number): string {
     switch (level) {
       case 0:
-        return '';
+        return 'notification-info';
       case 1:
-        return 'bg-success text-light';
+        return 'notification-success';
       case 2:
-        return 'bg-danger text-light';
+        return 'notification-failure';
+    }
+  }
+
+  getIcons(level: number): string {
+    switch (level) {
+      case 0:
+        return 'info';
+      case 1:
+        return 'check_circle';
+      case 2:
+        return 'warning';
     }
   }
 }

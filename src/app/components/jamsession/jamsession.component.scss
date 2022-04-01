@@ -1,64 +1,98 @@
-.main {
-  position: relative;
-  min-height: 100vh;
-  min-width: 100vw;
+/*SIDEBAR*/
+.sidebar {
+  background: var(--main-background-color);
+  width: 400px;
+  height: 100vh;
+  position: absolute;
+  z-index: 10;
 }
 
-.title {
-  top: 0;
-  left: 0;
-  height: auto;
+.sidebar-box-shadow {
+  box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 1);
+}
+
+.sidebar-active {
+  width: 400px;
+}
+
+/*######################################################################*/
+/*HEADER*/
+.header {
   position: fixed;
+  left: 0;
+  top: 0;
+  background: var(--main-background-color);
+  padding: 10px;
+}
+
+/*######################################################################*/
+/*SEARCH*/
+.search-result-container {
+  width: 70%;
+  right: 0;
+  position: absolute;
+  top: 70px;
+  height: 75vh;
+  z-index: 3;
+  padding: 10px;
+  display: block;
+}
+
+/*######################################################################*/
+/*FOOTER*/
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: auto;
+  background: linear-gradient(transparent, var(--main-background-color), var(--main-background-color));
+  padding: 15px;
   z-index: 2;
 }
 
-.notifications-anker {
-  position: fixed;
-  top: 81px;
-  right: 0;
-  margin: 0.5em;
-  z-index: 1200;
-  cursor: default;
+/*######################################################################*/
+/*MAIN CONTENT*/
+.main {
+  position: absolute;
+  top: 83px;
+  bottom: 0;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.search {
-  position: fixed;
-  top: 35px;
-  left: 0;
-  width: 100%;
-  background-image: linear-gradient(to bottom, rgba(48, 48, 48, 1) 0%, rgba(48, 48, 48, 0.9));
-  box-shadow: 0 0 5px 0px #000;
-  z-index: 50;
-}
-
-.queue {
-  width: 100%;
-  height: auto;
-  padding-top: 79px;
-  padding-bottom: 100px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-
-  .header {
-    height: 20px;
-  }
-
-  .header-text {
-    font-size: 0.8em;
-  }
-
-  .search {
-    top: 20px;
-  }
-
-  .queue {
-    //padding-top: 84px;
-    margin-top: -15px;
-    padding-bottom: 80px;
+/*######################################################################*/
+/*MEDIA QUERIES*/
+@media screen and (max-width: 768px), (max-height: 768px) {
+  .search-result-container {
+    width: 100%;
   }
 }
 
+@media screen and (max-width: 992px), (max-height: 450px) {
+  .footer {
+    padding: 0;
+    background: transparent;
+  }
+}
+
+@media screen and (max-width: 576px), (max-height: 576px) {
+  .move-content-right {
+    -webkit-transform: translateX(100vw);
+    -moz-transform: translateX(100vw);
+    -ms-transform: translateX(100vw);
+    -o-transform: translateX(100vw);
+    transform: translateX(100vw);
+  }
+
+  .move-content-left {
+    -webkit-transform: translateX(-100vw);
+    -moz-transform: translateX(-100vw);
+    -ms-transform: translateX(-100vw);
+    -o-transform: translateX(-100vw);
+    transform: translateX(-100vw);
+  }
+
+  .sidebar {
+    width: 100vw;
+  }
+}

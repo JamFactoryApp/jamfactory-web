@@ -1,20 +1,16 @@
-<div class="main">
+<app-sidebar id="sidebar" [ngClass]="(searchViewStore.$view | async).menu ? 'sidebar-active sidebar-box-shadow' : 'move-content-left'"
+             class="sidebar"></app-sidebar>
 
-  <app-title id="title" class="title"></app-title>
+<main [ngStyle]="{'pointer-events': (searchViewStore.$view | async).menu ? 'none' : ''}">
+  <app-title id="header" [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''"
+             class="header d-flex al-center w-100"></app-title>
+  <app-search *ngIf="(searchViewStore.$view | async).searchBarViewToggle || (searchViewStore.$view | async).searchResultViewToggle" id="search-box"
+              [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''" class="search-result-container"></app-search>
 
-  <div id="search" class="search">
-    <app-search></app-search>
-  </div>
+  <app-queue id="main-content" [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''" class="main d-flex w-100"></app-queue>
 
-  <div id="jamNotificationAnker" class="notifications-anker">
-    <app-notifications></app-notifications>
-  </div>
+  <app-playback-controller id="footer" [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''"
+                           class="footer w-100"></app-playback-controller>
+</main>
 
-  <div class="queue">
-    <app-queue></app-queue>
-  </div>
 
-  <div class="footer">
-    <app-playback-controller></app-playback-controller>
-  </div>
-</div>

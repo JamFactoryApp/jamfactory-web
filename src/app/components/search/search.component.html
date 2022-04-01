@@ -1,43 +1,62 @@
-<div class="row search-div">
-  <div class="col-10">
-    <div class="inner-addon left-addon">
-      <i class="glyphicon"><span class="material-icons">search</span></i>
-      <input type="text" class="form-control search-input" placeholder="Search" (keyup)="searchEvent()"
-             [formControl]="searchField"/>
+<div *ngIf="!emptySearch" class="search-result w-100 h-100">
+  <div class="search-result-main w-100">
+    <app-search-song *ngFor="let track of searchResultsTracks.slice(0 + searchShift,searchCount + searchShift)"
+                     [songInfo]="track" [isVoted]="track.voted"
+                     class="search-result-main-element d-flex jy-center al-center w-100"></app-search-song>
+    <app-search-playlist
+      *ngFor="let playlist of searchResultsPlaylists.slice(0 + searchShift,searchCount + searchShift)"
+      [playlist]="playlist"
+      class="search-result-main-element d-flex jy-center al-center w-100"></app-search-playlist>
+    <app-search-album *ngFor="let album of searchResultsAlbums.slice(0 + searchShift,searchCount + searchShift)"
+                      [album]="album"
+                      class="search-result-main-element d-flex jy-center al-center w-100"></app-search-album>
+  </div>
+  <div class="search-result-footer d-flex al-center jy-center w-100">
+    <div class="search-result-button-container">
+      <button class="search-result-button" style="float: left"
+              *ngIf="searchShift !== 0"
+              (click)="showLess()">Previous page...
+      </button>
     </div>
-  </div>
-
-
-  <div class="col-2">
-    <span class="user-text" *ngIf="userStore.currentUser">{{userStore.currentUser.display_name}}</span>
-  </div>
-
-</div>
-<hr>
-<div class="search-result" *ngIf="searchType !== ''">
-
-  <div class="search-text" *ngIf="searchResultsTracks.length === 0">No results!</div>
-  <div class="row">
-    <div class="col mt-1">
-      <div *ngFor="let track of searchResultsTracks.slice(0 + searchShift,searchCount + searchShift)">
-        <app-queue-song style="display: block" #SearchSong [inQueue]="false" [track]="track"
-                        [search]="true"></app-queue-song>
+    <ng-container *ngIf="this.permissions.hasPermission(this.permissions.Host)">
+      <div class="search-result-radio-container">
+        <button class="search-result-radio"
+                (click)="setMode('track')" [class.search-result-radio-active]="searchStore.searchType === 'track'">
+          Tracks
+        </button>
+        <button class="search-result-radio"
+                (click)="setMode('album')" [class.search-result-radio-active]="searchStore.searchType === 'album'">
+          Albums
+        </button>
+        <button class="search-result-radio"
+                (click)="setMode('playlist')"
+                [class.search-result-radio-active]="searchStore.searchType === 'playlist'">Playlists
+        </button>
+        <button class="search-result-radio"
+                (click)="setMode('personal')"
+                [class.search-result-radio-active]="searchStore.searchType === 'personal'">Personal
+        </button>
       </div>
-      <div *ngFor="let playlist of searchResultsPlaylists.slice(0 + searchShift,searchCount + searchShift)">
-        <app-queue-collection style="display: block"
-                              [collection]="playlist"></app-queue-collection>
+      <div #dropdown class="search-result-dropdown-container d-flex al-center">
+        <details id="searchTypeDropdown" class="d-flex al-center jy-center">
+          <summary class="d-flex al-center">
+            <li>{{searchStore.searchType[0].toUpperCase() + searchStore.searchType.slice(1)}}</li>
+          </summary>
+          <ul>
+            <li (click)="setMode('track')" *ngIf="searchStore.searchType !== 'track'">Tracks</li>
+            <li (click)="setMode('album')" *ngIf="searchStore.searchType !== 'album'">Albums</li>
+            <li (click)="setMode('playlist')" *ngIf="searchStore.searchType !== 'playlist'">Playlists</li>
+            <li (click)="setMode('personal')" *ngIf="searchStore.searchType !== 'personal'">Personal</li>
+          </ul>
+        </details>
       </div>
 
-
-      <div class="btn user-playlist" *ngIf="getSearchResultCount() > searchCount" (click)="showMore()">
-        {{getSearchResultCount() > searchCount + searchShift ? 'Show more...' : 'Back to beginning'}}
-      </div>
-      <hr
-        *ngIf="getSearchResultCount() > searchCount && this.permissions.hasPermission(this.permissions.Host) && searchResultsPlaylists !== undefined">
-      <div class="btn user-playlist" *ngIf="this.permissions.hasPermission(this.permissions.Host) && searchResultsPlaylists !== undefined"
-           (click)="showUserPlaylists()">Show your playlists <span
-        class="material-icons material-btn">navigate_next</span></div>
-
+    </ng-container>
+    <div class="search-result-button-container">
+      <button class="search-result-button" style="float: right"
+              *ngIf="getSearchResultCount() > searchCount"
+              (click)="showMore()">{{getSearchResultCount() > searchCount + searchShift ? 'Next page...' : 'Back to beginning'}}
+      </button>
     </div>
   </div>
 </div>

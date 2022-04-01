@@ -1,29 +1,30 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {AuthHttpService} from '../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
 import {JamPlaybackBody, JamPlaySongBody, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
 import {QueueStore} from '../../core/stores/queue.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
-import {UserStore} from '../../core/stores/user.store';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {Notification, NotificationService} from '../../core/services/notification.service';
 import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
-import {ColorService} from '../../core/services/color.service';
-import {WebsocketService} from '../../core/services/websocket.service';
+import {ColorService, SongColor} from '../../core/services/color.service';
 import {UtilService} from '../../core/services/util.service';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {FormControl} from '@angular/forms';
+import {ViewStore} from '../../core/stores/view.store';
+
+type Vec3 = [number, number, number];
 
 @Component({
   selector: 'app-playback-controller',
   templateUrl: './playback-controller.component.html',
   styleUrls: ['./playback-controller.component.scss']
 })
-export class PlaybackControllerComponent implements OnInit {
-  Math = Math;
+export class PlaybackControllerComponent implements OnInit, AfterContentInit {
 
-  @ViewChild('deviceTooltip', {static: false}) deviceTooltip: NgbTooltip;
+  @ViewChild('cover') cover: ElementRef;
+
   public currentUser: JamUser;
   public playback: JamPlaybackBody;
   public progressms: number;
@@ -34,6 +35,13 @@ export class PlaybackControllerComponent implements OnInit {
   private showedNoPlaybackNotification = false;
   private timeout: number;
   public currentVolume: FormControl = new FormControl(0);
+  public songColor: SongColor = {
+    vibrant: [231, 231, 231],
+    muted: [0, 0, 0],
+  };
+  public songProgress = 0;
+  public durationRest = 0;
+  public playStatus = false;
 
   constructor(
     private authService: AuthHttpService,
@@ -44,23 +52,56 @@ export class PlaybackControllerComponent implements OnInit {
     public jamStore: JamsessionStore,
     public permissions: PermissionsService,
     public utils: UtilService,
-    private authStore: UserStore,
-    private notificationService: NotificationService,
-    private websocketService: WebsocketService,
-    private colorService: ColorService) {
+    public notificationService: NotificationService,
+    public colorService: ColorService,
+    public viewStore: ViewStore
+  ) {
+  }
+
+  // Control pause/play with space
+  @HostListener('window:keydown.space', ['$event'])
+  setPausePlay(event: KeyboardEvent): void {
+    if (this.permissions.hasPermission(this.permissions.Host) &&
+      (!this.viewStore.view.searchBarViewToggle && !this.viewStore.view.searchResultViewToggle)) {
+      event.preventDefault();
+      if (this.playStatus) {
+        this.pausePlayback();
+      } else {
+        this.resumePlayback();
+      }
+    }
   }
 
   ngOnInit(): void {
-
-    this.authStore.$currentUser.subscribe(value => {
-      this.currentUser = value;
-      this.getDevices();
-    });
-
     this.jamStore.$playback.subscribe(value => {
+      const lastPlayback = this.playback;
+
       this.playback = value;
       this.progressms = this.playback?.playback?.progress_ms;
       this.item = this.playback !== undefined && this.playback?.playback?.item !== null;
+
+      if (value !== undefined) {
+        if (value.playback.item === null) {
+          this.resetPlaybackProgress();
+        }
+      }
+
+      if (lastPlayback?.playback?.item === null && value?.playback?.item !== null) {
+        this.playStatus = this.playback.playback.is_playing;
+        this.getProgressForContainer();
+        this.getRestDuration();
+      }
+
+      if ((lastPlayback?.playback?.item?.name !== value?.playback?.item?.name) ||
+        (lastPlayback?.playback?.is_playing !== value?.playback?.is_playing) ||
+        (Math.abs(value?.playback?.progress_ms - lastPlayback?.playback?.progress_ms)) >= 10000 ||
+        this.playStatus !== value?.playback?.is_playing) {
+        this.playStatus = this.playback?.playback?.is_playing;
+        setTimeout(() => {
+          this.getProgressForContainer();
+          this.getRestDuration();
+        }, 500);
+      }
 
       if (this.playback?.device_id) {
         this.notificationService.clearId(1);
@@ -84,43 +125,18 @@ export class PlaybackControllerComponent implements OnInit {
     }, 1000);
   }
 
+  ngAfterContentInit(): void {
+    setTimeout(() => {
+      this.getProgressForContainer();
+      this.getRestDuration();
+    }, 500);
+  }
+
   checkNotifications(): void {
     if (this.permissions.hasPermission(this.permissions.Host) && !this.playback?.device_id && !this.showedNoPlaybackNotification) {
       this.showedNoPlaybackNotification = true;
-      this.notificationService.show(new Notification('Open Spotify on your preferred device and select it below').setLevel(2).addHeader('No playback device found', 'speaker_group').setId(1));
+      this.notificationService.show(new Notification('No playback device found').setLevel(2).setId(1));
     }
-  }
-
-  leave(): void {
-    this.colorService.clearImgStore();
-    clearTimeout(this.timeout);
-    this.websocketService.close();
-    this.jamService.leaveJamSession().subscribe(value => {
-      if (value.success) {
-        this.notificationService.show(
-          new Notification('Successfully quit the JamSession')
-            .addHeader('JamSession quit', 'exit_to_app')
-            .setAutohide(5000));
-        this.router.navigate(['./']);
-      }
-    });
-  }
-
-  getDevices(): void {
-    if (this.permissions.hasPermission(this.permissions.Host)) {
-      this.spotifyService.getDevices().subscribe(value1 => {
-        this.devices = value1;
-      });
-    }
-  }
-
-  selectDevice(deviceid: string): void {
-    const body: SetPlaybackRequestBody = {
-      device_id: deviceid
-    };
-    this.jamService.putPlayback(body).subscribe((value) => {
-      this.jamStore.playback = value;
-    });
   }
 
   onVolumeChange(): void {
@@ -139,7 +155,6 @@ export class PlaybackControllerComponent implements OnInit {
         remove: true
       };
       this.jamService.playSong(body).subscribe((value) => {
-
       });
     }
   }
@@ -154,7 +169,6 @@ export class PlaybackControllerComponent implements OnInit {
   }
 
   pausePlayback(): void {
-
     const body: SetPlaybackRequestBody = {
       playing: false
     };
@@ -169,6 +183,41 @@ export class PlaybackControllerComponent implements OnInit {
     });
     clearInterval(this.intervallId);
     this.intervallId = undefined;
+  }
+
+  getImgColor(): void {
+    this.songColor = this.colorService.getImgColor(this.cover.nativeElement);
+  }
+
+  /*This sucks balls, but is the best solution that actually works*/
+  getProgressForContainer(): void {
+    this.songProgress = Number(((this.progressms * 100) / this.playback?.playback?.item?.duration_ms).toFixed(2));
+    document.getElementById('progress-bar').style.transition = '0.5s linear';
+    setTimeout(() => {
+      document.getElementById('progress-bar').style.transition = this.durationRest + 's linear';
+      if (this.playStatus) {
+        document.getElementById('progress-bar').style.backgroundPosition = 'right 100% bottom 100%';
+      }
+    }, 1000);
+  }
+
+  getRestDuration(): void {
+    this.durationRest = (this.playback?.playback?.item?.duration_ms - this.progressms) / 1000;
+  }
+
+  resetPlaybackProgress(): void {
+    document.getElementById('progress-bar').style.transition = '0.5s linear';
+    document.getElementById('progress-bar').style.backgroundPosition = 'right bottom';
+    this.songColor = {vibrant: [231, 231, 231], muted: [0, 0, 0]};
+  }
+
+  toggleMenu(): void {
+    setTimeout(() => this.viewStore.menu = !this.viewStore.view.menu, 20);
+  }
+
+  getBestColor(col1: Vec3 = this.songColor.vibrant, col2: Vec3 = this.songColor.muted, baseCol: Vec3 = [42, 42, 52]): string {
+    const bestColor = this.colorService.getBestSuitedColor(col1, col2, baseCol);
+    return this.colorService.vec3ToRGBAString(bestColor, 1);
   }
 
 }

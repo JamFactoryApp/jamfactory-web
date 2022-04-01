@@ -2,9 +2,9 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserModule} from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {httpInterceptorProviders} from './core/interceptors';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {NotificationsComponent} from './components/notifications/notifications.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
@@ -17,11 +17,18 @@ import {QueueCollectionComponent} from './components/queue-collection/queue-coll
 import {TitleComponent} from './components/title/title.component';
 import {RedirectGuard} from './core/guards/redirect.guard';
 import { CreateComponent } from './components/create/create.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SearchSongComponent } from './components/search/search-song/search-song.component';
+import { QueueSongListComponent } from './components/queue-song/queue-song-list/queue-song-list.component';
+import { QueueSongCardsComponent } from './components/queue-song/queue-song-cards/queue-song-cards.component';
+import {SearchPlaylistComponent} from './components/search/search-playlist/search-playlist.component';
+import {SearchAlbumComponent} from './components/search/search-album/search-album.component';
+import { ModalsComponent } from './components/modals/modals.component';
+import {Router} from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotificationsComponent,
     QueueSongComponent,
     PlaybackControllerComponent,
     QueueComponent,
@@ -30,11 +37,19 @@ import { CreateComponent } from './components/create/create.component';
     QueueCollectionComponent,
     TitleComponent,
     RedirectGuard,
-    CreateComponent
+    CreateComponent,
+    SidebarComponent,
+    SearchSongComponent,
+    SearchPlaylistComponent,
+    SearchAlbumComponent,
+    QueueSongListComponent,
+    QueueSongCardsComponent,
+    ModalsComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
     NgbModule,
     FormsModule,
     HttpClientModule,
@@ -48,4 +63,8 @@ import { CreateComponent } from './components/create/create.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(private router: Router) {
+    // Reload JamSession Component on label change
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 }
