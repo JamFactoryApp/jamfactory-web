@@ -12,7 +12,6 @@ import {PlaybackControllerComponent} from './components/playback-controller/play
 import {QueueComponent} from './components/queue/queue.component';
 import {SearchComponent} from './components/search/search.component';
 import {JamsessionComponent} from './components/jamsession/jamsession.component';
-import {QueueCollectionComponent} from './components/queue-collection/queue-collection.component';
 import {TitleComponent} from './components/title/title.component';
 import {RedirectGuard} from './core/guards/redirect.guard';
 import { CreateComponent } from './components/create/create.component';
@@ -33,7 +32,6 @@ import {Router} from '@angular/router';
     QueueComponent,
     SearchComponent,
     JamsessionComponent,
-    QueueCollectionComponent,
     TitleComponent,
     RedirectGuard,
     CreateComponent,
