@@ -7,7 +7,7 @@ import {CanActivate, ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '
 @Injectable({
   providedIn: 'root'
 })
-// tslint:disable-next-line:component-class-suffix
+// eslint-disable-next-line @angular-eslint/component-class-suffix
 export class RedirectGuard implements CanActivate {
 
   constructor(private router: Router) {}
