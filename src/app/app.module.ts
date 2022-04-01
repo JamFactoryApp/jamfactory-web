@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {httpInterceptorProviders} from './core/interceptors';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {CommonModule} from '@angular/common';
+import {APP_BASE_HREF, CommonModule} from '@angular/common';
 import {QueueSongComponent} from './components/queue-song/queue-song.component';
 import {PlaybackControllerComponent} from './components/playback-controller/playback-controller.component';
 import {QueueComponent} from './components/queue/queue.component';
@@ -56,7 +56,8 @@ import {Router} from '@angular/router';
   ],
   providers: [
     httpInterceptorProviders,
-    RedirectGuard
+    RedirectGuard,
+    { provide: APP_BASE_HREF, useValue: '/jam/' }
   ],
   bootstrap: [AppComponent]
 })
