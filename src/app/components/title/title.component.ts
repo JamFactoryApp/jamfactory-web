@@ -30,7 +30,6 @@ export class TitleComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   clickout(event): void {
     this.searchViewStore.statusSearchBar = this.search.nativeElement.contains(event.target);
-    console.log('OUTSIDE SEARCH BAR:', !this.search.nativeElement.contains(event.target));
   }
 
   ngOnInit(): void {

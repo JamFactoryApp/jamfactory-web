@@ -42,7 +42,6 @@ export class SearchComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   clickout(event): void {
     this.viewStore.statusSearchBox = this.eRef.nativeElement.contains(event.target) || this.dropdownMenu?.nativeElement.contains(event.target);
-    console.log('OUTSIDE RESULT:', !(this.eRef.nativeElement.contains(event.target) || this.dropdownMenu?.nativeElement.contains(event.target)));
   }
 
   ngOnInit(): void {
@@ -56,7 +55,6 @@ export class SearchComponent implements OnInit {
         this.updateResults(value);
       } else {
         this.emptySearch = true;
-        console.log('EMPTY SEARCH');
       }
     });
   }

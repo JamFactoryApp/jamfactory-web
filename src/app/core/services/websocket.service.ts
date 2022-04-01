@@ -20,8 +20,7 @@ export class WebsocketService {
     }
     this.socket.asObservable().subscribe(
       message => handler(message),
-      error => this.handleError(error, handler),
-      () => console.log('closed'));
+      error => this.handleError(error, handler));
   }
 
   public close(): void {
