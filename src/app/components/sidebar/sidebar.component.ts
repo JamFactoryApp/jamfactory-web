@@ -91,7 +91,7 @@ export class SidebarComponent implements OnInit {
     this.websocketService.close();
     this.jamService.leaveJamSession().subscribe(value => {
       if (value.success) {
-        this.router.navigate(['jam']);
+        this.router.navigate(['']);
       }
     });
   }

@@ -27,7 +27,7 @@ export class CreateComponent implements OnInit {
     // Let's try to create a new JamSession for the current user
     this.jamSessionService.createJamSession().subscribe(jamSession => {
       // Successfully created a new JamSession. Redirect to the JamSession component
-      this.router.navigate(['jam', jamSession.label]).then();
+      this.router.navigate([jamSession.label]).then();
     }, error => {
       // Could not create a new JamSession
       if (error.error === 'already member') {
@@ -36,7 +36,7 @@ export class CreateComponent implements OnInit {
         this.modal.add(createAlreadyMemberModal(this));
       } else {
         // Unspecified error occurred. Redirect to landing-page with the error in the url
-        this.router.navigate(['jam'], {queryParams: {error: error.error}});
+        this.router.navigate([''], {queryParams: {error: error.error}});
       }
     });
   }

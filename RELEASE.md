@@ -1,5 +1,16 @@
 # JamFactory Web Release Notes
 
+## v0.2.0
+
+### Features Added
+* :sparkles: 
+
+### Features Removed
+This is the first release. Nothing to remove.
+
+### Bug Fixes
+No bugs were fixed with this release
+
 ## v0.1.0
 
 :sparkles: This is the initial release of the JamFactory Web project!

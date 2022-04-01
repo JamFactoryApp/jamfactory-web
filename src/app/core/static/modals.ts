@@ -16,14 +16,14 @@ export function createAlreadyMemberModal(ctx: any): Modal {
           // Successfully left the JamSession. Let's create a new one
           ctx.jamSessionService.createJamSession().subscribe(jamSession => {
             // Successfully created a new JamSession. Redirect to the JamSession component
-            ctx.router.navigate(['jam', jamSession.label]);
+            ctx.router.navigate([jamSession.label]);
           }, error => {
-            ctx.router.navigate(['jam'], {queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
+            ctx.router.navigate([''], {queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
           });
         });
       } else {
         // Cancel the action and redirect to users current JamSession
-        ctx.router.navigate(['jam', ctx.userStore.currentUser.joined_label]).then(nav => {
+        ctx.router.navigate([ctx.userStore.currentUser.joined_label]).then(nav => {
         });
       }
     }
@@ -52,7 +52,7 @@ export function createCloseModal(ctx: any, reason: string): Modal {
     placeholder: '',
     withInput: false,
     label: '',
-    callback: (btn: string, _: string) => ctx.router.navigate(['jam'])
+    callback: (btn: string, _: string) => ctx.router.navigate([''])
   };
   return modal;
 }
