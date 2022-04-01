@@ -1,159 +1,228 @@
 <div id="sidebar-container" class="sidebar-container">
   <div class="sidebar-header d-flex al-center">
-    <div id="menu-button-mob" class="menu-button menu-button-mob d-flex jy-center al-center" (click)="toggleMenu()">
-      <i id="menu-button-icon-mob" class="material-icons-outlined menu-button-icon">close</i>
+    <div class="menu-button menu-button-mob d-flex jy-center al-center" (click)="toggleMenu()">
+      <i class="material-icons-outlined menu-button-icon">close</i>
     </div>
     <div id="sidebar-leave" class="sidebar-header-leave" (click)="leave()">
       <i class="material-icons-outlined sidebar-leave-button">logout</i>
     </div>
   </div>
+
   <div class="sidebar-content">
-    <div class="sidebar-divider"></div>
 
-    <div class="sidebar-section">
-      <div class="sidebar-section-header">Your host</div>
-      <div class="sidebar-section-content d-flex al-center">
-        <div class="sidebar-section-host-container d-flex al-center">
-          <img src="https://www.w3schools.com/howto/img_avatar.png" class="sidebar-host-img">
-          <div class="sidebar-host-divider"></div>
-          <div class="sidebar-host-name">{{getUserName((membersStore.$currentHost | async)?.display_name)}}</div>
-        </div>
-
-        <div id="sidebar-jamlabel-container"
-             class="sidebar-section-label-container d-flex al-center">
-          <div class="sidebar-section-label-icon-container d-flex jy-center al-center">
-            <i class="material-icons-outlined sidebar-section-label-icon">{{copyIcon}}</i>
-          </div>
-          <div class="sidebar-host-divider"></div>
-          <div id="sidebar-jamlabel-text" class="sidebar-host-name"
-               (click)="copyToClipboard()">{{(jamStore.$jamSession | async)?.label}}</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sidebar-divider"></div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-section-header">Change view</div>
-
-      <div style="padding: 10px;" class="d-flex jy-center al-center w-100 h-100">
-        <div id="list-view" class="view-button d-flex jy-center al-center list-view-button"
-             [ngClass]="queueViewStatus ? '' : 'active'" (click)="switchQueueView(false)">
-          <i class="material-icons-outlined view-button-icon" style="position: relative;">table_rows</i>
-<!--          <div class="main-content-queue-counter-container">-->
-<!--            <div class="queue-counter-text">4</div>-->
-<!--            <i class="material-icons-outlined queue-counter-icon">table_rows</i>-->
-<!--          </div>-->
-          <div class="card-view-button-text">List-View</div>
-        </div>
-
-        <div class="view-button-divider"></div>
-
-        <div id="card-view" class="view-button d-flex jy-center al-center card-view-button"
-             [ngClass]="queueViewStatus ? 'active' : ''" (click)="switchQueueView(true)">
-          <i class="material-icons-outlined view-button-icon">view_week</i>
-          <div class="card-view-button-text">Card-View</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sidebar-divider"></div>
-
-    <ng-container *ngIf="this.permissions.hasPermission(this.permissions.Host)">
-      <div class="sidebar-section">
-        <div class="sidebar-section-header">Playback Device</div>
-
-        <div class="sidebar-section-content">
-
-          <div class="sidebar-device-selection d-flex al-center">
-            <details id="deviceSelectDropdown" class="d-flex al-center jy-center">
-              <summary class="d-flex al-center">
-                <div class="sidebar-section-label-icon-container d-flex jy-center al-center">
-                  <i class="material-icons sidebar-device-icon">speaker_group</i>
-                </div>
-                <div class="sidebar-host-divider"></div>
-                <div
-                  class="sidebar-host-name">{{playback?.playback?.device.name === '' ? 'No playback device found' : playback?.playback?.device.name}}</div>
-              </summary>
-              <ul>
-                <li class="device-item" [ngClass]="device.id === playback?.device_id ? 'active' : ''"
-                    *ngFor="let device of devices?.devices" (click)="selectDevice(device.id)">{{device.name}}</li>
-              </ul>
-            </details>
-          </div>
-
-          <div class="d-flex al-center w-100" style="height: 10px;"></div>
-        </div>
-      </div>
+    <ng-container *ngIf="!viewNotify && !viewSetting && !viewCustom">
       <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-header">Your host</div>
+        <div class="sidebar-section-content d-flex al-center">
+          <div class="sidebar-section-host-container d-flex al-center">
+            <img src="https://www.w3schools.com/howto/img_avatar.png" class="sidebar-host-img">
+            <div class="sidebar-host-divider"></div>
+            <div class="sidebar-host-name">{{getUserName((membersStore.$currentHost | async)?.display_name)}}</div>
+          </div>
+
+          <div id="sidebar-jamlabel-container"
+               class="sidebar-section-label-container d-flex al-center">
+            <div class="sidebar-section-label-icon-container d-flex jy-center al-center">
+              <i class="material-icons-outlined sidebar-section-label-icon">{{copyIcon}}</i>
+            </div>
+            <div class="sidebar-host-divider"></div>
+            <div id="sidebar-jamlabel-text" class="sidebar-host-name"
+                 (click)="copyToClipboard()">{{(jamStore.$jamSession | async)?.label}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-header">Change view</div>
+
+        <div style="padding: 10px;" class="d-flex jy-center al-center w-100 h-100">
+          <div id="list-view" class="view-button d-flex jy-center al-center list-view-button"
+               [ngClass]="queueViewStatus ? '' : 'active'" (click)="switchQueueView(false)">
+            <i class="material-icons-outlined view-button-icon" style="position: relative;">table_rows</i>
+            <!--          <div class="main-content-queue-counter-container">-->
+            <!--            <div class="queue-counter-text">4</div>-->
+            <!--            <i class="material-icons-outlined queue-counter-icon">table_rows</i>-->
+            <!--          </div>-->
+            <div class="card-view-button-text">List-View</div>
+          </div>
+
+          <div class="view-button-divider"></div>
+
+          <div id="card-view" class="view-button d-flex jy-center al-center card-view-button"
+               [ngClass]="queueViewStatus ? 'active' : ''" (click)="switchQueueView(true)">
+            <i class="material-icons-outlined view-button-icon">view_week</i>
+            <div class="card-view-button-text">Card-View</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <ng-container *ngIf="this.permissions.hasPermission(this.permissions.Host)">
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">Playback Device</div>
+
+          <div class="sidebar-section-content">
+
+            <div class="sidebar-device-selection d-flex al-center">
+              <details id="deviceSelectDropdown" class="d-flex al-center jy-center">
+                <summary class="d-flex al-center">
+                  <div class="sidebar-section-label-icon-container d-flex jy-center al-center">
+                    <i class="material-icons sidebar-device-icon">speaker_group</i>
+                  </div>
+                  <div class="sidebar-host-divider"></div>
+                  <div
+                    class="sidebar-host-name">{{playback?.playback?.device.name === '' ? 'No playback device found' : playback?.playback?.device.name}}</div>
+                </summary>
+                <ul>
+                  <li class="device-item" [ngClass]="device.id === playback?.device_id ? 'active' : ''"
+                      *ngFor="let device of devices?.devices" (click)="selectDevice(device.id)">{{device.name}}</li>
+                </ul>
+              </details>
+            </div>
+
+            <div class="d-flex al-center w-100" style="height: 10px;"></div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section d-flex al-center jy-center">
+        <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Notifications" (click)="toggleNotification()">
+          <i class="material-icons menu-button">notifications</i>
+        </div>
+        <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Settings" (click)="toggleSettings()">
+          <i class="material-icons menu-button">settings</i>
+        </div>
+        <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Customization" (click)="toggleCustom()">
+          <i class="material-icons menu-button">brush</i>
+        </div>
+      </div>
     </ng-container>
 
-    <div class="sidebar-section">
-      <div class="sidebar-section-header">Notifications
-        <div class="sidebar-notification-counter">
-          {{notificationService.notifications.length}}
+    <div class="sidebar-notification" *ngIf="viewNotify">
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section d-flex al-center" style="justify-content: start">
+        <div class="sidebar-back-button d-flex jy-center al-center" (click)="toggleNotification()">
+          <i class="material-icons menu-button">arrow_back</i>
+        </div>
+      </div>
+      <div class="sidebar-section sidebar-section-notify">
+        <div class="sidebar-section-header">Notifications
+          <div class="sidebar-notification-counter">
+            {{notificationService.notifications.length}}
+          </div>
+        </div>
+
+        <div class="sidebar-section-notifications">
+          <div class="sidebar-notifications-container">
+
+            <div *ngIf="notificationService.notifications.length === 0" style="color: #808c9f; opacity: 0.7;">
+              There are no new notifications!
+            </div>
+
+            <ng-container *ngFor="let n of notificationService.notifications">
+              <div class="d-flex al-center notification-container" style="padding: 10px 10px 10px 15px;"
+                   [ngClass]="notificationService.getClasses(n.level)">
+                <div class="d-flex al-center notification-left-container h-100">
+                  <i class="material-icons-outlined notification-icon">{{notificationService.getIcons(n.level)}}</i>
+                </div>
+
+                <div class="d-flex al-center jy-center notification-middle-container h-100">
+                  <div class="d-flex al-center jy-center notification-text-container">
+                    <div class="notification-text">{{n.message}}</div>
+                  </div>
+                </div>
+
+                <div class="d-flex al-center jy-center notification-right-container h-100"
+                     (click)="notificationService.remove(n)">
+                  <div class="d-flex al-center jy-center notification-delete-container">
+                    <i class="material-icons-outlined notification-delete-icon">close</i>
+                  </div>
+                </div>
+              </div>
+              <div class="sidebar-notification-divider"></div>
+            </ng-container>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="viewSetting">
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section d-flex al-center" style="justify-content: start">
+        <div class="sidebar-back-button d-flex jy-center al-center" (click)="toggleSettings()">
+          <i class="material-icons menu-button">arrow_back</i>
         </div>
       </div>
 
-      <div class="sidebar-section-content">
-        <div class="sidebar-section-notifications">
-
-          <div *ngIf="notificationService.notifications.length === 0" style="color: #808c9f; opacity: 0.7;">
-            There are no new notifications!
+      <ng-container *ngIf="this.permissions.hasPermission(this.permissions.Host)">
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">Options</div>
+          <div class="sidebar-section-content">
+            <div class="sidebar-subsection-header">Name</div>
+            <div class="sidebar-subsection-content">
+              <input id="name-input" type="text" placeholder="" class="sidebar-options-input w-100"
+                     [formControl]="nameField">
+            </div>
+            <div class="sidebar-subsection-header">Password</div>
+            <div class="sidebar-subsection-content">
+              <input id="password-input" [type]="!hasPassword ? 'text' : 'password'" placeholder="Change password"
+                     class="sidebar-options-input w-100"
+                     [formControl]="passwordField">
+            </div>
+            <div class="sidebar-subsection-content">
+              <button class="button button-green" (click)="saveSettings()">Save</button>
+            </div>
           </div>
+        </div>
+      </ng-container>
+    </ng-container>
 
-          <ng-container *ngFor="let n of notificationService.notifications">
-            <div class="d-flex al-center notification-container" style="padding: 10px 10px 10px 15px;"
-                 [ngClass]="notificationService.getClasses(n.level)">
-              <div class="d-flex al-center notification-left-container h-100">
-                <i class="material-icons-outlined notification-icon">{{notificationService.getIcons(n.level)}}</i>
-              </div>
+    <ng-container *ngIf="viewCustom">
+      <div class="sidebar-divider"></div>
 
-              <div class="d-flex al-center jy-center notification-middle-container h-100">
-                <div class="d-flex al-center jy-center notification-text-container">
-                  <div class="notification-text">{{n.message}}</div>
-                </div>
-              </div>
+      <div class="sidebar-section d-flex al-center" style="justify-content: start">
+        <div class="sidebar-back-button d-flex jy-center al-center" (click)="toggleCustom()">
+          <i class="material-icons menu-button">arrow_back</i>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-header">Customizations</div>
 
-              <div class="d-flex al-center jy-center notification-right-container h-100"
-                   (click)="notificationService.remove(n)">
-                <div class="d-flex al-center jy-center notification-delete-container">
-                  <i class="material-icons-outlined notification-delete-icon">close</i>
-                </div>
+        <div class="sidebar-section-content">
+          <div class="sidebar-subsection-header">Color Theme</div>
+          <div class="sidebar-subsection-content d-flex al-center jy-center">
+            <div class="custom-colortheme-container" (click)="changeTheme(0)">
+              <div class="h-100 w-100 d-flex al-center" style="justify-content: space-between">
+                <div class="h-100 colortheme-selector" style="width: 60%; background: rgb(236, 154, 41);"></div>
+                <div class="h-100 colortheme-selector" style="width: 30%; background: rgb(236, 154, 41);"></div>
               </div>
             </div>
-            <div class="sidebar-notification-divider"></div>
-          </ng-container>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="sidebar-divider"></div>
-    <ng-container *ngIf="this.permissions.hasPermission(this.permissions.Host)">
-      <div class="sidebar-section">
-        <div class="sidebar-section-header">Options</div>
-        <div class="sidebar-section-content">
-          <div class="sidebar-subsection-header">Name</div>
-          <div class="sidebar-subsection-content">
-            <input id="name-input" type="text" placeholder="" class="sidebar-options-input w-100"
-                   [formControl]="nameField">
-          </div>
-          <div class="sidebar-subsection-header">Password</div>
-          <div class="sidebar-subsection-content">
-            <input id="password-input" [type]="!hasPassword ? 'text' : 'password'" placeholder="Change password"
-                   class="sidebar-options-input w-100"
-                   [formControl]="passwordField">
-          </div>
-          <div class="sidebar-subsection-content">
-            <button class="button button-green" (click)="saveSettings()">Save</button>
+            <div class="custom-colortheme-container" (click)="changeTheme(1)">
+              <div class="h-100 w-100 d-flex al-center" style="justify-content: space-between">
+                <div class="h-100 colortheme-selector" style="width: 60%; background: rgb(101, 155, 94);"></div>
+                <div class="h-100 colortheme-selector" style="width: 30%; background: rgb(101, 155, 94);"></div>
+              </div>
+            </div>
+            <div class="custom-colortheme-container" (click)="changeTheme(2)">
+              <div class="h-100 w-100 d-flex al-center" style="justify-content: space-between">
+                <div class="h-100 colortheme-selector" style="width: 60%; background: rgb(81, 113, 165);"></div>
+                <div class="h-100 colortheme-selector" style="width: 30%; background: rgb(81, 113, 165);"></div>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
-      <div class="sidebar-divider"></div>
     </ng-container>
-
 
   </div>
 </div>

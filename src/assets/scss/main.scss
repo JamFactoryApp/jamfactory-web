@@ -7,9 +7,13 @@
 /*######################################################################*/
 /*HTML ELEMENTS*/
 :root {
+  --dominant-color: 236, 154, 41;
+
   --main-background-color: rgb(31, 31, 45);
   --main-text-color: hsla(0, 0%, 100%, .8);
-  --main-accent-color: rgb(236, 154, 41);
+  --main-accent-color: rgb(var(--dominant-color));
+  --main-accent-color-background: rgba(var(--dominant-color), 0.1);
+  --main-accent-color-selection: rgba(var(--dominant-color), 0.05);
 }
 
 html {

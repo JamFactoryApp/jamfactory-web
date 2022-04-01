@@ -25,7 +25,8 @@
 }
 
 .sidebar-content {
-  max-height: 91%;
+  height: 90%;
+  max-height: 90%;
 }
 
 .sidebar-divider {
@@ -65,11 +66,6 @@
 
 .sidebar-section-content {
   padding: 10px;
-
-  .sidebar-section-notifications {
-    height: 135px;
-    overflow: auto;
-  }
 }
 
 .sidebar-subsection-content {
@@ -79,7 +75,7 @@
 
 .sidebar-section-host-container {
   padding: 8px;
-  background: rgba(236, 154, 41, 0.1);
+  background: var(--main-accent-color-background);
   border-radius: 20px;
   float: left;
   margin-right: auto;
@@ -107,7 +103,7 @@
 
 .sidebar-section-label-container {
   padding: 8px;
-  background: rgba(236, 154, 41, 0.1);
+  background: var(--main-accent-color-background);
   border-radius: 20px;
   width: 45%;
   cursor: pointer;
@@ -149,7 +145,7 @@
     padding: 10px;
     cursor: pointer;
     border-radius: 10px;
-    background-color: rgba(236, 154, 41, 0.1);
+    background-color: var(--main-accent-color-background);
     list-style: none;
     color: var(--main-accent-color);
   }
@@ -268,6 +264,38 @@
   height: 5px;
 }
 
+.sidebar-section-notifications {
+  padding: 10px;
+  flex-grow: 1;
+  display: flex;
+
+  .sidebar-notifications-container {
+    width: 100%;
+    flex-grow: 1;
+    overflow: auto;
+  }
+}
+
+.sidebar-section-notify {
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column;
+}
+
+.custom-colortheme-container {
+  width: 100px;
+  height: 50px;
+  padding: 15px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-right: 10px;
+  cursor: pointer;
+
+  .colortheme-selector {
+    border-radius: 10px;
+  }
+}
+
 /*######################################################################*/
 /*VIEW CHANGE*/
 .view-button {
@@ -278,7 +306,7 @@
   border-radius: 15px;
 
   * {
-    color: rgba(236, 154, 41, 0.7);
+    color: var(--main-accent-color);
   }
 }
 
@@ -298,7 +326,33 @@
 }
 
 .active {
-  background: rgba(236, 154, 41, 0.05);
+  background: var(--main-accent-color-selection);
+}
+
+.sidebar-menu-toggle-container {
+  padding: 15px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-right: 10px;
+  cursor: pointer;
+
+  .material-icons.menu-button {
+    color: var(--main-text-color);
+  }
+}
+
+.sidebar-back-button {
+  cursor: pointer;
+
+  .material-icons.menu-button {
+    color: var(--main-text-color);
+  }
+}
+
+.sidebar-notification {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
 
 /*######################################################################*/

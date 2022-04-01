@@ -31,6 +31,10 @@ export class SidebarComponent implements OnInit {
   public copyIcon = 'content_copy';
   public nameField = new FormControl('');
 
+  public viewNotify = false;
+  public viewSetting = false;
+  public viewCustom = false;
+
   constructor(
     public colorService: ColorService,
     public notificationService: NotificationService,
@@ -120,7 +124,7 @@ export class SidebarComponent implements OnInit {
   }
 
   copyToClipboard(): void {
-    navigator.clipboard.writeText(window.location.host + window.location.pathname ).then( () =>
+    navigator.clipboard.writeText(window.location.host + window.location.pathname).then(() =>
       this.copyIcon = 'done'
     );
   }
@@ -142,5 +146,41 @@ export class SidebarComponent implements OnInit {
         this.hasPassword = true;
       }
     });
+  }
+
+  toggleNotification(): void {
+    setTimeout(() => {
+      this.viewNotify = !this.viewNotify;
+    }, 10);
+  }
+
+  toggleSettings(): void {
+    setTimeout(() => {
+      this.viewSetting = !this.viewSetting;
+    }, 10);
+  }
+
+  toggleCustom(): void {
+    setTimeout(() => {
+      this.viewCustom = !this.viewCustom;
+    }, 10);
+  }
+
+  changeTheme(type): void {
+    setTimeout(() => {
+      let color = '';
+      switch (type) {
+        case 0:
+          color = '236, 154, 41';
+          break;
+        case 1:
+          color = '101, 155, 94';
+          break;
+        case 2:
+          color = '81, 113, 165';
+          break;
+      }
+      document.documentElement.style.setProperty('--dominant-color', color);
+    }, 10);
   }
 }
