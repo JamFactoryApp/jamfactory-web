@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {QueueSong, VoteRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {UtilService} from '../../../core/services/util.service';
 import TrackObjectFull = SpotifyApi.TrackObjectFull;
@@ -9,7 +9,7 @@ import {QueueService} from '../../../core/services/queue.service';
   templateUrl: './search-song.component.html',
   styleUrls: ['./search-song.component.scss']
 })
-export class SearchSongComponent implements OnInit {
+export class SearchSongComponent  {
 
   @Input()
   songInfo: QueueSong;
@@ -19,8 +19,7 @@ export class SearchSongComponent implements OnInit {
 
   constructor(public utils: UtilService, private queueService: QueueService) { }
 
-  ngOnInit(): void {
-  }
+
 
   vote(track: TrackObjectFull): void {
     const body: VoteRequestBody = {

@@ -1,6 +1,5 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {DeleteSongRequestBody, QueueSong, SetJamSessionRequestBody, VoteRequestBody} from '@jamfactoryapp/jamfactory-types';
-import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {ColorService, SongColor} from '../../../core/services/color.service';
 import {QueueHttpService} from '../../../core/http/queue.http.service';
 import {QueueService} from '../../../core/services/queue.service';
@@ -16,7 +15,7 @@ import TrackObjectFull = SpotifyApi.TrackObjectFull;
   templateUrl: './queue-song-cards.component.html',
   styleUrls: ['./queue-song-cards.component.scss']
 })
-export class QueueSongCardsComponent implements OnInit, AfterViewInit {
+export class QueueSongCardsComponent  {
 
   @Input()
   track: QueueSong;
@@ -29,9 +28,7 @@ export class QueueSongCardsComponent implements OnInit, AfterViewInit {
   ) {
   }
 
-  ngOnInit(): void {
-  }
 
-  ngAfterViewInit(): void {
-  }
+
+
 }

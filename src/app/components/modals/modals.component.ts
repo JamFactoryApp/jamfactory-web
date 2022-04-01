@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener} from '@angular/core';
 import {ModalService} from '../../core/services/modal.service';
 import {FormControl} from '@angular/forms';
 
@@ -7,7 +7,7 @@ import {FormControl} from '@angular/forms';
   templateUrl: './modals.component.html',
   styleUrls: ['./modals.component.scss']
 })
-export class ModalsComponent implements OnInit {
+export class ModalsComponent  {
 
   public modalField = new FormControl('');
 
@@ -22,7 +22,6 @@ export class ModalsComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-  }
+
 
 }

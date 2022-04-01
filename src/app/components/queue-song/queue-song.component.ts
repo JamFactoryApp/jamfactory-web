@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {QueueSong} from '@jamfactoryapp/jamfactory-types';
 
 
@@ -8,7 +8,7 @@ import {QueueSong} from '@jamfactoryapp/jamfactory-types';
   styleUrls: ['./queue-song.component.scss']
 })
 
-export class QueueSongComponent implements OnInit {
+export class QueueSongComponent  {
 
   @Input()
   track: QueueSong;
@@ -22,6 +22,5 @@ export class QueueSongComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit(): void {
-  }
+
 }

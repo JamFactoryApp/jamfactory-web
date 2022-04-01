@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {DeleteSongRequestBody, QueueSong, SetJamSessionRequestBody, VoteRequestBody} from '@jamfactoryapp/jamfactory-types';
-import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {ColorService, SongColor} from '../../../core/services/color.service';
 import {QueueHttpService} from '../../../core/http/queue.http.service';
 import {QueueService} from '../../../core/services/queue.service';
@@ -17,7 +16,7 @@ import {formatDate} from '@angular/common';
   templateUrl: './queue-song-list.component.html',
   styleUrls: ['./queue-song-list.component.scss']
 })
-export class QueueSongListComponent implements OnInit, AfterViewInit {
+export class QueueSongListComponent implements OnInit {
 
   @Input()
   track: QueueSong;
@@ -27,7 +26,6 @@ export class QueueSongListComponent implements OnInit, AfterViewInit {
 
   @ViewChild('cover') cover: ElementRef;
 
-  @ViewChild('tooltip') tooltip: NgbTooltip;
 
   @ViewChild('listAdditional') listAdditional: ElementRef;
 
@@ -65,12 +63,6 @@ export class QueueSongListComponent implements OnInit, AfterViewInit {
     this.showExpandedBorder = false;
     this.showExpandedContent1 = false;
     this.showExpandedContent2 = false;
-  }
-
-  ngAfterViewInit(): void {
-    if (this.tooltip && !this.jamSessionStore.jamSession.active) {
-      this.tooltip.open();
-    }
   }
 
   getImgColor(): void {

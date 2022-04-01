@@ -7,7 +7,6 @@ import {QueueStore} from '../../core/stores/queue.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {Notification, NotificationService} from '../../core/services/notification.service';
-import {NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {ColorService, SongColor} from '../../core/services/color.service';
 import {UtilService} from '../../core/services/util.service';
 import {PermissionsService} from '../../core/services/permissions.service';

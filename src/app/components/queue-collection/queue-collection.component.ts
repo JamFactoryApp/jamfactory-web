@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AddCollectionRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {QueueService} from '../../core/services/queue.service';
 import PlaylistObjectSimplified = SpotifyApi.PlaylistObjectSimplified;
@@ -12,7 +12,7 @@ import {UtilService} from '../../core/services/util.service';
   styleUrls: ['./queue-collection.component.scss']
 })
 
-export class QueueCollectionComponent implements OnInit {
+export class QueueCollectionComponent  {
 
   inQueue = true;
 
@@ -27,8 +27,7 @@ export class QueueCollectionComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-  }
+
 
 
   vote(collection: PlaylistObjectSimplified | AlbumObjectSimplified): void {
