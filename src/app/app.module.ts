@@ -4,7 +4,6 @@ import {AppComponent} from './app.component';
 import {BrowserModule} from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {httpInterceptorProviders} from './core/interceptors';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
@@ -50,7 +49,6 @@ import {Router} from '@angular/router';
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    NgbModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
