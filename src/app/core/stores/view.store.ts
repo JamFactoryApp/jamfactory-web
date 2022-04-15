@@ -6,6 +6,7 @@ export class ViewSettings {
   searchBarViewToggle: boolean;
   searchResultViewToggle: boolean;
   menu: boolean;
+  menuSub: string;
 }
 
 @Injectable({
@@ -17,7 +18,8 @@ export class ViewStore {
     cardMode: false,
     searchBarViewToggle: false,
     searchResultViewToggle: false,
-    menu: false
+    menu: false,
+    menuSub: ''
   };
 
   private viewSubject: BehaviorSubject<ViewSettings> = new BehaviorSubject<ViewSettings>(this.defaultView);
@@ -54,6 +56,12 @@ export class ViewStore {
   set menu(value: boolean) {
     const v = this.viewSubject.value;
     v.menu = value;
+    this.viewSubject.next(v);
+  }
+
+  set menuSub(value: string) {
+    const v = this.viewSubject.value;
+    v.menuSub = value;
     this.viewSubject.next(v);
   }
 }
