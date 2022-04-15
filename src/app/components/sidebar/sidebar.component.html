@@ -10,7 +10,7 @@
 
   <div class="sidebar-content">
 
-    <ng-container *ngIf="!viewNotify && !viewSetting && !viewCustom">
+    <ng-container *ngIf="!sidebarViewObject.viewNotify && !sidebarViewObject.viewSetting && !sidebarViewObject.viewCustom">
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-section">
@@ -105,7 +105,7 @@
       </div>
     </ng-container>
 
-    <div class="sidebar-notification" *ngIf="viewNotify">
+    <div class="sidebar-notification" *ngIf="sidebarViewObject.viewNotify">
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-section d-flex al-center" style="justify-content: start">
@@ -155,7 +155,7 @@
       </div>
     </div>
 
-    <ng-container *ngIf="viewSetting">
+    <ng-container *ngIf="sidebarViewObject.viewSetting">
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-section d-flex al-center" style="justify-content: start">
@@ -187,7 +187,7 @@
       </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="viewCustom">
+    <ng-container *ngIf="sidebarViewObject.viewCustom">
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-section d-flex al-center" style="justify-content: start">
