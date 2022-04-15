@@ -2,7 +2,13 @@ import {AfterContentInit, Component, ElementRef, HostListener, OnInit, ViewChild
 import {AuthHttpService} from '../../core/http/auth.http.service';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {JamPlaybackBody, JamPlaySongBody, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
+import {
+  JamPlaybackBody,
+  JamPlaySongBody,
+  JamUser,
+  SetPlaybackRequestBody,
+  SpotifyDevices
+} from '@jamfactoryapp/jamfactory-types';
 import {QueueStore} from '../../core/stores/queue.store';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
@@ -211,7 +217,10 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   }
 
   toggleMenu(): void {
-    setTimeout(() => this.viewStore.menu = !this.viewStore.view.menu, 20);
+    setTimeout(() => {
+      this.viewStore.menu = !this.viewStore.view.menu;
+      this.viewStore.menuSub = 'notification';
+    }, 20);
   }
 
   getBestColor(col1: Vec3 = this.songColor.vibrant, col2: Vec3 = this.songColor.muted, baseCol: Vec3 = [42, 42, 52]): string {

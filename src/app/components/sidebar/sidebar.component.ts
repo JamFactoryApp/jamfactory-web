@@ -38,8 +38,6 @@ export class SidebarComponent implements OnInit {
   public copyIcon = 'content_copy';
   public nameField = new FormControl('');
 
-  public sidebarViewObject = {viewNotify: false, viewSetting: false, viewCustom: false};
-
   constructor(
     public colorService: ColorService,
     public notificationService: NotificationService,
@@ -50,7 +48,7 @@ export class SidebarComponent implements OnInit {
     private authStore: UserStore,
     public permissions: PermissionsService,
     private spotifyService: SpotifyHttpService,
-    private viewStore: ViewStore,
+    public viewStore: ViewStore,
     public membersStore: MemberStore,
     private eRef: ElementRef,
     private modal: ModalService,
@@ -65,7 +63,7 @@ export class SidebarComponent implements OnInit {
       if (!this.eRef.nativeElement.contains(event.target)) {
         this.viewStore.menu = false;
         this.copyIcon = 'content_copy';
-        this.resetViews();
+        this.resetViewsClosingMenu();
       }
     }
   }
@@ -158,25 +156,29 @@ export class SidebarComponent implements OnInit {
 
   toggleNotification(): void {
     setTimeout(() => {
-      this.sidebarViewObject.viewNotify = !this.sidebarViewObject.viewNotify;
+      this.viewStore.menuSub = 'notification';
     }, 10);
   }
 
   toggleSettings(): void {
     setTimeout(() => {
-      this.sidebarViewObject.viewSetting = !this.sidebarViewObject.viewSetting;
+      this.viewStore.menuSub = 'settings';
     }, 10);
   }
 
   toggleCustom(): void {
     setTimeout(() => {
-      this.sidebarViewObject.viewCustom = !this.sidebarViewObject.viewCustom;
+      this.viewStore.menuSub = 'custom';
     }, 10);
   }
 
   resetViews() {
+    setTimeout(() => this.viewStore.menuSub = '', 10);
+  }
+
+  resetViewsClosingMenu() {
     setTimeout(() => {
-      Object.keys(this.sidebarViewObject).forEach(v => this.sidebarViewObject[v] = false)
+      this.viewStore.menuSub = '';
     }, 300);
   }
 

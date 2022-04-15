@@ -10,7 +10,7 @@
 
   <div class="sidebar-content">
 
-    <ng-container *ngIf="!sidebarViewObject.viewNotify && !sidebarViewObject.viewSetting && !sidebarViewObject.viewCustom">
+    <ng-container *ngIf="viewStore.view.menuSub === ''">
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-section">
@@ -94,6 +94,7 @@
 
       <div class="sidebar-section d-flex al-center jy-center">
         <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Notifications" (click)="toggleNotification()">
+          <div class="notification-new" *ngIf="notificationService.notifications.length !== 0"></div>
           <i class="material-icons menu-button">notifications</i>
         </div>
         <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Settings" (click)="toggleSettings()">
@@ -105,11 +106,11 @@
       </div>
     </ng-container>
 
-    <div class="sidebar-notification" *ngIf="sidebarViewObject.viewNotify">
+    <div class="sidebar-notification" *ngIf="viewStore.view.menuSub === 'notification'">
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-section d-flex al-center" style="justify-content: start">
-        <div class="sidebar-back-button d-flex jy-center al-center" (click)="toggleNotification()">
+        <div class="sidebar-back-button d-flex jy-center al-center" (click)="resetViews()">
           <i class="material-icons menu-button">arrow_back</i>
         </div>
       </div>
@@ -155,11 +156,11 @@
       </div>
     </div>
 
-    <ng-container *ngIf="sidebarViewObject.viewSetting">
+    <ng-container *ngIf="viewStore.view.menuSub === 'settings'">
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-section d-flex al-center" style="justify-content: start">
-        <div class="sidebar-back-button d-flex jy-center al-center" (click)="toggleSettings()">
+        <div class="sidebar-back-button d-flex jy-center al-center" (click)="resetViews()">
           <i class="material-icons menu-button">arrow_back</i>
         </div>
       </div>
@@ -187,11 +188,11 @@
       </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="sidebarViewObject.viewCustom">
+    <ng-container *ngIf="viewStore.view.menuSub === 'custom'">
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-section d-flex al-center" style="justify-content: start">
-        <div class="sidebar-back-button d-flex jy-center al-center" (click)="toggleCustom()">
+        <div class="sidebar-back-button d-flex jy-center al-center" (click)="resetViews()">
           <i class="material-icons menu-button">arrow_back</i>
         </div>
       </div>

@@ -97,16 +97,6 @@
   background: red;
   margin: 0 0 10px 10px;
   border: 1px solid #2a2a34;
-  animation: pulsating 0.8s infinite alternate-reverse;
-}
-
-@keyframes pulsating {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.4);
-  }
 }
 
 .main-notification {
