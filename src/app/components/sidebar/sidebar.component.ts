@@ -4,7 +4,13 @@ import {ColorService} from '../../core/services/color.service';
 import {WebsocketService} from '../../core/services/websocket.service';
 import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
-import {JamPlaybackBody, JamSessionSetting, JamUser, SetPlaybackRequestBody, SpotifyDevices} from '@jamfactoryapp/jamfactory-types';
+import {
+  JamPlaybackBody,
+  JamSessionSetting,
+  JamUser,
+  SetPlaybackRequestBody,
+  SpotifyDevices
+} from '@jamfactoryapp/jamfactory-types';
 import {JamsessionStore} from '../../core/stores/jamsession.store';
 import {UserStore} from '../../core/stores/user.store';
 import {PermissionsService} from '../../core/services/permissions.service';
@@ -31,9 +37,7 @@ export class SidebarComponent implements OnInit {
   public copyIcon = 'content_copy';
   public nameField = new FormControl('');
 
-  public viewNotify = false;
-  public viewSetting = false;
-  public viewCustom = false;
+  public sidebarViewObject = {viewNotify: false, viewSetting: false, viewCustom: false};
 
   constructor(
     public colorService: ColorService,
@@ -59,6 +63,7 @@ export class SidebarComponent implements OnInit {
       if (!this.eRef.nativeElement.contains(event.target)) {
         this.viewStore.menu = false;
         this.copyIcon = 'content_copy';
+        this.resetViews();
       }
     }
   }
@@ -150,20 +155,26 @@ export class SidebarComponent implements OnInit {
 
   toggleNotification(): void {
     setTimeout(() => {
-      this.viewNotify = !this.viewNotify;
+      this.sidebarViewObject.viewNotify = !this.sidebarViewObject.viewNotify;
     }, 10);
   }
 
   toggleSettings(): void {
     setTimeout(() => {
-      this.viewSetting = !this.viewSetting;
+      this.sidebarViewObject.viewSetting = !this.sidebarViewObject.viewSetting;
     }, 10);
   }
 
   toggleCustom(): void {
     setTimeout(() => {
-      this.viewCustom = !this.viewCustom;
+      this.sidebarViewObject.viewCustom = !this.sidebarViewObject.viewCustom;
     }, 10);
+  }
+
+  resetViews() {
+    setTimeout(() => {
+      Object.keys(this.sidebarViewObject).forEach(v => this.sidebarViewObject[v] = false)
+    }, 300);
   }
 
   changeTheme(type): void {
