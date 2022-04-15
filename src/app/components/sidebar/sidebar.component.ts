@@ -19,6 +19,7 @@ import {ViewStore} from '../../core/stores/view.store';
 import {FormControl} from '@angular/forms';
 import {Modal, ModalService} from '../../core/services/modal.service';
 import {MemberStore} from '../../core/stores/member.store';
+import {LocalstorageService} from "../../core/services/localstorage.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -52,7 +53,8 @@ export class SidebarComponent implements OnInit {
     private viewStore: ViewStore,
     public membersStore: MemberStore,
     private eRef: ElementRef,
-    private modal: ModalService
+    private modal: ModalService,
+    private localstorageService: LocalstorageService
   ) {
   }
 
@@ -135,6 +137,7 @@ export class SidebarComponent implements OnInit {
   }
 
   switchQueueView(status: boolean): void {
+    this.localstorageService.setItem("ViewStatus", String(status));
     this.viewStore.cardMode = status;
   }
 
@@ -182,15 +185,16 @@ export class SidebarComponent implements OnInit {
       let color = '';
       switch (type) {
         case 0:
-          color = '236, 154, 41';
+          color = '236, 154, 41'; //Orange
           break;
         case 1:
-          color = '101, 155, 94';
+          color = '101, 155, 94'; //Green
           break;
         case 2:
-          color = '81, 113, 165';
+          color = '81, 113, 165'; //Blue
           break;
       }
+      this.localstorageService.setItem("MainColor", color);
       document.documentElement.style.setProperty('--dominant-color', color);
     }, 10);
   }

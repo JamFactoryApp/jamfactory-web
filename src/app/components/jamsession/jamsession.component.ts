@@ -24,6 +24,7 @@ import {MemberStore} from '../../core/stores/member.store';
 import {ViewStore} from '../../core/stores/view.store';
 import {ModalService} from '../../core/services/modal.service';
 import {createAlreadyMemberModal, createCloseModal, createJoinModal} from '../../core/static/modals';
+import {LocalstorageService} from "../../core/services/localstorage.service";
 
 
 @Component({
@@ -49,7 +50,8 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private memberStore: MemberStore,
     public notificationService: NotificationService,
     public searchViewStore: ViewStore,
-    private modal: ModalService
+    private modal: ModalService,
+    private localstorageService: LocalstorageService
   ) {
     this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
   }
@@ -74,6 +76,8 @@ export class JamsessionComponent implements OnInit, OnDestroy {
         // Try to join the JamSession
         this.joinWithPassword('');
       });
+
+    this.getSetCustoms();
   }
 
   joinWithPassword(password: string): void {
@@ -146,6 +150,18 @@ export class JamsessionComponent implements OnInit, OnDestroy {
         break;
       default:
         console.error('unknown event');
+    }
+  }
+
+  getSetCustoms() {
+    const color = this.localstorageService.getItem("MainColor");
+    if (color !== null) {
+      document.documentElement.style.setProperty('--dominant-color', color);
+    }
+
+    const view = this.localstorageService.getItem("ViewStatus");
+    if (view !== null) {
+      this.searchViewStore.cardMode = view == 'true';
     }
   }
 
