@@ -39,12 +39,13 @@
 }
 
 .footer-cover-container {
-  float: left;
   padding-right: 15px;
 }
 
 .footer-song-desc-container {
-  float: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .footer-title {
@@ -182,21 +183,79 @@ i.main-notification-icon {
 
 .footer-volume-container {
   position: absolute;
-  bottom: 65%;
-  padding-bottom: 10px;
-  margin-left: -11px;
-}
+  bottom: 58px;
 
-.footer-volume-slider {
-  padding: 10px;
-  background: #2b2b32;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  display: none;
+  @media screen and (max-width: 576px), (max-height: 576px) {
+    bottom: 40px;
+  }
+
+  .footer-volume-slider {
+    cursor: default;
+    padding: 10px;
+    background: #2a2a34;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    clip-path: inset(-5px -5px 8px -5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 50%;
+      height: 100%;
+      border-radius: 5px;
+      display: block;
+      cursor: pointer;
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 5px;
+        border-radius: 2px;
+        width: 200%;
+        background: #e1e1e1;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      &::-moz-range-thumb {
+        height: 5px;
+        border-radius: 2px;
+        width: 200%;
+        background: #e1e1e1;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      &::-ms-thumb {
+        height: 5px;
+        border-radius: 2px;
+        width: 200%;
+        background: #e1e1e1;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &::-ms-track {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+      }
+    }
+  }
 }
 
 .footer-control-button:hover .footer-volume-slider {
-  display: block;
+  display: flex;
 }
 
 /*######################################################################*/
