@@ -21,42 +21,41 @@
        [style]="{'background-image': 'linear-gradient(to left, #23232b 50%, ' + colorService.vec3ToRGBAString(songColor.vibrant, 0.4) + ' 50%)'}"
        [ngStyle]="{'background-position': 'right ' + songProgress + '% bottom 100%'}"></div>
 
-  <div class="d-flex jy-center al-center" [style]="{'color': getBestColor()}"
-       style="position: relative">
-    <div class="footer-listen-content d-flex al-center h-100">
-      <div class="footer-cover-container d-flex al-center">
-        <img #cover *ngIf="item" [src]="playback.playback.item.album.images[1].url" (load)="getImgColor()"
-             alt="Album Cover" class="footer-cover" crossOrigin="anonymous"/>
-      </div>
-      <div class="footer-song-desc-container h-100"
-           [style]="{'color': getBestColor( songColor.muted, [255, 255, 255], [35, 35, 43])}">
-        <div *ngIf="item" class="footer-title">{{playback.playback.item.name}}</div>
-        <div *ngIf="item" class="footer-artist">{{playback.playback.item.artists[0].name}}</div>
-      </div>
+  <div class="d-flex al-center w-100" [style]="{'color': getBestColor()}"
+       style="position: relative; justify-content: space-between; gap: 15px">
+    <img #cover *ngIf="item" [src]="playback.playback.item.album.images[1].url" (load)="getImgColor()"
+         alt="Album Cover" class="footer-cover" crossOrigin="anonymous"/>
+    <div class="footer-song-desc-container h-100" style="flex-grow: 1;"
+         [style]="{'color': getBestColor( songColor.muted, [255, 255, 255], [35, 35, 43])}">
+      <span *ngIf="item" class="footer-title">{{playback.playback.item.name}}</span> <br>
+      <span *ngIf="item" class="footer-artist">{{playback.playback.item.artists[0].name}}</span>
     </div>
 
     <div class="footer-control-button-container d-flex al-center footer-control-button-util">
       <div class="d-flex jy-center al-center">
 
-        <button (click)="resumePlayback()" *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing"
-             class="footer-control-button d-flex jy-center al-center">
+        <button (click)="resumePlayback()"
+                *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && !playback.playback.is_playing"
+                class="footer-control-button d-flex jy-center al-center">
           <i class="material-icons footer-button-icons">play_arrow</i>
         </button>
-        <button (click)="pausePlayback()" *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && playback.playback.is_playing"
+        <button (click)="pausePlayback()"
+                *ngIf="item && this.permissions.hasPermission(this.permissions.Host) && playback.playback.is_playing"
                 class="footer-control-button d-flex jy-center al-center">
           <i class="material-icons footer-button-icons">pause</i>
         </button>
 
         <button class="footer-control-button d-flex jy-center al-center" (click)="onSkip()"
-             *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
+                *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
           <i class="material-icons footer-button-icons">skip_next</i>
         </button>
 
-        <button class="footer-control-button"
-             *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
+        <button class="footer-control-button d-flex al-center jy-center"
+                *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
           <div class="footer-volume-container">
             <div class="footer-volume-slider">
               <input class="footer-volume" type="range" orient="vertical" (change)="onVolumeChange()"
+                     [style]="{'background-color': getBestColor()}"
                      [formControl]="currentVolume"/>
             </div>
           </div>
@@ -66,9 +65,9 @@
         </button>
 
         <button id="notification-button"
-             class="footer-control-button d-flex jy-center al-center" (click)="toggleMenu()">
+                class="footer-control-button d-flex jy-center al-center" (click)="toggleMenu()">
           <div class="footer-notification-new" *ngIf="notificationService.notifications.length !== 0"></div>
-          <i  class="material-icons footer-button-icons">notifications</i>
+          <i class="material-icons footer-button-icons">notifications</i>
         </button>
       </div>
     </div>
