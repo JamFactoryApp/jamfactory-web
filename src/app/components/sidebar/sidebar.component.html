@@ -93,14 +93,17 @@
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-section d-flex al-center jy-center">
-        <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Notifications" (click)="toggleNotification()">
+        <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Notifications"
+             (click)="toggleNotification()">
           <div class="notification-new" *ngIf="notificationService.notifications.length !== 0"></div>
           <i class="material-icons menu-button">notifications</i>
         </div>
-        <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Settings" (click)="toggleSettings()">
+        <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Settings"
+             (click)="toggleSettings()">
           <i class="material-icons menu-button">settings</i>
         </div>
-        <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Customization" (click)="toggleCustom()">
+        <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Customization"
+             (click)="toggleCustom()">
           <i class="material-icons menu-button">brush</i>
         </div>
       </div>
@@ -165,10 +168,10 @@
         </div>
       </div>
 
-      <ng-container *ngIf="this.permissions.hasPermission(this.permissions.Host)">
-        <div class="sidebar-section">
-          <div class="sidebar-section-header">Options</div>
-          <div class="sidebar-section-content">
+      <div class="sidebar-section">
+        <div class="sidebar-section-header">Options</div>
+        <div class="sidebar-section-content">
+          <ng-container *ngIf="this.permissions.hasPermission(this.permissions.Host)">
             <div class="sidebar-subsection-header">Name</div>
             <div class="sidebar-subsection-content">
               <input id="name-input" type="text" placeholder="" class="sidebar-options-input w-100"
@@ -183,9 +186,17 @@
             <div class="sidebar-subsection-content">
               <button class="button button-green" (click)="saveSettings()">Save</button>
             </div>
+          </ng-container>
+          <div class="options-entry">
+            <div class="options-description">Show song previews</div>
+            <div id="options-button" class="options-button" [ngClass]="viewStore.view.showPreview ? 'toggle-on' : ''" (click)="toggleButton()">
+              <div [ngClass]="viewStore.view.showPreview ? 'toggle-text-on' : 'toggle-text-off'">{{viewStore.view.showPreview ? 'ON' : 'OFF'}}</div>
+              <div class='toggle-button'></div>
+            </div>
           </div>
         </div>
-      </ng-container>
+      </div>
+
     </ng-container>
 
     <ng-container *ngIf="viewStore.view.menuSub === 'custom'">

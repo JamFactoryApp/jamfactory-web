@@ -38,6 +38,8 @@ export class SidebarComponent implements OnInit {
   public copyIcon = 'content_copy';
   public nameField = new FormControl('');
 
+  public optionsCheck = false;
+
   constructor(
     public colorService: ColorService,
     public notificationService: NotificationService,
@@ -89,6 +91,13 @@ export class SidebarComponent implements OnInit {
     this.viewStore.$view.subscribe(value => {
       this.queueViewStatus = value.cardMode;
     });
+
+    const preview = this.localstorageService.getItem('PreviewSong');
+    if (preview !== null) {
+      this.viewStore.preview = Boolean(this.localstorageService.getItem('PreviewSong'));
+    } else {
+      this.viewStore.preview = false;
+    }
   }
 
   leave(): void {
@@ -199,5 +208,10 @@ export class SidebarComponent implements OnInit {
       this.localstorageService.setItem("MainColor", color);
       document.documentElement.style.setProperty('--dominant-color', color);
     }, 10);
+  }
+
+  toggleButton(): void {
+    this.viewStore.preview = !this.viewStore.view.showPreview;
+    this.localstorageService.setItem('PreviewSong', String(this.viewStore.view.showPreview));
   }
 }

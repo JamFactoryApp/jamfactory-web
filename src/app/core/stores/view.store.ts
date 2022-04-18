@@ -7,6 +7,7 @@ export class ViewSettings {
   searchResultViewToggle: boolean;
   menu: boolean;
   menuSub: string;
+  showPreview: boolean;
 }
 
 @Injectable({
@@ -19,7 +20,8 @@ export class ViewStore {
     searchBarViewToggle: false,
     searchResultViewToggle: false,
     menu: false,
-    menuSub: ''
+    menuSub: '',
+    showPreview: false
   };
 
   private viewSubject: BehaviorSubject<ViewSettings> = new BehaviorSubject<ViewSettings>(this.defaultView);
@@ -62,6 +64,12 @@ export class ViewStore {
   set menuSub(value: string) {
     const v = this.viewSubject.value;
     v.menuSub = value;
+    this.viewSubject.next(v);
+  }
+
+  set preview(value: boolean) {
+    const v = this.viewSubject.value;
+    v.showPreview = value;
     this.viewSubject.next(v);
   }
 }

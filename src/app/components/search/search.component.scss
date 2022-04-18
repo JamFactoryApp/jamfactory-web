@@ -201,12 +201,20 @@
   text-overflow: ellipsis;
 }
 
+.search-result-icon-container {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
 .search-result-icon {
   font-size: 32px;
   color: var(--main-text-color);
   cursor: pointer;
-  padding-right: 20px;
-  padding-left: 20px;
+}
+
+.search-result-play-icon {
+  padding-right: 10px;
+  font-size: 40px;
 }
 
 /*######################################################################*/

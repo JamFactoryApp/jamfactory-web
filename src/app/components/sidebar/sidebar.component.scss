@@ -306,6 +306,98 @@
   border: 1px solid #2a2a34;
 }
 
+.options-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 15px 0;
+
+  .options-description {
+    font-size: 20px;
+    color: #808c9f;
+    font-weight: 600;
+  }
+
+  .options-button {
+    position: relative;
+    height: 40px;
+    width: 75px;
+    border: 2px solid #444249;
+    border-radius: 20px;
+    transition: border-color .6s ease-out;
+
+    .toggle-button {
+      position: absolute;
+      top: 4px;
+      width: 28px;
+      bottom: 4px;
+      right: 39px;
+      background-color: #444249;
+      border-radius: 19px;
+      cursor: pointer;
+      transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+    }
+
+    .toggle-text-off {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 6px;
+      line-height: 36px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      user-select: none;
+      cursor: pointer;
+      color: #808c9f;
+      z-index: 1;
+    }
+
+    .toggle-text-on {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      line-height: 36px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: normal;
+      cursor: pointer;
+      user-select: none;
+      color: rgba(0,0,0,0);
+      z-index: 1;
+    }
+  }
+
+  .toggle-on {
+    border-color: var(--main-accent-color);
+    transition: all .5s .15s ease-out;
+
+    .toggle-button {
+      top: 3px;
+      width: 65px;
+      bottom: 3px;
+      right: 3px;
+      border-radius: 23px;
+      background-color: var(--main-accent-color);
+      transition: all .2s .1s, right .1s;
+    }
+
+    .toggle-text-off {
+      color: rgba(0,0,0,0);
+      z-index: 1;
+    }
+
+    .toggle-text-on {
+      color: var(--main-background-color);
+      transition: color .3s .15s ;
+      z-index: 1;
+    }
+  }
+}
+
 /*######################################################################*/
 /*VIEW CHANGE*/
 .view-button {
