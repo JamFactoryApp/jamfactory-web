@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {first} from 'rxjs';
 
 declare var ColorThief: any;
 type Vec3 = [number, number, number];
