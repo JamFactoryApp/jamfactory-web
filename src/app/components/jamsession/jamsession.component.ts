@@ -96,7 +96,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   }
 
   handleJoinError(error): void {
-    if (error.error === 'wrong password\n') {
+    if (error.error === 'wrong password') {
       this.modal.add(createJoinModal(this));
     } else {
       this.router.navigate([''], {queryParams: {error: error.error, label: this.route.snapshot.params.jamlabel}});
