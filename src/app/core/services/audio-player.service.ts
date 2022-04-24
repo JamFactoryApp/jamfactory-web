@@ -29,7 +29,7 @@ export class AudioPlayerService {
         this.audio.load();
         this.audio.play();
 
-        this.fadeAudio = setInterval(() => {
+        this.fadeAudio = window.setInterval(() => {
           const fadePoint = this.audio.duration - 2;
           if ((this.audio.currentTime >= fadePoint) && (this.audio.volume !== 0)) {
             this.audio.volume -= 0.1
@@ -46,7 +46,7 @@ export class AudioPlayerService {
       this.audio.load();
       this.audio.play();
 
-      this.fadeAudio = setInterval(() => {
+      this.fadeAudio = window.setInterval(() => {
         const fadePoint = this.audio.duration - 2;
         if ((this.audio.currentTime >= fadePoint) && (this.audio.volume !== 0)) {
           this.audio.volume -= 0.1
@@ -67,7 +67,7 @@ export class AudioPlayerService {
   }
 
   fadeOut(): void {
-    this.fadeAudio = setInterval(() => {
+    this.fadeAudio = window.setInterval(() => {
       if (this.audio.volume !== 0) {
         this.audio.volume -= 0.1
       }

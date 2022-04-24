@@ -1,0 +1,34 @@
+<div class="sidebar-divider"></div>
+
+<div class="sidebar-section d-flex al-center" style="justify-content: start">
+  <div class="sidebar-back-button d-flex jy-center al-center" (click)="resetViews()">
+    <i class="material-icons menu-button">arrow_back</i>
+  </div>
+</div>
+<div class="sidebar-section">
+  <div class="sidebar-section-header">Customizations</div>
+
+  <div class="sidebar-section-content">
+    <div class="sidebar-subsection-header">Color Theme</div>
+    <div class="sidebar-subsection-content d-flex al-center jy-center">
+      <div class="custom-colortheme-container" (click)="changeTheme(0)">
+        <div class="h-100 w-100 d-flex al-center" style="justify-content: space-between">
+          <div class="h-100 colortheme-selector" style="width: 60%; background: rgb(236, 154, 41);"></div>
+          <div class="h-100 colortheme-selector" style="width: 30%; background: rgb(236, 154, 41);"></div>
+        </div>
+      </div>
+      <div class="custom-colortheme-container" (click)="changeTheme(1)">
+        <div class="h-100 w-100 d-flex al-center" style="justify-content: space-between">
+          <div class="h-100 colortheme-selector" style="width: 60%; background: rgb(101, 155, 94);"></div>
+          <div class="h-100 colortheme-selector" style="width: 30%; background: rgb(101, 155, 94);"></div>
+        </div>
+      </div>
+      <div class="custom-colortheme-container" (click)="changeTheme(2)">
+        <div class="h-100 w-100 d-flex al-center" style="justify-content: space-between">
+          <div class="h-100 colortheme-selector" style="width: 60%; background: rgb(81, 113, 165);"></div>
+          <div class="h-100 colortheme-selector" style="width: 30%; background: rgb(81, 113, 165);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

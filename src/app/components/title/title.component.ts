@@ -43,7 +43,7 @@ export class TitleComponent implements OnInit {
 
   searchEvent(): void {
     clearTimeout(this.searchTimeout);
-    this.searchTimeout = setTimeout(() => this.searchTracks(), 100);
+    this.searchTimeout = window.setTimeout(() => this.searchTracks(), 100);
   }
 
   searchTracks(): void {

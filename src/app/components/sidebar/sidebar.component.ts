@@ -6,7 +6,6 @@ import {JamsessionHttpService} from '../../core/http/jamsession.http.service';
 import {Router} from '@angular/router';
 import {
   JamPlaybackBody,
-  JamSessionSetting,
   JamUser,
   SetPlaybackRequestBody,
   SpotifyDevices
@@ -16,8 +15,7 @@ import {UserStore} from '../../core/stores/user.store';
 import {PermissionsService} from '../../core/services/permissions.service';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {ViewStore} from '../../core/stores/view.store';
-import {FormControl} from '@angular/forms';
-import {Modal, ModalService} from '../../core/services/modal.service';
+import {ModalService} from '../../core/services/modal.service';
 import {MemberStore} from '../../core/stores/member.store';
 import {LocalstorageService} from "../../core/services/localstorage.service";
 
@@ -33,12 +31,7 @@ export class SidebarComponent implements OnInit {
   public devices: SpotifyDevices;
   public playback: JamPlaybackBody;
 
-  public passwordField = new FormControl('');
-  public hasPassword = false;
   public copyIcon = 'content_copy';
-  public nameField = new FormControl('');
-
-  public optionsCheck = false;
 
   constructor(
     public colorService: ColorService,
@@ -78,12 +71,6 @@ export class SidebarComponent implements OnInit {
       }, 500);
     });
 
-    this.jamStore.$jamSession.subscribe(value => {
-      if (value) {
-        this.nameField.patchValue(value.name);
-      }
-    });
-
     this.jamStore.$playback.subscribe(value => {
       this.playback = value;
     });
@@ -91,13 +78,6 @@ export class SidebarComponent implements OnInit {
     this.viewStore.$view.subscribe(value => {
       this.queueViewStatus = value.cardMode;
     });
-
-    const preview = this.localstorageService.getItem('PreviewSong');
-    if (preview !== null) {
-      this.viewStore.preview = Boolean(this.localstorageService.getItem('PreviewSong'));
-    } else {
-      this.viewStore.preview = false;
-    }
   }
 
   leave(): void {
@@ -131,6 +111,7 @@ export class SidebarComponent implements OnInit {
 
   toggleMenu(): void {
     this.viewStore.menu = !this.viewStore.view.menu;
+    this.resetViewsClosingMenu();
   }
 
   getUserName(JamSessionName: string): string {
@@ -146,21 +127,6 @@ export class SidebarComponent implements OnInit {
   switchQueueView(status: boolean): void {
     this.localstorageService.setItem("ViewStatus", String(status));
     this.viewStore.cardMode = status;
-  }
-
-  saveSettings(): void {
-    const body: JamSessionSetting = {
-      name: this.nameField.value
-    };
-    if (this.passwordField.value !== '') {
-      body.password = this.passwordField.value;
-    }
-    this.jamService.putJamsession(body).subscribe(value => {
-      this.jamStore.jamSession = value;
-      if (this.passwordField.value !== '') {
-        this.hasPassword = true;
-      }
-    });
   }
 
   toggleNotification(): void {
@@ -181,37 +147,15 @@ export class SidebarComponent implements OnInit {
     }, 10);
   }
 
-  resetViews() {
-    setTimeout(() => this.viewStore.menuSub = '', 10);
+  toggleMember(): void {
+    setTimeout(() => {
+      this.viewStore.menuSub = 'member';
+    }, 10);
   }
 
   resetViewsClosingMenu() {
     setTimeout(() => {
       this.viewStore.menuSub = '';
     }, 300);
-  }
-
-  changeTheme(type): void {
-    setTimeout(() => {
-      let color = '';
-      switch (type) {
-        case 0:
-          color = '236, 154, 41'; //Orange
-          break;
-        case 1:
-          color = '101, 155, 94'; //Green
-          break;
-        case 2:
-          color = '81, 113, 165'; //Blue
-          break;
-      }
-      this.localstorageService.setItem("MainColor", color);
-      document.documentElement.style.setProperty('--dominant-color', color);
-    }, 10);
-  }
-
-  toggleButton(): void {
-    this.viewStore.preview = !this.viewStore.view.showPreview;
-    this.localstorageService.setItem('PreviewSong', String(this.viewStore.view.showPreview));
   }
 }

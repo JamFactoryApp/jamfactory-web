@@ -1,0 +1,27 @@
+<div class="sidebar-divider"></div>
+
+<div class="sidebar-section d-flex al-center" style="justify-content: start">
+  <div class="sidebar-back-button d-flex jy-center al-center" (click)="resetViews()">
+    <i class="material-icons menu-button sidebar-menu-button">arrow_back</i>
+  </div>
+</div>
+<div class="sidebar-section sidebar-section-notify">
+  <div class="sidebar-section-header">Members
+    <div class="sidebar-notification-counter">
+      {{memberStore.members.length}}
+    </div>
+  </div>
+
+  <div class="sidebar-section-notifications">
+    <div class="sidebar-notifications-container">
+
+      <div *ngIf="memberStore.members.length === 0" style="color: #808c9f; opacity: 0.7;">
+        There are no members in your JamSession!
+      </div>
+
+      <app-sidebar-member *ngFor="let member of memberStore.members" [memberInfo]="member"
+                          class="member-container" [ngClass]="member.permissions.includes('Admin') ? 'admin-member' : ''"></app-sidebar-member>
+
+    </div>
+  </div>
+</div>

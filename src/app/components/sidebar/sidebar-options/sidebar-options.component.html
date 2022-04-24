@@ -1,0 +1,38 @@
+<div class="sidebar-divider"></div>
+
+<div class="sidebar-section d-flex al-center" style="justify-content: start">
+  <div class="sidebar-back-button d-flex jy-center al-center" (click)="resetViews()">
+    <i class="material-icons menu-button">arrow_back</i>
+  </div>
+</div>
+
+<div class="sidebar-section">
+  <div class="sidebar-section-header">Options</div>
+  <div class="sidebar-section-content">
+    <ng-container *ngIf="this.permissions.hasPermission(this.permissions.Host)">
+      <div class="sidebar-subsection-header">Name</div>
+      <div class="sidebar-subsection-content">
+        <input id="name-input" type="text" placeholder="" class="sidebar-options-input w-100"
+               [formControl]="nameField">
+      </div>
+      <div class="sidebar-subsection-header">Password</div>
+      <div class="sidebar-subsection-content">
+        <input id="password-input" [type]="!hasPassword ? 'text' : 'password'" placeholder="Change password"
+               class="sidebar-options-input w-100"
+               [formControl]="passwordField">
+      </div>
+      <div class="sidebar-subsection-content">
+        <button class="button button-green" (click)="saveSettings()">Save</button>
+      </div>
+    </ng-container>
+    <div class="options-entry">
+      <div class="options-description">Show song previews</div>
+      <div id="options-button" class="options-button" [ngClass]="viewStore.view.showPreview ? 'toggle-on' : ''"
+           (click)="toggleButton()">
+        <div
+          [ngClass]="viewStore.view.showPreview ? 'toggle-text-on' : 'toggle-text-off'">{{viewStore.view.showPreview ? 'ON' : 'OFF'}}</div>
+        <div class='toggle-button'></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="member-image"/>
+<div class="member-name">{{memberInfo.display_name}}</div>
+<i class="material-icons member-icon" [ngClass]="menuToggle ? 'active' : ''" (click)="toggleMenu()">more_horiz</i>
+
+<div *ngIf="menuToggle" class="member-menu">
+  <div *ngIf="!memberInfo.permissions.includes('Admin')" class="member-menu-item" (click)="makeAdmin()">Make admin</div>
+  <div *ngIf="memberInfo.permissions.includes('Admin')" class="member-menu-item" (click)="removeAdmin()">Remove admin</div>
+  <div class="member-menu-item" (click)="removeMember()">Kick</div>
+</div>

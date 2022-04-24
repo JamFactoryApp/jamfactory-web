@@ -21,6 +21,7 @@ export class MemberStore {
   }
 
   set members(members: JamMember[]) {
+    /*Check if joined member is new or already was in the JamSession*/
     if (this.membersSubject.value.length !== 0) {
       const newMembers = members.filter(member => {
         let isNewMember = true;
@@ -29,6 +30,9 @@ export class MemberStore {
             isNewMember = false;
           }
         });
+        if (member.permissions.includes('Host')) {
+          isNewMember = false;
+        }
         return isNewMember;
       });
 
@@ -36,7 +40,10 @@ export class MemberStore {
         this.notifications.show(new Notification(newMember.display_name + ' joined'));
       });
     }
-    this.membersSubject.next(members);
+
+    /*Set sorted members*/
+    this.membersSubject.next(this.sortMembers(members));
+
     if (this.userStore.currentUser) {
       const currentMemberArr = members.filter(m => m.identifier === this.userStore.currentUser.identifier);
       if (currentMemberArr.length === 1) {
@@ -67,6 +74,15 @@ export class MemberStore {
 
   get $currentHost(): Observable<JamMember> {
     return new Observable(fn => this.currentHostSubject.subscribe(fn));
+  }
+
+
+  private sortMembers(members: JamMember[]): JamMember[] {
+    return members.sort((a, b) =>
+      a.display_name.localeCompare(b.display_name) || <any>a.permissions.includes('Admin') - <any>b.permissions.includes('Admin')
+    ).filter(
+      member => !member.permissions.includes('Host')
+    );
   }
 
 }

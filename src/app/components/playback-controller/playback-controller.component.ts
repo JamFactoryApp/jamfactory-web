@@ -117,7 +117,7 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
       if (this.playback?.playback?.is_playing && this.progressms < this.playback.playback.item.duration_ms) {
 
         if (this.intervallId === undefined) {
-          this.intervallId = setInterval(() => this.progressms += 1000, 1000);
+          this.intervallId = window.setInterval(() => this.progressms += 1000, 1000);
         }
       } else {
         clearInterval(this.intervallId);
@@ -125,7 +125,7 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
       }
     });
 
-    this.timeout = setTimeout(() => {
+    this.timeout = window.setTimeout(() => {
       this.checkNotifications();
     }, 1000);
   }

@@ -23,6 +23,11 @@ import {SearchPlaylistComponent} from './components/search/search-playlist/searc
 import {SearchAlbumComponent} from './components/search/search-album/search-album.component';
 import { ModalsComponent } from './components/modals/modals.component';
 import {Router} from '@angular/router';
+import { SidebarNotificationComponent } from './components/sidebar/sidebar-notification/sidebar-notification.component';
+import { SidebarOptionsComponent } from './components/sidebar/sidebar-options/sidebar-options.component';
+import { SidebarCustomizationComponent } from './components/sidebar/sidebar-customization/sidebar-customization.component';
+import { SidebarMembersComponent } from './components/sidebar/sidebar-members/sidebar-members.component';
+import { SidebarMemberComponent } from './components/sidebar/sidebar-members/sidebar-member/sidebar-member.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +46,12 @@ import {Router} from '@angular/router';
     SearchAlbumComponent,
     QueueSongListComponent,
     QueueSongCardsComponent,
-    ModalsComponent
+    ModalsComponent,
+    SidebarNotificationComponent,
+    SidebarOptionsComponent,
+    SidebarCustomizationComponent,
+    SidebarMembersComponent,
+    SidebarMemberComponent
   ],
   imports: [
     AppRoutingModule,
