@@ -21,6 +21,7 @@ export class MemberStore {
   }
 
   set members(members: JamMember[]) {
+    /*Check if joined member is new or already was in the JamSession*/
     if (this.membersSubject.value.length !== 0) {
       const newMembers = members.filter(member => {
         let isNewMember = true;
@@ -29,6 +30,9 @@ export class MemberStore {
             isNewMember = false;
           }
         });
+        if (member.permissions.includes('Host')) {
+          isNewMember = false;
+        }
         return isNewMember;
       });
 
@@ -36,7 +40,9 @@ export class MemberStore {
         this.notifications.show(new Notification(newMember.display_name + ' joined'));
       });
     }
+
     this.membersSubject.next(members);
+
     if (this.userStore.currentUser) {
       const currentMemberArr = members.filter(m => m.identifier === this.userStore.currentUser.identifier);
       if (currentMemberArr.length === 1) {

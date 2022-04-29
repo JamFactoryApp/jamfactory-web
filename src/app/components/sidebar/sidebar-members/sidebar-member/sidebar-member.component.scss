@@ -1,0 +1,47 @@
+.member-image {
+  height: 100%;
+  width: auto;
+  border-radius: 50%;
+}
+
+.member-name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.member-icon {
+  font-size: 32px;
+  cursor: pointer;
+  border-radius: 10px;
+  color: var(--main-accent-color);
+
+  &.active {
+    background: #1d1d27;
+  }
+}
+
+.member-menu {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background: #1d1d27;
+  z-index: 2;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 10px;
+
+  .member-menu-item {
+    width: 100%;
+    padding: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    color: var(--main-accent-color);
+
+    &:hover {
+      //background-color: rgba(255, 255, 255, 0.1);
+      background-color: var(--main-accent-color-background);
+    }
+  }
+}
