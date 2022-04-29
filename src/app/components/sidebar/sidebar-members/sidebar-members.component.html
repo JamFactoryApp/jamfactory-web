@@ -8,19 +8,20 @@
 <div class="sidebar-section sidebar-section-notify">
   <div class="sidebar-section-header">Members
     <div class="sidebar-notification-counter">
-      {{memberStore.members.length}}
+      {{memberStore.members.length - 1}}
     </div>
   </div>
 
   <div class="sidebar-section-notifications">
     <div class="sidebar-notifications-container">
 
-      <div *ngIf="memberStore.members.length === 0" style="color: #808c9f; opacity: 0.7;">
+      <div *ngIf="(memberStore.members.length - 1) === 0" style="color: #808c9f; opacity: 0.7;">
         There are no members in your JamSession!
       </div>
 
-      <app-sidebar-member *ngFor="let member of memberStore.members" [memberInfo]="member"
-                          class="member-container" [ngClass]="member.permissions.includes('Admin') ? 'admin-member' : ''"></app-sidebar-member>
+      <app-sidebar-member *ngFor="let member of sortMembers(memberStore.members)" [memberInfo]="member"
+                          class="member-container"
+                          [ngClass]="member.permissions.includes('Admin') ? 'admin-member' : ''"></app-sidebar-member>
 
     </div>
   </div>

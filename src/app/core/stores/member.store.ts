@@ -41,8 +41,7 @@ export class MemberStore {
       });
     }
 
-    /*Set sorted members*/
-    this.membersSubject.next(this.sortMembers(members));
+    this.membersSubject.next(members);
 
     if (this.userStore.currentUser) {
       const currentMemberArr = members.filter(m => m.identifier === this.userStore.currentUser.identifier);
@@ -74,15 +73,6 @@ export class MemberStore {
 
   get $currentHost(): Observable<JamMember> {
     return new Observable(fn => this.currentHostSubject.subscribe(fn));
-  }
-
-
-  private sortMembers(members: JamMember[]): JamMember[] {
-    return members.sort((a, b) =>
-      a.display_name.localeCompare(b.display_name) || <any>a.permissions.includes('Admin') - <any>b.permissions.includes('Admin')
-    ).filter(
-      member => !member.permissions.includes('Host')
-    );
   }
 
 }
