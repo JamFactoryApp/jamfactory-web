@@ -9,7 +9,7 @@
   </div>
 </div>
 <div class="d-flex jy-center al-center h-100 search-result-icon-container">
-  <i *ngIf="viewStore.view.showPreview" (click)="audioPlayerService.playAudio(songInfo.spotifyTrackFull.preview_url)"
+  <i *ngIf="viewStore.view.showPreview && songInfo.spotifyTrackFull.preview_url !== null" (click)="audioPlayerService.playAudio(songInfo.spotifyTrackFull.preview_url)"
      class="material-icons-outlined search-result-icon search-result-play-icon" title="Play preview">play_arrow</i>
   <i (click)="vote(songInfo.spotifyTrackFull)" [ngStyle]="{'color': isVoted ? '#F72C25' : ''}"
      class="material-icons-outlined search-result-icon" title="Vote">{{isVoted ? 'favorite' : 'favorite_border'}}</i>
