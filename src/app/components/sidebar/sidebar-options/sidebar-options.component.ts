@@ -33,13 +33,6 @@ export class SidebarOptionsComponent implements OnInit {
         this.nameField.patchValue(value.name);
       }
     });
-
-    const preview = this.localstorageService.getItem('PreviewSong');
-    if (preview !== null) {
-      this.viewStore.preview = (preview === 'true');
-    } else {
-      this.viewStore.preview = false;
-    }
   }
 
   resetViews() {

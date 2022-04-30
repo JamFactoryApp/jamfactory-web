@@ -163,6 +163,13 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     if (view !== null) {
       this.searchViewStore.cardMode = view == 'true';
     }
+
+    const preview = this.localstorageService.getItem('PreviewSong');
+    if (preview !== null) {
+      this.searchViewStore.preview = (preview === 'true');
+    } else {
+      this.searchViewStore.preview = false;
+    }
   }
 
   ngOnDestroy(): void {
