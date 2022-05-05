@@ -1,0 +1,22 @@
+<div class="main-content-container re-scroll d-flex">
+  <ng-container *ngIf="(queueStore.$queue | async).tracks as queue">
+
+    <ng-container *ngIf="queueViewStatus === true">
+      <div id="card-table" class="card-main-container re-scroll" style="position: relative">
+        <app-queue-song *ngFor="let track of queue; trackBy: trackFunction; let index = index"
+                        [queueView]="queueViewStatus" [track]="track" [index]="index + 1"></app-queue-song>
+        <span class="empty-queue-text"
+              *ngIf="queue.length === 0">Currently there are no songs in the queue!</span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="queueViewStatus === false">
+      <div id="list-table" class="list-table">
+        <app-queue-song *ngFor="let track of queue; trackBy: trackFunction; let index = index"
+                        [queueView]="queueViewStatus" [track]="track" [index]="index"></app-queue-song>
+        <span class="empty-queue-text"
+              *ngIf="queue.length === 0">Currently there are no songs in the queue!</span>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

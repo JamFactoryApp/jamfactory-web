@@ -1,0 +1,21 @@
+<ng-container *ngIf="modalService.modals.length !== 0">
+  <div class="modal-backdrop backdrop-blur"></div>
+  <div class="modal-container">
+    <div class="modal">
+      <div class="modal-header">{{modalService.modals[0].header}}</div>
+      <div class="modal-divider"></div>
+      <div class="modal-body">
+        <div class="modal-text">
+          {{modalService.modals[0].message}}
+        </div>
+        <label for="modal-input" class="modal-input-label" *ngIf="modalService.modals[0].withInput">{{modalService.modals[0].label}}</label>
+        <input id="modal-input" type="text" placeholder="{{modalService.modals[0].placeholder}}" class="modal-input w-100" *ngIf="modalService.modals[0].withInput"
+               [formControl]="modalField">
+      </div>
+      <div class="modal-divider"></div>
+      <div class="modal-actions d-flex jy-center w-100">
+        <button class="button" style="margin: 0% 5%" *ngFor="let btn of modalService.modals[0].buttons" [ngClass]="modalService.getClasses(btn.level)" (click)="onButton(btn.text)">{{btn.text}}</button>
+      </div>
+    </div>
+  </div>
+</ng-container>

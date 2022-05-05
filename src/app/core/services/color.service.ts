@@ -1,15 +1,91 @@
 import {Injectable} from '@angular/core';
 
+declare var ColorThief: any;
 type Vec3 = [number, number, number];
+
+export interface SongColor {
+  vibrant: Vec3;
+  muted: Vec3;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ColorService {
 
-  imgColors = [];
+  private imgColors: SongColor[] = [];
+  private colorThief: any;
+  private maxDelta = 60.0;
 
   constructor() {
+    this.colorThief = new ColorThief();
+  }
+
+  vec3ToRGBAString(vec: Vec3, opacity: number = 1): string {
+    return 'rgba(' + vec[0] + ',' + vec[1] + ',' + vec[2] + ',' + opacity + ')';
+  }
+
+  getImgColor(element: any): SongColor {
+    const check = this.checkImgStore(element.src);
+
+    if (check === undefined) {
+
+      const palette = this.colorThief.getPalette(element, 3, 50);
+      const songColor: SongColor = {
+        vibrant: palette[0],
+        muted: this.highestDiff(palette, palette[0])
+      };
+      if (this.deltaE94(songColor.vibrant, songColor.muted) < this.maxDelta) {
+        songColor.muted = this.bwContrast(songColor.vibrant);
+      }
+
+      this.addImgStore(songColor, element.src);
+      return songColor;
+    } else {
+      return check;
+    }
+  }
+
+  addImgStore(songColor: SongColor, src: any): void {
+    this.imgColors[src] = songColor;
+  }
+
+  checkImgStore(src): SongColor {
+    return this.imgColors[src];
+  }
+
+  clearImgStore(): void {
+    this.imgColors = [];
+  }
+
+  getBestSuitedColor(col1: Vec3, col2: Vec3, baseCol: Vec3): Vec3 {
+    const firstCol = this.contrast(col1, baseCol);
+    const secondCol = this.contrast(col2, baseCol);
+
+    if (secondCol > 15) {
+      if (firstCol >= 2) {
+        return col1;
+      } else {
+        return col2;
+      }
+    }
+
+    if (firstCol >= 2 || secondCol >= 2) {
+      if (firstCol > secondCol) {
+        return col1;
+      } else {
+        return col2;
+      }
+    } else {
+      const blackCol = this.contrast([0, 0, 0], baseCol);
+      const whiteCol = this.contrast([255, 255, 255], baseCol);
+
+      if (whiteCol > blackCol) {
+        return col1;
+      } else {
+        return col2;
+      }
+    }
   }
 
   /***************************************************************************************
@@ -143,19 +219,33 @@ export class ColorService {
 
   /***************************************************************************************/
 
-  addImgStore(vibrant, muted, src): void {
-    this.imgColors[src] = [vibrant, muted];
+  bwContrast(rgb: Vec3): Vec3 {
+    // http://stackoverflow.com/a/3943023/112731
+    return (rgb[0] * 0.299 + rgb[1] * 0.587 + rgb[2] * 0.114) > 186
+      ? [0, 0, 0]
+      : [255, 255, 255];
   }
 
-  checkImgStore(src): any[] {
-    return this.imgColors[src];
+  /*Functions from https://stackoverflow.com/questions/9733288/how-to-programmatically-calculate-the-contrast-ratio-between-two-colors*/
+  luminance(r, g, b): any {
+    const a = [r, g, b].map((v) => {
+      v /= 255;
+      return v <= 0.03928
+        ? v / 12.92
+        : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
   }
 
-  getImgStore(): any[] {
-    return this.imgColors;
+  contrast(rgb1, rgb2): number {
+    const lum1 = this.luminance(rgb1[0], rgb1[1], rgb1[2]);
+    const lum2 = this.luminance(rgb2[0], rgb2[1], rgb2[2]);
+    const brightest = Math.max(lum1, lum2);
+    const darkest = Math.min(lum1, lum2);
+    return (brightest + 0.05)
+      / (darkest + 0.05);
   }
 
-  clearImgStore(): void {
-    this.imgColors = [];
-  }
+  /***************************************************************************************/
+
 }

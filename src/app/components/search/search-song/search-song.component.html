@@ -1,0 +1,16 @@
+<div class="search-result-img-container d-flex al-center">
+  <img src="{{songInfo.spotifyTrackFull.album.images[1].url}}"
+       alt="Album Cover" class="search-result-img"/>
+</div>
+<div class="search-result-text-container d-flex al-center h-100">
+  <div>
+    <div class="search-result-title">{{songInfo.spotifyTrackFull.name}}</div>
+    <div class="search-result-artist">{{utils.getArtistString(songInfo.spotifyTrackFull.artists)}}</div>
+  </div>
+</div>
+<div class="d-flex jy-center al-center h-100 search-result-icon-container">
+  <i *ngIf="viewStore.view.showPreview && songInfo.spotifyTrackFull.preview_url !== null" (click)="audioPlayerService.playAudio(songInfo.spotifyTrackFull.preview_url)"
+     class="material-icons-outlined search-result-icon search-result-play-icon" title="Play preview">play_arrow</i>
+  <i (click)="vote(songInfo.spotifyTrackFull)" [ngStyle]="{'color': isVoted ? '#F72C25' : ''}"
+     class="material-icons-outlined search-result-icon" title="Vote">{{isVoted ? 'favorite' : 'favorite_border'}}</i>
+</div>

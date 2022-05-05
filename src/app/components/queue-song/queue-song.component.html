@@ -1,0 +1,7 @@
+<ng-container *ngIf="queueView === false">
+  <app-queue-song-list [track]="track" [index]="index"></app-queue-song-list>
+</ng-container>
+
+<ng-container *ngIf="queueView === true">
+  <app-queue-song-cards [track]="track" [index]="index"></app-queue-song-cards>
+</ng-container>

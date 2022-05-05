@@ -2,8 +2,9 @@ FROM node:14
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json package-lock.json /app/
 RUN npm install
 
-COPY . .
-CMD ["app/node_modules/.bin/ng", "serve", "--host", "0.0.0.0"]
+COPY ./ /app/
+CMD ["npm", "run", "start" ,"--" ,"--host", "0.0.0.0", "--poll", "1000"]
+

@@ -16,6 +16,11 @@ export class TimeoutInterceptor implements HttpInterceptor {
     const timeoutValue = Number(req.headers.get('timeout') || TIMEOUT);
     return next.handle(req).pipe(
       timeout(timeoutValue),
-      catchError(() => throwError(new HttpErrorResponse({error: 'timeout', status: 408, statusText: 'Request Timeout'}))));
+      catchError((err) => {
+        if (!err.status) {
+          return throwError(new HttpErrorResponse({error: 'timeout', status: 408, statusText: 'Request Timeout'}))
+        }
+        return throwError(err);
+      }));
   }
 }

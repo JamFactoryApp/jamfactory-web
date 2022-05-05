@@ -17,13 +17,12 @@ export class QueueService {
     return list.map((q) => {
       const song: QueueSong = {
         spotifyTrackFull: q.spotifyTrackFull,
-        votes: 0,
+        votes: q.votes,
         voted: false
       };
 
       this.queueStore.queue.tracks.forEach(value => {
         if (value.spotifyTrackFull.id === q.spotifyTrackFull.id) {
-          song.votes = value.votes;
           song.voted = value.voted;
         }
       });
@@ -48,5 +47,7 @@ export class QueueService {
       this.queueStore.queue = response;
     });
   }
+
+
 
 }

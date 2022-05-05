@@ -22,7 +22,6 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
             "assets": [
               "src/assets"
             ],
@@ -30,8 +29,18 @@
               "src/assets/scss/main.scss"
             ],
             "scripts": [
-              { "input": "node_modules/colorthief/dist/color-thief.umd.js", "inject": true, "bundleName": "colorthief" }
-            ]
+              {
+                "input": "node_modules/colorthief/dist/color-thief.umd.js",
+                "inject": true,
+                "bundleName": "colorthief"
+              }
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -55,21 +64,26 @@
                   "maximumError": "5mb"
                 }
               ]
-            }
-          }
+            },
+            "development": {}
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "sslCert": "cert.pem",
-            "sslKey": "key.pem",
-            "browserTarget": "jamfactory-web:build"
+            "sslKey": "key.pem"
           },
           "configurations": {
             "production": {
               "browserTarget": "jamfactory-web:build:production"
+            },
+            "development": {
+              "browserTarget": "jamfactory-web:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -93,33 +107,35 @@
             "scripts": []
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "jamfactory-web:serve"
+            "protractorConfig": "e2e/protractor.conf.js"
           },
           "configurations": {
             "production": {
               "devServerTarget": "jamfactory-web:serve:production"
+            },
+            "development": {
+              "devServerTarget": "jamfactory-web:serve:development"
             }
+          },
+          "defaultConfiguration": "development"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
-  "defaultProject": "jamfactory-web"
+  "defaultProject": "jamfactory-web",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

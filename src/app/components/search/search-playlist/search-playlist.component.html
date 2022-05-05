@@ -1,0 +1,14 @@
+<div class="search-result-img-container d-flex al-center">
+  <img src="{{playlist.images[0].url}}"
+       alt="Album Cover" class="search-result-img"/>
+</div>
+<div class="search-result-text-container d-flex al-center h-100">
+  <div>
+    <div class="search-result-title">{{playlist.name}}</div>
+    <div class="search-result-artist">{{playlist.owner.display_name}}</div>
+  </div>
+</div>
+<div class="d-flex jy-center al-center h-100">
+  <i (click)="add(playlist.id)"
+     class="material-icons-outlined search-result-icon">{{added ? 'check' : 'add'}}</i>
+</div>

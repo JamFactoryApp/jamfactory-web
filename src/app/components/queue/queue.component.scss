@@ -1,0 +1,45 @@
+/*QUEUE*/
+.card-main-container {
+  flex-grow: 1;
+  padding: 0 10px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .empty-queue-text {
+    color: var(--main-text-color);
+    padding: 15px 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.main-content-container {
+  flex-grow: 1;
+  overflow: auto;
+  flex-direction: column;
+  box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.2), inset 0 -10px 20px rgba(0, 0, 0, 0.2);
+  padding-bottom: 120px;
+}
+
+.list-table {
+  flex-grow: 1;
+  padding: 15px 20px 10px 20px;
+
+  .empty-queue-text {
+    color: var(--main-text-color);
+  }
+}
+
+/*######################################################################*/
+/*MEDIA QUERIES*/
+@media screen and (max-width: 576px), (max-height: 576px) {
+  .list-table {
+    padding: 10px 10px 5px 10px;
+  }
+}
