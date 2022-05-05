@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {AuthHttpService} from '../../core/http/auth.http.service';
@@ -54,6 +54,23 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private localstorageService: LocalstorageService
   ) {
     this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
+  }
+
+  private timestamp: Date
+  @HostListener('document:onfocus', ['$event'])
+  @HostListener('document:click', ['$event'])
+  checkStatus(event): void {
+    let date = new Date(Date.now())
+    date.setSeconds(date.getSeconds() - 20);
+    if (date > this.timestamp) {
+      this.timestamp = new Date(Date.now())
+      // Recconect
+      console.log("RECONNECT");
+      this.websocketService.close()
+      this.websocketService.connect(this.websocketHandler)
+    }
+
+
   }
 
   ngOnInit(): void {
@@ -119,6 +136,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
   }
 
   websocketHandler(wsMessage): void {
+    this.timestamp = new Date(Date.now())
     switch (wsMessage.event) {
       case 'jam':
         const jamPayload: SocketJamMessage = wsMessage.message as SocketJamMessage;
