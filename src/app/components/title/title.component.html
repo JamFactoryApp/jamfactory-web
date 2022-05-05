@@ -1,11 +1,12 @@
-<div class="jamsession-header d-flex jy-center al-center">
+<div class="d-flex jy-center al-center">
   <div id="menu-button" class="menu-button d-flex jy-center al-center">
     <i id="menu-button-icon" class="material-icons-outlined menu-button-icon"
        [ngStyle]="{'opacity': (searchViewStore.$view | async).menu ? '0' : '1'}" (click)="toggleMenu()">menu</i>
   </div>
   <div class="jamlabel">{{(jamStore.$jamSession | async)?.name}} - {{(jamStore.$jamSession | async)?.label}}</div>
 </div>
-<div #search class="search-input-container d-flex al-center">
+
+<div #search *ngIf="!(searchViewStore.$view | async).cardMode" class="search-input-container d-flex al-center">
   <span class="material-icons-outlined search-input-icon">search</span>
   <input id="search-input" type="text" placeholder="Search..." class="search-input-box w-100" (keyup)="searchEvent()"
          [ngStyle]="{'pointer-events': (searchViewStore.$view | async).menu ? 'none' : ''}" [formControl]="searchField">
