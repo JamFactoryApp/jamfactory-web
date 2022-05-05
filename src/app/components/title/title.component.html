@@ -6,8 +6,8 @@
   <div class="jamlabel">{{(jamStore.$jamSession | async)?.name}} - {{(jamStore.$jamSession | async)?.label}}</div>
 </div>
 
-<div #search *ngIf="!(searchViewStore.$view | async).cardMode" class="search-input-container d-flex al-center">
-  <span class="material-icons-outlined search-input-icon">search</span>
-  <input id="search-input" type="text" placeholder="Search..." class="search-input-box w-100" (keyup)="searchEvent()"
+<div #search class="search-input-container d-flex al-center">
+  <span *ngIf="!(searchViewStore.$view | async).cardMode" class="material-icons-outlined search-input-icon">search</span>
+  <input *ngIf="!(searchViewStore.$view | async).cardMode" id="search-input" type="text" placeholder="Search..." class="search-input-box w-100" (keyup)="searchEvent()"
          [ngStyle]="{'pointer-events': (searchViewStore.$view | async).menu ? 'none' : ''}" [formControl]="searchField">
 </div>
