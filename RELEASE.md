@@ -16,7 +16,7 @@
 * :sparkles: Personal playlist selectable in the search bar.
 
 ### Features Removed
-This is the first release. Nothing to remove.
+No features removed
 
 ### Bug Fixes
 No bugs were fixed with this release
