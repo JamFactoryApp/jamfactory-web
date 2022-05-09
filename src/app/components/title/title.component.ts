@@ -37,6 +37,7 @@ export class TitleComponent implements OnInit {
     this.searchViewStore.$view.subscribe(value => {
       if (value.searchResultViewToggle === false && value.searchBarViewToggle === false) {
         this.searchField.reset();
+        this.searchStore.searchString = '';
       }
     });
   }
@@ -48,9 +49,11 @@ export class TitleComponent implements OnInit {
 
   searchTracks(): void {
     if (this.searchField.value === '') {
-      this.searchStore.searchString = '';
-      this.searchViewStore.statusSearchBar = false;
-      this.searchViewStore.statusSearchBox = false;
+      setTimeout(() => {
+        this.searchStore.searchString = '';
+        this.searchViewStore.statusSearchBar = false;
+        this.searchViewStore.statusSearchBox = false;
+      }, 20);
       return;
     }
     if ( this.searchStore.searchType !== 'personal') {
@@ -73,6 +76,14 @@ export class TitleComponent implements OnInit {
       this.searchViewStore.statusSearchBar = false;
       this.searchViewStore.statusSearchBox = false;
     }, 10);
+  }
+
+  clearSearch(): void {
+    setTimeout(() => {
+    this.searchStore.searchString = '';
+    this.searchViewStore.statusSearchBar = false;
+    this.searchViewStore.statusSearchBox = false;
+    }, 20);
   }
 
 }

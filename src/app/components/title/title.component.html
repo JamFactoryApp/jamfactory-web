@@ -15,4 +15,6 @@
   <input *ngIf="!(searchViewStore.$view | async).cardMode" id="search-input" type="text" placeholder="Search..."
          class="search-input-box w-100" (keyup)="searchEvent()"
          [ngStyle]="{'pointer-events': (searchViewStore.$view | async).menu ? 'none' : ''}" [formControl]="searchField">
+  <span *ngIf="!(searchViewStore.$view | async).cardMode"
+        (click)="clearSearch()" class="material-icons-outlined search-clear-button">close</span>
 </div>

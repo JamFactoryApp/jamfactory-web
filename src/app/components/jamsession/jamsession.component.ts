@@ -25,6 +25,7 @@ import {ViewStore} from '../../core/stores/view.store';
 import {ModalService} from '../../core/services/modal.service';
 import {createAlreadyMemberModal, createCloseModal, createJoinModal} from '../../core/static/modals';
 import {LocalstorageService} from "../../core/services/localstorage.service";
+import {SearchStore} from "../../core/stores/search.store";
 
 
 @Component({
@@ -51,7 +52,8 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     public notificationService: NotificationService,
     public searchViewStore: ViewStore,
     private modal: ModalService,
-    private localstorageService: LocalstorageService
+    private localstorageService: LocalstorageService,
+    public searchStore: SearchStore,
   ) {
     this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
   }
