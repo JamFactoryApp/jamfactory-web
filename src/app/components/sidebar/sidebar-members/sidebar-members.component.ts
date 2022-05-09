@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {ViewStore} from "../../../core/stores/view.store";
 import {MemberStore} from "../../../core/stores/member.store";
 import {JamMember} from "@jamfactoryapp/jamfactory-types";
+import {NotificationService} from "../../../core/services/notification.service";
+import {UserStore} from "../../../core/stores/user.store";
 
 @Component({
   selector: 'app-sidebar-members',
@@ -12,7 +14,8 @@ export class SidebarMembersComponent {
 
   constructor(
     public viewStore: ViewStore,
-    public memberStore: MemberStore
+    public memberStore: MemberStore,
+    private userStore: UserStore
   ) {
   }
 
@@ -24,7 +27,7 @@ export class SidebarMembersComponent {
     return members.sort((a, b) =>
       a.display_name.localeCompare(b.display_name) || <any>a.permissions.includes('Admin') - <any>b.permissions.includes('Admin')
     ).filter(
-      member => !member.permissions.includes('Host')
+      member => member.identifier !== this.userStore.currentUser.identifier
     );
   }
 

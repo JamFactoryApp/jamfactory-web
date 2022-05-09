@@ -22,14 +22,13 @@
             <div class="sidebar-host-name">{{getUserName((membersStore.$currentHost | async)?.display_name)}}</div>
           </div>
 
-          <div id="sidebar-jamlabel-container"
+          <div id="sidebar-jamlabel-container" (click)="copyToClipboard()"
                class="sidebar-section-label-container d-flex al-center">
             <div class="sidebar-section-label-icon-container d-flex jy-center al-center">
               <i class="material-icons-outlined sidebar-section-label-icon">{{copyIcon}}</i>
             </div>
             <div class="sidebar-host-divider"></div>
-            <div id="sidebar-jamlabel-text" class="sidebar-host-name"
-                 (click)="copyToClipboard()">{{(jamStore.$jamSession | async)?.label}}</div>
+            <div id="sidebar-jamlabel-text" class="sidebar-host-name">{{(jamStore.$jamSession | async)?.label}}</div>
           </div>
         </div>
       </div>
@@ -107,9 +106,9 @@
           <i class="material-icons menu-button sidebar-menu-button">brush</i>
         </div>
         <div class="sidebar-menu-toggle-container d-flex jy-center al-center" title="Customization"
-                   (click)="toggleMember()">
-        <i class="material-icons menu-button sidebar-menu-button">group</i>
-      </div>
+             (click)="toggleMember()">
+          <i class="material-icons menu-button sidebar-menu-button">group</i>
+        </div>
 
       </div>
     </ng-container>
@@ -121,7 +120,7 @@
 
     <app-sidebar-customization *ngIf="viewStore.view.menuSub === 'custom'"></app-sidebar-customization>
 
-    <app-sidebar-members *ngIf="viewStore.view.menuSub === 'member'"></app-sidebar-members>
+    <app-sidebar-members class="sidebar-notification" *ngIf="viewStore.view.menuSub === 'member'"></app-sidebar-members>
 
   </div>
 </div>

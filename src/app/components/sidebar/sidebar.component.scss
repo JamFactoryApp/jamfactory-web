@@ -266,21 +266,14 @@
 
 .sidebar-section-notifications {
   padding: 10px;
-  flex-grow: 1;
-  display: flex;
-
-  .sidebar-notifications-container {
-    width: 100%;
-    flex-grow: 1;
-    overflow: auto;
-    padding-bottom: 75px;
-  }
+  overflow: auto;
 }
 
 .sidebar-section-notify {
   flex-grow: 1;
   display: flex;
   flex-flow: column;
+  overflow: hidden;
 }
 
 .custom-colortheme-container {

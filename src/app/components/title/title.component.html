@@ -1,13 +1,18 @@
-<div class="d-flex jy-center al-center">
+<div class="d-flex jy-center al-center" style="padding-right: 10px;">
   <div id="menu-button" class="menu-button d-flex jy-center al-center">
     <i id="menu-button-icon" class="material-icons-outlined menu-button-icon"
        [ngStyle]="{'opacity': (searchViewStore.$view | async).menu ? '0' : '1'}" (click)="toggleMenu()">menu</i>
   </div>
-  <div class="jamlabel">{{(jamStore.$jamSession | async)?.name}} - {{(jamStore.$jamSession | async)?.label}}</div>
+  <div class="jamlabel"
+       [ngStyle]="{'display': searchViewStore.view.cardMode ? 'block' : '' }">{{(jamStore.$jamSession | async)?.name}}
+    - {{(jamStore.$jamSession | async)?.label}}</div>
 </div>
 
-<div #search class="search-input-container d-flex al-center">
-  <span *ngIf="!(searchViewStore.$view | async).cardMode" class="material-icons-outlined search-input-icon">search</span>
-  <input *ngIf="!(searchViewStore.$view | async).cardMode" id="search-input" type="text" placeholder="Search..." class="search-input-box w-100" (keyup)="searchEvent()"
+<div #search class="search-input-container d-flex al-center"
+     [ngStyle]="{'height': searchViewStore.view.cardMode ? '0px' : '',  'width': searchViewStore.view.cardMode ? '0px' : ''}">
+  <span *ngIf="!(searchViewStore.$view | async).cardMode"
+        class="material-icons-outlined search-input-icon">search</span>
+  <input *ngIf="!(searchViewStore.$view | async).cardMode" id="search-input" type="text" placeholder="Search..."
+         class="search-input-box w-100" (keyup)="searchEvent()"
          [ngStyle]="{'pointer-events': (searchViewStore.$view | async).menu ? 'none' : ''}" [formControl]="searchField">
 </div>
