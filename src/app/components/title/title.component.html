@@ -18,3 +18,8 @@
   <span *ngIf="!(searchViewStore.$view | async).cardMode"
         (click)="clearSearch()" class="material-icons-outlined search-clear-button">close</span>
 </div>
+
+<div *ngIf="(searchViewStore.$view | async).cardMode" style="height: 100%; width: 63px;">
+  <qrcode [qrdata]="getQRCode()" [width]="63" [colorLight]="'#0000'" [elementType]="'svg'" [margin]="0"
+          [colorDark]="'#ec9a29'"></qrcode>
+</div>

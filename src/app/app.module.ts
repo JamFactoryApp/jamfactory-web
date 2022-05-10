@@ -28,6 +28,7 @@ import { SidebarOptionsComponent } from './components/sidebar/sidebar-options/si
 import { SidebarCustomizationComponent } from './components/sidebar/sidebar-customization/sidebar-customization.component';
 import { SidebarMembersComponent } from './components/sidebar/sidebar-members/sidebar-members.component';
 import { SidebarMemberComponent } from './components/sidebar/sidebar-members/sidebar-member/sidebar-member.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { SidebarMemberComponent } from './components/sidebar/sidebar-members/sid
     HttpClientModule,
     ReactiveFormsModule,
     CommonModule,
+    QRCodeModule
   ],
   providers: [
     httpInterceptorProviders,

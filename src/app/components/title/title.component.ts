@@ -86,4 +86,9 @@ export class TitleComponent implements OnInit {
     }, 20);
   }
 
+  getQRCode(): string {
+    console.log(window.location.host + window.location.pathname)
+    return 'https://' + window.location.host + window.location.pathname;
+  }
+
 }
