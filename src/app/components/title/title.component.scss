@@ -49,7 +49,6 @@ span.search-clear-button {
   padding-right: 20px;
   color: var(--main-accent-color);
   font-size: 32px;
-  display: block;
   cursor: pointer;
 }
 
@@ -94,10 +93,6 @@ span.search-clear-button {
 
   .jamsession-header {
     padding-right: 10px;
-  }
-
-  span.search-clear-button {
-    display: block;
   }
 }
 

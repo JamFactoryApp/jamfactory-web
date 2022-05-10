@@ -25,8 +25,8 @@
 }
 
 .sidebar-content {
-  height: 90%;
-  max-height: 90%;
+  height: 85%;
+  max-height: 85%;
 }
 
 .sidebar-divider {
@@ -208,6 +208,34 @@
     color: var(--main-accent-color);
     list-style: none;
     border-radius: 5px;
+  }
+}
+
+.sidebar-footer {
+  height: 5%;
+  max-height: 5%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: var(--main-text-color);
+
+  .github-container {
+    width: 150px;
+    text-align: center;
+
+    & > a {
+      margin-left: 5px;
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  .impressum {
+    width: 150px;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
   }
 }
 
