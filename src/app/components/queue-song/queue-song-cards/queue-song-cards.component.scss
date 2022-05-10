@@ -36,7 +36,8 @@
 }
 
 .card-number-accent {
-  border: 3px solid #F72C25;
+  //border: 3px solid #F72C25;
+  border: 3px solid var(--main-accent-color);
   width: 30px;
   margin-left: 7px;
   border-radius: 2px;

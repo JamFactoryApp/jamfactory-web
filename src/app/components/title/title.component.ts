@@ -5,6 +5,7 @@ import {SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {SearchStore} from '../../core/stores/search.store';
 import {ViewStore} from '../../core/stores/view.store';
+import {ColorService} from "../../core/services/color.service";
 
 @Component({
   selector: 'app-title',
@@ -17,12 +18,14 @@ export class TitleComponent implements OnInit {
 
   public searchField = new FormControl('');
   public searchTimeout: number;
+  public colorAccent: string;
 
   constructor(
     public jamStore: JamsessionStore,
     private spotifyService: SpotifyHttpService,
     public searchStore: SearchStore,
-    public searchViewStore: ViewStore
+    public searchViewStore: ViewStore,
+    public colorService: ColorService
   ) {
   }
 
@@ -40,6 +43,13 @@ export class TitleComponent implements OnInit {
         this.searchStore.searchString = '';
       }
     });
+
+    this.colorService.$color.subscribe(value => {
+      console.log(value);
+      this.colorAccent = value;
+    })
+
+    // this.colorAccent = this.colorService.getCurrentColor();
   }
 
   searchEvent(): void {
@@ -87,7 +97,6 @@ export class TitleComponent implements OnInit {
   }
 
   getQRCode(): string {
-    console.log(window.location.host + window.location.pathname)
     return 'https://' + window.location.host + window.location.pathname;
   }
 
