@@ -12,7 +12,7 @@
     class="search-result-container"></app-search>
 
   <app-queue id="main-content" [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''"
-             class="main d-flex w-100"></app-queue>
+             class="content d-flex w-100"></app-queue>
 
   <app-playback-controller id="footer" [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''"
                            class="footer w-100"></app-playback-controller>

@@ -45,11 +45,8 @@ export class TitleComponent implements OnInit {
     });
 
     this.colorService.$color.subscribe(value => {
-      console.log(value);
       this.colorAccent = value;
     })
-
-    // this.colorAccent = this.colorService.getCurrentColor();
   }
 
   searchEvent(): void {
