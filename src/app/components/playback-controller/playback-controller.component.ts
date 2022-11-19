@@ -47,6 +47,7 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
   public songProgress = 0;
   public durationRest = 0;
   public playStatus = false;
+  public titleTooLong = false;
 
   constructor(
     private authService: AuthHttpService,
@@ -123,6 +124,8 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
         clearInterval(this.intervallId);
         this.intervallId = undefined;
       }
+
+      this.checkTextLength();
     });
 
     this.timeout = window.setTimeout(() => {
@@ -228,4 +231,23 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     return this.colorService.vec3ToRGBAString(bestColor, 1);
   }
 
+  checkTextLength(): void {
+    const playbackSize = document.getElementById('playback-text-container').offsetWidth + 15;
+
+    const font = "22px sans-serif";
+
+    let canvas = document.createElement("canvas");
+    let context = canvas.getContext("2d");
+    context.font = font;
+    let textWidth = Math.ceil(context.measureText(this.playback.playback.item.name).width);
+
+    console.log(playbackSize);
+    console.log(textWidth);
+
+    document.documentElement.style.setProperty('--text-animation-speed1', Math.floor((textWidth/10)/4) + 's');
+    document.documentElement.style.setProperty('--text-animation-speed2', Math.floor((textWidth/10)/2) + 's');
+    document.documentElement.style.setProperty('--text-animation-wait', (Math.floor((textWidth/10)/4) + 3) + 's');
+
+    this.titleTooLong = textWidth >= playbackSize;
+  }
 }

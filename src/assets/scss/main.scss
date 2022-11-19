@@ -14,6 +14,10 @@
   --main-accent-color: rgb(var(--dominant-color));
   --main-accent-color-background: rgba(var(--dominant-color), 0.1);
   --main-accent-color-selection: rgba(var(--dominant-color), 0.05);
+
+  --text-animation-speed1: 10;
+  --text-animation-speed2: 20;
+  --text-animation-wait: 8;
 }
 
 html {
