@@ -42,6 +42,7 @@ html {
 }
 
 body {
+  width: 100%;
   height: 100vh;
   margin: 0 auto;
   background: var(--main-background-color);
@@ -346,6 +347,6 @@ button {
 /*MEDIA QUERIES*/
 @media screen and (max-width: 450px), (max-height: 450px) {
   body {
-    overflow: hidden;
+    //overflow: hidden;
   }
 }
