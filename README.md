@@ -28,7 +28,7 @@ JamFactory Web is build among others using these awesome projects
 
 ### Last Release
 
-``V0.1.0`` [Release Notes](./RELEASE.md)
+``V0.2.1`` [Release Notes](./RELEASE.md)
 
 ## Getting started
 

@@ -1,5 +1,19 @@
 # JamFactory Web Release Notes
 
+## v0.2.1
+
+### Features Added
+* :sparkles: Added QR feature for card view
+* :sparkles: Added github and imprint link to sidebar
+
+### Features Removed
+No features removed
+
+### Bug Fixes
+* :bug: Fixed search result not closing and mobile support to clear search
+* :bug: Fixed broken scrolling and refreshing
+* :bug: Fixed unreadable song title and added scroll animation if title too long
+
 ## v0.2.0
 
 ### Features Added
