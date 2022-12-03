@@ -18,7 +18,7 @@ const routes: Routes = [
     canActivate: [RedirectGuard],
     component: RedirectGuard,
     data: {
-      externalUrl: '../'
+      externalUrl: './'
     }
   },
   {
@@ -29,7 +29,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {relativeLinkResolution: 'legacy'})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

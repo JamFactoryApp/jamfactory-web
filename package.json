@@ -19,7 +19,7 @@
     "@angular/platform-browser": "^15.0.2",
     "@angular/platform-browser-dynamic": "^15.0.2",
     "@angular/router": "^15.0.2",
-    "@jamfactoryapp/jamfactory-types": "^0.2.2",
+    "@jamfactoryapp/jamfactory-types": "^0.2.3",
     "@types/spotify-api": "0.0.19",
     "angularx-qrcode": "^15.0.0",
     "colorthief": "npm:@pioug/colorthief@^3.0.1",
