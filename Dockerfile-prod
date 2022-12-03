@@ -1,5 +1,5 @@
 # node:14
-FROM node:14-alpine as builder
+FROM node:18-alpine as builder
 
 WORKDIR /usr/src/app
 
@@ -14,8 +14,7 @@ RUN --mount=type=ssh,id=github npm install
 COPY . .
 RUN ./node_modules/.bin/ng build --prod
 
-# nginx:1.19-alpine
-FROM nginx@sha256:a3c6118edc80de4a5aaf2711b7742c25d4d2da54325bae465205cb386afa79ee
+FROM nginx:1.23-alpine
 
 COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /usr/src/app/dist/jamfactory-web /usr/share/nginx/html
