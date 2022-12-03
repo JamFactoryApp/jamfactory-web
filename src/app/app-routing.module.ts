@@ -18,7 +18,7 @@ const routes: Routes = [
     canActivate: [RedirectGuard],
     component: RedirectGuard,
     data: {
-      externalUrl: './'
+      externalUrl: '../'
     }
   },
   {
