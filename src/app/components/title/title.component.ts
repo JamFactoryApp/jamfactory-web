@@ -5,6 +5,7 @@ import {SpotifySearchRequestBody} from '@jamfactoryapp/jamfactory-types';
 import {SpotifyHttpService} from '../../core/http/spotify.http.service';
 import {SearchStore} from '../../core/stores/search.store';
 import {ViewStore} from '../../core/stores/view.store';
+import {ColorService} from "../../core/services/color.service";
 
 @Component({
   selector: 'app-title',
@@ -17,12 +18,14 @@ export class TitleComponent implements OnInit {
 
   public searchField = new FormControl('');
   public searchTimeout: number;
+  public colorAccent: string;
 
   constructor(
     public jamStore: JamsessionStore,
     private spotifyService: SpotifyHttpService,
     public searchStore: SearchStore,
-    public searchViewStore: ViewStore
+    public searchViewStore: ViewStore,
+    public colorService: ColorService
   ) {
   }
 
@@ -37,8 +40,13 @@ export class TitleComponent implements OnInit {
     this.searchViewStore.$view.subscribe(value => {
       if (value.searchResultViewToggle === false && value.searchBarViewToggle === false) {
         this.searchField.reset();
+        this.searchStore.searchString = '';
       }
     });
+
+    this.colorService.$color.subscribe(value => {
+      this.colorAccent = value;
+    })
   }
 
   searchEvent(): void {
@@ -48,9 +56,11 @@ export class TitleComponent implements OnInit {
 
   searchTracks(): void {
     if (this.searchField.value === '') {
-      this.searchStore.searchString = '';
-      this.searchViewStore.statusSearchBar = false;
-      this.searchViewStore.statusSearchBox = false;
+      setTimeout(() => {
+        this.searchStore.searchString = '';
+        this.searchViewStore.statusSearchBar = false;
+        this.searchViewStore.statusSearchBox = false;
+      }, 20);
       return;
     }
     if ( this.searchStore.searchType !== 'personal') {
@@ -73,6 +83,18 @@ export class TitleComponent implements OnInit {
       this.searchViewStore.statusSearchBar = false;
       this.searchViewStore.statusSearchBox = false;
     }, 10);
+  }
+
+  clearSearch(): void {
+    setTimeout(() => {
+    this.searchStore.searchString = '';
+    this.searchViewStore.statusSearchBar = false;
+    this.searchViewStore.statusSearchBox = false;
+    }, 20);
+  }
+
+  getQRCode(): string {
+    return 'https://' + window.location.host + window.location.pathname;
   }
 
 }

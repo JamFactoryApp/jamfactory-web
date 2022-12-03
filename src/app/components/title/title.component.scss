@@ -45,6 +45,13 @@ span.search-input-icon {
   font-size: 32px;
 }
 
+span.search-clear-button {
+  padding-right: 20px;
+  color: var(--main-accent-color);
+  font-size: 32px;
+  cursor: pointer;
+}
+
 .jamlabel {
   padding: 10px;
   font-weight: bold;

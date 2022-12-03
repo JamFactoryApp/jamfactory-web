@@ -25,8 +25,8 @@
 }
 
 .sidebar-content {
-  height: 90%;
-  max-height: 90%;
+  height: 85%;
+  max-height: 85%;
 }
 
 .sidebar-divider {
@@ -211,6 +211,34 @@
   }
 }
 
+.sidebar-footer {
+  height: 5%;
+  max-height: 5%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: var(--main-text-color);
+
+  .github-container {
+    width: 150px;
+    text-align: center;
+
+    & > a {
+      margin-left: 5px;
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  .impressum {
+    width: 150px;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
 .device-item {
   cursor: pointer;
 
@@ -266,21 +294,14 @@
 
 .sidebar-section-notifications {
   padding: 10px;
-  flex-grow: 1;
-  display: flex;
-
-  .sidebar-notifications-container {
-    width: 100%;
-    flex-grow: 1;
-    overflow: auto;
-    padding-bottom: 75px;
-  }
+  overflow: auto;
 }
 
 .sidebar-section-notify {
   flex-grow: 1;
   display: flex;
   flex-flow: column;
+  overflow: hidden;
 }
 
 .custom-colortheme-container {

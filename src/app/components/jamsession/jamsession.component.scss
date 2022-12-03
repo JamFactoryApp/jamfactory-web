@@ -18,9 +18,6 @@
 /*######################################################################*/
 /*HEADER*/
 .header {
-  position: fixed;
-  left: 0;
-  top: 0;
   background: var(--main-background-color);
   padding: 10px;
   height: 83px;
@@ -56,12 +53,20 @@
 
 /*######################################################################*/
 /*MAIN CONTENT*/
-.main {
-  position: absolute;
-  top: 83px;
-  bottom: 0;
+main {
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
   flex-direction: column;
-  overflow: hidden;
+}
+
+.content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100% - 83px);
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none;
 }
 
 /*######################################################################*/
