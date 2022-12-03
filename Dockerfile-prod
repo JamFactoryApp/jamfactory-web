@@ -11,7 +11,7 @@ RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN --mount=type=ssh,id=github npm install
 
 COPY . .
-RUN ./node_modules/.bin/ng build --prod
+RUN ./node_modules/.bin/ng build --configuration=production
 
 FROM nginx:1.23-alpine
 
