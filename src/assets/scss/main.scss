@@ -14,6 +14,10 @@
   --main-accent-color: rgb(var(--dominant-color));
   --main-accent-color-background: rgba(var(--dominant-color), 0.1);
   --main-accent-color-selection: rgba(var(--dominant-color), 0.05);
+
+  --text-animation-speed1: 10;
+  --text-animation-speed2: 20;
+  --text-animation-wait: 8;
 }
 
 html {
@@ -38,7 +42,9 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
   background: var(--main-background-color);
 }
 
@@ -341,6 +347,6 @@ button {
 /*MEDIA QUERIES*/
 @media screen and (max-width: 450px), (max-height: 450px) {
   body {
-    overflow: hidden;
+    //overflow: hidden;
   }
 }

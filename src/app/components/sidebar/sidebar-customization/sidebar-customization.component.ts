@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {ViewStore} from "../../../core/stores/view.store";
 import {LocalstorageService} from "../../../core/services/localstorage.service";
+import {ColorService} from "../../../core/services/color.service";
 
 @Component({
   selector: 'app-sidebar-customization',
@@ -11,7 +12,8 @@ export class SidebarCustomizationComponent {
 
   constructor(
     public viewStore: ViewStore,
-    private localstorageService: LocalstorageService
+    private localstorageService: LocalstorageService,
+    public colorService: ColorService
   ) {
   }
 
@@ -35,6 +37,7 @@ export class SidebarCustomizationComponent {
       }
       this.localstorageService.setItem("MainColor", color);
       document.documentElement.style.setProperty('--dominant-color', color);
+      this.colorService.getCurrentColor();
     }, 10);
   }
 }

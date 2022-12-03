@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from "rxjs";
+import {ViewSettings} from "../stores/view.store";
 
 declare var ColorThief: any;
 type Vec3 = [number, number, number];
@@ -17,6 +19,8 @@ export class ColorService {
   private colorThief: any;
   private maxDelta = 60.0;
 
+  private currentColor: BehaviorSubject<string> = new BehaviorSubject<string>('#ec9a29');
+
   constructor() {
     this.colorThief = new ColorThief();
   }
@@ -31,6 +35,7 @@ export class ColorService {
     if (check === undefined) {
 
       const palette = this.colorThief.getPalette(element, 3, 50);
+      // console.log(this.colorThief.getPalette(element, 3, 50));
       const songColor: SongColor = {
         vibrant: palette[0],
         muted: this.highestDiff(palette, palette[0])
@@ -87,6 +92,29 @@ export class ColorService {
       }
     }
   }
+
+  get $color(): Observable<string> {
+    return new Observable(fn => this.currentColor.subscribe(fn));
+  }
+
+  set color(value: string) {
+    this.currentColor.next(value);
+  }
+
+  getCurrentColor(): void {
+    const color = getComputedStyle(document.documentElement).getPropertyValue('--dominant-color').split(',');
+    this.color = this.rgbToHex(Number(color[0]), Number(color[1]), Number(color[2]));
+  }
+
+  /***************************************************************************************/
+
+  /*Function from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb*/
+
+  rgbToHex(r, g, b): string {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+
+  /***************************************************************************************/
 
   /***************************************************************************************
    * The functions highestDiff(), rgbDiff(), rgbToCIELab(), rgbToXyz(), xyzToCIELab() and deltaE94()

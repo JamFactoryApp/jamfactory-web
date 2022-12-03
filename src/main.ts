@@ -10,3 +10,6 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
+
+// document.body.style.height = window.innerHeight + 'px';
+// document.body.style.width = window.innerWidth + 'px';

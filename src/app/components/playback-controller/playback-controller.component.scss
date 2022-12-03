@@ -10,6 +10,12 @@
   color: black;
 }
 
+.footer-content-container {
+  position: relative;
+  justify-content: space-between;
+  gap: 15px;
+}
+
 .footer-cover {
   border-radius: 10px;
   box-shadow: 0 5px 20px -5px #000;
@@ -45,18 +51,41 @@
 .footer-song-desc-container {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  margin: 0 10px;
+}
+
+.playback-text-animator {
+  animation: text-scroll-initial-animation var(--text-animation-speed1) linear, text-scroll-animation var(--text-animation-speed2) linear infinite;
+  animation-delay: 3s, var(--text-animation-wait);
+}
+
+@keyframes text-scroll-initial-animation {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes text-scroll-animation {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
 
 .footer-title {
-  padding: 10px 10px 0 10px;
   font-weight: bold;
   font-size: 22px;
   color: inherit;
+  display: inline-block;
 }
 
 .footer-artist {
-  padding: 0 10px 10px 10px;
+  padding-top: 10px;
   font-size: 14px;
   color: inherit;
 }
@@ -330,5 +359,15 @@ i.main-notification-icon {
   .footer-cover {
     height: 50px;
     width: 50px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .optional-footer-control-button {
+    display: none;
+  }
+
+  .footer-content-container {
+    gap: 5px;
   }
 }

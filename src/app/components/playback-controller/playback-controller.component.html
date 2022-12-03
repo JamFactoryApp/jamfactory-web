@@ -21,13 +21,12 @@
        [style]="{'background-image': 'linear-gradient(to left, #23232b 50%, ' + colorService.vec3ToRGBAString(songColor.vibrant, 0.4) + ' 50%)'}"
        [ngStyle]="{'background-position': 'right ' + songProgress + '% bottom 100%'}"></div>
 
-  <div class="d-flex al-center w-100" [style]="{'color': getBestColor()}"
-       style="position: relative; justify-content: space-between; gap: 15px">
+  <div class="footer-content-container d-flex al-center w-100" [style]="{'color': getBestColor()}">
     <img #cover *ngIf="item" [src]="playback.playback.item.album.images[1].url" (load)="getImgColor()"
          alt="Album Cover" class="footer-cover" crossOrigin="anonymous"/>
-    <div class="footer-song-desc-container h-100" style="flex-grow: 1;"
+    <div id="playback-text-container" class="footer-song-desc-container h-100" style="flex-grow: 1;"
          [style]="{'color': getBestColor( songColor.muted, [255, 255, 255], [35, 35, 43])}">
-      <span *ngIf="item" class="footer-title">{{playback.playback.item.name}}</span> <br>
+      <span *ngIf="item" class="footer-title" [ngClass]="titleTooLong ? 'playback-text-animator' : ''">{{playback.playback.item.name}}</span> <br>
       <span *ngIf="item" class="footer-artist">{{playback.playback.item.artists[0].name}}</span>
     </div>
 
@@ -50,7 +49,7 @@
           <i class="material-icons footer-button-icons">skip_next</i>
         </button>
 
-        <button class="footer-control-button d-flex al-center jy-center"
+        <button class="footer-control-button optional-footer-control-button d-flex al-center jy-center"
                 *ngIf="item && this.permissions.hasPermission(this.permissions.Host)">
           <div class="footer-volume-container">
             <div class="footer-volume-slider">
@@ -65,7 +64,8 @@
         </button>
 
         <button id="notification-button"
-                class="footer-control-button d-flex jy-center al-center" (click)="toggleMenu()">
+                class="footer-control-button optional-footer-control-button d-flex jy-center al-center"
+                (click)="toggleMenu()">
           <div class="footer-notification-new" *ngIf="notificationService.notifications.length !== 0"></div>
           <i class="material-icons footer-button-icons">notifications</i>
         </button>

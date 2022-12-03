@@ -1,13 +1,18 @@
-<app-sidebar id="sidebar" [ngClass]="(searchViewStore.$view | async).menu ? 'sidebar-active sidebar-box-shadow' : 'move-content-left'"
+<app-sidebar id="sidebar"
+             [ngClass]="(searchViewStore.$view | async).menu ? 'sidebar-active sidebar-box-shadow' : 'move-content-left'"
              class="sidebar"></app-sidebar>
 
 <main [ngStyle]="{'pointer-events': (searchViewStore.$view | async).menu ? 'none' : ''}">
   <app-title id="header" [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''"
              class="header d-flex al-center w-100"></app-title>
-  <app-search *ngIf="(searchViewStore.$view | async).searchBarViewToggle || (searchViewStore.$view | async).searchResultViewToggle" id="search-box"
-              [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''" class="search-result-container"></app-search>
+  <app-search
+    *ngIf="((searchViewStore.$view | async).searchBarViewToggle || (searchViewStore.$view | async).searchResultViewToggle) && this.searchStore.searchString !== ''"
+    id="search-box"
+    [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''"
+    class="search-result-container"></app-search>
 
-  <app-queue id="main-content" [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''" class="main d-flex w-100"></app-queue>
+  <app-queue id="main-content" [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''"
+             class="content d-flex w-100"></app-queue>
 
   <app-playback-controller id="footer" [ngClass]="(searchViewStore.$view | async).menu ? 'move-content-right' : ''"
                            class="footer w-100"></app-playback-controller>
