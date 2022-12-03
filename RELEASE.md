@@ -5,6 +5,7 @@
 ### Features Added
 * :sparkles: Added QR feature for card view
 * :sparkles: Added github and imprint link to sidebar
+* :arrow_up: Move to Angular version 15
 
 ### Features Removed
 No features removed
