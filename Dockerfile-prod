@@ -1,9 +1,8 @@
-# node:14
-FROM node:14-alpine as builder
+FROM node:18-alpine as builder
 
 WORKDIR /usr/src/app
 
-RUN apk add git openssh-client
+RUN apk add git openssh-client python3 make gcc g++
 
 COPY package.json package-lock.json ./
 
