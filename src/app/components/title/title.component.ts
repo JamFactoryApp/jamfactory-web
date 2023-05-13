@@ -18,7 +18,7 @@ export class TitleComponent implements OnInit {
 
   public searchField = new FormControl('');
   public searchTimeout: number;
-  public colorAccent: string;
+  public QRColor: string;
 
   constructor(
     public jamStore: JamsessionStore,
@@ -45,7 +45,7 @@ export class TitleComponent implements OnInit {
     });
 
     this.colorService.$color.subscribe(value => {
-      this.colorAccent = value;
+      this.QRColor = value;
     })
   }
 

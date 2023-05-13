@@ -239,10 +239,10 @@ export class PlaybackControllerComponent implements OnInit, AfterContentInit {
     let canvas = document.createElement("canvas");
     let context = canvas.getContext("2d");
     context.font = font;
-    let textWidth = Math.ceil(context.measureText(this.playback.playback.item.name).width);
+    let textWidth = Math.ceil(context.measureText(this.playback?.playback?.item?.name).width);
 
-    console.log(playbackSize);
-    console.log(textWidth);
+    // console.log(playbackSize);
+    // console.log(textWidth);
 
     document.documentElement.style.setProperty('--text-animation-speed1', Math.floor((textWidth/10)/4) + 's');
     document.documentElement.style.setProperty('--text-animation-speed2', Math.floor((textWidth/10)/2) + 's');

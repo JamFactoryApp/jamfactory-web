@@ -33,6 +33,8 @@ export class SidebarComponent implements OnInit {
 
   public copyIcon = 'content_copy';
 
+  public QRColor: string;
+
   constructor(
     public colorService: ColorService,
     public notificationService: NotificationService,
@@ -78,6 +80,10 @@ export class SidebarComponent implements OnInit {
     this.viewStore.$view.subscribe(value => {
       this.queueViewStatus = value.cardMode;
     });
+
+    this.colorService.$color.subscribe(value => {
+      this.QRColor = value;
+    })
   }
 
   leave(): void {
@@ -157,5 +163,17 @@ export class SidebarComponent implements OnInit {
     setTimeout(() => {
       this.viewStore.menuSub = '';
     }, 300);
+  }
+
+  getQRCode(): string {
+    return 'https://' + window.location.host + window.location.pathname;
+  }
+
+  getQRSize(): number {
+    return 150;
+  }
+
+  getQRColor(): string {
+    return document.documentElement.style.getPropertyValue('--dominant-color');
   }
 }

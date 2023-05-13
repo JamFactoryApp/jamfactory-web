@@ -26,6 +26,7 @@ import {ModalService} from '../../core/services/modal.service';
 import {createAlreadyMemberModal, createCloseModal, createJoinModal} from '../../core/static/modals';
 import {LocalstorageService} from "../../core/services/localstorage.service";
 import {SearchStore} from "../../core/stores/search.store";
+import {ColorService} from "../../core/services/color.service";
 
 
 @Component({
@@ -54,6 +55,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     private modal: ModalService,
     private localstorageService: LocalstorageService,
     public searchStore: SearchStore,
+    public colorService: ColorService
   ) {
     this.userService.getCurrentUser().subscribe(value => userStore.currentUser = value);
   }
@@ -178,6 +180,7 @@ export class JamsessionComponent implements OnInit, OnDestroy {
     if (color !== null) {
       document.documentElement.style.setProperty('--dominant-color', color);
     }
+    this.colorService.getCurrentColor();
 
     const view = this.localstorageService.getItem("ViewStatus");
     if (view !== null) {

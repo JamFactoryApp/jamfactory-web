@@ -109,7 +109,11 @@
              (click)="toggleMember()">
           <i class="material-icons menu-button sidebar-menu-button">group</i>
         </div>
+      </div>
 
+      <div class="d-flex jy-center al-center" style="padding: 25px 10px 10px 10px">
+        <qrcode [qrdata]="getQRCode()" [width]="getQRSize()" [colorLight]="'#0000'" [elementType]="'svg'" [margin]="0"
+                [colorDark]="QRColor"></qrcode>
       </div>
     </ng-container>
 

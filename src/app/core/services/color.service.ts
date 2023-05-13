@@ -35,7 +35,6 @@ export class ColorService {
     if (check === undefined) {
 
       const palette = this.colorThief.getPalette(element, 3, 50);
-      // console.log(this.colorThief.getPalette(element, 3, 50));
       const songColor: SongColor = {
         vibrant: palette[0],
         muted: this.highestDiff(palette, palette[0])
